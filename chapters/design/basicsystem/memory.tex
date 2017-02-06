@@ -1,0 +1,5 @@
+\section{Memory}
+According to \autoref{req:store_perimeter} the lawn mower must be able to store the perimeter markings on non-volatile memory. For easy access to this data, the memory should be onboard the robot. The Intel Edison module, which is included in the Reach \gls{dgps}, offers \SI{1}{\giga\byte} of available storage. By having a serial connection between this and the microcontroller it is possible to access this storage and use the data needed.
+
+To access the storage on the Intel Edison Module a serial connection is, as mentioned, needed. As the Intel Edison module uses \gls{uart} this is an obvious choice for a serial connection.
+

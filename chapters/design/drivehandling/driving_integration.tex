@@ -1,0 +1,17 @@
+\subsection{Integration of driving}
+After validating the model of the vehicle through simulations, the controller is implemented on the Intel Edison board, where the calculations of the angular velocities of the motors will be handled. 
+The direction and duty cycle is calculated and sent via a serial communication link to the \gls{fpga}. This information is divided into three bytes as shown in \autoref{fig:byteToFPGA}.
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{bytedivision}
+\caption{Division of information in bytes sent from the \gls{fpga} to the Edison via a \gls{uart} com} 
+\label{fig:byteToFPGA}
+\end{figure}
+
+To specify if the command is sent to the left or right wheel, an ASCII value corresponding to a capital R or L is sent and an ASCII value corresponding to a lower case f or r specifies whether it is forward or reverse. The last byte states what duty cycle the \gls{pwm} must have in order to get the desired direction. This is sent as an 8 bit value between 0 and 255. Since the motors need a duty cycle of at least \SI{35}{\percent} to start, the second lowest value the integer can obtain is defined as:
+\begin{equation}
+\frac{255}{100} \cdot 35 = 89.25 \approx 90 
+\end{equation}
+The transmission of the three bytes in C code is shown in \autoref{cs:serialTrans}.
+
+\includeCode{motor.c}{C}{241}{264}{Serial transmitting of angular velocities for motors.}{cs:serialTrans}{../Kode/clienttest/}

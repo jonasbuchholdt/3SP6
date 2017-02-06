@@ -1,0 +1,117 @@
+\section{Gearing}
+
+The gearbox from motor to wheel has the ratio 75:1. This ratio is the combined ratio from the motor, which is 50:1 and from the vehicle which have a gearing ratio to 1.5:1. The free body diagram is as seen on \autoref{fig:free-body}.
+From the free body diagram, differential equations for the motors can be derived and Laplace transformed in order to make a block diagram for the motor. The derivation of these equations can be seen in \autoref{app:freebody_motor}. The calculations end up in \autoref{Eq:done}.
+
+\begin{figure}[htb] 
+\begin{center}
+
+\begin{picture}(0,0)%
+\includegraphics[width=.6\textwidth]{gear}%
+\end{picture}%
+\setlength{\unitlength}{2368sp}% Unscaled unitlength: 3947sp
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(6698,5569)(811,-5382)
+\put(6361,  4){$f_b$}%
+\put(3581,-2376){$f_g$}%
+\put(5606,-2716){$J_p$}%
+\put(5921,-571){$r_3$}%
+\put(5326,-1486){$r_2$}%
+\put(7276,-2761){$B_p\omega_p$}%
+\put(2401,-2461){$J_m$}%
+\put(4776,-1261){$f_g$}%
+\put(4276,-2911){$\omega_p$}%
+\put(746,-1561){$K_i$}%
+\put(2551,-211){$\omega_m$}%
+\put(2701,-1486){$r_1$}%
+\put(2940,-4394){$f_b$}%
+\put(2890,-5304){$B_b\dot{x}$}%
+\put(4120,-4534){$M_b$}%
+\put(2101,-3161){$B_m\omega_m$}%
+\put(3650,-3594){$x$}%
+\end{picture}%
+\caption{This picture shows the free-body diagram from motor to wheel.} \label{fig:free-body} 
+\end{center}
+  \end{figure}
+
+
+\vspace{-1mm}
+
+\begin{equation}
+\left(J_m+J_p\left(\frac{r_1^2}{r_2^2}\right)+M_b r_3^2\left(\frac{r_1^2}{r_2^2}\right)\right)s\omega_m(s)=KI-\left(B_m+B_p\left(\frac{r_1^2}{r_2^2}\right)+B_b r_3^2\left(\frac{r_1^2}{r_2^2}\right)\right)\omega_m(s)
+\label{Eq:done}
+\end{equation}
+\startexplain
+\explain{$J_m$  is the total moment of inertia of the motor}{\SI{}{\newton\meter}}
+\explain{$J_p$  is the total moment of inertia on the gear}{\SI{}{\newton\meter}}
+\explain{$M_b$  is the total moment of inertia of the lawn mower mass}{\SI{}{\newton}}
+\explain{$K_i$  is the input current times motor constant}{\SI{}{\volt\second\per\radian}}
+		\explain{$\omega_m$  is the motor angular velocity }{\SI{}{\radian\per\second}}
+		\explain{$\omega_p$  is the pulley angular velocity }{\SI{}{\radian\per\second}}
+		\explain{$r_1$  is the gear radius on motor }{\SI{}{\meter}}
+		\explain{$r_2$  is the gear radius on pulley }{\SI{}{\meter}}
+		\explain{$r_3$  is the pulley wheel radius }{\SI{}{\meter}}
+		\explain{$B_m$  is the friction coefficient on motor shaft}{\SI{}{\newton\meter\second}}
+		\explain{$B_p$  is the friction coefficient on gear}{\SI{}{\newton\meter\second}}
+		\explain{$B_b$  is the friction coefficient on the belt}{\SI{}{\newton\second\per\meter}}
+	\stopexplain 
+This equation can be divided into the following three equations:
+
+\begin{subequations}
+\begin{equation}
+J_{tot}=J_m+J_p\frac{r_1^2}{r_2^2}+M_br_3^2\frac{r_1^2}{r_2^2}
+\end{equation}
+
+\begin{equation}
+B_{tot}=B_m+B_p\frac{r_1^2}{r_2^2}+B_br_3^2\frac{r_1^2}{r_2^2}
+\end{equation}
+
+\begin{equation}
+J_{tot}s\omega_m(s)=KI-B_{tot}\omega_m(s)
+\end{equation}
+\end{subequations}
+
+From these three equations a block diagram is created, as shown in \autoref{fig:block_diagramdrive}.
+
+\begin{figure}[htb] 
+	\begin{center} 
+		\begin{picture}(0,0)%
+		\includegraphics{gearblock.pdf}%
+		\end{picture}%
+		\setlength{\unitlength}{4144sp}%
+		%
+		\begingroup\makeatletter\ifx\SetFigFont\undefined%
+		\gdef\SetFigFont#1#2#3#4#5{%
+			\reset@font\fontsize{#1}{#2pt}%
+			\fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+			\selectfont}%
+			\fi\endgroup%
+			\begin{picture}(6297,1284)(836,-397)
+			\put(4184,563){$\frac{r_1}{r_2}$}%
+			\put(5287,554){$\frac{1}{s}$}%
+			\put(6358,554){$r_3$}%
+			\put(4573,697){$\omega_p(s)$}%
+			\put(2926,-241){$B_{tot}$}%
+			\put(6706,704){$x(s)$}%
+			\put(5626,704){$\theta_p(s)$}%
+			\put(1531,569){$K$}%
+			\put(1036,704){$I$}%
+			\put(2566,344){$-$}%
+			\put(2116,434){$+$}%
+			\put(1891,704){$\tau_m(s)$}%
+			\put(2986,556){$\frac{1}{J_{tot}}$}%
+			\put(3483,697){$\omega_m(s)$}%
+			\end{picture}%
+			\caption{This figure shows the transfer function from motor to wheel.} \label{fig:block_diagramdrive} 
+			\end{center}
+			\end{figure}
+
+
+
+	

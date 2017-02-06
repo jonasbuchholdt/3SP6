@@ -1,0 +1,26 @@
+\subsection{Contact Sensor}
+In this section the design concept of the contact sensor will be developed. This includes the mount of the plastic body, how the mounted body will react when the body touches an obstacle and how the contact switch will be activated.
+
+The body of the autonomous robotic lawn mower is not designed circularly, and therefore when the lawn mower makes a turn, there will be a possibility of hitting an obstacle. This makes it necessary to use at least three directional switches. The lawn mower must know where the obstacle touches the body, therefore the corner area on the body must trigger it's own switch. If these two requirements are combined, the switch must be a joystick switch with eight possible switch directions. \autoref{fig:contactswitch_concept} shows the principle of this joystick switch.  
+
+\begin{figure}[htb]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=1\textwidth]{contactswitch_concept}
+		\caption{contact switch concept of the robotic lawn mower.}
+		\label{fig:contactswitch_concept}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=1\textwidth]{contactswitch_mounting}
+		\caption{contact switch mounting concept of the robotic lawn mower.}
+		\label{fig:contactswitch_mounting}
+	\end{subfigure}
+	\caption{Concept of the mounting of the switch contact on the robotic lawn mower}\label{fig:mount_concept}
+\end{figure}
+
+
+The plastic body needs to be able to move from the lawn mower chassis in order to allow the switch to be activated. Therefore the body mount on the chassis needs to have four bendable mounting brackets to make this possible. If the lawn mower touches an obstacle, the body will be moved slightly backwards without the chassis being affected, and thus will the switch be activated. Depending on where the obstacle touches the body, the lawn mower knows where the obstacle is situated. For example when the opposite corner of B on \autoref{fig:contactswitch_concept} is touched by an obstacle and the body moves the joystick switch, switch B will be activated, and the lawn mower knows an obstacle is situated in the front, right corner. Afterwards the lawn mower will start driving backwards and start driving around the obstacle using the ultrasonic obstacle detection system and after the vehicle is free of the obstacle it will continue following the route.
+
+The chosen contact sensor is the compact stick switch: RKJXL \citep{RKJXL}, which is a joystick switch. The bendable mounting bracket are mounted in each corner of the chassis of the body and makes sure that the body only moves in the x- and y axis. The joystick switch is mounted in the center of the chassis and the little lever of the switch is situated in a circular hole on the body. \autoref{fig:contactswitch_mounting} shows a drawing of the concept. The \autoref{fig:contactswitch_mounting} shows the degin of the vehicle chassis, body with bendable mounting bracket and switch.  
+
+Due to time constraints of the project, it is decided not to implement the contact sensor system in the prototype despite the module already being designed. This is mainly because the construction of the chassis of the vehicle is too time consuming.

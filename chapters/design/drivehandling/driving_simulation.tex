@@ -1,0 +1,95 @@
+\subsection{Simulation of driving}
+In order to validate whether or not, the algorithms are able to control the motors, a model of the drive controller is created and simulated in MATLAB. Derivation for some of the following equations are not written out in this section, instead they are located in \autoref{app:drive-equations}.
+
+\autoref{fig:motor_calc} shows the two wheels of the vehicle, placed in a coordinate system.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{motor}
+\caption{Vehicle position and direction.}
+\label{fig:motor_calc}
+\end{figure}
+
+To determine the direction of the vehicle in the simulation, the vector $\vec{L}$ from the left wheel to the right, is rotated $\SI{\pi /2}{rad}$.
+The $\vec{L}$ vector can be determined as:
+
+\begin{equation}
+\vec{L}=\vec{X_L}-\vec{X_R} \addunit{}
+\end{equation}
+\startexplain
+		\explain{$\vec{X_L}$  is the vector from origin to the left wheel}{}
+		\explain{$\vec{X_R}$  is the vector from origin to the right wheel}{}
+	\stopexplain
+	 
+A unit vector $\vec{U_L}$ of $\vec{L}$ is determined as:
+
+\begin{equation}
+\vec{U_L}=\frac{\vec{L}}{|\vec{L}|} \addunit{}
+\end{equation}
+
+By creating a rotational matrix $R$ rotated $\SI{\pi /2}{rad}$ as:
+
+\begin{equation}
+R= \begin{bmatrix}
+	cos(\pi /2) & -sin(\pi /2)\\ 
+	&\\
+	sin(\pi /2) & cos(\pi /2) 
+	\end{bmatrix}
+ = \begin{bmatrix}
+	0 & -1\\ 
+	1 & 0 
+	\end{bmatrix} \addunit{}
+\end{equation}
+
+the direction vector can be determined as: 
+
+\begin{equation}	
+\vec{F}=\vec{U_L} \cdot R \addunit{}
+\label{eq:directionVect}
+\end{equation}
+
+The vectors from origin to the wheels can time dependently be described by differential equations:
+
+\begin{equation}
+\dot{\vec{X_L}} = r \cdot \omega_L \cdot \vec{F} \addunit{} 
+\label{eq:vect2wheelL}
+\end{equation}
+\begin{equation}
+\dot{\vec{X_R}} = r \cdot \omega_R \cdot \vec{F} \addunit{} 
+\label{eq:vect2wheelR}
+\end{equation}
+\startexplain
+	\explain{$r$ is the radius of the wheels}{\SI{}{\meter}}
+	\explain{$\omega_L$ and $\omega_R$ are the angular velocities of the wheels}{\SI{}{\radian\per\second}}
+\stopexplain
+
+Equally, the directional vector $\vec{F}$ and the center point of the vehicle can time dependently be described as:
+
+\begin{equation}
+\dot{\vec{F}} 
+= R \cdot \frac{\dot{\vec{X_L}} - \dot{\vec{X_R}}}{|\vec{X_L} - \vec{X_R}|}
+= R \cdot \frac{r}{|\vec{X_L} - \vec{X_R}|} \cdot \vec{F} \cdot (\omega_L - \omega_R)
+ \addunit{} 
+\end{equation}
+\begin{equation}
+\dot{x_c} 
+= \frac{\dot{\vec{X_L}} - \dot{\vec{X_R}}}{2} 
+= \frac{r}{2} \cdot \vec{F} \cdot (\omega_L - \omega_R) \addunit{} 
+\end{equation}
+
+With these equations and the driving calculations, the drive handling can be simulated. Two simulations are performed and are shown in \autoref{fig:MotorSimCurve} and \autoref{fig:MotorSimRoute}.
+
+\begin{figure}[h!]
+    \centering
+        \includegraphics[width=1\textwidth]{curvemotor}
+        \caption{Simulation of soft curve with two points.}
+        \label{fig:MotorSimCurve} 
+\end{figure}
+\begin{figure}[h!]
+  \centering
+         \includegraphics[width=1\textwidth]{routemotor}
+        \caption{Simulation of route following.}
+        \label{fig:MotorSimRoute}
+\end{figure}
+
+The first simulation, shown in \autoref{fig:MotorSimCurve}, is done with only two points. It is used to illustrate the process which will occur if the robot is suddenly placed off of the line it is supposed to follow. In the simulation the robot is set to drive on the Y-axis until it reaches the point $P=(0,10)$. From here it will drive out to $P=(10,10)$. From this it is concluded that in theory the algorithm can keep the mower on track if supplied with the correct coordinates from the Reach devices. The second simulation, shown in \autoref{fig:MotorSimRoute}, is a simulation of how the algorithm will behave when used on a route set by the previous module. This simulation shows that the algorithm works well, and that it has no problems staying within the perimeter and that it turns well. 

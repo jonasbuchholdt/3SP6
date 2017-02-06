@@ -1,0 +1,36 @@
+\section{Positioning}
+The sub module for positioning is an implementation of the Reach \gls{gps} by Emlid. A communication link between the two Reach \gls{gps} receivers must be established in order to take advantage of the precision they can offer. This will enable them to function as a \gls{dgps} with one unit being a base and the other placed on a lawn mower. As it is already decided that the product must utilise an 802.11x connection for general communication, this will be used for the link between the Reach \gls{gps} receivers.
+
+\begin{figure}[h]%
+\centering%
+\setlength{\unitlength}{1mm}%
+%
+\scalebox{.7}{%utilise
+\begin{picture}(0,0)
+    \includegraphics[width=\textwidth]{reach_setup}%
+\end{picture}%
+%
+\begin{picture}(\getlength{\textwidth},93)%(0,-93)
+    \put(20,60){Base}%
+    \put(106,30){Rover}%
+    \put(63,40){Correction data}%
+\end{picture}%
+}
+\caption{Illustration of the base sending correction data via Wi-Fi to the rover, which enables the rover to calculate its position more accurately using the received \gls{gps} signal correction.}%
+\label{fig:basrov}%
+\end{figure}
+
+\subsection{Base}
+
+One of the Reach \gls{gps} units will function as a base to give the best precision. This is achieved with the open source software RTKlib which is already implemented on the Reach. RTKlib offers a program which allows the device to function as a base. This program will calculate correction data based on information from satellites and the fixed position of the base. This correction data will be available to the rover in order to achieve greater accuracy. A simple illustration is shown in \autoref{fig:basrov}. Therefore a way to derive the position of the base must be implemented. To do this, the RTKlib function for the rover is used. This program will calculate a position based on satellite information and this position will be used as the base position. To get a fairly precise position it is necessary to make more than one measurement. A test of more than 10\,000 measurements is shown in \autoref{fig:10000}. This shows that the difference in the average of the X and Y coordinates is nearly 0 at about 8\,000 measurements, which means that 10\,000 measurements may be sufficient. 
+\begin{figure}[htb]
+\includegraphics[width=\textwidth]{10000}
+\caption{Difference in average for base positions.}
+\label{fig:10000}
+\end{figure}
+
+Whether this position is corresponding to the actual coordinates of the base or not, does not have much influence on the precision of the rover because its position is relative to the base position. The base will output the correction data on a \gls{tcp} server where the rover can access and use the data. 
+
+\subsection{Rover}
+
+The rover is placed on the mower and calculates the position by utilising data from both the satellites and the base. The rover can be initialised with different options, e.g. update frequency, which frequency bands it should use, where to output the coordinates, the format of the coordinates and so on. The full configuration file can be found in the included ZIP in the \textit{ReachRover/receiver} folder, and is called \textit{rtkrcv.conf}. The rover is also configured to output data on a \gls{tcp}-server. This server is accessed by a client-program whose function is to sort the coordinates and retrieve the relevant data. This is explained in detail in the following sections. 

@@ -1,0 +1,260 @@
+\graphicspath{{figures/route_planning/}}
+\chapter{Module: Route Planning}\label{ch:modroute}
+This chapter reviews the design and construction of the route planning and perimeter delimitation, for the prototype of the robotic lawn mower.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=\textwidth]{Moduldiagram-routehandling}
+\caption{Highlighted modules will be developed in the following chapter}
+\label{fig:modular_routeplanning}
+\end{figure}
+
+According to \autoref{req:calculate_route} and \autoref{req:follow_route}, the robotic lawn mower must be able to calculate and follow a route that is more efficient than a random pattern route. For calculating a more efficient route, the area to be mowed must be determined by the perimeter delimitation, and converted to a coordinate system with points within the perimeter. 
+
+The sections of the chapter corresponds to the highlighted sub-modules in \autoref{fig:modular_routeplanning}.
+
+\section{Perimeter delimitation}\label{sec:per_def}
+From \autoref{req:position} it is concluded that a solution with perimeter wire would be redundant, since the product must be able to know its own position. Furthermore \autoref{req:markperimeter} dictates how the perimeter is set. The module is designed to keep track of the boundaries of the garden, so the mower does not drive out of bounds. In \autoref{sec:chosolut} it is determined that a solution implementing \gls{dgps} is wanted for perimeter delimitation. On the Danish consumer market only one robotic lawn mower is currently implementing such a solution. This mower however is out of price range for the general consumer and therefore a solution with \gls{dgps} available for the general consumer is desired.
+
+The perimeter must be defined from several points on the edge of the area that needs to be mowed. These points must be at every corner, which is illustrated in \autoref{fig:area_to_be_mowed}, the four corners limits the rectangular shape of the area to me mowed.
+                         
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.5\textwidth]{fourCorners}
+\caption{Illustration of points in every corner of an area to be mowed.}
+\label{fig:area_to_be_mowed}
+\end{figure}
+
+The route planning module must obtain the coordinates from the \gls{dgps} in these positions, which can be illustrated in a coordinate system with vertical and horizontal positions on the axes, as seen on \autoref{fig:coordinate_system}.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.6\textwidth]{coordinateSystem}
+\caption{Illustration of positions converted to a coordinate system.}
+\label{fig:coordinate_system}
+\end{figure}
+
+The red dotted lines illustrate the delimitation, which the robotic lawn mower must stay inside of.
+
+As the robotic lawn mower is mowing, it is constantly receiving the current position from the \gls{dgps}. According to \autoref{req:inactive_outside_perimeter} the cutting function of the robotic lawn mower must be inactive, if it contrary to expectation is outside the delimitation. To determine whether the position is outside of the delimitation, some calculations must be done. First, the size of the area inside the four corner positions $A$, $B$, $C$ and $D$ must be calculated, as:
+
+\begin{equation}
+	\text{Area}=\frac{1}{2}\cdot|(Y_A-Y_C)\cdot (X_D-X_B)+(Y_B-Y_D)\cdot (X_A-X_C)|  \addunit{m^2}
+\end{equation}
+
+	\startexplain
+		\explain{$Y_N$ is the vertical position for point $N$}{m}
+		\explain{$X_N$ is the vertical position for point $N$}{m}
+	\stopexplain
+	
+If a coordinate position is inside the area, the sum of the size of the four coloured triangles shown in \autoref{fig:triangles1} must equal the size of the area. Otherwise, if the coordinate position is outside the area as shown in \autoref{fig:triangles2}, the sum of the size of the four coloured triangles will be greater than the size of the delimitation area.
+ 
+\begin{figure}[htb]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=1\textwidth]{pointInside}
+        \caption{Position inside area.}
+        \label{fig:triangles1}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+         \includegraphics[width=1\textwidth]{pointOutside}
+        \caption{Position outside area.}
+        \label{fig:triangles2}
+    \end{subfigure}
+    \caption{Illustration of points inside and outside area connected to all corners, to form four triangles.}\label{fig:triangles}
+\end{figure}
+
+For a point $P$, the size of the four triangles and the sum can be determined as:
+
+\begin{equation}
+		ABP=\frac{1}{2}\cdot|X_A\cdot (Y_B-Y_P)+X_B\cdot (Y_P-Y_A)+X_P\cdot (Y_A-Y_B)|  \addunit{\square\meter}
+	\end{equation}
+	\begin{equation}
+		ADP=\frac{1}{2}\cdot|X_A\cdot (Y_D-Y_P)+X_D\cdot (Y_P-Y_A)+X_P\cdot (Y_A-Y_D)|  \addunit{\square\meter}
+	\end{equation}
+	\begin{equation}
+		BCP=\frac{1}{2}\cdot|X_B\cdot (Y_C-Y_P)+X_C\cdot (Y_P-Y_B)+X_P\cdot (Y_B-Y_C)|  \addunit{\square\meter}
+	\end{equation}
+	\begin{equation}
+		CDP=\frac{1}{2}\cdot|X_C\cdot (Y_D-Y_P)+X_D\cdot (Y_P-Y_C)+X_P\cdot (Y_C-Y_D)|  \addunit{\square\meter}
+	\end{equation}
+	\begin{equation}
+	sum = ABP+ADP+BCP+CDP \addunit{\square\meter}
+	\end{equation}
+
+	
+These calculations are shown in \autoref{cs:determine_in_out}, where a function \textit{emergencyStop();} is executed, if the robotic lawn mower is outside the delimitation.
+
+\includeCode{del_emergency.c}{C}{37}{50}{Determine of whether the current position is inside or outside the delimitation}{cs:determine_in_out}{../Kode/per_del/}
+
+
+\section{Route optimisation}
+After defining the perimeter of the area to be mowed, the route inside the perimeter must be defined. To predefine a route, the area to be mowed must be covered by points as shown in \autoref{fig:covered}, with a specific distance between each point.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.7\textwidth]{cuttingWidth}
+\caption{Illustration of area covered with points, with distance just narrower than cutting width. Circles showing the cutting width.}
+\label{fig:covered}
+\end{figure} 
+ 
+The red circles illustrate the points where the cutting mechanism will be outside the perimeter, and will not be included in the route. To be sure that only the area inside the perimeter will be mowed, the robotic lawn mower must start with a route just inside the perimeter, as shown in \autoref{fig:startRoute}.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.7\textwidth]{startRoute}
+\caption{Illustration of mowing pattern just inside the perimeter, as a start route.}
+\label{fig:startRoute}
+\end{figure}
+
+By visiting all remaining points in parallel lines as shown is \autoref{fig:routeRemaining}, the entire area will be mowed.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.7\textwidth]{routeRemaining}
+\caption{Illustration of mowing pattern with parallel lines between point in area.}
+\label{fig:routeRemaining}
+\end{figure}
+
+To predefine a route for the points inside the perimeter, the position of these must me determined, by filling in the area from \autoref{fig:coordinate_system} with points with a specific and constant distance to each other. 
+Improbable the lines between the perimeter points from \autoref{fig:coordinate_system} are not parallel to the axes, why a local coordinate system is defined, as shown in \autoref{fig:rectangle1}.
+
+\begin{figure}[htb]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=1\textwidth]{squareBorder}
+        \caption{Illustration of local coordinate system.}
+        \label{fig:rectangle1}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+         \includegraphics[width=1\textwidth]{allPoints}
+        \caption{Rectangle filled in with points in parallel lines according to the local coordinate system.}
+        \label{fig:rectangle2}
+    \end{subfigure}
+    \caption{Illustration of a rectangle around the area to be mowed, filled in with points with distance corresponding to cutting width.}\label{fig:rectangle}
+\end{figure}
+
+The square can be filled in with points by \autoref{cs:filling}.
+
+	\includeCode{perimeter_delimitation.c}{C}{76}{86}{Filling in points in the rectangle around the area to be mowed.}{cs:filling}{../Kode/per_del/}
+
+This results in an array of points, which the robotic lawn mower has to visit, for mowing the entire area. 
+
+To visit all points in the area to be mowed, an algorithm is specified in \autoref{alg:route}.
+\algrenewcommand\algorithmicrequire{\textbf{Precondition:}}
+\begin{algorithm}[htb]
+\caption{Route planning}\label{alg:route}
+\begin{algorithmic}[1]
+\Require{Read all points from csv file}
+\Require{Read all corner coordinates from csv file}
+\Statex
+\Procedure{Drive at edges}{}
+\For{$i=0$ ; $i=numberOfCorners$}  \State{$addToRoute(corner[i])$} \EndFor
+\EndProcedure
+\Statex
+\Procedure{Add starting point to route}{}
+\State{Find point with the smallest longitude value, in the row with the smallest latitude values}
+\State $addToRoute(startingPoint)$
+\EndProcedure
+\Statex
+\Procedure{Find last point in starting row and add to route}{}
+\State $addToRoute(firstPoint)$
+\EndProcedure
+\Statex 
+\While{$visitedPoints$ $!=$ $numberOfPoints$}
+\Procedure{Find all points in next row and add first and last point to route in reverse order}{}
+\State $addToRoute(lastPoint , firstPoint)$
+\EndProcedure
+\Statex 
+\Procedure{Find all points in next row and add first and last point to route}{}
+\State $addToRoute(firstPoint , lastPoint)$
+\EndProcedure
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+To reduce the number of points to be visited and make the vehicle drive in a straighter line, the algorithm only adds the outer points in a row to the route.
+This algorithm results in a list of coordinates for the route.
+
+\subsection{Simulation}\label{subsec:sim}
+According to \autoref{req:calculate_route}, the calculated route must be more efficient than a random pattern route. To test this, two different simulations are created. The first one is a simulation of \autoref{alg:route}, and the second is a simulation of a mower with a random pattern route. Both simulations are mowing an area with a predefined size and calculates the length of the route. 
+
+The simulations of the algorithm and a random pattern are shown in \autoref{fig:Sim}, with an area with a predefined size.
+
+\begin{figure}[htb]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=1\textwidth]{routeopt}
+        \caption{Simulation of algorithm.}
+        \label{fig:simAlg}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+         \includegraphics[width=1\textwidth]{routerandom}
+        \caption{Simulation of random pattern.}
+        \label{fig:simRandom}
+    \end{subfigure}
+    \caption{Simulations of mowing an area with two different routes.}\label{fig:Sim}
+\end{figure}
+
+Because the second simulation is mowing in a random pattern, several repetitions must be done to calculate a mean value for the length.
+To calculate an estimate of the mean value $\mu$ and the standard derivation $\sigma$, 2000 routes are simulated. These results are:
+
+\begin{equation}
+\mu_{est} = \frac{1}{N}\cdot\sum_{i=1}^N x_i= 13\,077
+\end{equation}
+\begin{equation}
+\sigma_{est} = \sqrt{ \frac{1}{N}\cdot\sum_{i=1}^N (x_i-\mu_{est})^2} = 2685.9 
+\end{equation}
+
+%From this, the standard derivation of the estimated mean value can be calculated as:
+%\begin{equation}
+%\sigma_{\mu_{est}} =  \frac{\sigma_{est}}{\sqrt{N_{test}}}=\frac{2685.9}{2000}=60.06
+%\end{equation}
+%\startexplain
+%\explain{$N_{test}$ is numbers of simulations in test}{\SI{}{1}}
+%\stopexplain
+
+It is estimated that a standard derivation of 1\% of the estimated mean value is acceptable, which gives:
+
+\begin{equation}
+\sigma_{acc} = \mu_{est}\cdot 0.01 =130.77
+\end{equation}
+From this, the number of simulations can be calculated as: 
+\begin{equation}
+N = \left(\frac{\sigma_{est}}{\sigma_{acc}}\right)^2=421.85\approx 422
+\end{equation}
+\startexplain
+\explain{$N$ is numbers of simulations}{\SI{}{1}}
+\stopexplain
+
+\autoref{tab:simResults} shows the results of the simulations, where the predefined route is significantly shorter.
+
+\begin{table}[htb]
+\centering
+\caption{Results of simulations.}
+\label{tab:simResults}
+	\begin{tabular}{l c c}
+	\textit{Route} & \textit{Number of simulations} & \textit{Mean value of length}\\ \toprule \rowcolor{lightGrey}
+	Predefined route & 1 & 3150\\
+	Random pattern & 422 & 13129
+	\end{tabular}
+\end{table}
+
+This is based on the assumption that the whole lawn needs to be mowed before the robot starts over. This is not necessarily a correct assumption and therefore it is interesting to look how well a random pattern would run if it only needed to cut 90\%. Even though this will leave 10\% of the lawn uncut, there is a 90\% chance for each point in these 10\% will be cut in the next run. Therefore simulations are made with different increments in how much of the lawn is allowed to be left uncut in a run. The results are shown in \autoref{tab:simResultsDifferent}.
+
+\begin{table}[htb]
+\centering
+\caption{Simulation results with different percent of area mowed.}
+\label{tab:simResultsDifferent}
+\begin{tabular}{c c c}
+\textit{Percent of area mowed} & \textit{Mean length} & \textit{Standard derivation}\\ \toprule 
+\rowcolor{lightGrey} 99.0\% & 6853 & 829\\
+97.5\% & 5490 & 585\\
+\rowcolor{lightGrey} 95.0\% & 4458 & 436\\
+92.5\% & 3865 & 371\\
+\rowcolor{lightGrey} 90.0\% & 3442 & 320\\
+\end{tabular}
+\end{table}
+The mean values with their standard derivations are shown in \autoref{tab:simResultsDifferent}. This shows that the robotic lawn mower has to mow at least 90\% of the area, before the algorithm is the best solution.
+
+%\section{Power consumption to base estimation}
+
