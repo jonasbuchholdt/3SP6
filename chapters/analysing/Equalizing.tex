@@ -1,2 +1,52 @@
 \section{Equalizing}
-Equalizing is a bank of bandpass filters from \SI{20}{\hertz} to \SI{20}{\kilo\hertz} which is divided by a fixed or customized distance. The analog equalizer often have fixed distance where the digital equalizer is more flexible and do have customized distance. This bandpass filter is able to ether amplifier and attenuate the gain of the specified frequency. The %\autoref{•}
+Equalizing is a bank of bandpass filters using third-octave parametric filters from \SI{20}{\hertz} to \SI{20}{\kilo\hertz} which is divided by a fixed or customized frequency distance. The analog equalizer often have fixed distance where the digital equalizer is more flexible and often have customized frequency distance. This bandpass filter is able to ether amplify or attenuate the gain of the specified frequency. The \autoref{fig:analog_equalizer} shows an analog equalizer with traditional third-octave parametric. %\citep{nordic}
+\todo[inline]{Jonas: Fix your citep}
+
+\begin{figure} [htbp]
+ \centering
+  \includegraphics[width=0.8\textwidth]{analog_equalizer}
+  \caption{The photo shows an example of an analog equalizer}
+  \label{fig:analog_equalizer}
+\end{figure}
+
+
+The amplified bandpass filter will affects each other, and the frequency respond will be different than expected on the analog equalizer output. The following \autoref{fig:analog_equalizer_respond} shows the analog frequency respond of the above analog equalizer \autoref{fig:analog_equalizer}.
+
+\begin{figure} [htbp]
+ \centering
+  \includegraphics[width=0.8\textwidth]{analog_equalizer_respond}
+  \caption{The photo shows the respond of the equalizer at \autoref{fig:analog_equalizer} }
+  \label{fig:analog_equalizer_respond}
+\end{figure}
+
+The amplification affects on side lying bandpass filter can easily be avoided by using an digital equalizer with third-octave raised cosine characteristics. The bandpass filter characteristics different is shown in \autoref{fig:raised_cosine_vs_traditional}
+
+
+\begin{figure} [htbp]
+ \centering
+  \includegraphics[width=0.7\textwidth]{raised_cosine_vs_traditional}
+  \caption{The photo shows the raised cosine characteristics versus traditional characteristics of third-octave bandpass filter %\citep{nordic}
+  }
+  \label{fig:raised_cosine_vs_traditional}
+\end{figure}
+
+
+
+When using third-octave raised cosine bandpass filter, it is possible to make an equalizer where the adjusted frequency does not interact on the neighboring filters, because raised cosine filter dose not leak into other third-octave bands like the traditional filter does. With this kind of filter it is possible to make a perfectly flat frequency respond, and it is very close to an ideal equalizer. The \autoref{fig:raised_cosine_respond} shows the frequency respond of a third-octave raised cosine equalizer designed by Dolby lake with the same gain and frequency settings as the analog equalizer at \autoref{fig:analog_equalizer}
+
+\begin{figure} [htbp]
+ \centering
+  \includegraphics[width=0.8\textwidth]{raised_cosine_respond}
+  \caption{The photo shows an third-octave raised cosine equalizer frequency respond  %\citep{nordic}
+  }
+  \label{fig:raised_cosine_respond}
+\end{figure}
+
+
+The equalizer is used to compensate for the room sound characteristics, because the sound can be completely different in completely different rooms. The room characteristics will or can amplify or attenuate some frequency, and therefore the equalizer is very important to adjust the frequency in every new room. 
+
+
+
+http://www.howtogeek.com/59467/htg-explains-what-is-an-equalizer-and-how-does-it-work/
+
+http://www.nordicsales.dk/imgdb/docs/lakewh_981.pdf
