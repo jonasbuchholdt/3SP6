@@ -1,31 +1,57 @@
 \section{Equalizing}
-The audible frequency can be separated into octaves, witch is a interval between frequency, where the frequency is the half or the double. Normally the frequency of an equalizer is separated by one-third of an octave, also caled third-octave separation.
-The equalizing effect is done with a bank of bandpass filters using third-octave separation from \SI{20}{\hertz} to \SI{20}{\kilo\hertz} which mostly are divided by a fixed frequency distance but can be divided by customized frequency distance in advance systems. The analog equalizer has a fixed distance which keep the one-third of an octave standard while the digital equalizer can be more flexible and sometime has customized frequency distance. This bandpass filter is able to either amplify or attenuate the gain of the specified frequency. The \autoref{fig:analog_equalizer} shows an analog equalizer with traditional third-octave parametric. \citep{nordic}
-\todo[inline]{Jonas: Fix your citep and explain third-octave}
+The audible frequency can be separated into octaves, witch is a interval between center frequency, where the frequency is the half or the double in one octave separation. Frequently by some well known company as Dolby lake \citep{lab_gruppen_eq}, now owned by Music group and Powersoft \citep{powersoft_eq}, the frequency of an equalizer is separated by third of an octave. 
+The \gls{eq} effect is done with a bank of bandpass filters using third octave separation from \SI{20}{\hertz} to \SI{20}{\kilo\hertz} which are divided by a fixed frequency distance but the octave order can be changed in advance systems. The analog \gls{eq} has a fixed distance which mostly keep the octave standard while the digital equalizer can be more flexible octave order and sometime has customized frequency distance. This bandpass filter is able to either amplify or attenuate the gain of the specified frequency. The \autoref{fig:analog_equalizer} shows an analog \gls{eq} with traditional third octave separation \citep{nordic}
 
 \begin{figure} [htbp]
  \centering
-  \includegraphics[width=0.8\textwidth]{analog_equalizer}
+  \includegraphics[width=0.6\textwidth]{analog_equalizer}
   \caption{The photo shows an example of an analog equalizer}
   \label{fig:analog_equalizer}
 \end{figure}
 
 \todo[inline]{Mohamed : Maybe add why they will affect each other}
-One amplified bandpass filter will interfere with the other neighboring filters, thus the frequency response will be different than what can be expected with ideal filters on the analog equalizer output. The following \autoref{fig:analog_equalizer_respond} shows the analog frequency response of the above analog equalizer \autoref{fig:analog_equalizer}.
+One amplified bandpass filter will interfere with the other neighboring filters, thus the frequency response will be different than what can be expected with ideal filters on the analog equalizer output. The following \autoref{fig:analog_equalizer_respond} shows the analog frequency response of the above analog \gls{eq} \autoref{fig:analog_equalizer}.
 
 \begin{figure} [htbp]
  \centering
   \includegraphics[width=0.8\textwidth]{analog_equalizer_respond}
-  \caption{The photo shows the response of the equalizer at \autoref{fig:analog_equalizer} }
+  \caption{The photo shows the response of the equalizer at \autoref{fig:analog_equalizer} \citep{nordic}}
   \label{fig:analog_equalizer_respond}
 \end{figure}
+
+A simple block diagram of a \gls{eq}  is showing at the following \autoref{fig:equalizer_block}.
+
+\begin{figure}[htb] 
+	\begin{center} 
+\begin{picture}(0,0)%
+\includegraphics{eq}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(4524,2859)(2689,-478)
+\put(6391,479){$Output$}%
+\put(2881,479){$Input$}%
+\put(4636,1964){$1\cdot Octave$}%
+\put(4636,1199){$2\cdot Octave$}%
+\put(4591,479){$4\cdot Octave$}%
+\put(4636,-286){$8\cdot Octave$}%
+\end{picture}%
+			\caption{This figure shows a simple block diagram over a \gls{eq}.} \label{fig:equalizer_block} 
+			\end{center}
+			\end{figure}
 
 The interference effects on the side lying bandpass filter can easily be avoided by using an digital equalizer with third-octave raised cosine characteristics. The difference between the  bandpass filter characteristics and the one with a raised-cosine are shown in \autoref{fig:raised_cosine_vs_traditional}
 
 \begin{figure} [htbp]
  \centering
   \includegraphics[width=0.7\textwidth]{raised_cosine_vs_traditional}
-  \caption{The photo shows the raised cosine bandpass filter characteristics versus traditional characteristics of third-octave bandpass filter %\citep{nordic}
+  \caption{The photo shows the raised cosine bandpass filter characteristics versus traditional characteristics of third-octave bandpass filter \citep{nordic}
   }
   \label{fig:raised_cosine_vs_traditional}
 \end{figure}
@@ -37,7 +63,7 @@ When using third-octave raised cosine bandpass filter, it is possible to make an
 \begin{figure} [htbp]
  \centering
   \includegraphics[width=0.8\textwidth]{raised_cosine_respond}
-  \caption{The photo shows an third-octave raised cosine equalizer frequency response  %\citep{nordic}
+  \caption{The photo shows an third-octave raised cosine equalizer frequency response  \citep{nordic}
   }
   \label{fig:raised_cosine_respond}
 \end{figure}

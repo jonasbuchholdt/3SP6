@@ -1,15 +1,31 @@
 \section{Delay}
-Delay is an audio effect which memorize the input signal for a customized time, and then release the signal without change the signal. The delayed signal can ether be played back multiple times witch make echo, or only delay the signal for the specified time. When the signal is delayed and played back multiple times, the delayed signal must be attenuated, unless the signal will keep moving in infinity time and depending on component tolerance, the delayed signal will be amplified or attenuated. If the delay is amplified the signal will start oscillate, so in analog delay unit the delayed signal needs to be attenuated to avoid oscillation. The \autoref{fig:delay_block} shows a block diagram over a simple delay, "echo" unit.
+Delay is an audio effect which memorize the input signal for a customized time, and then release the signal without change the signal. The delayed signal can ether be played back multiple times witch make echo, or only delay the signal for the specified time. When the signal is delayed and played back multiple times, the delayed signal must be attenuated, unless the signal will keep moving in infinity time and depending on component tolerance, the delayed signal will ether be amplified or attenuated. If the delay is amplified the signal will start oscillate, so in analog delay unit the delayed signal most be attenuated to avoid oscillation. The \autoref{fig:delay_block} shows a block diagram over a simple delay, "echo" unit.
 
 
 \begin{figure} [htbp]
  \centering
-  \includegraphics[width=0.8\textwidth]{delay_block}
-  \caption{The photo shows a block diagram on a delay unit}
+\begin{picture}(0,0)%
+\includegraphics{delay.pdf}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(5035,1752)(1491,-118)
+\put(1506,659){$Input$}%
+\put(3106,479){$Delay$}%
+\put(3736,1469){$Gain$}%
+\put(5814,672){$output$}%
+\end{picture}%
+  \caption{The photo shows a block diagram on a delay unit citep{delay_block}}
   \label{fig:delay_block}
 \end{figure}
 
-The \autoref{fig:delay_block} shows a delay unit with feedback line, where the gain is adjusted. The feedback signal is attenuated and added to the delay line. This will continue until the signal is completely attenuated. This kind of delay give the echo effect, and this effect is the delay effect in guitar effect unit. The following \autoref{fig:delay_echo} shows the effect in time domain.
+The \autoref{fig:delay_block} shows a delay unit with feedback line, where the gain is adjustable. The feedback signal is attenuated and added to the delay line input. This will continue until the signal is completely attenuated. This kind of delay give the echo effect, and this effect is the delay effect in guitar effect unit. \cite{delay_echo} The following \autoref{fig:delay_echo} shows the effect in time domain.
 
 \begin{figure} [htbp]
  \centering
@@ -18,4 +34,4 @@ The \autoref{fig:delay_block} shows a delay unit with feedback line, where the g
   \label{fig:delay_echo}
 \end{figure}
 
-http://www.hobby-hour.com/guitar/delay_effects.php
+The \autoref{fig:delay_echo} shows that the main signal is repeated and attenuated 6 time before the signal is total attenuated.
