@@ -4,12 +4,28 @@ Delay is an audio effect which memorize the input signal for a customized time, 
 
 \begin{figure} [htbp]
  \centering
-  \includegraphics[width=0.8\textwidth]{delay_block}
-  \caption{The photo shows a block diagram on a delay unit}
+\begin{picture}(0,0)%
+\includegraphics{delay.pdf}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(5035,1752)(1491,-118)
+\put(1506,659){$Input$}%
+\put(3106,479){$Delay$}%
+\put(3736,1469){$Gain$}%
+\put(5814,672){$output$}%
+\end{picture}%
+  \caption{The photo shows a block diagram on a delay unit citep{delay_block}}
   \label{fig:delay_block}
 \end{figure}
 
-The \autoref{fig:delay_block} shows a delay unit with feedback line, where the gain is adjusted. The feedback signal is attenuated and added to the delay line. This will continue until the signal is completely attenuated. This kind of delay give the echo effect, and this effect is the delay effect in guitar effect unit. The following \autoref{fig:delay_echo} shows the effect in time domain.
+The \autoref{fig:delay_block} shows a delay unit with feedback line, where the gain is adjusted. The feedback signal is attenuated and added to the delay line input. This will continue until the signal is completely attenuated. This kind of delay give the echo effect, and this effect is the delay effect in guitar effect unit. The following \autoref{fig:delay_echo} shows the effect in time domain.
 
 \begin{figure} [htbp]
  \centering
@@ -17,5 +33,3 @@ The \autoref{fig:delay_block} shows a delay unit with feedback line, where the g
   \caption{The photo shows a echo in time domain}
   \label{fig:delay_echo}
 \end{figure}
-
-http://www.hobby-hour.com/guitar/delay_effects.php
