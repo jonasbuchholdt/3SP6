@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{321.57442607bp}%
+    \setlength{\unitlength}{329.08133591bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,16 +48,16 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.47294819)%
+  \begin{picture}(1,0.46215943)%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{ink_test1.pdf}}%
-    \put(0.17658682,0.31501957){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
-    \put(0.18492799,0.42983347){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Anti-aliasing\\ filter}}}%
-    \put(0.51423432,0.22459329){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{DSP}}}%
-    \put(0.19937716,0.24558372){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{ADC}}}%
-    \put(0.79877181,0.22692554){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{DAC}}}%
-    \put(0.82298729,0.06599857){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Anti-imaging\\ filter}}}%
-    \put(0.2372493,0.06599857){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Host\\ interface}}}%
-    \put(0.06643746,-0.11591888){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.16325925\unitlength}\raggedright \end{minipage}}}%
+    \put(0.17255857,0.30783343){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
+    \put(0.18298854,0.40407473){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Anti aliasing filter}}}%
+    \put(0.50250375,0.21946994){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{DSP}}}%
+    \put(0.19482902,0.23998154){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{ADC}}}%
+    \put(0.78055045,0.22174898){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{DAC}}}%
+    \put(0.81332983,0.05765584){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Anti imaging filter}}}%
+    \put(0.23183723,0.06449303){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Host interface}}}%
+    \put(0.06492191,-0.11327457){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.15953503\unitlength}\raggedright \end{minipage}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{ink_test1.pdf}}%
   \end{picture}%
 \endgroup%
