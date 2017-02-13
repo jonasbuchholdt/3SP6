@@ -1,13 +1,19 @@
 \subsection{FPGA}
 
 
-The FPGA (Field Programmable Gate Array) is an integrated circuits that contains multiple logic blocks and routing channels. \\
-The hardware configuration is customizable in order to meet the user’s demands; unlike ICs where the connections between the transistors cannot be changed, it is possible to make a custom architecture on an FPGA. \\
-The biggest advantage of the FPGA is to make multiple processes at the same time, which is not the case in the ICs. If task needs to be done in a restricted timing, this parameter can be crucial. 
-As said, the FPGA consists of multiple logic blocks often called logic cells. Each cells consists of an LUT (Look-up table) and a flip-flop. The LUT has four inputs and the flip-flop one clock input. The LUT contains a small Random Access Memory and performs logical operation. \\
+The FPGA (Field Programmable Gate Array) is a circuit that contains multiple logic blocks and routing channels.
+The hardware configuration is customizable in order to meet the user’s demands in the digital domain; unlike ICs where the connections between the transistors cannot be changed, it is possible to make a custom architecture on an FPGA.
+As said, the FPGA consists of multiple logic blocks often called logic cells. Each cells consists of an LUT (Look-up table) and a flip-flop. The LUT has four inputs and the flip-flop one clock input. The LUT contains a small Random Access Memory and performs logical operation.
 
+Around the logic blocks, there are multiple I/O blocks which can also be programmed to be an output or an input for instance. 
 
-The FPGA can be programmed using a hardware description language like VHDL. \\
+An FPGA contains a configuration logic that is connected to the flash memory which contains information about the connection between the logic blocks and the architecture inside the block itself. The more logic blocks are used and programmed, the bigger the flash memory storage size has to be.
+
+The biggest advantage of the FPGA is to make multiple processes at the same time by isolating some logic blocks and I/Os for a specific task, which is not possible with ICs. A micro controller needs to run tasks in sequence, one after the other. If different tasks needs to be done in a restricted timing, this parameter can be crucial. 
+By using parallelism and having fast I/Os, the FPGA can be very powerful.
+
+The FPGA can be programmed using a hardware description language like VHDL.
+
 
 
 
