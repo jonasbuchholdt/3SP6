@@ -13,7 +13,29 @@ A block diagram of the effect is illustrated in \autoref{wah-wah-diag}.
 
 \begin{figure} [htbp]
 	\centering
-	\includegraphics[width=1\textwidth]{wah-wah-diag.png}
+\begin{picture}(0,0)%
+\includegraphics{wah_diag.pdf}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+	\reset@font\fontsize{#1}{#2pt}%
+	\fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+	\selectfont}%
+\fi\endgroup%
+\begin{picture}(7112,2202)(2776,-2278)
+\put(9466,-556){Output}%
+
+\put(5626,-1906){Bandpass-}%
+\put(5626,-2106){ \newline Filter}%
+\put(5521,-281){Original Signal Mixer}%
+
+\put(6906,-1466){Wah-Wah Mixer}%
+
+\put(2791,-601){Input}%
+\end{picture}%
+
 	\caption{Block diagram of the wah-wah effect}
 	\label{wah-wah-diag}
 \end{figure}
@@ -21,3 +43,14 @@ A block diagram of the effect is illustrated in \autoref{wah-wah-diag}.
 The phaser effect can be created by using a band-stop filter instead of a bandpass filter using the same block diagram presented in \autoref{wah-wah-diag}.
 
 There is another type of wah-wah effect called M-fold wah-wah which uses multiple M-tap bandpass filters that move around the spectrum at the same time.
+
+An example of a time domain response is shown in figure \autoref{wah-wah-diag}.
+
+\begin{figure} [htbp!]
+	\centering
+	\includegraphics[width=0.6\textwidth]{wah-wah-response.png}
+	\caption{Time domain response of the original sound (red) and the one after having the wah-wah effect (blue)}
+	\label{wah-wah-diag}
+\end{figure}
+
+
