@@ -46,30 +46,6 @@ A simple block diagram of a \gls{eq}  is showing at the following \autoref{fig:e
 			\end{center}
 			\end{figure}
 
-The interference effects on the side lying bandpass filter can easily be avoided by using an digital equalizer with third-octave raised cosine characteristics. The difference between the  bandpass filter characteristics and the one with a raised-cosine are shown in \autoref{fig:raised_cosine_vs_traditional}
 
-\begin{figure} [htbp]
- \centering
-  \includegraphics[width=0.7\textwidth]{raised_cosine_vs_traditional}
-  \caption{The photo shows the raised cosine bandpass filter characteristics versus traditional characteristics of third-octave bandpass filter \citep{nordic}
-  }
-  \label{fig:raised_cosine_vs_traditional}
-\end{figure}
-
-
-
-When using third-octave raised cosine bandpass filter, it is possible to make an equalizer where neighboring filters do not interfere with each other, because a raised cosine filter does not leak into other third-octave bands like the traditional filter does. With this kind of filter it is possible to make a perfectly flat frequency response, and it is very close to an ideal equalizer. The \autoref{fig:raised_cosine_respond} shows the frequency response of a third-octave raised cosine equalizer designed by Dolby lake with the same gain and frequency settings as the analog equalizer at \autoref{fig:analog_equalizer}.
-
-\begin{figure} [htbp]
- \centering
-  \includegraphics[width=0.8\textwidth]{raised_cosine_respond}
-  \caption{The photo shows an third-octave raised cosine equalizer frequency response  \citep{nordic}
-  }
-  \label{fig:raised_cosine_respond}
-\end{figure}
-
-
-The equalizer is used to compensate for the changes in sound due to different room characteristics, because the sound can be completely different in different rooms. The room characteristics will or can amplify or attenuate some frequency, and therefore the equalizer is very important to adjust the frequency in every new room.\citep{howtogeek} 
-
-
+The block diagram \autoref{fig:equalizer_block} shows an simple equalizer, where each bandpass filter is divided into separate block. Each block is separated in octave, where the next higher bandpass filter frequency is raised by a factor of 2 . 
 
