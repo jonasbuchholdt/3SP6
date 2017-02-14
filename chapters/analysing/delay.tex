@@ -1,5 +1,5 @@
 \subsection{Delay}
-Delay is an audio effect which memorize the input signal for a customized time, and then release the signal without change the signal. The delayed signal can ether be played back multiple times witch make echo, or only delay the signal for the specified time. When the signal is delayed and played back multiple times, the delayed signal must be attenuated, unless the signal will keep moving in infinity time and depending on component tolerance, the delayed signal will ether be amplified or attenuated. If the delay is amplified the signal will start oscillate, so in analog delay unit the delayed signal most be attenuated to avoid oscillation. The \autoref{fig:delay_block} shows a block diagram over a simple delay, "echo" unit.
+Delay is an audio effect which memorizes the input signal for a customized time, and then release it without changing it. The delayed signal can either be played back multiple times or only once . When the signal is delayed and then played back multiple times, it can either be amplified or attenuated. If the delayed signal is amplified, it will start to oscillate. If the wanted effect is an echo, the delayed signal shouldn't be kept alive, then the gain in the feedback must be reduced in order to attenuate the signal.  \autoref{fig:delay_block} shows a block diagram of a simple delay, "echo" unit.
 
 
 \begin{figure} [htbp]
@@ -25,7 +25,7 @@ Delay is an audio effect which memorize the input signal for a customized time, 
   \label{fig:delay_block}
 \end{figure}
 
-The block diagram \autoref{fig:delay_block} shows a delay unit with feedback line, where the gain is adjustable. The feedback signal is attenuated and added to the delay line input. This will continue until the signal is completely attenuated. This kind of delay give the echo effect, and this effect is the delay effect in guitar effect unit. \cite{delay_echo} The following \autoref{fig:delay_echo} shows the effect in time domain.
+The block diagram \autoref{fig:delay_block} shows a delay unit with a feedback line that has an adjustable gain. The feedback signal is either attenuated or amplified depending on the gain value and then added to the delay line input. \cite{delay_echo} The following \autoref{fig:delay_echo} shows the effect in time domain.
 
 \begin{figure} [htbp]
  \centering
@@ -34,4 +34,4 @@ The block diagram \autoref{fig:delay_block} shows a delay unit with feedback lin
   \label{fig:delay_echo}
 \end{figure}
 
-The \autoref{fig:delay_echo} shows that the main signal is repeated and attenuated 6 time before the signal is total attenuated.
+The \autoref{fig:delay_echo} shows that the main signal is repeated and attenuated 6 time before it is totally attenuated.
