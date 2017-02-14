@@ -24,29 +24,30 @@ The Raspberry pi 3 model B has a 1.2 GHz Quad-core ARM processor, supports wirel
 The Raspberry Pi is Linux based, but can also run Windows \cite{sparkfun_Raspberry_pi}. This makes the Raspberry pi 3 model B suited for a wide range of projects. This is both its advantage and its disadvantage if a specialized platform is wanted. 
 
 \subsection{Digital Signal Processor}
-A \gls{dsp} is a processor, which is optimized for high-speed numerical operations such as: Addition, subtraction, multiplication and division. A typical \gls{dsp} system includes an anti-aliasing filter, an \gls{adc}, a \gls{dsp}, a host interface, a \gls{dac} and a anti-imaging filter. A block diagram of the typical \gls{dsp} system is shown in \autoref{}
+A \gls{dsp} is a processor, which is optimized for high-speed numerical operations such as: Addition, subtraction, multiplication and division. A typical \gls{dsp} system includes an anti-aliasing filter, an \gls{adc}, a \gls{dsp}, a host interface, a \gls{dac} and a anti-imaging filter. A block diagram of the typical \gls{dsp} system is shown in \autoref{fig:typ_dsp}.
 
 \begin{figure}
 \centering
 \def\svgwidth{\columnwidth}
-\input{figures/analysing/ink_test1.pdf_tex}
+\input{figures/analysing/DSP_typical.pdf_tex}
+\caption{Block diagram of a typical \gls{dsp} \cite{AnalogDialogue}.}
+		\label{fig:typ_dsp}
 \end{figure}
 
+These high-speed numerical operations make the \gls{dsp} suited for real-time applications, and a \gls{dsp} can work both as a sample-based system and as a frame-based system. 
+Two terms are commonly used for describing the processing power of a \gls{dsp}. These are \gls{mips} and \gls{mops}. The requirements of the \gls{dsp} can be found, based on the sampling interval and the number of operations needed between each sample. This is shown in \eqref{eq:MOPS}.
 
-%\begin{figure}[h]
-%	\centering
-%		\begin{picture}(0,0)%
-%\includegraphics{ink_test1.pdf}%
-%\end{picture}%
-%\setlength{\unitlength}{3947sp}%
-%\begingroup\makeatletter\ifx\SetFigFont\undefined%
-%\gdef\SetFigFont#1#2#3#4#5{%
-%  \reset@font\fontsize{#1}{#2pt}%
-%  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
-%  \selectfont}%
-%\fi\endgroup%
-%\begin{picture}(1,1.41428571)%
-%  \end{picture}%
-%		\caption{Picture of the Raspberry Pi 3 model B \cite{Rasperry_pi}.}
-%		\label{fig:R}
-%\end{figure}
+\begin{equation}\label{eq:MOPS}
+        DSP_{speed} = \frac{Operations}{T_s}\addunit{MOPS}
+    \end{equation}
+
+    \startexplain
+        \explain{$DSP_{speed}$ is the \gls{dsp}'s processing power}{1}
+        \explain{$Operations$  is the number of operations}{1}
+        \explain{$T_s$ is the sampling interval}{\si{\second}}
+    \stopexplain
+    
+\gls{mips} and \gls{mops} are not the same, but related in the way that a \gls{dsp} with a processing power of 10 \gls{mips}, can do a number of operations per instruction \cite{AnalogDialogue}.
+
+
+  
