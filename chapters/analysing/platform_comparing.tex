@@ -1,4 +1,4 @@
-\section{Platform comparing}
+\section{Description of Different DSP Devices}
 In order to implement the previous discussed effects digitally, a platform has to be chosen. In this section a list of possible platforms for the effect implementation will be analysed. The following platforms will be analysed:
 
 \begin{itemize}
@@ -10,8 +10,8 @@ In order to implement the previous discussed effects digitally, a platform has t
 The different platforms will be compared w.r.t \textbf{TBD}.
 
 \subsection{Raspberry pi}
-There exist different generations of the Raspberry pi, but the one that will be analysed is the Raspberry pi 3 model B, since it is the latest version. 
-A Raspberry pi is a \gls{sbc} at the size of a credit-card. A picture of the Raspberry pi 3 model B, is shown in \autoref{fig:RP3mB}.
+Different generations of the Raspberry pi exist, but the one that will be analysed is the Raspberry pi 3 model B, since it is the latest version. 
+A Raspberry pi is a \gls{sbc} of the size of a credit-card. A picture of the Raspberry pi 3 model B, is shown in \autoref{fig:RP3mB}.
 
 \begin{figure}[h]
 	\centering
@@ -21,7 +21,10 @@ A Raspberry pi is a \gls{sbc} at the size of a credit-card. A picture of the Ras
 \end{figure}
 
 The Raspberry pi 3 model B has a 1.2 GHz Quad-core ARM processor, supports wireless LAN and Bluetooth 4.1. It has 1GB RAM and has connectors for micro SD cards \cite{Raspberry_pi}.
-The Raspberry Pi is Linux based, but can also run Windows \cite{sparkfun_Raspberry_pi}. This makes the Raspberry pi 3 model B suited for a wide range of projects. This is both its advantage and its disadvantage if a specialized platform is wanted. 
+It is Linux based, but can also run Windows \cite{sparkfun_Raspberry_pi}. This makes the Raspberry pi 3 model B suited for a wide range of projects. This is both its advantage and its disadvantage if a specialized platform is wanted. 
+
+\todo[inline]{Sebastian: Is there any major thing that makes the Raspberry Pi an advantage?}
+
 
 \subsection{Digital Signal Processor}
 A \gls{dsp} is a processor, which is optimized for high-speed numerical operations such as: Addition, subtraction, multiplication and division. A typical \gls{dsp} system includes an anti-aliasing filter, an \gls{adc}, a \gls{dsp}, a host interface, a \gls{dac} and a anti-imaging filter. A block diagram of the typical \gls{dsp} system is shown in \autoref{fig:typ_dsp}.
@@ -49,5 +52,4 @@ Two terms are commonly used for describing the processing power of a \gls{dsp}. 
     
 \gls{mips} and \gls{mops} are not the same, but related in the way that a \gls{dsp} with a processing power of 10 \gls{mips}, can do a number of operations per instruction \cite{AnalogDialogue}.
 
-
-  
+\todo[inline]{Sebastian : If 10 MIPS is not a number always used to describe the relation between MIPS and MOPS then we have to generalize}
