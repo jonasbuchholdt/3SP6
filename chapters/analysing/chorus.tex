@@ -11,5 +11,39 @@ Different parameters can be changed to tune the chorus effect:\\
 \item \textbf{Depth}: the amplitude of the of the modulation frequency.
 \end{itemize}
 
-The flanger effect is the same as the chorus effect but with shorter delay times. 
+The flanger effect is the same as the chorus effect but with shorter delay times.
+
+A block diagram for  the chorus effect is shown in figure \autoref{fig:chorus_diag}.
+
+\begin{figure} [htbp!]
+	\centering
+\begin{picture}(0,0)%
+\includegraphics{chorus_diag.pdf}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+	\reset@font\fontsize{#1}{#2pt}%
+	\fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+	\selectfont}%
+\fi\endgroup%
+\begin{picture}(6369,1578)(3589,-2053)
+\put(9181,-646){Output}%
+
+\put(6481,-1771){Delay}%
+
+\put(3961,-691){Input}%
+\end{picture}%
+
+\caption{Block Diagram of the chorus effect.}
+\label{fig:chorus_diag}
+\end{figure}
+
+
+
+
+
+
+
 
