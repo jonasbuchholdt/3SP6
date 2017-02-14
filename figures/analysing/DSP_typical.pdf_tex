@@ -1,6 +1,6 @@
 %% Creator: Inkscape inkscape 0.92.0, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file 'ink_test1.pdf' (pdf, eps, ps)
+%% Accompanies image file 'DSP_typical.pdf' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{329.08133591bp}%
+    \setlength{\unitlength}{371.75389593bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,16 +48,19 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.46215943)%
-    \put(0,0){\includegraphics[width=\unitlength,page=1]{ink_test1.pdf}}%
-    \put(0.17255857,0.30783343){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
-    \put(0.18298854,0.40407473){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Anti aliasing filter}}}%
-    \put(0.50250375,0.21946994){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{DSP}}}%
-    \put(0.19482902,0.23998154){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{ADC}}}%
-    \put(0.78055045,0.22174898){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{DAC}}}%
-    \put(0.81332983,0.05765584){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Anti imaging filter}}}%
-    \put(0.23183723,0.06449303){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Host interface}}}%
-    \put(0.06492191,-0.11327457){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.15953503\unitlength}\raggedright \end{minipage}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=2]{ink_test1.pdf}}%
+  \begin{picture}(1,0.56586703)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{DSP_typical.pdf}}%
+    \put(0.17774519,0.36536234){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
+    \put(0.18697793,0.45055638){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Anti aliasing filter}}}%
+    \put(0.46981691,0.28714184){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{DSP}}}%
+    \put(0.19745928,0.30529897){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{ADC}}}%
+    \put(0.71594743,0.28915927){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{DAC}}}%
+    \put(0.74496416,0.14390192){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Anti imaging filter}}}%
+    \put(0.23021942,0.14995429){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Host interface}}}%
+    \put(0.08246383,-0.00740789){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.14122246\unitlength}\raggedright \end{minipage}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{DSP_typical.pdf}}%
+    \put(-0.00025218,0.54134223){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Analog input}}}%
+    \put(0.77243641,0.0127668){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Analog output}}}%
+    \put(0.24184346,0.00671437){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Digital IO}}}%
   \end{picture}%
 \endgroup%
