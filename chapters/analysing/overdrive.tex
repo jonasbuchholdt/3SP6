@@ -29,4 +29,29 @@ In the previous paragraphs, distortion and overdrive has been explained as if th
   \label{fig:clipping2}
 \end{figure}
 
+A simple block diagram i shown at \autoref{fig:overdrive_block}.
 
+\begin{figure} [htbp]
+	\centering
+\begin{picture}(0,0)%
+\includegraphics{overdrive_block.pdf}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(4167,627)(-374,-703)
+\put(901,-241){$Gain$}%
+\put(1846,-466){$Clipping$}%
+\put(-359,-286){$Input$}%
+\put(2881,-286){$Output$}%
+\end{picture}%
+  \caption{Photo showing the effect of hard and soft clipping, a consequence of the overdrive or distortion effect.}
+  \label{fig:overdrive_block}
+\end{figure}
+
+The above block diagram \autoref{fig:overdrive_block} shows a simple block diagram over overdrive and distortion, as described the only differers is the clipping hardness in the clipping block. 
