@@ -1,13 +1,13 @@
 \subsection{Wah-Wah}
 
-The effect takes the original signal and mix it with another signal that passes through a bandpass filter. The bandpass filter is time varying, which means that it changes its position in the frequency spectrum. \\
+The effect takes the original signal and mix it with another signal that passes through a bandpass filter. The bandpass filter is time varying, which means that it changes its position in the frequency spectrum \citep{wah-wah_course,}. \\
 Different parameters can be changed on the \gls{lfo} to customize the effect:\\
 
 \begin{itemize}
 	\item \textbf{The \gls{lfo} frequency}: it sets the speed at which the bandpass filter moves in the frequency spectrum.
 	\item \textbf{\gls{lfo} start phase}: Determine where should the bandpass filter start.
 	\item \textbf{\gls{lfo} depth}: the range of frequencies it should work on, high depth gives a bigger range and vice versa.
-\end{itemize}
+\end{itemize} \citep{wah-wah_audacity}
 
 A block diagram of the effect is illustrated in \autoref{fig:wah_diag}.  
 
@@ -41,11 +41,11 @@ A block diagram of the effect is illustrated in \autoref{fig:wah_diag}.
 It can be seen on the block diagram that a filtered sound with a bandpass filter is added to a sound that hasn't been affected by any signal just before the output. Thus, this block diagram is a representation of the wah-wah effect.  \\
 
 
-The phaser effect can be created by using a band-stop filter instead of a bandpass filter using the same block diagram presented in \autoref{fig:wah_diag}.
+The phaser effect can be created by using a band-stop filter instead of a bandpass filter using the same block diagram presented in \autoref{fig:wah_diag} \citep{wah-wah_cardiff}. \\
 
-There is another type of wah-wah effect called M-fold wah-wah which uses multiple M-tap bandpass filters that move around the spectrum at the same time.
+There is another type of wah-wah effect called M-fold wah-wah which uses multiple M-tap bandpass filters that move around the spectrum at the same time \citep{wah-wah_cardiff}. \\
 
-An example of a time domain response is shown in figure \autoref{fig:wah-wah-response}.
+An example of a time domain response is shown in figure \autoref{fig:wah-wah-response}. \\
 
 \begin{figure} [htbp!]
 	\centering
