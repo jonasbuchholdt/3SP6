@@ -27,8 +27,8 @@ A block diagram of the effect is illustrated in \autoref{fig:wah_diag}.
 \begin{picture}(6999,1977)(2689,-2233)
 \put(5626,-1816){$Bandpass-$}%
 \put(2791,-601){$Input$}%
-\put(7021,-1501){\textit{Wah-Wah Mixer}}%
-\put(5100,-421){\textit{Original Signal Mixer}}%
+\put(7021,-1501){\textit{Wah-Wah-mix}}%
+\put(5100,-421){\textit{\hspace{1cm}Direct-mix}}%
 \put(8941,-601){$Output$}%
 \put(5626,-2041){$Filter$}%
 \end{picture}%
@@ -38,7 +38,7 @@ A block diagram of the effect is illustrated in \autoref{fig:wah_diag}.
 	\label{fig:wah_diag}
 \end{figure}
 
-It can be seen on the block diagram that a filtered sound with a bandpass filter is added to a sound that hasn't been affected by any signal just before the output. Thus, this block diagram is a representation of the wah-wah effect.  \\
+It can be seen on the block diagram that the filtered signal is added to the direct signal. Thus, this block diagram is a representation of the wah-wah effect.  \\
 
 
 The phaser effect can be created by using a band-stop filter instead of a bandpass filter using the same block diagram presented in \autoref{fig:wah_diag} \citep{wah-wah_cardiff}. \\
@@ -50,10 +50,11 @@ An example of a time domain response is shown in figure \autoref{fig:wah-wah-res
 \begin{figure} [htbp!]
 	\centering
 	\includegraphics[width=0.6\textwidth]{wah-wah-response.png}
-	\caption{Time domain response of the original sound (red) and the one after having the wah-wah effect (blue)}
+	\caption{Time domain response of the original sound (red) and the one after having the wah-wah effect (blue) \citep{wah-wah_cardiff}.}
 	\label{fig:wah-wah-response}
 \end{figure}
 
 \todo[inline]{Jonas: Muhammed, can you explain the above time domain spectra?(and the block diagram)}
+\todo[inline]{Sebastian: Maybe make figure our self, because axis descriptions are missing now}
 
-As it can be seen on figure \autoref{fig:wah-wah-response}, the wah-wah effect reduced the amplitudes of many parts of the wave-form compared to the signal without the wah-wah effect. Some of the them remained the same. It is due to the bandpass-filtering.
+As it can be seen on \autoref{fig:wah-wah-response}, the wah-wah effect reduced the amplitudes of many parts of the wave-form compared to the signal without the wah-wah effect. Some of the them remained the same. It is due to the bandpass-filtering.
