@@ -4,11 +4,12 @@ The chorus effect is obtained when a sound is delayed and then mixed with its or
 The chorus effect generator takes as an input a single audio signal and applies different delay values on it. Chorus effect can be applied using one delay. Each of the delayed signal are then mixed with original audio input. \\
 An \gls{lfo} (Low Frequency Oscillator) can be used to make the delay times vary. Different \gls{lfo}s can be used for each of the delay channels to make a richer sound mix and avoiding repetitive sound but it implies more computations. The same \gls{lfo} can be used for all the delay channels but not at the same cycle for each delay \citep{chorus_testtone}. \\ 
 
-Different parameters can be changed to tune the chorus effect:\\
+Different parameters on \gls{lfo} is changed by settings on the hardware and the most frequently settings are:\\
 \begin{itemize}
 \item \textbf{Delay time}: the time difference between the original sound and the delayed one.
-\item \textbf{Chorus size}: the number of delayed sounds that will be mixed.
-\item \textbf{Depth}: the amplitude of the of the modulation frequency.
+\item \textbf{Chorus size}: The number of delayed sounds that will be mixed.
+\item \textbf{Depth}: The amplitude of the modulation frequency.
+\item \textbf{waveform}: The waveform of the \gls{lfo} can be changed to triangle, sine, log ect. \citep{hobby_hour_chorus}
 \end{itemize} \citep{chorus_parameters}
 
 The flanger effect is the same as the chorus effect but with shorter delay times and a feedback \citep{chorus_testtone}.
