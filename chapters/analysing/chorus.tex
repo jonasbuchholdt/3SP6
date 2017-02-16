@@ -1,15 +1,16 @@
 \subsection{Chorus and Flanger Effect}
 
-The chorus effect is obtained when a sound is delayed and then mixed with its original version \citep{chorus_gibson} \citep{chorus_apple}. \\
-The chorus effect generator takes as an input a single audio signal and applies different delay values on it. Chorus effect can be applied using one delay. Each of the delayed signal are then mixed with original audio input. \\
-An \gls{lfo} (Low Frequency Oscillator) can be used to make the delay times vary. Different \gls{lfo}s can be used for each of the delay channels to make a richer sound mix and avoiding repetitive sound but it implies more computations. The same \gls{lfo} can be used for all the delay channels but not at the same cycle for each delay \citep{chorus_testtone}. \\ 
+The chorus effect is obtained when a signal is delayed and then mixed with its original version \citep{chorus_gibson} \citep{chorus_apple}. \\
+The chorus effect takes a single audio signal as input and applies different delay values to it. Chorus effect can be applied using one delay. Each of the delayed signal are then mixed with the original audio input. \\
+A \gls{lfo} can be used to make the delay times vary. Different \gls{lfo}s can be used for each of the delay channels to make a richer sound mix and avoiding repetitive sound but it implies more computations. The same \gls{lfo} can be used for all the delay channels but not at the same cycle for each delay \citep{chorus_testtone}. \\ 
 
-Different parameters on \gls{lfo} is changed by settings on the hardware and the most frequently settings are:\\
+Different parameters on the chorus effect can changed by settings on the hardware. Some of these are:\\
 \begin{itemize}
-\item \textbf{Delay time}: the time difference between the original sound and the delayed one.
+\item \textbf{Delay time}: The time difference between the original sound and the delayed one (The frequency of the signal from the \gls{lfo}).
 \item \textbf{Chorus size}: The number of delayed sounds that will be mixed.
-\item \textbf{Depth}: The amplitude of the modulation frequency.
-\item \textbf{waveform}: The waveform of the \gls{lfo} can be changed to triangle, sine, log ect. \citep{hobby_hour_chorus}
+\item \textbf{Depth}: The amplitude of the signal from the \gls{lfo}.
+\item \textbf{Waveform}: The waveform of the signal from the \gls{lfo} can be changed to triangle, sine, log ect. \citep{hobby_hour_chorus}
+\item \textbf{Gain}: The amplification of the delayed signal.
 \end{itemize} \citep{chorus_parameters}
 
 The flanger effect is the same as the chorus effect but with shorter delay times and a feedback \citep{chorus_testtone}.
@@ -43,7 +44,7 @@ A block diagram for  the chorus effect is shown in figure \autoref{fig:chorus_di
 \end{figure}
 
 
-As it can be seen on the block diagram in figure \autoref{fig:chorus_diag}, a signal that hasn't been affected by any changes is added to the same one but with a delay and some changed, controlled by the \gls{lfo}. The addition is done just before the output. This represents the chorus effect \citep{chorus_projectpaper}, and is the black text and drawing. When the red drawing and text is included, it is represents the flanger effect  \\
+As it can be seen on the block diagram in figure \autoref{fig:chorus_diag}, a signal that hasn't been affected by any changes is added to the same signal delayed, controlled by the \gls{lfo}. The addition is done just before the output. This represents the chorus effect \citep{chorus_projectpaper}, and is the black text and drawing. When the red drawing and text is included, it represents the flanger effect  \\
 
 
 
