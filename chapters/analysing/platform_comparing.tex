@@ -7,8 +7,6 @@ In order to implement the previous discussed effects digitally, a platform has t
 \item \gls{fpga}
 \end{itemize}
 
-The different platforms will be compared w.r.t \textbf{TBD}.
-
 \subsection{Raspberry pi}
 There exist different generations of the Raspberry pi, but the one that will be analysed is the Raspberry pi 3 model B, since it is the latest version. 
 A Raspberry pi is a \gls{sbc} at the size of a credit-card. A picture of the Raspberry pi 3 model B, is shown in \autoref{fig:RP3mB}.
@@ -46,8 +44,8 @@ Two terms are commonly used for describing the processing power of a \gls{dsp}. 
         \explain{$Operations$  is the number of operations}{1}
         \explain{$T_s$ is the sampling interval}{\si{\second}}
     \stopexplain
-    
-\gls{mips} and \gls{mops} are not the same, but related in the way that a \gls{dsp} with a processing power of 10 \gls{mips}, can do a number of operations per instruction \cite{AnalogDialogue}.
 
 
-  
+\gls{mips} and \gls{mops} are not the same, but related in the way that each \gls{dsp} instruction containe a numbers for operation  \cite{AnalogDialogue}. Eg a \gls{dsp} with 4 \gls{mips} and 8 \gls{mops} means that the \gls{dsp} can preform 2 operation for each instruction.
+
+
