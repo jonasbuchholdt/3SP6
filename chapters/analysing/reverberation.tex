@@ -43,28 +43,41 @@ A simple block diagram of the \gls{reverb} effect is shown at \autoref{fig:rever
 \fi\endgroup%
 \begin{picture}(5787,3102)(886,-1603)
 \put(2791,-1366){\color[rgb]{0,0,.82}Delay}%
-
-\put(2791,1334){\color[rgb]{0,0,0}Initial sound directly from the source}%
-
-\put(901,1334){\color[rgb]{0,0,0}Input}%
-
-\put(5896,-286){\color[rgb]{0,0,0}Output}%
-
-\put(4321,704){\color[rgb]{.63,.25,0}Gain}%
-
-\put(2791,434){\color[rgb]{.63,.25,0}Delay}%
-
-\put(2791,-466){\color[rgb]{1,0,0}Delay}%
-
-\put(4321,-241){\color[rgb]{1,0,0}Gain}%
-
-\put(4321,-1141){\color[rgb]{0,0,.82}Gain}%
-
+\put(2791,1334){\color[rgb]{0,0,0}$Main$}%
+\put(901,1334){\color[rgb]{0,0,0}$Input$}%
+\put(5896,-286){\color[rgb]{0,0,0}$Output$}%
+\put(4321,704){\color[rgb]{.63,.25,0}$Gain$}%
+\put(2791,434){\color[rgb]{.63,.25,0}$Delay$}%
+\put(2791,-466){\color[rgb]{1,0,0}$Delay$}%
+\put(4321,-241){\color[rgb]{1,0,0}$Gain$}%
+\put(4321,-1141){\color[rgb]{0,0,.82}$Gain$}%
 \end{picture}%
-
-
   \caption{The photo shows a block diagram of a \gls{reverb} unit.}
   \label{fig:reverb_block}
 \end{figure}
 
-The block diagram \autoref{fig:reverb_block} shows the direct sound way and only a few delay blocks with their individual gain and delay. Normally, there are many more delay lines. All signals are added together just before the Output line.
+The block diagram \autoref{fig:reverb_block} shows the direct sound way and only a few delay blocks with their individual gain and delay. Normally, there are many more delay lines. All signals are added together just before the Output line. A time domain diagram is shown at \autoref{fig:reverb_timed}. Each colour refer to \autoref{fig:reverb_block} and is just and example of a impulse respond. With other settings at gain and delay, the impulse respond will look different.
+
+
+\begin{figure} [htbp]
+ \centering
+\begin{picture}(0,0)%
+\includegraphics{reverb_timed.pdf}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(5843,2478)(4129,-5833)
+\put(9496,-5506){$Time$}%
+\put(4231,-3526){$Magnitude$}%
+\put(4591,-4291){$Main$}%
+\end{picture}%
+  \caption{The figure shows the impulse respond of a \gls{reverb} unit.}
+  \label{fig:reverb_timed}
+\end{figure}
+
