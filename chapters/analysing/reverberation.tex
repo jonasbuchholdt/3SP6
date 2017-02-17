@@ -34,23 +34,35 @@ A simple block diagram of the \gls{reverb} effect is shown at \autoref{fig:rever
 \includegraphics{reverb.pdf}%
 \end{picture}%
 \setlength{\unitlength}{4144sp}%
+%
 \begingroup\makeatletter\ifx\SetFigFont\undefined%
 \gdef\SetFigFont#1#2#3#4#5{%
-  \reset@font\fontsize{#1}{#2pt}%
-  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
-  \selectfont}%
+	\reset@font\fontsize{#1}{#2pt}%
+	\fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+	\selectfont}%
 \fi\endgroup%
 \begin{picture}(5787,3102)(886,-1603)
-\put(5896,-286){$Output$}%
-\put(4321,704){$Gain$}%
-\put(2791,1334){Initial sound directly from the source}%
-\put(901,1334){$Input$}%
-\put(2791,434){$Delay$}%
-\put(2791,-466){$Delay$}%
-\put(2791,-1366){$Delay$}%
-\put(4321,-241){$Gain$}%
-\put(4321,-1141){$Gain$}%
+\put(2791,-1366){\color[rgb]{0,0,.82}Delay}%
+
+\put(2791,1334){\color[rgb]{0,0,0}Initial sound directly from the source}%
+
+\put(901,1334){\color[rgb]{0,0,0}Input}%
+
+\put(5896,-286){\color[rgb]{0,0,0}Output}%
+
+\put(4321,704){\color[rgb]{.63,.25,0}Gain}%
+
+\put(2791,434){\color[rgb]{.63,.25,0}Delay}%
+
+\put(2791,-466){\color[rgb]{1,0,0}Delay}%
+
+\put(4321,-241){\color[rgb]{1,0,0}Gain}%
+
+\put(4321,-1141){\color[rgb]{0,0,.82}Gain}%
+
 \end{picture}%
+
+
   \caption{The photo shows a block diagram of a \gls{reverb} unit.}
   \label{fig:reverb_block}
 \end{figure}
