@@ -24,24 +24,35 @@ A simple block diagram of a \gls{eq}  is shown in the following \autoref{fig:equ
 \begin{figure}[htb] 
 	\begin{center} 
 \begin{picture}(0,0)%
-\includegraphics{eq}%
+\includegraphics{eq.pdf}%
 \end{picture}%
 \setlength{\unitlength}{4144sp}%
 %
 \begingroup\makeatletter\ifx\SetFigFont\undefined%
 \gdef\SetFigFont#1#2#3#4#5{%
-  \reset@font\fontsize{#1}{#2pt}%
-  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
-  \selectfont}%
+	\reset@font\fontsize{#1}{#2pt}%
+	\fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+	\selectfont}%
 \fi\endgroup%
-\begin{picture}(4524,2859)(2689,-478)
-\put(6391,479){$Output$}%
-\put(2881,479){$Input$}%
-\put(4636,1964){$1^{st} Band$}%
-\put(4636,1199){$2^{nd} Band$}%
-\put(4591,479){$3^{rd} Band$}%
-\put(4636,-286){$4^{th} Band$}%
+\begin{picture}(5199,2454)(2689,-658)
+\put(2881,479){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}Input}%
+}}}}
+\put(5086,1244){\makebox(0,0)[lb]{\smash{{\SetFigFont{5}{6.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}1st Inverse}%
+}}}}
+\put(5086,1604){\makebox(0,0)[lb]{\smash{{\SetFigFont{7}{8.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}1st Band}%
+}}}}
+\put(5086,704){\makebox(0,0)[lb]{\smash{{\SetFigFont{7}{8.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}2nd Band}%
+}}}}
+\put(5086,344){\makebox(0,0)[lb]{\smash{{\SetFigFont{5}{6.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}2nd Inverse}%
+}}}}
+\put(5131,-196){\makebox(0,0)[lb]{\smash{{\SetFigFont{7}{8.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}3rd Band}%
+}}}}
+\put(5131,-556){\makebox(0,0)[lb]{\smash{{\SetFigFont{5}{6.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}3rd Inverse}%
+}}}}
+\put(7066,479){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}Output}%
+}}}}
 \end{picture}%
+
 			\caption{This figure shows a simple block diagram over a \gls{eq}.} \label{fig:equalizer_block} 
 			\end{center}
 			\end{figure}

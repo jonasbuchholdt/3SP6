@@ -15,7 +15,7 @@ Different parameters on the chorus effect can changed by settings on the hardwar
 
 The flanger effect is the same as the chorus effect but with shorter delay times and a feedback \citep{chorus_testtone}.
 
-A block diagram for  the chorus effect is shown in figure \autoref{fig:chorus_diag}.
+A block diagram for  the chorus effect is shown in \autoref{fig:chorus_diag}.
 
 \begin{figure} [htbp!]
 	\centering
@@ -44,16 +44,16 @@ A block diagram for  the chorus effect is shown in figure \autoref{fig:chorus_di
 \end{figure}
 
 
-As it can be seen on the block diagram in figure \autoref{fig:chorus_diag}, a signal that hasn't been affected by any changes is added to the same signal delayed, controlled by the \gls{lfo}. The addition is done just before the output. This represents the chorus effect \citep{chorus_projectpaper}, and is the black text and drawing. When the red drawing and text is included, it represents the flanger effect  \\
+As it can be seen on the block diagram in figure \autoref{fig:chorus_diag}, a signal that hasn't been affected by any changes is added to the same signal delayed, controlled by the \gls{lfo}. The addition is done just before the output. This represents the chorus effect \citep{chorus_projectpaper}, and is the black text and drawing. When the red drawing and text is included, it represents the flanger effect. In \autoref{fig:chorus_and_flanger_time} the impulse response of the chorus and the flanger effect. Its is seen that with a pulse as the input, in the chorus effect, the output will be the original pulse, followed by an echo. The period before this echo arrives varies, based on the \gls{lfo}. When using the flanger effect several echoes will arrive, still with varying delay time. 
 
-\begin{figure}
+\begin{figure}[htbp!]
 \centering
 \def\svgwidth{\columnwidth}
-\input{figures/analysing/chorus_and_flanger_time_domain.pdf_tex}
+\scalebox{0.8}{\input{figures/analysing/chorus_and_flanger_time_domain.pdf_tex}}
 \caption{Impulse response of the chorus effect (black) and the flanger effect (red).}
 		\label{fig:chorus_and_flanger_time}
 \end{figure}
-\todo[inline]{Include chorus and flanger time domain figure in text}
+
 
 
 
