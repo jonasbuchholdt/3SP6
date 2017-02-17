@@ -53,14 +53,14 @@
     \put(0.20681946,0.24947893){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.14510232\unitlength}\raggedright \end{minipage}}}%
     \put(0.12390385,0.66405699){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0\unitlength}\raggedright \end{minipage}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{chorus_and_flanger_time_domain.pdf}}%
-    \put(0.92059859,0.11359425){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Time}}}%
-    \put(-0.00025911,0.49089175){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Amplitude}}}%
+    \put(0.92059859,0.11359425){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$Time$}}}%
+    \put(-0.00025911,0.49089175){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$Amplitude$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{chorus_and_flanger_time_domain.pdf}}%
-    \put(0.10526888,0.33825549){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Original pulse}}}%
-    \put(0.27738189,0.25533986){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{1st echo}}}%
+    \put(0.10526888,0.33825549){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$Main$}}}%
+    \put(0.27738189,0.25533986){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$G$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{chorus_and_flanger_time_domain.pdf}}%
-    \put(0.6318672,0.15839812){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{3rd echo}}}%
+    \put(0.6318672,0.15839812){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$G^3$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{chorus_and_flanger_time_domain.pdf}}%
-    \put(0.45556631,0.20802111){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{2nd echo}}}%
+    \put(0.45556631,0.20802111){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$G^2$}}}%
   \end{picture}%
 \endgroup%

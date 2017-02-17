@@ -53,9 +53,9 @@
     \put(0.14227953,-0.10670964){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.12449458\unitlength}\raggedright \end{minipage}}}%
     \put(0.07113976,0.24898919){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0\unitlength}\raggedright \end{minipage}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{wah_wah_frequency_domain.pdf}}%
-    \put(0.85367719,0.0355699){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Frequency}}}%
-    \put(0.0506609,0.33557745){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{dB}}}%
+    \put(0.85367719,0.0355699){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$Frequency$}}}%
+    \put(0.0506609,0.33557745){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$dB$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{wah_wah_frequency_domain.pdf}}%
-    \put(0.6402578,0.1778494){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Bandpass filter}}}%
+    \put(0.6402578,0.1778494){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{\textit{Bandpass filter}}}}%
   \end{picture}%
 \endgroup%
