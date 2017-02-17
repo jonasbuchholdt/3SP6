@@ -26,17 +26,9 @@ Delay is an audio effect which memorizes the input signal for a customized time,
   \label{fig:delay_block}
 \end{figure}
 
-The block diagram \autoref{fig:delay_block} shows a delay unit with a feedback line that has an adjustable gain. The feedback signal is either attenuated or amplified depending on the gain value and then added to the delay line input \cite{delay_echo}. The following \autoref{fig:delay_echo} shows the effect in time domain.
+The block diagram \autoref{fig:delay_block} shows a delay unit with a feedback line that has an adjustable gain. The feedback signal is either attenuated or amplified depending on the gain value and then added to the delay line input \cite{delay_echo}. The following \autoref{fig:delay_timed} shows the effect in time domain.
 
-\begin{figure} [htbp]
- \centering
-  \includegraphics[width=1\textwidth]{delay_echo}
-  \caption{The photo shows a echo in time domain}
-  \label{fig:delay_echo}
-\end{figure}
-\todo[inline]{make figure i matlab}
-
-The \autoref{fig:delay_echo} shows that the main signal is repeated and attenuated 6 time before it is totally attenuated. A time domain diagram is shown at \autoref{fig:delay_timed}.
+\newpage
 
 \begin{figure} [htbp]
  \centering
@@ -70,3 +62,5 @@ The \autoref{fig:delay_echo} shows that the main signal is repeated and attenuat
   \caption{The figure shows the impulse respond of the delay unit}
   \label{fig:delay_timed}
 \end{figure}
+
+The \autoref{fig:delay_timed} shows that the main signal is repeated and attenuated 5 time before it is totally attenuated.
