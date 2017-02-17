@@ -11,16 +11,21 @@ Delay is an audio effect which memorizes the input signal for a customized time,
 %
 \begingroup\makeatletter\ifx\SetFigFont\undefined%
 \gdef\SetFigFont#1#2#3#4#5{%
-  \reset@font\fontsize{#1}{#2pt}%
-  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
-  \selectfont}%
+	\reset@font\fontsize{#1}{#2pt}%
+	\fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+	\selectfont}%
 \fi\endgroup%
-\begin{picture}(5035,1752)(1491,-118)
-\put(1506,659){$Input$}%
+\begin{picture}(5035,1329)(1491,-118)
+\put(4726,704){$Gain$}%
+
 \put(3106,479){$Delay$}%
-\put(3736,1469){$Gain$}%
+
 \put(5814,672){$Output$}%
+
+\put(1506,659){$Input$}%
+
 \end{picture}%
+
   \caption{The photo shows a block diagram on a delay unit \citep{delay_block}}
   \label{fig:delay_block}
 \end{figure}
@@ -35,4 +40,37 @@ The block diagram \autoref{fig:delay_block} shows a delay unit with a feedback l
 \end{figure}
 \todo[inline]{make figure i matlab}
 
-The \autoref{fig:delay_echo} shows that the main signal is repeated and attenuated 6 time before it is totally attenuated.
+The \autoref{fig:delay_echo} shows that the main signal is repeated and attenuated 6 time before it is totally attenuated. A time domain diagram is shown at \autoref{fig:delay_timed}.
+
+\begin{figure} [htbp]
+ \centering
+\begin{picture}(0,0)%
+\includegraphics{delay_timed.pdf}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(5843,2478)(4129,-5833)
+\put(9496,-5506){$Time$}%
+\put(4231,-3526){$Magnitude$}%
+\put(4591,-4291){$Main$}%
+\put(5536,-4606){$G$}%
+\put(6436,-4876){$G^2$}%
+\put(7336,-5056){$G^3$}%
+\put(8236,-5191){$G^4$}%
+\put(9136,-5281){$G^5$}%
+\put(4861,-5056){$t\Delta$}%
+\put(6256,-5776){$t2$}%
+\put(5356,-5776){$t1$}%
+\put(7156,-5776){$t4$}%
+\put(8056,-5776){$t5$}%
+\put(8956,-5776){$t6$}%
+\end{picture}%
+  \caption{The figure shows the impulse respond of the delay unit}
+  \label{fig:delay_timed}
+\end{figure}
