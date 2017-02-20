@@ -1,5 +1,5 @@
 clear all;
-filename = '\Users\Sebatian\3SP6\measure\guitar_low_E_neck.csv';
+filename = '\Users\Sebatian\3SP6\measure\guitar_high_E_flasholet_bridge.csv';
 delimiterIn = ',';
 headerlinesIn = 6;
 A = importdata(filename,delimiterIn,headerlinesIn);
