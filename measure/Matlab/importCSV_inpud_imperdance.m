@@ -1,5 +1,5 @@
 clear all;
-filename = 'guitar_bridge_picup.csv';
+filename = 'guitar_neck_and_bridge_picup.csv';
 delimiterIn = ',';
 headerlinesIn = 6;
 A = importdata(filename,delimiterIn,headerlinesIn);
