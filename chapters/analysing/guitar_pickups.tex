@@ -1,2 +1,72 @@
 \section{Pickups on an electric guitar}
-One of the most important parts of an electric guitar, is the transducer which converts the strings vibrations into an electrical signal. This is done with pickups, which as seen in \autoref{fig:guitar_parts}, is placed on the body. Typically an electric guitar has two or three pickups and the type and combination of pickups can vary. Two types of pickups are the single coil pickups and the dual coil (Humbucker) pickups. 
+One of the most important parts of an electric guitar, is the transducer which converts the strings vibrations into an electrical signal. This is done with pickups, which as seen in \autoref{fig:guitar_parts}, is placed on the body. Typically an electric guitar has two or three pickups and the type and combination of pickups can vary. Two types of pickups are the single coil pickups and the dual coil (Humbucker) pickups. The electric equivalent to a single coil pickup is shown in \autoref{fig:electric_pickup}
+
+\begin{figure}[h!]
+\centering
+\begin{circuitikz}\draw (0,0)
+to[L=$L$]  (3,0)
+to[R=$R$] (5,0)
+(5,-1)to[short,-o](6,-1)
+(5,0)to[short](5,-2)
+to[C=$C$] (0,-2)
+(0,-1)to[short,-o](-1,-1)
+(0,-2)to[short] (0,0)
+%to[short] (0,0)
+;\end{circuitikz}
+\caption{Electric equivalent of a single coil pickup \citep{build_your_guitar}.}
+\label{fig:electric_pickup}
+\end{figure}
+
+A single coil pickup can be described as a an ideal inductor and a resistor in series, in parallel with a capacitor. This circuit is for the case when the guitars strings doesn't vibrate. When one or more strings are played, the circuit is expanded as shown in \autoref{fig:electric_pickup_strings}.
+
+\begin{figure}[h!]
+\centering
+\begin{circuitikz}\draw (0,0)
+to[L=$L$]  (3,0)
+to[R=$R$] (5,0)
+to[short, -o](6,0)
+(5,0)to[C=$C$] (5,-2)
+(6,-2)to[short, o-] (0,-2)
+to[sV=$String$] (0,0)
+%to[short] (0,0)
+;\end{circuitikz}
+\caption{Electric equivalent of a single coil pickup, when strings are played \citep{build_your_guitar}.}
+\label{fig:electric_pickup_strings}
+\end{figure}
+
+When the strings are vibrates, they act as an \gls{ac} supply. The output signal from the pickup is then the voltage over the capacitor  \citep{build_your_guitar}. 
+The complete circuit in an electric guitar is a bit more complicated, since an electric guitar often contains a volume control, one or more tone controls etc. A simple circuit of an electric guitar with one volume control and one tone control, is shown in \autoref{}
+
+\begin{figure}[h!]
+\centering
+\begin{circuitikz}\draw (0,0)
+to[L=$Pickup$]  (0,4)
+to[short] (2,4)
+to[vR=$Tone$ $pot$] (2,2)
+to[C=$Tone$ $C$] (2,0)
+to[short](0,0)
+(2,4) to[short](5,4)
+to[pR=$ $](5,0)
+to[short](2,0)node[ground]{}
+%Jack
+(5.3,2)to[short]node[left,above]{$Volume$ $pot$}(6.6,2)
+to[short](6.9,1.7)
+to[short](7.2,2)
+(7.5,2)to[short](7.5,1)
+to[short](6,1)
+to[short](6,0)
+to[short](5,0)
+(7.5,2)to[short](7.7,2)
+to[short]node[right]{$Jack$ $input$}(7.7,1)
+to[short](7.5,1)
+%end Jack
+;\end{circuitikz}
+\caption{Simple circuit of an electric guitar with one volume control and one tone control \citep{electricalfun}.}
+\label{fig:simple_guitar_circuit}
+\end{figure}
+
+The tone control is a simple lowpass filter and the volume control is a potentiometer. 
+
+\subsection{Output impedance of an electric guitar}
+
+
