@@ -258,14 +258,14 @@ hi-fi-forstærker%
 \refstepcounter{requirement}%
 \stepcounter{reqIDCounter}%
 \reqLabel%
-\DefVar{requirement}\DefVar{argument}\DefVar{fullfilment}%
+\DefVar{requirement}\DefVar{argument}%\DefVar{fullfilment}%
 %
 \tabularx{1\textwidth}{p{\reqBoxWidth} !{\color{white}{\vrule width 2pt}} X}%
 \greyrow \parbox[t]{\reqBoxWidth}{\textsb{Requirement~\reqPrefixName\thereqIDCounter}\\\getrequirement\vskip1mm}%
 &%
-\parbox[t]{\textwidth-\reqBoxWidth-4\tabcolsep-2pt}{\textsb{Argumentation}\\\getargument\vskip1mm}\\
-\addlinespace[2pt]%
-\greyrow \multicolumn{2}{l}{\parbox{\textwidth-2\tabcolsep}{\vskip1mm\textsb{Conditions of fulfilment}\\\getfullfilment\vskip1mm}}%
+\parbox[t]{\textwidth-\reqBoxWidth-4\tabcolsep-2pt}{\textsb{Argumentation}\\\getargument\vskip1mm}
+%\addlinespace[2pt]%
+%\greyrow \multicolumn{2}{l}{\parbox{\textwidth-2\tabcolsep}{\vskip1mm\textsb{Conditions of fulfilment}\\\getfullfilment\vskip1mm}}%
 }%
 {\endtabularx\par\ignorespacesafterend}
 
