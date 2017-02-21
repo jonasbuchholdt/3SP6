@@ -33,9 +33,13 @@
 \part{Conclusions}\label{pt:conclusions} 
 %
 
-%Appendix:
 \glsresetall
+\appendix % Start of appendix
+\addtocontents{toc}{\protect\setcounter{tocdepth}{0}} 
+%\input{chapters/appendices/_appendices} % Include appendices
+%Appendix:
+
  \graphicspath{{figures/appendix/}}
-\part{Appendix}\label{pt:appendix}
+%\part{Appendix}\label{pt:appendix}
 \input{chapters/appendix/guitar_frequency_test}
 \input{chapters/appendix/guitar_output_impedance_test}
