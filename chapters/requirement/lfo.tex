@@ -1,16 +1,16 @@
 \newcommand{\reqlfo}{The delay unit must delay the input signal, in time defined by external unit.}
 
-\reqPrefix{Low frequency oscillator}
+\reqPrefix{LFO}
 \section{Low frequency oscillator}
 Based on the \autoref{ch:analysing}, the delay requirement is as following
 
 \begin{requirement}\label{req:lfo_ex}
-    \requirement{The delay unit must delay the input signal, in time defined by external unit.}
-    \argument{In order to be able to change the delay time, the unit needs to depend on external unit}
+    \requirement{The \gls{lfo} unit must have a frequency from \SI{0.1}{\hertz} to \SI{10}{\hertz}  }
+    \argument{In order to be able to make a signal which is under the audibility range. }
 \end{requirement}
 
 \begin{requirement}\label{req:lfo_time}
-    \requirement{The delay unit must delay the input signal, in time defined by external unit.}
-    \argument{In order to be able to change the delay time, the unit needs to depend on external unit}
+    \requirement{The \gls{lfo} unit shall be able to make an sinus, triangle, squared and sawtooth wave forms.}
+    \argument{In order to create different chorus, flanger and wah-wah effect}
 \end{requirement}
 
