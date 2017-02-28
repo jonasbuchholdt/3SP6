@@ -14,17 +14,16 @@ To measure the frequency area on a guitar, the following materials are used:
 \def\svgwidth{\columnwidth}
 \input{figures/appendix/guitar_frequency_test.pdf_tex}
 \caption{Setup for measuring frequency area on a guitar.}
-		\label{fig:appendix:guitar_freq}
+		\label{fig:appendix:guitar_amplitude}
 \end{figure}
 
 \section*{Test procedure}
 To the frequency area on a guitar, the following steps are made:
 \begin{enumerate}
-\item The materials are set up as in \autoref{fig:appendix:guitar_freq}.
-\item Digilent Waveforms 2015 is set as a spectrum analyser. 
-\item The guitar is set to use the neck pickup and the volume control and the tone control are turned all the way up.
-\item The highest and the lowest tone on the guitar are played, measured by the oscilloscope and analysed in Digilent Waveforms 2015.
-\item The guitar is set to use the bridge pickup and step 4 is repeated. 
+\item The materials are set up as in \autoref{fig:appendix:guitar_amplitude}.
+\item Digilent Waveforms 2015 is set as a scope. 
+\item The guitar is set to use the bridge pickup and the volume control and the tone control are turned all the way up.
+\item The highest amplitude for the guitar string is made by using a pick on all string together.
 \item The data is plotted in MATLAB.
 \end{enumerate}
 
@@ -32,9 +31,9 @@ To the frequency area on a guitar, the following steps are made:
 
 \begin{figure}[htbp!]
 	\centering
-		\includegraphics[width=1\textwidth]{guitar_low_E_neck.pdf}
-		\caption{Measurement of the low E note on the neck pickup.}
-		\label{fig:appendix:low_E_neck}
+		\includegraphics[width=1\textwidth]{peak_voltage.pdf}
+		\caption{the picture shows the maximum amplitude of the guitar}
+		\label{fig:appendix:guitar_max_amplitude}
 \end{figure}
 
-On  \autoref{fig:appendix:low_E_neck} it is seen that the lowest significant frequency is around \SI{80}{\hertz} and the highest significant frequency is around \SI{400}{\hertz}, when playing the low E note on the guitar, using the neck pickup.
+On  \autoref{fig:appendix:guitar_max_amplitude} it is seen that the highest amplitude is $\SI{1}{\volt}_{peak}$.

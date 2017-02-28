@@ -3,4 +3,7 @@ In order to transfer as much signal from the guitar as possible, and avoid some 
 
 \subsection{Component chose}
 
-As seen in the ?? the maximum output signal peak amplitude from the guitar is about \SI{100}{\milli\volt} peak and the standard in ?? says that the signal from a source shall have an voltage \gls{rms} value of \SI{1.768}{\volt} \gls{rms} which is a peak amplitude for \SI{2.5}{\volt} peak. This means that the \gls{preamp} shall have a gain form \SI{0}{\decibel} to \SI{14}{\decibel}, so it is possible to adjust the gain and the \gls{preamp} keeps the standard. 
+As seen in the \autoref{app:guitar_max_amplitude} that the maximum output signal peak amplitude from the guitar is about $\SI{1}{\volt}_{peak}$ and the standard in ?? says that the signal from a line source shall have an voltage \gls{rms} value of $\SI{1.768}{\volt}_{\gls{rms}}$ which is a peak amplitude for $\SI{2.5}{\volt}_{peak}$. This means that the \gls{preamp} shall have a gain form \SI{0}{\decibel} to approximate \SI{8}{\decibel}, so it is possible to adjust the gain and the \gls{preamp} keeps the line standard. 
+
+Since the amplification only shall be form \SI{0}{\decibel} to approximate \SI{8}{\decibel} and the input impedance shall be very high and the guitar have an balanced output, an \gls{opamp} in differential mode will fit very well. An \gls{opamp} often have an input impedance on \SI{1}{\mega\Ohm} and have a gain of about \SI{100}{\decibel}, and after the feedback circuit is implemented on the \gls{opamp} the input impedance is even higher and the output impedance is even smaller the main output impedance.
+
