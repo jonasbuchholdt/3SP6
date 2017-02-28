@@ -1,5 +1,5 @@
 clear all;
-filename = '.csv';
+filename = 'ppeak_voltage.csv';
 delimiterIn = ',';
 headerlinesIn = 6;
 A = importdata(filename,delimiterIn,headerlinesIn);
@@ -7,11 +7,12 @@ A = importdata(filename,delimiterIn,headerlinesIn);
 %dat = iddata(A.data(:,1),A.data(:,2));
 
 figure
-loglog(A.data(:,1),A.data(:,2))
-axis([20 20000 -140 -20])
+plot(A.data(:,1),A.data(:,2))
+axis([-1 1 -1 1])
 set(gca,'fontsize',18)
 hold on
-ylabel('Magnitude [dB]')
-xlabel('Frequency [Hz]')
+grid on
+ylabel('Magnitude [V]')
+xlabel('Time [S]')
 hold off
 
