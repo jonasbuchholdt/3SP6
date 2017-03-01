@@ -3,7 +3,19 @@ In order to transfer as much signal from the guitar as possible, and avoid some 
 
 \subsection{Component chose}
 
-As seen in the \autoref{app:guitar_max_amplitude} that the maximum output signal peak amplitude from the guitar is about $\SI{1}{\volt}_{peak}$ and the standard in ?? says that the signal from a line source shall have an voltage \gls{rms} value of $\SI{1.768}{\volt}_{\gls{rms}}$ which have a peak amplitude of $\SI{2.5}{\volt}_{peak}$. This means that the \gls{preamp} shall have a gain form \SI{0}{\decibel} to approximate \SI{8}{\decibel}, so it is possible to adjust the gain and the \gls{preamp} keeps the line standard. 
+As seen in the \autoref{app:guitar_max_amplitude} that the maximum output signal peak amplitude from the guitar is about $\SI{1}{\volt}_{peak}$ and the standard in ?? says that the signal from a line source shall have an voltage \gls{rms} value of $\SI{1.768}{\volt}_{\gls{rms}}$ which have a peak amplitude of $\SI{2.5}{\volt}_{peak}$. This means that the \gls{preamp} shall have a gain of approximate \SI{8}{\decibel}. Since the amplification only shall be approximate \SI{8}{\decibel} and the input impedance shall be very high, an \gls{opamp} will fit very well. An \gls{opamp} often have an input impedance of more than \SI{1}{\mega\ohm} and have a gain of about \SI{100}{\decibel}, and after the feedback circuit is implemented on the \gls{opamp} the input impedance is even higher and the output impedance is even smaller.
 
-Since the amplification only shall be form \SI{0}{\decibel} to approximate \SI{8}{\decibel} and the input impedance shall be very high and the guitar have an balanced output, an \gls{opamp} in differential mode will fit very well. An \gls{opamp} often have an input impedance on \SI{1}{\mega\ohm} and have a gain of about \SI{100}{\decibel}, and after the feedback circuit is implemented on the \gls{opamp} the input impedance is even higher and the output impedance is even smaller the main output impedance.
+\subsection{The amplifier}
+The \gls{opamp} can ether be working in non inverting or inverting \gls{opamp} configuration, but since the \gls{preamp} shall have en gain of \SI{8}{\decibel} and a high input impedance, the non inverting \gls{opamp} configuration will fit very well. The non inverting \gls{opamp} configuration have at least a gain of \SI{0}{\decibel} and it is easy to design a high input impedance. The amplification is given by \autoref{eq:amplification}
 
+\begin{equation}\label{eq:amplification}
+        V_{out} =V_{in} \cdot (1+\frac{R_2}{R_1})
+        \addunit{\si{\volt}}
+    \end{equation}
+
+    \startexplain
+        \explain{$V_{out}$ is the output voltage}{\si{\volt}}
+        \explain{$V_{in}$  is the input voltage}{\si{\volt}}
+        \explain{$R_1$ is a resistor in the feedback circuit}{\si{\ohm}}
+        \explain{$R_2$ is a resistor in the feedback circuit}{\si{\ohm}}
+    \stopexplain
