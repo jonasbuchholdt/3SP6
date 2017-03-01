@@ -17,7 +17,7 @@ to[C=$C$] (0,-2)
 \label{fig:electric_pickup}
 \end{figure}
 
-A single coil pickup can be described as a an ideal inductor and a resistor in series, in parallel with a capacitor. This circuit is for the case when the guitars' strings do not vibrate. When one or more strings are played, the circuit is expanded as shown in \autoref{fig:electric_pickup_strings}.
+A single coil pickup can be described as a an ideal inductor and a resistor in series, in parallel with a capacitor. This circuit is for the case when the guitars strings doesn't vibrate. When one or more strings are played, the circuit is expanded as shown in \autoref{fig:electric_pickup_strings}.
 
 \begin{figure}[h!]
 \centering
@@ -34,7 +34,7 @@ to[sV=$String$] (0,0)
 \label{fig:electric_pickup_strings}
 \end{figure}
 
-When the strings are vibrating, they act as an \gls{ac} supply. The output signal from the pickup is then the voltage over the capacitor  \citep{build_your_guitar}. 
+When the strings are vibrates, they act as an \gls{ac} supply. The output signal from the pickup is then the voltage over the capacitor  \citep{build_your_guitar}. 
 The complete circuit in an electric guitar is a bit more complicated, since an electric guitar often contains a volume control, one or more tone controls etc. A simple circuit of an electric guitar with one volume control and one tone control, is shown in \autoref{}
 
 \begin{figure}[h!]
@@ -129,8 +129,8 @@ Bridge & Around \SI{80}{\hertz}  & Around \SI{4400}{\hertz}\\ \hline
 \end{longtable}
 
 \subsection{Maximum and minimum output of an electric guitar}
-A test was made to measure the maximum output of an electric guitar. The test was made with a Fender Squier Classic Vibe Telecaster, and was made with the bridge pickup active. The complete test journal can be seen in \autoref{}. The maximum output was measured to be $\SI{1}{\volt}_{peak}$.
-In \ref{app:frequency_area} \ref{fig:appendix:high_E_bridge_flasholet} it is seen that the smallest significant signal is -59.11 dBu \todo[inline]{find SI}. To convert dBu to amplitude equation \ref{eq:dBu_to_amplitude} is used \citep{dB}.
+A test was made to measure the maximum output of an electric guitar. The test was made with a Fender Squier Classic Vibe Telecaster, and was made with the bridge pickup active. The complete test journal can be seen in \autoref{app:guitar_max_amplitude}. The maximum output was measured to be $\SI{1}{\volt}_{peak}$.
+In \autoref{app:frequency_area} \autoref{fig:appendix:high_E_bridge_flasholet} it is seen that the smallest significant signal is \SI{-59.11}{\deci \bel u}. To convert \SI{}{\deci \bel u} to amplitude \autoref{eq:dBu_to_amplitude} is used \citep{dB}.
 
 \begin{subequations}
 \begin{equation}\label{eq:V_RMS_to_dBu}
@@ -142,7 +142,18 @@ $\Updownarrow$
         V_{peak} = \sqrt{2} \cdot 0.775 \cdot 10^{\frac{dBu}{20}}
     \end{equation}
  \end{subequations}
+ 
+When inserting \SI{-59.11}{\deci \bel u} in \autoref{eq:dBu_to_amplitude}, the amplitude of the smallest signal can be calculated as in \autoref{eq:dBu_to_amplitude_number}.
 
+\begin{equation}\label{eq:dBu_to_amplitude_number}
+       \sqrt{2} \cdot 0.775 \cdot 10^{\frac{-59.11}{20}} = 1.21 \addunit{$\SI{}{\milli \volt}_{peak}$}
+    \end{equation}
+
+The relation between the maximum and the minimum signal in dB is calculated in \autoref{}
+
+\begin{equation}\label{eq:dBu_to_amplitude_number}
+       20 \cdot \log_{10}\left(\frac{1}{0.00121}\right) = 58.34 \addunit{$\SI{}{\deci \bel}$}
+    \end{equation}
 
 
 
