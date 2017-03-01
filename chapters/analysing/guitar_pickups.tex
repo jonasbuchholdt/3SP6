@@ -1,4 +1,4 @@
-\section{Pickups on an electric guitar}
+\section{Pickups on an electric guitar}\label{sec:pickups}
 One of the most important parts of an electric guitar, is the transducer which converts the strings vibrations into an electrical signal. This is done with pickups, which as seen in \autoref{fig:guitar_parts}, is placed on the body. Typically an electric guitar has two or three pickups and the type and combination of pickups can vary. Two types of pickups are the single coil pickups and the dual coil (Humbucker) pickups. The electric equivalent to a single coil pickup is shown in \autoref{fig:electric_pickup}
 
 \begin{figure}[h!]
@@ -93,8 +93,8 @@ A test was made to find the output impedance of an electric guitar. The test was
 \hline 
 \endlastfoot 
 %%%%%%%% Content of table 
-Neck & \SI{6220}{\ohm} at \SI{10}{\hertz} & \SI{58,51}{\kilo\ohm} at \SI{5167}{\hertz} \\ \hline
-Bridge & \SI{7863}{\ohm} at \SI{10}{\hertz}  & \SI{73.06}{\kilo\ohm} at \SI{4010}{\hertz}\\ \hline
+Neck & \SI{6220}{\ohm} at \SI{10}{\hertz} & \SI{58,57}{\kilo\ohm} at \SI{5104}{\hertz} \\ \hline
+Bridge & \SI{7863}{\ohm} at \SI{10}{\hertz}  & \SI{73.08}{\kilo\ohm} at \SI{4230}{\hertz}\\ \hline
 Neck and bridge & \SI{3563}{\ohm} at \SI{10}{\hertz} & \SI{53.43}{\kilo\ohm} at \SI{5702}{\hertz}\\ \hline
 \end{longtable}
 
@@ -127,4 +127,22 @@ A test was made to see which frequencies can be played on an electric guitar. Th
 Neck & Around \SI{80}{\hertz} & Around \SI{4400}{\hertz} \\ \hline
 Bridge & Around \SI{80}{\hertz}  & Around \SI{4400}{\hertz}\\ \hline
 \end{longtable}
+
+\subsection{Maximum and minimum output of an electric guitar}
+A test was made to measure the maximum output of an electric guitar. The test was made with a Fender Squier Classic Vibe Telecaster, and was made with the bridge pickup active. The complete test journal can be seen in \autoref{}. The maximum output was measured to be $\SI{1}{\volt}_{peak}$.
+In \ref{app:frequency_area} \ref{fig:appendix:high_E_bridge_flasholet} it is seen that the smallest significant signal is -59.11 dBu \todo[inline]{find SI}. To convert dBu to amplitude equation \ref{eq:dBu_to_amplitude} is used \citep{dB}.
+
+\begin{subequations}
+\begin{equation}\label{eq:V_RMS_to_dBu}
+        dBu = 20 \cdot \log_{10}\left(\frac{V_{RMS}}{0.775}\right)
+    \end{equation}
+\centering
+$\Updownarrow$
+\begin{equation}\label{eq:dBu_to_amplitude}
+        V_{peak} = \sqrt{2} \cdot 0.775 \cdot 10^{\frac{dBu}{20}}
+    \end{equation}
+ \end{subequations}
+
+
+
 
