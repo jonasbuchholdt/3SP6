@@ -2,16 +2,16 @@
 
 \reqPrefix{BS}
 \section{Basis requirements}
-Based on the \autoref{ch:analysing}, the delay requirement is as following
+Based on the \autoref{ch:analysing}, the basic requirements are as following
 
 \begin{requirement}\label{req:dsp}
     \requirement{Each unit must be implemented digitally }
-    \argument{It is concluded that the effect shall be made digitally}
+    \argument{This requirement is made according to the problem analysis conclusion.}
 \end{requirement}
 
 
 \begin{requirement}\label{req:speed}
     \requirement{All calculations made in one effect shall be faster than the sample frequency. }
-    \argument{The processing component shall be fast enough to calculate at lest one effect between two sample}
+    \argument{The processing component shall be fast enough to calculate at least one effect between two samples since they are continuous and not defined in time.}
 \end{requirement}
 
