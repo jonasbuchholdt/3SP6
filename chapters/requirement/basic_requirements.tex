@@ -2,20 +2,20 @@
 
 \reqPrefix{BS}
 \section{Basis requirements}
-Based on the \autoref{ch:analysing}, the delay requirement is as following
+Based on the \autoref{ch:analysing}, the processing component requirements are as following:
 
 \begin{requirement}\label{req:dsp}
-    \requirement{The processing component module are used to process the signal }
-    \argument{It is concluded that the effect shall be made digitally}
+    \requirement{The processing component module is used to process the signal }
+    \argument{It is concluded that the effects shall be made digitally}
 \end{requirement}
 
 \begin{requirement}\label{req:software}
     \requirement{Each unit must fit into a \gls{dsp} architecture}
-    \argument{In order to be able to design all unit digitally}
+    \argument{In order to be able to design all units digitally}
 \end{requirement}
 
 \begin{requirement}\label{req:speed}
-    \requirement{The calculation of one effect shall be faster than the sample frequency. }
-    \argument{The processing component shall be fast enough to calculate at lest one effect between two sample}
+    \requirement{The calculation process of one effect shall be faster than the sample frequency. }
+    \argument{The processing component shall be fast enough to calculate at least one effect between two sample since the effects are continuous and not defined in time.}
 \end{requirement}
 
