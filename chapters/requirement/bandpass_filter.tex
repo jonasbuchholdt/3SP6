@@ -2,10 +2,10 @@
 
 \reqPrefix{BF}
 \section{Bandpass filter (\reqPrefixName)}
-Based on the \autoref{ch:analysing}, the delay requirement is as following
+Based on the \autoref{ch:analysing}, the bandpass filter unit requirements are as following:
 
 \begin{requirement}\label{req:bandpass_filter}
-    \requirement{The bandpass filter unit must be able to increase the gain in its passband area}
+    \requirement{The bandpass filter unit must be able to increase the gain in its passband area.}
     \argument{In order to be able to amplify the the signal gain in specified frequencies}
 \end{requirement}
 
@@ -15,6 +15,6 @@ Based on the \autoref{ch:analysing}, the delay requirement is as following
 \end{requirement}
 
 \begin{requirement}\label{req:bandpass_filter2}
-    \requirement{The bandpass filter cross frequency at \SI{0}{\decibel} must be at the previous and the next bandpass center frequency at any gain value.}
-    \argument{In order to be able to make a flat frequency response on the amplified frequency}
+    \requirement{The bandpass filter cross frequency at \SI{0}{\decibel} must always be at the previous and the next bandpass center frequency at any gain value.}
+    \argument{In order to be able to obtain a flat frequency response on the amplified frequency}
 \end{requirement}
