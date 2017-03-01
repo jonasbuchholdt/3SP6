@@ -1,5 +1,5 @@
 clear all;
-filename = 'guitar_high_E_flasholet_bridge.csv';
+filename = 'C:\Users\Sebatian\3SP6\measure\guitar_high_E_flasholet_bridge.csv';
 delimiterIn = ',';
 headerlinesIn = 6;
 A = importdata(filename,delimiterIn,headerlinesIn);
