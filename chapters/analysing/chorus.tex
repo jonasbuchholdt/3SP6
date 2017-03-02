@@ -26,18 +26,30 @@ A block diagram for  the chorus effect is shown in \autoref{fig:chorus_diag}.
 %
 \begingroup\makeatletter\ifx\SetFigFont\undefined%
 \gdef\SetFigFont#1#2#3#4#5{%
-  \reset@font\fontsize{#1}{#2pt}%
-  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
-  \selectfont}%
+	\reset@font\fontsize{#1}{#2pt}%
+	\fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+	\selectfont}%
 \fi\endgroup%
-\begin{picture}(6327,2346)(3766,-2821)
-\put(6526,-2806){\color[rgb]{1,0,0}$Gain$}%
-\put(6706,-1186){$LFO$}%
-\put(6436,-1906){$Delay$}%
-\put(8101,-1636){$Gain$}%
-\put(3781,-646){$Input$}%
-\put(9406,-646){$Output$}%
+\begin{picture}(6327,3018)(3766,-3493)
+\put(6706,-1366){\color[rgb]{0,0,0}LFO}%
+
+\put(8101,-1636){\color[rgb]{0,0,0}Gain}%
+
+\put(3781,-646){\color[rgb]{0,0,0}Input}%
+
+\put(9406,-646){\color[rgb]{0,0,0}Output}%
+
+\put(6571,-1906){\color[rgb]{0,0,0}Delay}%
+
+\put(6616,-3211){\color[rgb]{1,0,0}Delay}%
+
+\put(8101,-2986){\color[rgb]{1,0,0}Gain}%
+
+\put(6706,-2671){\color[rgb]{1,0,0}LFO}%
+
 \end{picture}%
+
+
 
 \caption{Block Diagram of the chorus effect.}
 \label{fig:chorus_diag}
