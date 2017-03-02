@@ -26,24 +26,22 @@ This chapter lists the requirements for the effects presented in the analysis.
 
 From \autoref{ch:analysing} some of the effect can be designed together, because the effect is using the same parts but multiply times or just a small difference. The following description tells shortly about the different in the effect block and which effect that can be designed together.
 
-\paragraph{Basic filtering}
+\paragraph*{Basic filtering}
 The only basis filter, which is explained in \autoref{ch:analysing} which is a basic filter without delay and time changing parameters is the Equalizer.
-
 
 \paragraph{Time varying filter}
 The only Time varying filter, which is explained in \autoref{ch:analysing} is the Wah-Wah.
-
 
 \paragraph{Delay}
 All the delay based effect have at lest one delay block and have both fast and slow delay. All the analysed delayed based effect in \autoref{ch:analysing} is:
 \begin{itemize}
 	\item Delay
+	\item \gls{reverb}
 	\item Flanger
 	\item Chorus
-	\item \gls{reverb}
 \end{itemize} 
 
-The block diagram in each effect shows that two and two effect have a common structure with using the same parts but multiply times. In another way the chorus is the flanger with 
+The block diagram in each effect shows that pair wise effect have a common structure with using the same parts but multiply times. The chorus is the flanger with the same effect added more than once. The same is applicable by delay and \gls{reverb} respectively. Then the only two effect which needed to be designed is Chorus and \gls{reverb} because Flanger and Delay can easily be made out of removing the multiply parts in their respectively effect.
 
 \paragraph{Non-linear processing}
 \begin{itemize}
