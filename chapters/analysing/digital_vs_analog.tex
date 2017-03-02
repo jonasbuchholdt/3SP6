@@ -2,7 +2,10 @@
 \subsection{Quality}
 
 The bandwidth in an analog sound signal can be increased infinitely unlike the digital one where it is limited by the sampling rate that is being used. \\
-The \gls{snr} is higher in digital signals than analog ones because of their low bit depth. The bit depth is a variable that takes into account the change in amplitude between each sample. If the sample rate is not high enough in digital signal, the \gls{snr} is higher \citep{analog_quality}. The quantization noise do exist in digital signal and not in analog ones, the same goes for aliasing \citep{analog_aliasing}. \\
+
+The quality in the digital signal is  lower because in the digital domain there is what is called the digital noise. It occurs after sampling, and increase when the sound between samples get les and less smooth. On the other side, In the analog domain, the signal is not sampled, it is the real one so this problem do not exist. Errors can also occur due to bit depth, bit depth limits the values that the sample can take, which means that even with high sample rate but low bit depth, the digital track can sound different. The number of values that can be taken by the sample is defined by how much bits per sample are used, and the number of values are then $2^{number of bits}$ \citep{analog_quality}.\\
+It can then be inferred that there are quantization noise and errors in digital signals do not exist in analog ones, the same goes for aliasing \citep{analog_aliasing}. \\
+
 Some will argue that by sufficiently increasing the sampling rate, the quality difference between analog and digital sounds can no longer be felt \citep{analog_storage}.
 
 \subsection{Mobility}
