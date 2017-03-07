@@ -2,19 +2,19 @@
 
 \reqPrefix{IBF}
 \section{Inverse bandpass filter (\reqPrefixName)}
-Based on the \autoref{ch:analysing}, the Inversed bandpass filter requirements are as following:
+Based on the \autoref{ch:analysing}, the inverse bandpass filter requirements are as follows:
 
 \begin{requirement}\label{req:Inverse_bandpass_filter_ex}
-    \requirement{The inverse bandpass filter unit must be able to attenuate the gain in its stop-band area}
-    \argument{In order to be able to attenuate the the signal gain in specified frequencies}
+    \requirement{The inverse bandpass filter unit must be able to attenuate the gain in its stop-band.}
+    \argument{In order to be able to attenuate the specified frequencies of a signal.}
 \end{requirement}
 
 \begin{requirement}\label{req:Inverse_bandpass_filter_time}
-    \requirement{The center frequency must be defined by internal preset}
-    \argument{In order to be able to work in respect to the preset frequency separation of the equalizer}
+    \requirement{The center frequency must be defined by internal preset.}
+    \argument{In order to be able to work in respect to the preset frequency separation of the equalizer.}
 \end{requirement}
 
 \begin{requirement}\label{req:nverse_bandpass_filter_center}
-    \requirement{The bandstop filter cross frequency at \SI{0}{\decibel} must always be at the previous and the next bandstop center frequency at any gain value.}
+    \requirement{The inverse bandpass filters cross frequencies at \SI{0}{\decibel} must always be at the center frequency of the previous and the next bandpass filter at any gain value.}
     \argument{In order to be able to obtain a flat frequency response on the attenuated frequency.}
 \end{requirement}
