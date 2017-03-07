@@ -3,13 +3,132 @@ In order to transfer as much signal from the guitar as possible, and avoid some 
 
 \subsection{Component chose}
 
-As seen in the \autoref{app:guitar_max_amplitude} that the maximum output signal peak amplitude from the guitar is about $\SI{1}{\volt}_{peak}$ and the standard in ?? says that the signal from a line source shall have an voltage \gls{rms} value of $\SI{1.768}{\volt}_{\gls{rms}}$ which have a peak amplitude of $\SI{2.5}{\volt}_{peak}$. This means that the \gls{preamp} shall have a gain of approximate \SI{8}{\decibel}. Since the amplification only shall be approximate \SI{8}{\decibel} and the input impedance shall be very high, an \gls{opamp} will fit very well. An \gls{opamp} often have an input impedance of more than \SI{1}{\mega\ohm} and have a gain of about \SI{100}{\decibel}, and after the feedback circuit is implemented on the \gls{opamp} the input impedance is even higher and the output impedance is even smaller.
+As seen in the \autoref{app:guitar_max_amplitude} that the maximum output signal peak amplitude from the guitar is about $\SI{1}{\volt}_{peak}$ and the 
+\gls{dsp} have a capasitivity of maximum $\SI{2222}{\volt}_{peak}$. To make a general \gls{preamp} that works with more guitar than only the measured guitar, the \gls{preamp} will be designed with a volume control. This means that the \gls{preamp} shall have a gain of approximate \SI{99999}{\decibel} and the input impedance shall be over a decade higher than the guitar output impedance.
+	An \gls{opamp} often have an input impedance of more than \SI{1}{\mega\ohm} and have a gain of about \SI{100}{\decibel}, and after the feedback circuit is implemented on the \gls{opamp} the input impedance is even higher and the output impedance is even lower. A simple diagram over the \gls{preamp} is shown in \autoref{fig:simple_preamp} 
 
-\subsection{The amplifier}
-The \gls{opamp} can ether be working in non inverting or inverting \gls{opamp} configuration, but since the \gls{preamp} shall have en gain of \SI{8}{\decibel} and a high input impedance, the non inverting \gls{opamp} configuration will fit very well. The non inverting \gls{opamp} configuration have at least a gain of \SI{0}{\decibel} and it is easy to design a high input impedance. The amplification is given by \autoref{eq:amplification}
+\begin{figure}[h!]
+\centering
+\begin{circuitikz}\draw (0,0)
+(0,0)to[short, o-]node[left,above]{$Input$}(1,0)
+to[amp, t=$G1$]  (3,0)
+to[short] (3,0)
+to[pR=$ $](3,-2)
+to[short](3,-2)node[ground]{}(3.5,-1)
+to[short] (4,-1)
+to[short] (4,0)
+to[amp, t=$G2$]  (6,0)
+(6,0)to[short, -o]node[left,above]{$Output$}(7,0)
+%to[short] (0,0)
+;\end{circuitikz}
+\caption{A simple block diagram of a \gls{preamp}}
+\label{fig:simple_preamp}
+\end{figure}
 
-\begin{equation}\label{eq:amplification}
-        V_{out} =V_{in} \cdot (1+\frac{R_2}{R_1})
+
+\subsection{The amplifier $G1$}
+The \gls{opamp} part $G1$ in \autoref{fig:simple_preamp} can ether be working in non inverting or inverting \gls{opamp} configuration, but since the \gls{preamp} shall have a gain of \SI{99999}{\decibel} and a high input impedance, the non inverting \gls{opamp} configuration will fit very well, because it is a Voltage-seriel feedback configuration. The seriel feedback configuration means that the input impedance is higher than a parallel feedback, because the feedback circuit is in seriel with the input imperdance of the \gls{opamp} The schematics of a non inverting \gls{opamp} is shown in the following schematic \autoref{fig:preamp_opamp}
+
+\begin{figure}[h!]
+\centering
+\begin{circuitikz}\draw (0,0)
+node[op amp,yscale=-1] (opamp) {} 
+(-3,-3.5)node[ground]{}(-3,-3.5)
+to[R=$R_{Bias}$] (-3,0.5)
+to[short](opamp.+) 
+(-5,0.5)to[short, o-]node[left,above]{$Input$} (-3,0.5)
+(opamp.-) 
+(opamp.out) 
+to[short] (2,0)
+to[short] (2,-1.5)
+to[R=$R_F$] (-1.5,-1.5)
+to[short] (-1.5,-0.5)
+to[short] (-1,-0.5)
+(-1.5,-1.5)to[R=$R_1$] (-1.5,-3.5)node[ground]{}(-2,-3.5)
+(2,-1.5)to[pR, l_=$R_V$] (2,-3.5)node[ground]{}(2,-3.5)
+(2.5,-2.5)to[short, -o]node[left,above]{$Output$} (4,-2.5)
+;\end{circuitikz}
+\caption{The schematic over $G1$ \autoref{fig:simple_preamp}}
+\label{fig:preamp_opamp}
+\end{figure}
+
+The output is looking into another \gls{opamp} with over \SI{1}{\mega\ohm}, so the calculation is without the another \gls{opamp}, because it look like an open circuit. The equivalent schematic of a non inverting \gls{opamp} is as following \autoref{fig:preamp_opamp_equa}
+
+\begin{figure}[h!]
+\centering
+\begin{circuitikz}\draw (0,0)
+to[R=$R_{Bias}$] (0,-6)node[ground]{}(0,-6.5)
+(0,0)to[short] (2,0)
+to[R=$Z_{i}$] (2,-2)
+to[R=$Z_{i\beta}$] (2,-4)
+to[V=$\beta \cdot V_o$] (2,-6)node[ground]{}(2,-6.5)
+(0,0)to[short, -o]node[left,above]{$Z_{Input}$} (-3,0)
+;\end{circuitikz}
+\caption{The equalent schematic over $G1$ \autoref{fig:simple_preamp}}
+\label{fig:preamp_opamp_equa}
+\end{figure}
+
+\newpage
+
+Calculating for $Z_{i\beta}$ is as following \autoref{eq:preamp_ib}
+
+\begin{equation}\label{eq:preamp_ib}
+        Z_{i\beta} = R_F\parallel R_1
+    \end{equation}
+
+    \startexplain
+        \explain{$R_1$ is a resistor in the feedback circuit}{\si{\ohm}}
+        \explain{$R_F$ is a resistor in the feedback circuit}{\si{\ohm}}
+    \stopexplain
+
+The resulting input impedance will be as following \autoref{eq:preamp_result} because an voltage supply is a shut circuit when calculating impedance.
+
+\begin{equation}\label{eq:preamp_result}
+        Z_{Input} = R_{Bias}\parallel Z_i + Z_{i\beta}
+    \end{equation}
+
+    \startexplain
+        \explain{$Z_{Input}$ Resulting input impedance}{\si{\ohm}}
+        \explain{$R_{Bias}$ An bias resistor}{\si{\ohm}}
+        \explain{$Z_i$ The input impedance of the \gls{opamp}}{\si{\ohm}}
+        \explain{$Z_{i\beta}$ the impedance of the feedback circuit}{\si{\ohm}}
+    \stopexplain
+
+The feedback circuit will increase the $Z_{Input}$, but since the input impedance of a \gls{opamp} is over \SI{1}{\mega\ohm}, and the feedback circuit will increase the output impedance, the feedback resistors shall be chosen small enough to keep the output impedance low. The following circuit \autoref{fig:preamp_opamp_equa_out} shows the output impedance equerlent circuit of the \gls{opamp}
+
+\begin{figure}[h!]
+\centering
+\begin{circuitikz}\draw (0,0)
+to[V=$A \cdot V_i$] (0,-3)
+(0,0)to[R=$Z_o$](2,0)
+to[R=$Z_{o\beta}$](2,-3)
+(2,0)to[short](4,0)
+(4,0)to[pR, l_=$R_V$](4,-3)
+(0,-3)to[short, -o](6,-3)
+(4.5,-1.5)to[short, -o](6,-1.5)
+;\end{circuitikz}
+\caption{The equalent schematic over $G1$ \autoref{fig:simple_preamp}}
+\label{fig:preamp_opamp_equa_out}
+\end{figure}
+
+Calculating for $Z_{o\beta}$ is as following \autoref{eq:preamp_ib_out}
+
+\begin{equation}\label{eq:preamp_ib_out}
+        Z_{o\beta} = R_F+R_1
+    \end{equation}
+
+    \startexplain
+        \explain{$R_1$ is a resistor in the feedback circuit}{\si{\ohm}}
+        \explain{$R_F$ is a resistor in the feedback circuit}{\si{\ohm}}
+    \stopexplain
+
+Because the output of $R_V$ is loaded by an \gls{opamp}, the $R_F$ is chosen to \SI{5}{\kilo\ohm} to keep the output impedance at the same size as the $R_V$ which is chosen to be \SI{20}{\kilo\ohm}
+
+
+The amplification is given by \autoref{eq:preamp_amplification}
+
+\begin{equation}\label{eq:preamp_amplification}
+        V_{out} =V_{in} \cdot (1+\frac{R_F}{R_1})
         \addunit{\si{\volt}}
     \end{equation}
 
@@ -17,7 +136,6 @@ The \gls{opamp} can ether be working in non inverting or inverting \gls{opamp} c
         \explain{$V_{out}$ is the output voltage}{\si{\volt}}
         \explain{$V_{in}$  is the input voltage}{\si{\volt}}
         \explain{$R_1$ is a resistor in the feedback circuit}{\si{\ohm}}
-        \explain{$R_2$ is a resistor in the feedback circuit}{\si{\ohm}}
+        \explain{$R_F$ is a resistor in the feedback circuit}{\si{\ohm}}
     \stopexplain
-    
-    
+   
