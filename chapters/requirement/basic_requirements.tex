@@ -1,7 +1,7 @@
 \newcommand{\reqbasis}{The delay unit must delay the input signal, in time defined by external unit.}
 
-\reqPrefix{BS}
-\section{Basis requirements}
+\reqPrefix{BC}
+\section{Basic requirements}
 Based on \autoref{ch:analysing}, the basic requirements are as follows:
 
 \begin{requirement}\label{req:dsp}
@@ -15,3 +15,7 @@ Based on \autoref{ch:analysing}, the basic requirements are as follows:
     \argument{The processing component must be fast enough to calculate at least one effect between two samples.}
 \end{requirement}
 
+\begin{requirement}\label{req:power}
+    \requirement{The product shall be powered by a \SI{9}{\volt} power supply}
+    \argument{Only a design choose.}
+\end{requirement}
