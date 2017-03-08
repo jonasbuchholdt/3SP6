@@ -85,7 +85,43 @@ The delay can then be written as:
 
 $A$ is the value of the user-defined range which is also the depth. $f_{l}$ is the frequency of the LFO. 
 
-The Matlab code for the flanger effect is presented in 
+The Matlab code for the flanger effect is:
+
+\begin{lstlisting}[language=Matlab, caption= Matlab code for flanger effect]
+
+%Flanger Effect
+%Group 641
+
+%insert your input in this table
+input = [1 2 3 4 5 6 7 8 9 10]
+
+fs = 1;  %LFO Frequency
+sample_no = length(input) %Length of the input
+g = 0.4; %Gain
+after_delay = (1:1:sample_no); 
+before_delay = (1:1:sample_no);
+output = (1:1:sample_no);
+
+for n = 1:1:sample_no
+	delay = 3 * cos((2*pi*fs)/n);  %Calculate time varying delay
+	buffer = zeros(1,abs(round(delay)));
+
+	for i = 1:1:sample_no %loop for an output with one delay value
+		buffer = [buffer(2:end) input(i)];
+		after_delay(i) = buffer(1) * g;
+		before_delay(i) = input(i); 
+		output(i) = after_delay(i) + before_delay(i);
+	end
+	output
+end
+
+plot(output)
+hold on
+grid
+plot(before_delay)
+
+\end{lstlisting}
+
 
 
 
