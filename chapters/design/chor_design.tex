@@ -71,6 +71,9 @@ y[n] = x[n] + \sum_{j=1}^{i}  (x[n- d_{j}[n]] \cdot g_{j})
 
 The delay value has to be a periodic function that is varying in a user-defined range. 
 
+From the difference equation, it can be seen that the design is using a FIR Comb filter but where the delay value varies. 
+
+
 \subsection{Matlab Simulation}
 
 A delay can be done in different ways digitally. One way is to use a ring buffer also known as circular buffer. \\
