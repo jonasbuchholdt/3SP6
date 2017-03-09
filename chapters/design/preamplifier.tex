@@ -21,19 +21,19 @@ to[amp, t=$G2$]  (6,0)
 (6,0)to[short, -o]node[left,above]{$Output$}(7,0)
 %to[short] (0,0)
 ;\end{circuitikz}
-\caption{A simple block diagram of a \gls{preamp}}
+\caption{A simple block diagram of the \gls{preamp}}
 \label{fig:simple_preamp}
 \end{figure}
 
 
-\subsection{The amplifier $G1$}
+\subsection{Design of $G1$ resistor}
 The \gls{opamp} part $G1$ in \autoref{fig:simple_preamp} can ether be working in non inverting or inverting \gls{opamp} configuration, but since the \gls{preamp} shall have a gain of \SI{99999}{\decibel} and a high input impedance, the non inverting \gls{opamp} configuration will fit very well, because it is a Voltage-seriel feedback configuration. The seriel feedback configuration means that the input impedance is higher than a parallel feedback, because the feedback circuit is in seriel with the input imperdance of the \gls{opamp} The schematics of a non inverting \gls{opamp} is shown in the following schematic \autoref{fig:preamp_opamp}
 
 \begin{figure}[h!]
 \centering
 \begin{circuitikz}\draw (0,0)
 node[op amp,yscale=-1] (opamp) {} 
-(-3,-3.5)node[ground]{}(-3,-3.5)
+(-3,-3.5)
 to[R=$R_{Bias}$] (-3,0.5)
 to[short](opamp.+) 
 (-5,0.5)to[short, o-]node[left,above]{$Input$} (-3,0.5)
@@ -44,36 +44,38 @@ to[short] (2,-1.5)
 to[R=$R_F$] (-1.5,-1.5)
 to[short] (-1.5,-0.5)
 to[short] (-1,-0.5)
-(-1.5,-1.5)to[R=$R_1$] (-1.5,-3.5)node[ground]{}(-2,-3.5)
-(2,-1.5)to[pR, l_=$R_V$] (2,-3.5)node[ground]{}(2,-3.5)
+(-1.5,-1.5)to[R=$R_1$] (-1.5,-3.5)
+(2,-1.5)to[pR, l_=$R_V$] (2,-3.5)
 (2.5,-2.5)to[short, -o]node[left,above]{$Output$} (4,-2.5)
+(-3,-3.5)to[short](2,-3.5)
+(-1.5,-3.5)to[V=$V_{Offset}$] (-1.5,-5)node[ground]{}(-1.5,-5.5)
 ;\end{circuitikz}
-\caption{The schematic over $G1$ \autoref{fig:simple_preamp}}
+\caption{The schematic over $G1$, see \autoref{fig:simple_preamp}}
 \label{fig:preamp_opamp}
 \end{figure}
 
-The output is looking into another \gls{opamp} with over \SI{1}{\mega\ohm}, so the calculation is without the another \gls{opamp}, because it look like an open circuit. The equivalent schematic of a non inverting \gls{opamp} is as following \autoref{fig:preamp_opamp_equa}
+The output is looking into $G2$ which is a \gls{opamp} in buffer circuit with over \SI{1}{\mega\ohm}, so the calculation is without the $G2$ \gls{opamp} The calculation is also without the $V_{Offset}$ power supply, because a voltage power supply is a short circuit with respect to impedances.  The equivalent schematic of a non inverting \gls{opamp} is as following \autoref{fig:preamp_opamp_equa}
 
 \begin{figure}[h!]
 \centering
 \begin{circuitikz}\draw (0,0)
-to[R=$R_{Bias}$] (0,-6)node[ground]{}(0,-6.5)
-(0,0)to[short] (2,0)
-to[R=$Z_{i}$] (2,-2)
-to[R=$Z_{i\beta}$] (2,-4)
-to[V=$\beta \cdot V_o$] (2,-6)node[ground]{}(2,-6.5)
+to[R=$R_{Bias}$] (0,-2)node[ground]{}(0,-2.5)
+(0,0)to[R=$Z_{i}$] (2,0)
+to[R=$Z_{i\beta}$] (4,0)
+to[V=$\beta \cdot V_o$] (4,-2)node[ground]{}(4,-2.5)
 (0,0)to[short, -o]node[left,above]{$Z_{Input}$} (-3,0)
 ;\end{circuitikz}
-\caption{The equalent schematic over $G1$ \autoref{fig:simple_preamp}}
+\caption{The equivalent input impedance schematic of $G1$, see \autoref{fig:simple_preamp}}
 \label{fig:preamp_opamp_equa}
 \end{figure}
 
 \newpage
 
-Calculating for $Z_{i\beta}$ is as following \autoref{eq:preamp_ib}
+Calculating of $Z_{i\beta}$ is done by following \autoref{eq:preamp_ib}
 
 \begin{equation}\label{eq:preamp_ib}
         Z_{i\beta} = R_F\parallel R_1
+        \addunit{\si{\ohm}}
     \end{equation}
 
     \startexplain
@@ -81,10 +83,20 @@ Calculating for $Z_{i\beta}$ is as following \autoref{eq:preamp_ib}
         \explain{$R_F$ is a resistor in the feedback circuit}{\si{\ohm}}
     \stopexplain
 
-The resulting input impedance will be as following \autoref{eq:preamp_result} because an voltage supply is a shut circuit when calculating impedance.
+Calculating of $\beta$ is done by following \autoref{eq:preamp_beta}
+
+\begin{equation}\label{eq:preamp_beta}
+        \beta = \frac{R_1}{R_1 + R_F}
+        \addunit{\si{1}}
+    \end{equation}
+
+
+
+The resulting input impedance will be as following \autoref{eq:preamp_result} because an voltage supply is a shut circuit with respect to impedance.
 
 \begin{equation}\label{eq:preamp_result}
         Z_{Input} = R_{Bias}\parallel Z_i + Z_{i\beta}
+        \addunit{\si{\ohm}}
     \end{equation}
 
     \startexplain
@@ -107,35 +119,162 @@ to[R=$Z_{o\beta}$](2,-3)
 (0,-3)to[short, -o](6,-3)
 (4.5,-1.5)to[short, -o](6,-1.5)
 ;\end{circuitikz}
-\caption{The equalent schematic over $G1$ \autoref{fig:simple_preamp}}
+\caption{The equivalent output impedance schematic of $G1$, see \autoref{fig:simple_preamp}}
 \label{fig:preamp_opamp_equa_out}
 \end{figure}
 
-Calculating for $Z_{o\beta}$ is as following \autoref{eq:preamp_ib_out}
+
+Calculating of $Z_{o\beta}$ is done by following \autoref{eq:preamp_ib_out}
 
 \begin{equation}\label{eq:preamp_ib_out}
         Z_{o\beta} = R_F+R_1
+        \addunit{\si{\ohm}}
     \end{equation}
-
-    \startexplain
-        \explain{$R_1$ is a resistor in the feedback circuit}{\si{\ohm}}
-        \explain{$R_F$ is a resistor in the feedback circuit}{\si{\ohm}}
-    \stopexplain
 
 Because the output of $R_V$ is loaded by an \gls{opamp}, the $R_F$ is chosen to \SI{5}{\kilo\ohm} to keep the output impedance at the same size as the $R_V$ which is chosen to be \SI{20}{\kilo\ohm}
 
 
-The amplification is given by \autoref{eq:preamp_amplification}
+The amplification of a non inverting \gls{opamp} is given by \autoref{eq:preamp_amplification}
 
 \begin{equation}\label{eq:preamp_amplification}
-        V_{out} =V_{in} \cdot (1+\frac{R_F}{R_1})
-        \addunit{\si{\volt}}
+        G =1+\frac{R_F}{R_1}
+        \addunit{\si{1}}
     \end{equation}
 
     \startexplain
-        \explain{$V_{out}$ is the output voltage}{\si{\volt}}
-        \explain{$V_{in}$  is the input voltage}{\si{\volt}}
-        \explain{$R_1$ is a resistor in the feedback circuit}{\si{\ohm}}
-        \explain{$R_F$ is a resistor in the feedback circuit}{\si{\ohm}}
+        \explain{$G$ is the amplification of $G1$}{\si{1}}
     \stopexplain
+
+Then  $R_1$ is founded by isolate $R_1$ in the above \autoref{eq:preamp_amplification}.
+ 
    
+ \subsection{Design of $G1$ DC offset}
+  
+  Designing of the voltage offset power supply will be done by two resistors which divide the voltage by two equals, and afterwards an \gls{opamp} in buffer circuit is used to make a small output impedance. Because the \gls{opamp} have a impedance of more than \SI{1}{\mega\ohm} the resistor size does not matte at all, but a non ideal \gls{opamp} do have a bias current in the input, that will affect the division if the resistors is to large. To keep the division approximate by two, the resistors shall be at leas a decade smaller than the input impedance of the \gls{opamp}. The voltage offset power supply circuit is designed as following \autoref{fig:preamp_voffset}.
+    
+  \begin{figure}[h!]
+\centering
+\begin{circuitikz}\draw (0,0)
+node[op amp] (opamp) {} 
+(-9,0.5)to[short, o-]node[right,above]{$V_s$} (-8,0.5)
+to[R=$R_{2}$]
+(-5,0.5)to[C=$C_{Offset}$](-5,-2)node[ground]{}
+(-5,0.5)to[short]
+(-3,0.5)to[R=$R_{Offset}$](-3,-2)node[ground]{}
+(opamp.+) 
+(-3,0.5)to(opamp.-) 
+(opamp.out) 
+to[short] (2,0)
+to[short] (2,-1.5)
+to[short] (-1.5,-1.5)
+to[short] (-1.5,-0.5)
+to[short] (-1,-0.5)
+(2,0)to[short, -o] (4,-0)node[left,above]{$V_{Offset}$}
+;\end{circuitikz}
+\caption{The offset power supply to $G1$, see \autoref{fig:preamp_opamp} }
+\label{fig:preamp_voffset}
+\end{figure}
+  
+Where $C_{Offset}$ is used to stabilize the voltage at the input of the \gls{opamp} and the calculating of $R_{Offset}$ and $R_{2}$ is done as following \autoref{eq:preamp_offset}
+
+\begin{equation}\label{eq:preamp_offset}
+        R_{Offset} = R_{2} = \frac{Z_{in}}{10}
+        \addunit{\si{\ohm}}
+    \end{equation}
+
+    \startexplain
+        \explain{$Z_{in}$ is the input impedance of the \gls{opamp}}{\si{\ohm}}
+        \explain{$R_2$ is the upper resistor in the voltage division circuit}{\si{\ohm}}
+        \explain{$R_{offset}$ is the lower resistor in the voltage division circuit}{\si{\ohm}}
+    \stopexplain
+    
+\subsection{Design of input and output DC blocking}
+
+The total circuit of the \gls{preamp} is as \autoref{fig:preamp_total} and the design of $G1$ input capacitor $C_{In}$ and  $G2$ output capacitor $C_{Out}$ will be done beneath the full circuit \autoref{fig:preamp_total}.
+
+\begin{figure}[h!]
+\centering
+\begin{circuitikz}\draw 
+(-5,0.5) node[anchor=south] {$S_{In}$}
+(-5,-5.5) node[anchor=south] {$V_{in}$}
+(8.5,-3) node[anchor=south] {$S_{Out}$}
+(0,0)node[op amp,yscale=-1] (opamp1) {} 
+(-3,-3.5)
+to[R=$R_{Bias}$] (-3,0.5)
+to[short](opamp1.+) 
+(-5,0.5)to[C=$C_{In}$, o-] (-3,0.5)
+(opamp1.-) 
+(opamp1.out) 
+to[short] (2,0)
+to[short] (2,-1.5)
+to[R=$R_F$] (-1.5,-1.5)
+to[short] (-1.5,-0.5)
+to[short] (-1,-0.5)
+(-1.5,-1.5)to[R=$R_1$] (-1.5,-3.5)
+(2,-1.5)to[pR, l_=$R_V$] (2,-3.5)
+(2.5,-2.5)to[short](4,-2.5)
+(-3,-3.5)to[short](2,-3.5)
+(5,-3) node[op amp] (opamp2) {} 
+(opamp2.+) 
+(opamp2.-) 
+(opamp2.out) 
+to[short] (7,-3)
+to[short] (7,-4.5)
+to[short] (3.5,-4.5)
+to[short] (3.5,-3.5)
+to[short] (4,-3.5)
+(7,-3)to[C=$C_{Out}$, -o](8.5,-3)
+(2,-6)node[op amp] (opamp3) {} 
+(-5,-5.5)to[R=$R_{2}$, o-]
+(-3,-5.5)to[C=$C_{Offset}$](-3,-7.5)node[ground]{}
+(-3,-5.5)to[short]
+(-1,-5.5)to[R=$R_{Offset}$](-1,-7.5)node[ground]{}
+(opamp3.+) 
+(-1,-5.5)to(opamp3.-) 
+(opamp3.out) 
+to[short] (4,-6)
+to[short] (4,-7.5)
+to[short] (0.5,-7.5)
+to[short] (0.5,-6.5)
+to[short] (1,-6.5)
+(4,-6) to[short] (4,-5)
+to[short] (2,-5)
+to[short] (2,-3.5)
+;\end{circuitikz}
+\caption{The full schematic of the \gls{preamp}, $G1$ and $G2$, see \autoref{fig:simple_preamp}}
+\label{fig:preamp_total}
+\end{figure}
+
+The $C_{In}$ and $Z_{In}$ shall be designed to have an cross frequency of a decade beneath the audibility area. This result in a cross frequency of \SI{2}{\hertz}. The calculating of $C_{In}$ is done by following \autoref{eq:preamp_cin}.
+
+\begin{equation}\label{eq:preamp_cin}
+        C_{In} \geq  \frac{1}{2 \pi \cdot Z_{In} \cdot f}
+        \addunit{\si{\farad}}
+    \end{equation}
+
+    \startexplain
+         \explain{$C_{In}$ is the Input capacitor}{\si{\farad}}
+        \explain{$Z_{In}$ is the input impedance of $G1$}{\si{\ohm}}
+        \explain{$f$ is the cross frequency}{\si{\hertz}}
+    \stopexplain
+    
+    The $C_{Out}$ and $Z_{In,\gls{dsp}}$ shall be designed to have an cross frequency of a decade under the audibility area, which will result in a cross frequency of \SI{2}{\hertz}. The calculating of $C_{Out}$ is done by following \autoref{eq:preamp_cout}.
+
+\begin{equation}\label{eq:preamp_cout}
+        C_{In} \geq  \frac{1}{2 \pi \cdot Z_{In,\gls{dsp}} \cdot f}
+        \addunit{\si{\farad}}
+    \end{equation}
+
+    \startexplain
+     \explain{$C_{Out}$ is the output capacitor}{\si{\farad}}
+        \explain{$Z_{Out}$ is the output impedance of $G2$}{\si{\ohm}}
+ \explain{$f$ is the cross frequency}{\si{\hertz}}
+    \stopexplain
+    
+ The $C_{Offset}$ is selected to be separated intro one \SI{100}{\nano\farad} and one \SI{1}{\micro\farad} capacitors.
+ 
+\subsection{\gls{pcb} layout} 
+The signal cable will have a capacitive effect on the signal, form the guitar to the \gls{preamp}, and this will cause a low pass filter. In order to avoid the low pass problem with the cable, the \gls{preamp} will be designed to fit inside a \SI{6.35}{\milli\meter} Jack connector house.The chosen Jack connector is ?? and this require a \gls{pcb} with the maximum size of  \SI{1}{\centi\meter} times \SI{2.5}{\centi\meter}. The used cable from the \gls{dsp} to the \gls{preamp} is a balanced cable, where the shield is used as ground to both signal and power. The red wire is used as signal and the black wire is used as positive power wire.
+ 
+ 
+ 
