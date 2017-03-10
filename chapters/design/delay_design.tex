@@ -3,17 +3,15 @@ In this section, the delay and the \gls{reverb} will be designed to fit intro a 
 
 
 \subsection{Obtaining the Differential Equation}
-The Delay and \gls{reverb} effect are very similar in their design so they will be presented and designed in the same section. The block diagram presented in \autoref{} is changed so it fit intro a \gls{iir} filter construction. The \gls{iir} filter is chosen because the \gls{fir} filter will require lots more power. To get a naturally \gls{reverb} effect all the \gls{iir} filters needs to be a all pass filter, and each filter shall be in parallel 
-%\citep{}
-. The block diagram in the discrete time domain for the delay and \gls{reverb} effect can be obtained and is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is the one in red and black while the delay is only in black. 
+The Delay and \gls{reverb} effect are very similar in their design so they will be presented and designed in the same section. The block diagram presented in \autoref{} is changed so it fit intro a \gls{iir} filter construction. The \gls{iir} filter is chosen because the \gls{fir} filter will require lots more power. To get a naturally \gls{reverb} effect with flat amplitude-frequency respond and avoiding fluttering, all the \gls{iir} filters needs to be an all pass filter. The \gls{reverb} needs to have at least 1000 echo per second, and the best way to make as many echo as required, each all pass filter needs to be in serial otherwise if the all pass filter was in parallel, it will require forty all pass filter \citep{natural_sounding_revorb}. The block diagram in direct form 1 in time domain for the delay and \gls{reverb} effect can be obtained and is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is the one in red and black while the delay is only in black. 
 
 
 \begin{figure} [htbp]
  \centering
 \begin{picture}(0,0)%
-\includegraphics{reverb.pdf}%
+\includegraphics{reverb_diag_des.pdf}%
 \end{picture}%
-\setlength{\unitlength}{4144sp}%
+\setlength{\unitlength}{3750sp}%
 %
 \begingroup\makeatletter\ifx\SetFigFont\undefined%
 \gdef\SetFigFont#1#2#3#4#5{%
@@ -21,23 +19,25 @@ The Delay and \gls{reverb} effect are very similar in their design so they will 
   \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
   \selectfont}%
 \fi\endgroup%
-\begin{picture}(5787,3120)(886,-1603)
-\put(5493,-512){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$\Sigma$}%
+\begin{picture}(6927,1683)(-914,-1723)
+\put(-135,-409){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{13.2}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}-$\alpha$}%
 }}}}
-\put(2791,1334){}%
-\put(901,1334){$x[n]$}%
-\put(5896,-286){$y[n]$}%
-\put(4321,704){\color[rgb]{.63,.25,0}$g_1$}%
-\put(2791,434){\color[rgb]{.63,.25,0}$z^{-d_1}$}%
-\put(2791,-466){\color[rgb]{0,0,1}$z^{-d_2}$}%
-\put(4321,-241){\color[rgb]{0,0,1}$g_2$}%
-\put(4321,-1141){\color[rgb]{1,0,0}$g_3$}%
-\put(2791,-1366){\color[rgb]{1,0,0}$z^{-d_3}$}%
-\put(2071,389){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{.63,.25,0}$\Sigma$}%
+\put(-673,-1185){\color[rgb]{0,0,0}$z^{-d}$}%
+\put(1876,-1186){\color[rgb]{0,0,0}$z^{-d}$}%
+\put(2626,-1186){\color[rgb]{1,0,0}$z^{-d}$}%
+\put(3826,-436){\color[rgb]{1,0,0}$\Sigma$}%
+\put(1126,-436){\color[rgb]{0,0,0}$\Sigma$}%
+\put(526,-436){\color[rgb]{0,0,0}$\Sigma$}%
+\put(5126,-1616){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{13.2}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$\alpha$}%
 }}}}
-\put(2071,-512){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,1}$\Sigma$}%
+\put(5326,-1186){\color[rgb]{1,0,0}$z^{-d}$}%
+\put(4426,-436){\color[rgb]{1,0,0}$\Sigma$}%
+\put(-899,-286){\color[rgb]{0,0,0}$x[n]$}%
+\put(5776,-286){\color[rgb]{1,0,0}$y[n]$}%
+\put(1876,-211){\color[rgb]{1,0,0}\textit{Multiply times}}%
+\put(1663,-1610){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{13.2}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$\alpha$}%
 }}}}
-\put(2072,-1412){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$\Sigma$}%
+\put(3165,-408){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{13.2}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}-$\alpha$}%
 }}}}
 \end{picture}%
   \caption{The photo shows a block diagram of a \gls{reverb} unit.}
