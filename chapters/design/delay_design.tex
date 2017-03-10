@@ -3,8 +3,9 @@ In this section, the delay and the \gls{reverb} will be designed to fit intro a 
 
 
 \subsection{Obtaining the Differential Equation}
-The Delay and \gls{reverb} effect are very similar in their design so they will be presented and designed in the same section. The block diagram presented in \autoref{} is changed so it fit intro a \gls{iir} filter construction. The \gls{iir} filter is chosen because the \gls{fir} filter will require lots more power. To get a naturally \gls{reverb} effect with flat amplitude-frequency respond and avoiding fluttering, all the \gls{iir} filters needs to be an all pass filter. The \gls{reverb} needs to have at least 1000 echo per second, and the best way to make as many echo as required, each all pass filter needs to be in serial otherwise if the all pass filter was in parallel, it will require forty all pass filter \citep{natural_sounding_revorb}. The block diagram in direct form 1 in time domain for the delay and \gls{reverb} effect can be obtained and is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is the one in red and black while the delay is only in black. 
+The Delay and \gls{reverb} effect are very similar in their design so they will be presented and designed in the same section. The block diagram presented in \autoref{} is changed so it fit intro a direct form 1 construction. This effect both have \gls{iir} filter and \gls{fir} filter, but it is only the \gls{iir} filter which make the echo, the \gls{fir} filter is only applied to make a flat frequency respond. To get a naturally \gls{reverb} effect with flat amplitude-frequency respond and avoiding fluttering, all the \gls{iir} filters needs to be an all pass filter. The \gls{reverb} needs to have at least 1000 echo per second, and the best way to make as many echo as required, each all pass filter needs to be in serial otherwise if the all pass filter was in parallel, it will require forty all pass filter to make 1000 echo per second \citep{natural_sounding_revorb}. The block diagram in direct form 1 in time domain for the delay and \gls{reverb} effect can be obtained and is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is the one in red and black while the delay is only in black. 
 
+\newpage
 
 \begin{figure} [htbp]
  \centering
@@ -40,23 +41,23 @@ The Delay and \gls{reverb} effect are very similar in their design so they will 
 \put(3165,-408){\makebox(0,0)[lb]{\smash{{\SetFigFont{10}{13.2}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}-$\alpha$}%
 }}}}
 \end{picture}%
-  \caption{The photo shows a block diagram of a \gls{reverb} unit.}
+  \caption{The figure shows a block diagram of a \gls{reverb} unit.}
   \label{fig:reverb_block_des}
 \end{figure}
 
 From \autoref{fig:reverb_block_des}, the following differential equations can be inferred:
 
-%The equation for the flanger can be written as:
-%\begin{equation}
-%\label{flang_eq}
-%		y[n] = x[n] + x[n- d_{1}] \cdot g_{1}  
-%\end{equation}
-%
 The equation for the delay can be written as:
+\begin{equation}
+\label{eq:delay_eq}
+		y[n] = - \alpha \cdot x[n] + x[n-d] + \alpha \cdot y[n-d]
+\end{equation}
+
+The equation for the \gls{reverb} can be written as:
 
 \begin{equation}
-\label{delay_eq}
-y[n] = x[n] + \sum_{j=1}^{i}  (x[n- d_{1}] \cdot g_{1})
+\label{eq:reverb_eq}
+		y[n] = - \alpha \cdot x[n] + x[n-d] + \alpha \cdot y[n-d]
 \end{equation}
 
 %The index $i$ represents the number of delays that are being implemented in the chorus effect which is also the chorus size. Index $n$ represents the number of samples that are being modulated. \\
