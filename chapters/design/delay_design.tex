@@ -53,12 +53,81 @@ The equation for the delay can be written as:
 		y[n] = - \alpha \cdot x[n] + x[n-d] + \alpha \cdot y[n-d]
 \end{equation}
 
-The equation for the \gls{reverb} can be written as:
+Form \citep{natural_sounding_revorb} the \gls{reverb} time is defined by \autoref{eq:reverb_defined}
 
 \begin{equation}
-\label{eq:reverb_eq}
-		y[n] = - \alpha \cdot x[n] + x[n-d] + \alpha \cdot y[n-d]
+\label{eq:reverb_defined}
+		T = \frac{60}{-20 \cdot log(\alpha)} \cdot \tau
 \end{equation}
+
+    \startexplain
+\explain{$60$ is the \gls{reverb} attenuation in \si{\decibel}, and the \gls{reverb} time is defined that a given signal is attenuated by 60 \si{\decibel}}{\si{\decibel}}
+
+\explain{$\tau$ is the delay over the sample frequency $\tau = \frac{d}{f_s}$}{\si{\second}}
+
+\explain{$T$ is the resulting \gls{reverb} time}{\si{\second}}
+
+\explain{$-20 \cdot log10(\alpha)$ is the attenuation in the feedback loop for each round}{\si{\decibel}}
+    \stopexplain
+
+The gain $\alpha$ is is chosen to be 0.708 like useal \gls{reverb} unit  \citep{natural_sounding_revorb} and the total \gls{reverb} echo density shall at lest be 1000 echo per second. In formula \autoref{eq:reverb_defined_tal_res} it can be obtain that $\tau$ shall be $\frac{1}{20}$ of $T$
+
+
+\begin{subequations}
+\begin{equation}\label{eq:reverb_defined_tal}
+       T = \frac{60}{-20 \cdot log(0.7)} \cdot \tau
+       \addunit{\si{\second}}
+    \end{equation}
+\centering
+$\Updownarrow$
+\begin{equation}\label{eq:reverb_defined_tal_res}
+        \tau = \frac{1}{20} T
+        \addunit{\si{\second}}
+    \end{equation}
+ \end{subequations}
+
+\autoref{eq:reverb_defined_tal_res} then shows that the $\tau$ time is \SI{50}{\milli\second} with a total \gls{reverb} time $T$ of \SI{1}{second}. This achieve an echo density of 20 echo per second, but the \gls{reverb} unit require 1000 echo per second \citep{natural_sounding_revorb}. To achieve 1000 echo per second there needs to be multiply delay unit in serial. To calculate the number of needed \gls{reverb} unit, $n$ symbolize the number of \gls{reverb} unit in \autoref{eq:reverb_needed} 
+
+\begin{equation}
+\label{eq:reverb_needed}
+		\frac{1}{\tau} \cdot k^{n-1} \geq  1000
+\end{equation}
+
+    \startexplain
+\explain{$\tau$ is the delay over the sample frequency $\tau = \frac{d}{f_s}$}{\si{\second}}
+\explain{$k$ is the scaling factor, which normally is a factor of tree \citep{natural_sounding_revorb}}{\si{1}}
+\explain{$n$ is the required number of \gls{reverb} unit}{\si{1}}
+    \stopexplain
+
+The \autoref{eq:reverb_needed}  can be rewritten to \autoref{eq:reverb_needed_mellem}
+
+
+\begin{subequations}
+\begin{equation}\label{eq:reverb_needed_solve}
+		\frac{1}{\SI{50}{\milli\second}} \cdot 3^{n-1} \geq  1000
+    \end{equation}
+\centering
+$\Updownarrow$
+\begin{equation}\label{eq:reverb_defined_tal_mellem}
+        n \geq  \frac{ln(3)+ln{1000 \cdot T}}{ln(3)}
+        \addunit{\si{\second}}
+    \end{equation}
+    $\Updownarrow$
+\begin{equation}\label{eq:reverb_defined_tal_res}
+        n \geq  4.56
+        \addunit{\si{\second}}
+    \end{equation}
+ \end{subequations}
+
+Since the number of the \gls{reverb} unit only can be integer, the needed numbers of \gls{reverb} unit is 5.
+
+%
+%The equation for the \gls{reverb} can be written as:
+%
+%\begin{equation}
+%\label{eq:reverb_eq}
+%		y[n] = - \alpha \cdot x[n] + x[n-d] + \alpha \cdot y[n-d]
+%\end{equation}
 
 %The index $i$ represents the number of delays that are being implemented in the chorus effect which is also the chorus size. Index $n$ represents the number of samples that are being modulated. \\
 %If the implementation is done using a time varying delay, equations \ref{flang_eq} and \ref{chor_eq} can be re-written as:
