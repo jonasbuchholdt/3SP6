@@ -37,22 +37,30 @@ A simple block diagram of the \gls{reverb} effect is shown at \autoref{fig:rever
 %
 \begingroup\makeatletter\ifx\SetFigFont\undefined%
 \gdef\SetFigFont#1#2#3#4#5{%
-	\reset@font\fontsize{#1}{#2pt}%
-	\fontfamily{#3}\fontseries{#4}\fontshape{#5}%
-	\selectfont}%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
 \fi\endgroup%
-\begin{picture}(5787,3102)(886,-1603)
-\put(2791,-1366){\color[rgb]{0,0,.82}Delay}%
-\put(2791,1334){\color[rgb]{0,0,0}$Main$}%
-\put(901,1334){\color[rgb]{0,0,0}$Input$}%
-\put(5896,-286){\color[rgb]{0,0,0}$Output$}%
+\begin{picture}(5787,3120)(886,-1603)
+\put(5493,-512){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}+}%
+}}}}
+\put(2791,1334){$Main$}%
+\put(901,1334){$Input$}%
+\put(5896,-286){$Output$}%
 \put(4321,704){\color[rgb]{.63,.25,0}$Gain$}%
 \put(2791,434){\color[rgb]{.63,.25,0}$Delay$}%
-\put(2791,-466){\color[rgb]{1,0,0}$Delay$}%
-\put(4321,-241){\color[rgb]{1,0,0}$Gain$}%
-\put(4321,-1141){\color[rgb]{0,0,.82}$Gain$}%
+\put(2791,-466){\color[rgb]{0,0,1}$Delay$}%
+\put(4321,-241){\color[rgb]{0,0,1}$Gain$}%
+\put(4321,-1141){\color[rgb]{1,0,0}$Gain$}%
+\put(2791,-1366){\color[rgb]{1,0,0}$Delay$}%
+\put(2071,389){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{.63,.25,0}+}%
+}}}}
+\put(2071,-512){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,1}+}%
+}}}}
+\put(2072,-1412){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}+}%
+}}}}
 \end{picture}%
-  \caption{The photo shows a block diagram of a \gls{reverb} unit.}
+  \caption{The figure shows a block diagram of a \gls{reverb} unit.}
   \label{fig:reverb_block}
 \end{figure}
 
