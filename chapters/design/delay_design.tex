@@ -3,7 +3,7 @@ In this section, the delay and the \gls{reverb} will be designed to fit intro a 
 
 
 \subsection{Obtaining the Differential Equation}
-The Delay and \gls{reverb} effect are very similar in their design so they will be presented and designed in the same section. The block diagram presented in \autoref{} is changed so it fit intro a direct form 1 construction. This effect both have \gls{iir} filter and \gls{fir} filter, but it is only the \gls{iir} filter which make the echo, the \gls{fir} filter is only applied to make a flat frequency respond. To get a naturally \gls{reverb} effect with flat amplitude-frequency respond and avoiding fluttering, all the \gls{iir} filters needs to be an all pass filter. The \gls{reverb} needs to have at least 1000 echo per second, and the best way to make as many echo as required, each all pass filter needs to be in serial otherwise if the all pass filter was in parallel, it will require forty all pass filter to make 1000 echo per second \citep{natural_sounding_revorb}. The block diagram in direct form 1 in time domain for the delay and \gls{reverb} effect can be obtained and is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is the one in red and black while the delay is only in black. 
+The Delay and \gls{reverb} effect are very similar in their design so they will be presented and designed in the same section. The block diagram presented in \autoref{} is changed so it fit intro a direct form 1 construction. This effect both have \gls{iir} filter and \gls{fir} filter, but it is only the \gls{iir} filter which make the echo, the \gls{fir} filter is only applied to make a flat frequency respond. To get a naturally \gls{reverb} effect with flat amplitude-frequency respond and avoiding fluttering, all the \gls{reverb} unit needs to be an all pass filter. The \gls{reverb} needs to have at least 1000 echo per second, and the best way to make as many echo as required, each all pass filter needs to be in serial otherwise if the all pass filter was in parallel, it will require forty all pass filter to make 1000 echo per second \citep{natural_sounding_revorb}. The block diagram \autoref{fig:reverb_block_des} is in direct form 1. The delay and \gls{reverb} effect can be obtained and is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is the one in red and black while the delay is only in black. 
 
 \newpage
 
@@ -53,7 +53,7 @@ The equation for the delay can be written as:
 		y[n] = - \alpha \cdot x[n] + x[n-d] + \alpha \cdot y[n-d]
 \end{equation}
 
-Form \citep{natural_sounding_revorb} the \gls{reverb} time is defined by \autoref{eq:reverb_defined}
+The \gls{reverb} unit is more advanced than the delay unit and before the differential equations can be inferred, some calculation is needed. The \gls{reverb} unit calculation are based on a article \citep{natural_sounding_revorb} which explain the design parametric for a \gls{reverb} unit very well. Form \citep{natural_sounding_revorb} the \gls{reverb} time is defined by \autoref{eq:reverb_defined}
 
 \begin{equation}
 \label{eq:reverb_defined}
@@ -86,16 +86,18 @@ $\Updownarrow$
     \end{equation}
  \end{subequations}
 
-\autoref{eq:reverb_defined_tal_res} then shows that the $\tau$ time is \SI{50}{\milli\second} with a total \gls{reverb} time $T$ of \SI{1}{second}. This achieve an echo density of 20 echo per second, but the \gls{reverb} unit require 1000 echo per second \citep{natural_sounding_revorb}. To achieve 1000 echo per second there needs to be multiply delay unit in serial. To calculate the number of needed \gls{reverb} unit, $n$ symbolize the number of \gls{reverb} unit in \autoref{eq:reverb_needed} 
+\autoref{eq:reverb_defined_tal_res} then shows that the $\tau$ time is \SI{50}{\milli\second} with a total \gls{reverb} time $T$ of \SI{1}{second}. This achieve an echo density of 20 echo per second, but the \gls{reverb} unit require 1000 echo per second \citep{natural_sounding_revorb}. To achieve 1000 echo per second there needs to be multiply delay unit in serial. To calculate the number of needed \gls{reverb} unit a formula is obtained and the $n$ symbolize the number of \gls{reverb} unit in \autoref{eq:reverb_needed} 
 
 \begin{equation}
 \label{eq:reverb_needed}
-		\frac{1}{\tau} \cdot k^{n-1} \geq  1000
+		\frac{1}{\tau} \cdot k^{n-1} \geq  \text{echo density}
+		\addunit{\si{\second}}
 \end{equation}
 
     \startexplain
+\explain{\textit{echo density} is the number for echo per second}{\si{1}}
 \explain{$\tau$ is the delay over the sample frequency $\tau = \frac{d}{f_s}$}{\si{\second}}
-\explain{$k$ is the scaling factor, which normally is a factor of tree \citep{natural_sounding_revorb}}{\si{1}}
+\explain{$k$ is the scaling factor between each \gls{reverb} unit, which normally is a factor of tree \citep{natural_sounding_revorb}}{\si{1}}
 \explain{$n$ is the required number of \gls{reverb} unit}{\si{1}}
     \stopexplain
 
@@ -105,21 +107,80 @@ The \autoref{eq:reverb_needed}  can be rewritten to \autoref{eq:reverb_defined_t
 \begin{subequations}
 \begin{equation}\label{eq:reverb_needed_solve}
 		\frac{1}{\SI{50}{\milli\second}} \cdot 3^{n-1} \geq  1000
+		\addunit{\si{1}}
     \end{equation}
 \centering
 $\Updownarrow$
 \begin{equation}\label{eq:reverb_defined_tal_mellem}
         n \geq  \frac{ln(3)+ln{1000 \cdot T}}{ln(3)}
-        \addunit{\si{\second}}
+        \addunit{\si{1}}
     \end{equation}
     $\Updownarrow$
 \begin{equation}\label{eq:reverb_defined_tal_res}
         n \geq  4.56
-        \addunit{\si{\second}}
+        \addunit{\si{1}}
     \end{equation}
  \end{subequations}
 
 Since the number of the \gls{reverb} unit only can be integer, the needed numbers of \gls{reverb} unit is 5.
+
+\newpage
+
+\begin{figure} [htbp]
+ \centering
+\begin{picture}(0,0)%
+\includegraphics{reverb_serial_des.pdf}%
+\end{picture}%
+\setlength{\unitlength}{3937sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(5319,4317)(436,-4393)
+\put(2881,-3121){w5[n]}%
+\put(4771,-1276){a}%
+\put(4951,-916){$z^{-d}$}%
+\put(3151,-916){$z^{-d}$}%
+\put(3736,-376){-a}%
+\put(4231,-421){$\Sigma$}%
+\put(2431,-916){$z^{-d}$}%
+\put(1216,-376){-a}%
+\put(631,-916){$z^{-d}$}%
+\put(2251,-1276){a}%
+\put(1711,-421){$\Sigma$}%
+\put(1216,-1816){-a}%
+\put(631,-2356){$z^{-d}$}%
+\put(1711,-1861){$\Sigma$}%
+\put(3736,-1816){-a}%
+\put(4771,-2716){a}%
+\put(4231,-1861){$\Sigma$}%
+\put(3151,-2356){$z^{-d}$}%
+\put(2431,-2356){$z^{-d}$}%
+\put(2251,-2716){a}%
+\put(1216,-3256){-a}%
+\put(586,-3796){$z^{-d}$}%
+\put(2251,-4156){a}%
+\put(2431,-3796){$z^{-d}$}%
+\put(4951,-2356){$z^{-d}$}%
+\put(5356,-1681){w4[n]}%
+\put(2881,-1681){w3[n]}%
+\put(2881,-241){w1[n]}%
+\put(5356,-241){w2[n]}%
+\put(451,-241){x[n]}%
+\put(1711,-3301){$\Sigma$}%
+\put(4231,-3301){$\Sigma$}%
+\put(5446,-3121){y[n]}%
+\end{picture}%
+
+  \caption{The figure shows a block diagram of a \gls{reverb} unit.}
+  \label{fig:reverb_block_des}
+\end{figure}
+
+
+
 
 %
 %The equation for the \gls{reverb} can be written as:
