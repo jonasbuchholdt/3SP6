@@ -1,5 +1,5 @@
 \section{Design of the Delay and \gls{reverb} Effect}
-In this section, the delay and the \gls{reverb} will be designed to fit intro a \gls{dsp}, which mean that a discreet block diagram is obtained and afterwords the equation to the implementation is made. Afterwords the assembly code is developed and implemented. 
+In this section, the delay and the \gls{reverb} will be designed to fit intro a \gls{dsp}, which mean that a discreet block diagram is obtained and afterwords the equation to the implementation is made. All the equation will afterwords be simulated in MATLAB and then the assembly code is developed and implemented. 
 
 
 \subsection{Obtaining the Differential Equation}
@@ -131,7 +131,7 @@ Since the number of the \gls{reverb} unit only can be integer, the needed number
 \begin{picture}(0,0)%
 \includegraphics{reverb_serial_des.pdf}%
 \end{picture}%
-\setlength{\unitlength}{3937sp}%
+\setlength{\unitlength}{4351sp}%
 %
 \begingroup\makeatletter\ifx\SetFigFont\undefined%
 \gdef\SetFigFont#1#2#3#4#5{%
@@ -139,42 +139,41 @@ Since the number of the \gls{reverb} unit only can be integer, the needed number
   \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
   \selectfont}%
 \fi\endgroup%
-\begin{picture}(5319,4317)(436,-4393)
-\put(2881,-3121){w5[n]}%
-\put(4771,-1276){a}%
-\put(4951,-916){$z^{-d}$}%
-\put(3151,-916){$z^{-d}$}%
-\put(3736,-376){-a}%
+\begin{picture}(5589,4272)(166,-4393)
+\put(5446,-3166){$y[n]$}%
+\put(4771,-1276){$\alpha$}%
+\put(4951,-916){$z^{-d_2}$}%
+\put(3151,-916){$z^{-d_2}$}%
+\put(3736,-376){-$\alpha$}%
 \put(4231,-421){$\Sigma$}%
-\put(2431,-916){$z^{-d}$}%
-\put(1216,-376){-a}%
-\put(631,-916){$z^{-d}$}%
-\put(2251,-1276){a}%
+\put(2431,-916){$z^{-d_1}$}%
+\put(1216,-376){-$\alpha$}%
+\put(631,-916){$z^{-d_1}$}%
+\put(2251,-1276){$\alpha$}%
 \put(1711,-421){$\Sigma$}%
-\put(1216,-1816){-a}%
-\put(631,-2356){$z^{-d}$}%
+\put(1216,-1816){-$\alpha$}%
+\put(631,-2356){$z^{-d_3}$}%
 \put(1711,-1861){$\Sigma$}%
-\put(3736,-1816){-a}%
-\put(4771,-2716){a}%
+\put(3736,-1816){-$\alpha$}%
+\put(4771,-2716){$\alpha$}%
 \put(4231,-1861){$\Sigma$}%
-\put(3151,-2356){$z^{-d}$}%
-\put(2431,-2356){$z^{-d}$}%
-\put(2251,-2716){a}%
-\put(1216,-3256){-a}%
-\put(586,-3796){$z^{-d}$}%
-\put(2251,-4156){a}%
-\put(2431,-3796){$z^{-d}$}%
-\put(4951,-2356){$z^{-d}$}%
-\put(5356,-1681){w4[n]}%
-\put(2881,-1681){w3[n]}%
-\put(2881,-241){w1[n]}%
-\put(5356,-241){w2[n]}%
-\put(451,-241){x[n]}%
+\put(3151,-2356){$z^{-d_4}$}%
+\put(2431,-2356){$z^{-d_3}$}%
+\put(2251,-2716){$\alpha$}%
+\put(1216,-3256){-$\alpha$}%
+\put(2251,-4156){$\alpha$}%
+\put(2431,-3796){$z^{-d_5}$}%
+\put(4951,-2356){$z^{-d_4}$}%
 \put(1711,-3301){$\Sigma$}%
 \put(4231,-3301){$\Sigma$}%
-\put(5446,-3121){y[n]}%
+\put(631,-3796){$z^{-d_5}$}%
+\put(181,-286){$x[n]$}%
+\put(2881,-286){$w_1[n]$}%
+\put(5356,-286){$w_2[n]$}%
+\put(2881,-1726){$w_3[n]$}%
+\put(5356,-1726){$w_4[n]$}%
+\put(2881,-3166){$w_5[n]$}%
 \end{picture}%
-
   \caption{The figure shows a block diagram of a \gls{reverb} unit.}
   \label{fig:reverb_block_des}
 \end{figure}
@@ -182,45 +181,42 @@ Since the number of the \gls{reverb} unit only can be integer, the needed number
 
 
 
-%
-%The equation for the \gls{reverb} can be written as:
-%
-%\begin{equation}
-%\label{eq:reverb_eq}
-%		y[n] = - \alpha \cdot x[n] + x[n-d] + \alpha \cdot y[n-d]
-%\end{equation}
 
-%The index $i$ represents the number of delays that are being implemented in the chorus effect which is also the chorus size. Index $n$ represents the number of samples that are being modulated. \\
-%If the implementation is done using a time varying delay, equations \ref{flang_eq} and \ref{chor_eq} can be re-written as:
-%
-%\begin{equation}
-%\label{flang_eq2}
-%y[n] = x[n] + x[n- d_{1}[n]] \cdot g_{1}  
-%\end{equation}
-%
-%\begin{equation}
-%\label{chor_eq2}
-%y[n] = x[n] + \sum_{j=1}^{i}  (x[n- d_{j}[n]] \cdot g_{j})
-%\end{equation}
-%
-%The delay value has to be a periodic function that is varying in a user-defined range. 
-%
-%\subsection{Matlab Simulation}
-%
-%A delay can be done in different ways digitally. One way is to use a ring buffer also known as circular buffer. \\
-%The idea of this data structure is that it takes values and only outputs them when it gets full, and overwrites the oldest after outputting it. It is a kind of a FIFO queue structure but where the start and the overwriting can start at any index. \\
-%This means that the size of the buffer depends on the delay.  The buffer size must then be always up-to-date with the new delay value. \\ 
-%The value of the delay is determined by a periodic function as said before, different waveforms can be used as said in \autoref{chor_flang}. A common periodic function that can be used is the sine. Since it varies between 0 and 1, it can be then multiplied with the user-defined range. 
-%The delay can then be written as:
-%
-%\begin{equation}
-%	d[n]= A \cdot sin(2\pi f_{l} n)
-%\end{equation}
-%
-%$A$ is the value of the user-defined range which is also the depth. $f_{l}$ is the frequency of the LFO. 
-%
-%The Matlab code for the flanger effect is:
-%
+
+The equation for the \gls{reverb} can be written in six parts as:
+
+
+\begin{subequations}
+\begin{equation}\label{eq:reverb_eq_1}
+w_1[n] = - \alpha \cdot x[n] + x[n-d_1] + \alpha \cdot w_1[n-d_1]
+    \end{equation}
+\begin{equation}\label{eq:reverb_eq_2}
+w_2[n] = - \alpha \cdot w_1[n] + w_1[n-d_2] + \alpha \cdot w_2[n-d_2]
+    \end{equation}
+\begin{equation}\label{eq:reverb_eq_3}
+w_3[n] = - \alpha \cdot w_2[n] + w_2[n-d_3] + \alpha \cdot w_3[n-d_3]
+    \end{equation}
+    \begin{equation}\label{eq:reverb_eq_4}
+w_4[n] = - \alpha \cdot w_3[n] + w_3[n-d_4] + \alpha \cdot w_4[n-d_4]
+    \end{equation}
+    \begin{equation}\label{eq:reverb_eq_5}
+w_5[n] = - \alpha \cdot w_4[n] + w_4[n-d_5] + \alpha \cdot w_5[n-d_5]
+    \end{equation}
+    \begin{equation}\label{eq:reverb_eq_6}
+y[n] = x[n]+w_5[n]
+    \end{equation}
+ \end{subequations}
+
+
+\subsection{Matlab Simulation}
+
+A delay can be done in different ways digitally. One way is to use a ring buffer also known as circular buffer. \\
+The idea of this data structure is that it takes values and only outputs them when it gets full, and overwrites the oldest after outputting it. It is a kind of a FIFO queue structure but where the start and the overwriting can start at any index. \\
+This means that the size of the buffer depends on the delay.  The buffer size must then be always up-to-date with the new delay value. \\ 
+
+
+The Matlab code for the delay effect is:
+
 %\begin{lstlisting}[language=Matlab, caption= Matlab code for flanger effect]
 %
 %%Flanger Effect
