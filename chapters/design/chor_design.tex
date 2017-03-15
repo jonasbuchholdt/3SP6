@@ -101,10 +101,10 @@ filename = 'inputtt.wav';
 [input, fs] = audioread(filename);
 %input = [1 2 3 4 5 6 7 8 9 10]
 
-fl = 10;  %LFO Frequency
+fl = 1;  %LFO Frequency
 sample_no = length(input); %Length of the input
-g = 0.7; %Gain
-delay_s = 0.1; % delay in seconds 
+g = 0.4; %Gain
+delay_s = 1; % delay in seconds 
 after_delay = (1:1:sample_no); 
 before_delay = (1:1:sample_no);
 output = (1:1:sample_no);
@@ -135,6 +135,7 @@ plot(output,'r')
 hold on
 grid
 plot(before_delay,'b')
+
 
 
 
