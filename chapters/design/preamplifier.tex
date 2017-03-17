@@ -4,7 +4,7 @@ In order to transfer as much signal from the guitar as possible, and avoid some 
 \subsection{Component chose}
 
 As seen in the \autoref{app:guitar_max_amplitude} that the maximum output signal peak amplitude from the guitar is about $\SI{1}{\volt}_{peak}$ and the 
-\gls{dsp} have a capasitivity of maximum $\SI{0.5}{\volt}_{RMS}$ which give a peak value of $\SI{0.707}{\volt}_{peak}$. To make a general \gls{preamp} that works with more guitar than only the measured guitar, the \gls{preamp} will be designed with a volume control. This means that the \gls{preamp} shall have a gain of approximate \SI{0}{\decibel} and the input impedance shall be over a decade higher than the guitar output impedance.
+\gls{dsp} have a capasitivity of maximum $\SI{0.5}{\volt}_{RMS}$ which give a peak value of $\SI{0.707}{\volt}_{peak}$. To make a general \gls{preamp} that works with more guitar than only the measured guitar, the \gls{preamp} will be designed with a volume control. The \gls{preamp} shall have a voltage gain of approximate \SI{6}{\decibel} and the input impedance shall be over a decade higher than the guitar output impedance. The \gls{preamp} will be designed to fit intro a \SI{6.33}{\milli\meter}  jack connector house, and therefore the chosen \gls{opamp} is the smallest in komponenten at Aalborg University. The chosen \gls{opamp} is ST ts424 \citep{TS464} and the \gls{preamp} will be designed to fit this \gls{opamp}. 
 	An \gls{opamp} often have an input impedance of more than \SI{1}{\mega\ohm} and have a gain of about \SI{100}{\decibel}, and after the feedback circuit is implemented on the \gls{opamp} the input impedance is even higher and the output impedance is even lower. A simple diagram over the \gls{preamp} is shown in \autoref{fig:simple_preamp} 
 
 \begin{figure}[h!]
@@ -27,7 +27,7 @@ to[amp, t=$G2$]  (6,0)
 
 
 \subsection{Design of $G1$ resistor}
-The \gls{opamp} part $G1$ in \autoref{fig:simple_preamp} can ether be working in non inverting or inverting \gls{opamp} configuration, but since the \gls{preamp} shall have a gain of \SI{99999}{\decibel} and a high input impedance, the non inverting \gls{opamp} configuration will fit very well, because it is a Voltage-seriel feedback configuration. The seriel feedback configuration means that the input impedance is higher than a parallel feedback, because the feedback circuit is in seriel with the input imperdance of the \gls{opamp} The schematics of a non inverting \gls{opamp} is shown in the following schematic \autoref{fig:preamp_opamp}
+The \gls{opamp} part $G1$ in \autoref{fig:simple_preamp} can ether be working in non inverting or inverting \gls{opamp} configuration, but since the \gls{preamp} shall have a gain of \SI{6}{\decibel} and a high input impedance, the non inverting \gls{opamp} configuration will fit very well, because it is a Voltage-seriel feedback configuration. The seriel feedback configuration means that the input impedance is higher than a parallel feedback, because the feedback circuit is in seriel with the input imperdance of the \gls{opamp} The schematics of a non inverting \gls{opamp} is shown in the following schematic \autoref{fig:preamp_opamp}
 
 \begin{figure}[h!]
 \centering
@@ -81,6 +81,7 @@ Calculating of $Z_{i\beta}$ is done by following \autoref{eq:preamp_ib}
     \startexplain
         \explain{$R_1$ is a resistor in the feedback circuit}{\si{\ohm}}
         \explain{$R_F$ is a resistor in the feedback circuit}{\si{\ohm}}
+        \explain{$Z_{i\beta}$ the impedance of the feedback circuit}{\si{\ohm}}
     \stopexplain
 
 Calculating of $\beta$ is done by following \autoref{eq:preamp_beta}
@@ -89,25 +90,26 @@ Calculating of $\beta$ is done by following \autoref{eq:preamp_beta}
         \beta = \frac{R_1}{R_1 + R_F}
         \addunit{\si{1}}
     \end{equation}
+    \startexplain
+        \explain{$\beta$ is the feedback factor}{\si{1}}
+    \stopexplain
 
 
-
-The resulting input impedance of the \gls{preamp} will be as following \autoref{eq:preamp_result} because an voltage supply is a shut circuit with respect to impedance.
+The resulting input impedance of the \gls{preamp} will be as following \autoref{eq:preamp_result}.
 
 \begin{equation}\label{eq:preamp_result}
-        Z_{Input} = R_{Bias}\parallel (Z_i + Z_{i \beta}) \cdot (1+\beta \cdot A) \simeq R_{Bias}
+        Z_{In_{G1}} = R_{Bias}\parallel (Z_i + Z_{i \beta}) \cdot (1+\beta \cdot A) \simeq R_{Bias}
         \addunit{\si{\ohm}}
     \end{equation}
 
     \startexplain
-        \explain{$Z_{Input}$ Resulting input impedance}{\si{\ohm}}
+        \explain{$Z_{In_{G1}} $ is the resulting input impedance of $G1$}{\si{\ohm}}
         \explain{$R_{Bias}$ An bias resistor}{\si{\ohm}}
         \explain{$Z_i$ The input impedance of the \gls{opamp}}{\si{\ohm}}
-        \explain{$Z_{i\beta}$ the impedance of the feedback circuit}{\si{\ohm}}
          \explain{$A$ is the gain of the \gls{opamp}}{\si{1}}
     \stopexplain
 
-The feedback circuit will increase the $Z_{Input}$ by a factor of $(1+\beta \cdot A)$, and since the input impedance of an \gls{opamp} is over \SI{1}{\mega\ohm}, and the feedback circuit will decrease the output impedance by a factor of $(1+\beta \cdot A)$, the feedback resistors value dose not matters at all. The following circuit \autoref{fig:preamp_opamp_equa_out} shows the output impedance equivalent circuit of the \gls{opamp}
+The feedback circuit will increase the $Z_{i}$ by a factor of $(1+\beta \cdot A)$, and since the input impedance of an \gls{opamp} is over \SI{1}{\mega\ohm}, and the feedback circuit will decrease the output impedance by a factor of $(1+\beta \cdot A)$, the feedback resistors value dose not matters at all, only the factors matters. The following circuit \autoref{fig:preamp_opamp_equa_out} shows the output impedance equivalent circuit of the \gls{opamp}
 
 \begin{figure}[h!]
 \centering
@@ -132,10 +134,21 @@ Calculating of $Z_{o\beta}$ is done by following \autoref{eq:preamp_ib_out}
         \addunit{\si{\ohm}}
     \end{equation}
 
-Because the output of $R_V$ is loaded by an \gls{opamp}, the $R_F$ is chosen to \SI{5}{\kilo\ohm} to keep the output impedance at the same size as the $R_V$ which is chosen to be \SI{20}{\kilo\ohm}
+A voltage power supply is a short cut with respect to impedance, so the resulting output impedance of $G1$ is calculated by following \autoref{eq:preamp_ib_out} 
+
+\begin{equation}\label{eq:preamp_ib_out}
+        Z_{out_{G1}} = \frac{ Z_{o\beta} \parallel Z_{o} }{1+\beta \cdot A'}
+        \addunit{\si{\ohm}}
+    \end{equation}
+    \startexplain
+        \explain{$A' =A \cdot \frac{Z_{o\beta}}{Z_o+Z_{o\beta}}$ which is the voltage division between $Z_{o\beta}$ and $Z_{o}$ multiplied by $A$ }{\si{1}}
+\explain{$Z_{out_{G1}}$ is the total output impedance of $G1$ }{\si{\ohm}}
+    \stopexplain
+
+The $R_V$ is chosen to \SI{10}{\kilo\ohm} to make as small voltage division between $Z_{out}$ and $R_V$ as possible. In another way, to keep the voltage over $Z_{out_{G1}}$ as small as possible. The $R_F$ is chosen to be \SI{5}{\kilo\ohm}
 
 
-The amplification of a non inverting \gls{opamp} is given by \autoref{eq:preamp_amplification}
+The approximated amplification of a non inverting \gls{opamp} is given by \autoref{eq:preamp_amplification}
 
 \begin{equation}\label{eq:preamp_amplification}
         G =1+\frac{R_F}{R_1}
@@ -146,7 +159,7 @@ The amplification of a non inverting \gls{opamp} is given by \autoref{eq:preamp_
         \explain{$G$ is the amplification of $G1$}{\si{1}}
     \stopexplain
 
-Then  $R_1$ is founded by isolate $R_1$ in the above \autoref{eq:preamp_amplification}.
+Then  $R_1$ is founded to \SI{5}{\kilo\ohm} by isolate $R_1$ in the above \autoref{eq:preamp_amplification}.
  
    
  \subsection{Design of $G1$ DC offset}
@@ -249,7 +262,7 @@ to[short] (2,-3.5)
 The $C_{In}$ and $Z_{In}$ shall be designed to have an cross frequency of a decade beneath the audibility area. This result in a cross frequency of \SI{2}{\hertz}. The calculating of $C_{In}$ is done by following \autoref{eq:preamp_cin}.
 
 \begin{equation}\label{eq:preamp_cin}
-        C_{In} \geq  \frac{1}{2 \pi \cdot Z_{In} \cdot f}
+        C_{In} \geq  \frac{1}{2 \pi \cdot Z_{In_{G1}} \cdot f}
         \addunit{\si{\farad}}
     \end{equation}
 
