@@ -4,7 +4,7 @@ In order to transfer as much signal from the guitar as possible, and avoid some 
 \subsection{Component chose}
 
 As seen in the \autoref{app:guitar_max_amplitude} that the maximum output signal peak amplitude from the guitar is about $\SI{1}{\volt}_{peak}$ and the 
-\gls{dsp} have a capasitivity of maximum $\SI{2222}{\volt}_{peak}$. To make a general \gls{preamp} that works with more guitar than only the measured guitar, the \gls{preamp} will be designed with a volume control. This means that the \gls{preamp} shall have a gain of approximate \SI{99999}{\decibel} and the input impedance shall be over a decade higher than the guitar output impedance.
+\gls{dsp} have a capasitivity of maximum $\SI{0.5}{\volt}_{RMS}$ which give a peak value of $\SI{0.707}{\volt}_{peak}$. To make a general \gls{preamp} that works with more guitar than only the measured guitar, the \gls{preamp} will be designed with a volume control. This means that the \gls{preamp} shall have a gain of approximate \SI{0}{\decibel} and the input impedance shall be over a decade higher than the guitar output impedance.
 	An \gls{opamp} often have an input impedance of more than \SI{1}{\mega\ohm} and have a gain of about \SI{100}{\decibel}, and after the feedback circuit is implemented on the \gls{opamp} the input impedance is even higher and the output impedance is even lower. A simple diagram over the \gls{preamp} is shown in \autoref{fig:simple_preamp} 
 
 \begin{figure}[h!]
@@ -92,10 +92,10 @@ Calculating of $\beta$ is done by following \autoref{eq:preamp_beta}
 
 
 
-The resulting input impedance will be as following \autoref{eq:preamp_result} because an voltage supply is a shut circuit with respect to impedance.
+The resulting input impedance of the \gls{preamp} will be as following \autoref{eq:preamp_result} because an voltage supply is a shut circuit with respect to impedance.
 
 \begin{equation}\label{eq:preamp_result}
-        Z_{Input} = R_{Bias}\parallel Z_i + Z_{i\beta}
+        Z_{Input} = R_{Bias}\parallel (Z_i + Z_{i \beta}) \cdot (1+\beta \cdot A) \simeq R_{Bias}
         \addunit{\si{\ohm}}
     \end{equation}
 
@@ -104,9 +104,10 @@ The resulting input impedance will be as following \autoref{eq:preamp_result} be
         \explain{$R_{Bias}$ An bias resistor}{\si{\ohm}}
         \explain{$Z_i$ The input impedance of the \gls{opamp}}{\si{\ohm}}
         \explain{$Z_{i\beta}$ the impedance of the feedback circuit}{\si{\ohm}}
+         \explain{$A$ is the gain of the \gls{opamp}}{\si{1}}
     \stopexplain
 
-The feedback circuit will increase the $Z_{Input}$, but since the input impedance of a \gls{opamp} is over \SI{1}{\mega\ohm}, and the feedback circuit will increase the output impedance, the feedback resistors shall be chosen small enough to keep the output impedance low. The following circuit \autoref{fig:preamp_opamp_equa_out} shows the output impedance equerlent circuit of the \gls{opamp}
+The feedback circuit will increase the $Z_{Input}$ by a factor of $(1+\beta \cdot A)$, and since the input impedance of an \gls{opamp} is over \SI{1}{\mega\ohm}, and the feedback circuit will decrease the output impedance by a factor of $(1+\beta \cdot A)$, the feedback resistors value dose not matters at all. The following circuit \autoref{fig:preamp_opamp_equa_out} shows the output impedance equivalent circuit of the \gls{opamp}
 
 \begin{figure}[h!]
 \centering
