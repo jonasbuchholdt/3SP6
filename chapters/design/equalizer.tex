@@ -1,6 +1,30 @@
 \section{Design of the equalizer}
 This chapter aims to describe the design of an digital equalizer, for an electric guitar. 
-To begin with, some design choices have to made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by as series connection of shelving filters and peak filters. The shelving filters are used the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters are normally kept as first or second order filters 
+To begin with, some design choices have to made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by as series connection of shelving filters and peak filters. The shelving filters are used the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters are normally kept as first or second order filters. 
+
+The transferfunction for a first order analog low shelving filter is as in \autoref{eq:analog_shelving_low}, and the transferfunction for a first order analog high shelving filter is as in \autoref{eq:analog_shelving_high} \citep{Julius_smith}:
+
+\begin{equation}\label{eq:analog_shelving_low}
+        H(s) = 1+\frac{G\cdot\omega_1}{s+\omega_1}
+    \end{equation}
+
+    \startexplain
+     \explain{$\omega_1$ is the transition frequency between the high and the low frequency regions}{\si{\radian/\second}}
+     \explain{$G$ is the transition frequency between the high and the low frequency regions}{\si{\radian/\second}}
+    \stopexplain
+
+\begin{equation}\label{eq:analog_shelving_high}
+        H(s) = 1+\frac{G\cdot\frac{1}{\omega_1}}{\frac{1}{s}+\frac{1}{\omega_1}}
+    \end{equation}
+    
+In \autoref{fig:low_and_high_shelving} a bodeplot of first order low- and high- shelving filters with different transition frequencies is shown.
+
+\begin{figure}
+    \centering
+        \includegraphics[width=\textwidth]{low_and_high_shelfing.pdf}
+        \caption{Bodeplot of first order low- and high- shelving filters with different transition frequencies.}
+        \label{fig:low_and_high_shelving}
+  \end{figure} 
 
 
 %Raised Cosine
