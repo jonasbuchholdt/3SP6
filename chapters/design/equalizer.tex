@@ -2,15 +2,16 @@
 This chapter aims to describe the design of an digital equalizer, for an electric guitar. 
 To begin with, some design choices have to made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by as series connection of shelving filters and peak filters. The shelving filters are used the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters are normally kept as first or second order filters. 
 
-The transferfunction for a first order analog low shelving filter is as in \autoref{eq:analog_shelving_low}, and the transferfunction for a first order analog high shelving filter is as in \autoref{eq:analog_shelving_high} \citep{Julius_smith}:
+\subsection{Shelving filter}
+The transfer function for a first order analog low shelving filter is as in \autoref{eq:analog_shelving_low}, and the transfer function for a first order analog high shelving filter is as in \autoref{eq:analog_shelving_high} \citep{Julius_smith}:
 
 \begin{equation}\label{eq:analog_shelving_low}
         H(s) = 1+\frac{G\cdot\omega_1}{s+\omega_1}
     \end{equation}
 
     \startexplain
-     \explain{$\omega_1$ is the transition frequency between the high and the low frequency regions}{\si{\radian/\second}}
-     \explain{$G$ is the transition frequency between the high and the low frequency regions}{\si{\radian/\second}}
+     \explain{$\omega_1$ is the transition frequency between the high and the low frequency regions.}{\si{\radian/\second}}
+     \explain{$G$ is the transition frequency between the high and the low frequency regions.}{\si{\radian/\second}}
     \stopexplain
 
 \begin{equation}\label{eq:analog_shelving_high}
@@ -26,6 +27,111 @@ In \autoref{fig:low_and_high_shelving} a bodeplot of first order low- and high- 
         \label{fig:low_and_high_shelving}
   \end{figure} 
 
+\subsection{Peak filter}
+The peak filters for the in between bands can be made from a number of design topologies. One of these are the constant-Q design. This design is sufficient the way that it keeps a specified bandwidth of the filter and therefore each individual filter's impact on the neighbouring filters can be controlled \citep{constant_Q}.
+A way to make these constant-Q peak filters, and keep the order of the filter low, is by combining a second order lowpass filter with a high Q-value, and a linear function in Laplace domain.
+The transfer function for the analog second order lowpass filter is as in \autoref{eq:analog_2nd_order_LP} and the transfer function for the analog linear function is as in \autoref{eq:analog_linear_function}. Their bodeplot can be seen in \autoref{fig:lin_function_&_2nd_order_LP}, where $Q = 4$ and $\omega_0 = 1000$. 
+
+\begin{equation}\label{eq:analog_2nd_order_LP}
+        H_{LP}(s) = \frac{\omega_0^2}{s^2+\frac{\omega_0}{Q}\cdot s + \omega_0^2}
+    \end{equation}
+
+    \startexplain
+     \explain{$\omega_0$ is the cut-off frequency.}{\si{\radian/\second}}
+     \explain{$Q$ is the ratio between the center frequency and the bandwidth.}{\si{1}}
+    \stopexplain
+
+\begin{equation}\label{eq:analog_linear_function}
+        H_{lin}(s) = \frac{s}{\omega_0 \cdot Q}
+    \end{equation}
+    
+\begin{figure}
+    \centering
+        \includegraphics[width=\textwidth]{linear_function_and_2nd_order_LP.pdf}
+        \caption{Bodeplot of a linear function and second order lowpass filter.}
+        \label{fig:lin_function_&_2nd_order_LP}
+  \end{figure} 
+
+To make a peak filter, the two functions in \autoref{fig:lin_function_&_2nd_order_LP} are combined as illustrated the blockdiagram in \autoref{fig:peak_filter_block}.
+
+\begin{figure}[!h]
+\centering
+\def\svgwidth{\columnwidth}
+\input{figures/design/peak_filter_block.pdf_tex}
+\caption{Block diagram of a peak filter.}
+		\label{fig:peak_filter_block}
+\end{figure}
+
+When deriving the transfer function from \autoref{fig:peak_filter_block}, the transfer function for the peak filter is as in \autoref{eq:H_peak}, with a bodeplot as in \autoref{fig:peak_filter}, where $Q = 4$, $\omega_0 = 1000$ and various gain values. 
+
+\begin{equation}\label{eq:H_peak}
+        H_{peak}(s) = 1+G \cdot \frac{\frac{\omega_0}{Q}\cdot s}{s^2+\frac{\omega_0}{Q}\cdot s + \omega_0^2}
+    \end{equation}
+    
+    \startexplain
+     \explain{$G$ is the gain of the peak filter.}{\si{1}}
+    \stopexplain
+
+\begin{figure}[!h]
+    \centering
+        \includegraphics[width=\textwidth]{peak_filter.pdf}
+        \caption{Bodeplot of a peak filter with various gain values.}
+        \label{fig:peak_filter}
+  \end{figure} 
+  
+\subsection{Design choices}
+All the parts needed to make an equalizer have now been described. The parameters after which the equalizer shall be designed, will now be presented. 
+The equalizer will be inspired by the BOSS GE-7 which is an analog equalizer for an electric guitar. The equalizer designed in this report will have the same number of bands and have the same attenuation and amplification ranges as the BOSS GE-7 \citep{Boss_GE7}. Thus the equalizer will have seven bands and be able to amplify each band $\pm$ \SI{15}{\decibel}.
+The center frequencies of the 7 bands are also inspired by the BOSS GE-7 and is placed as in \autoref{tab:center_frequencies}.
+
+\begin{longtable}[h!]{ |m{\dimexpr 0.3\linewidth-2\tabcolsep}| 
+          m{\dimexpr 0.3\linewidth-2\tabcolsep}|    } 
+\caption{Center frequencies for the equalizer.} \label{tab:center_frequencies} \\ 
+ 
+\hline 
+%%%%%%%%  
+\textbf{Band} & \textbf{Center frequency} \\ 
+%%%%%%%% 
+\hline 
+\endfirsthead     
+\multicolumn{2}{c}{{{\footnotesize \bfseries \tablename\ \thetable{} -- Continued from previous page.}}} \\  
+\hline 
+%%%%%%%%  
+\textbf{Band} & \textbf{Center frequency} \\ 
+%%%%%%%%  
+\hline 
+\endhead       
+\hline \multicolumn{2}{|r|}{{Continues on next page.}} \\ \hline 
+\endfoot     
+\hline 
+\endlastfoot 
+%%%%%%%% Content of table 
+1st & \SI{100}{\hertz} \\ \hline
+2nd & \SI{200}{\hertz}\\ \hline
+3rd & \SI{400}{\hertz} \\ \hline
+4th & \SI{800}{\hertz} \\ \hline
+5th & \SI{1600}{\hertz} \\ \hline
+6th & \SI{3200}{\hertz} \\ \hline
+7th & \SI{6400}{\hertz} \\ \hline
+\end{longtable}
+
+The first and the seventh band will be made by shelving filters and band 2,3,4,5 and 6 will be made by peak filters.
+The peak filters will be designed first, followed by the shelving filters. Since $\omega_0$ is fixed for each band, only $G$ and $Q$ have to be determined. The gain, $G$, has to changeable within $\pm$ \SI{15}{\decibel}.
+What the gain should be for the band to amplify \SI{15}{\decibel} is found in \autoref{}
+
+
+\begin{subequations}
+\begin{equation}\label{eq:V_RMS_to_dBu}
+       20 \cdot \log_{10} \left(\mathopen|H_{peak}(j\omega_0)\mathclose|\right) = 20 \cdot \log_{10} \left(1+G\right) = 15 \addunit{$\SI{}{\decibel}$}
+    \end{equation}
+\centering
+$\Updownarrow$
+\begin{equation}\label{eq:dBu_to_amplitude}
+        G = -1+10^{\frac{3}{4}} = 4.62 \addunit{$\SI{}{1}$}
+    \end{equation}
+ \end{subequations}
+
+The Q-value is then the only unknown in the design of the peak filters. The Q-value will be chosen so that frequency response of all the peak filters combined, will have the minimum ripple in the passband, when $G = 4.62$.
 
 %Raised Cosine
 
