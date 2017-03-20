@@ -21,42 +21,24 @@ The Delay and \gls{reverb} effect are very similar in their design so they will 
   \selectfont}%
 \fi\endgroup%
 \begin{picture}(5832,1599)(-1319,-1288)
-\put(2656,-106){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$w_6[n]$}%
-}}}}
-\put(1711,-421){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$\Sigma$}%
-}}}}
-\put(721,-916){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$z^{-d_5}$}%
-}}}}
-\put( 91,-421){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$\Sigma$}%
-}}}}
-\put(1261,-196){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$-a_5$}%
-}}}}
-\put(2251,-421){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$\Sigma$}%
-}}}}
-\put(2881,-916){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$z^{-d_6}$}%
-}}}}
-\put(271,-1006){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$a_5$}%
-}}}}
-\put(2431,-1006){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$a_6$}%
-}}}}
-\put(3871,-421){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$\Sigma$}%
-}}}}
-\put(3421,-196){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$-a_6$}%
-}}}}
-\put(-449,-421){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$\Sigma$}%
-}}}}
-\put(-224,-106){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$x_5[n]$}%
-}}}}
-\put(1936,-106){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$x_6[n]$}%
-}}}}
-\put(4276,-106){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$y[n]$}%
-}}}}
-\put(-1304,-151){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}Low pass}%
-}}}}
-\put(-1304,-421){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}filter in}%
-}}}}
-\put(-1304,-646){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}Parallel}%
-}}}}
+\put(2656,-106){\color[rgb]{1,0,0}$w_6[n]$}%
+\put(1711,-421){$\Sigma$}%
+\put(721,-916){$z^{-d_5}$}%
+\put( 91,-421){$\Sigma$}%
+\put(1261,-196){$-a_5$}%
+\put(2251,-421){\color[rgb]{1,0,0}$\Sigma$}%
+\put(2881,-916){\color[rgb]{1,0,0}$z^{-d_6}$}%
+\put(271,-1006){$a_5$}%
+\put(2431,-1006){\color[rgb]{1,0,0}$a_6$}%
+\put(3871,-421){\color[rgb]{1,0,0}$\Sigma$}%
+\put(3421,-196){\color[rgb]{1,0,0}$-a_6$}%
+\put(-449,-421){$\Sigma$}%
+\put(-224,-106){$x_5[n]$}%
+\put(1936,-106){\color[rgb]{1,0,0}$x_6[n]$}%
+\put(4276,-106){\color[rgb]{1,0,0}$y[n]$}%
+\put(-1304,-151){Low pass}%
+\put(-1304,-421){filter in}%
+\put(-1304,-646){Parallel}%
 \end{picture}%
 
   \caption{The figure shows a block diagram of a \gls{reverb} and delay unit.}
@@ -87,11 +69,8 @@ The \gls{reverb} unit is more advanced than the delay unit and before the differ
 
     \startexplain
 \explain{$60$ is the \gls{reverb} attenuation in \si{\decibel}, and the \gls{reverb} time is defined that a given signal is attenuated by 60 \si{\decibel}}{\si{\decibel}}
-
 \explain{$\tau$ is the delay time}{\si{\second}}
-
 \explain{$T$ is the resulting \gls{reverb} time}{\si{\second}}
-
 \explain{$-20 \cdot log10(\alpha)$ is the attenuation in the feedback loop for each round}{\si{\decibel}}
     \stopexplain
 
@@ -111,49 +90,75 @@ $\Updownarrow$
     \end{equation}
  \end{subequations}
 
-\autoref{eq:reverb_defined_tal_res} then shows that the $\tau$ time is \SI{42}{\milli\second} with a total \gls{reverb} time $T$ of \SI{1}{second}. This achieve an echo density of 24 echo per second for each of the \gls{iir} low pass filter, but if all the filter have the same delay time all echo will interference. To avoid interference each filter delay time is chosen to its own prime numbers which lay nearest \SI{42}{\milli\second}
+\autoref{eq:reverb_defined_tal_res} then shows that the $\tau$ time is \SI{42}{\milli\second} with a total \gls{reverb} time $T$ of \SI{1}{second}. This achieve an echo density of 24 echo per second for each of the \gls{iir} low pass filter, but if all the filter have the same delay time some echo will interference. To avoid interference each filter delay time is chosen to its own prime numbers which lay nearest \SI{42}{\milli\second}. The chosen delay prime number is as following \autoref{tab:reverb_delay}
+
+\begin{table}[htbp]
+\centering
+\caption{The chosen delay prime numbers}
+\label{tab:reverb_delay}
+\begin{tabular}{lll}
+$d_1$ & = & 37 \\
+$d_2$ & = & 41 \\
+$d_3$ & = & 43 \\
+$d_4$ & = & 47 \\
+$d_5$ & = & 29 \\
+$d_6$ & = & 31
+\end{tabular}
+\end{table}
+
+Each \gls{iir} filter is also attenuated by a defined gain which is shown in \autoref{tab:reverb_bgain}
+
+\begin{table}[htbp]
+\centering
+\caption{The chosen delay prime numbers}
+\label{tab:reverb_bgain}
+\begin{tabular}{lll}
+$b_1$ & = & 1 \\
+$b_2$ & = & 0.9 \\
+$b_3$ & = & 0.8 \\
+$b_4$ & = & 0.7 
+\end{tabular}
+\end{table}
 
 
-
-The \gls{reverb} unit require 1000 echo per second \citep{natural_sounding_revorb}. To achieve 1000 echo per second there needs to be multiply delay unit in serial after 4 defined \gls{iir} low pass filter, which is in parallel. To calculate the number of needed all pass \gls{reverb} unit in serial a formula is obtained and the $n$ symbolize the number of \gls{reverb} unit in \autoref{eq:reverb_needed} 
-
-\begin{equation}
-\label{eq:reverb_needed}
-		\frac{1}{\tau} \cdot k^{n-1} \geq  \text{echo density}
-		\addunit{\si{\second}}
-\end{equation}
-
-    \startexplain
-\explain{\textit{echo density} is the number for echo per second}{\si{1}}
-\explain{$\tau$ is the delay over the sample frequency $\tau = \frac{d}{f_s}$}{\si{\second}}
-\explain{$k$ is the scaling factor between each \gls{reverb} unit, which normally is a factor of tree \citep{natural_sounding_revorb}}{\si{1}}
-\explain{$n$ is the required number of \gls{reverb} unit}{\si{1}}
-    \stopexplain
-
-The \autoref{eq:reverb_needed}  can be rewritten to \autoref{eq:reverb_defined_tal_mellem}
-
+The \gls{reverb} unit require 1000 echo per second \citep{natural_sounding_revorb}. To achieve 1000 echo per second there needs to be multiply all pass \gls{fir} filter delay unit in serial after the four in parallel defined \gls{iir} low pass filter. It is defined by \citep{natural_sounding_revorb} that two \gls{fir} filter is required. To calculate the approximated number of echo in one second from the 4 \gls{iir} filter, the following \autoref{eq:reverb_par} calculation the echo, where the two first \gls{iir} filters is 24 echo since the prime number is under 42.
 
 \begin{subequations}
-\begin{equation}\label{eq:reverb_needed_solve}
-		\frac{1}{\SI{50}{\milli\second}} \cdot 3^{n-1} \geq  1000
-		\addunit{\si{1}}
+\begin{equation}\label{eq:reverb_par}
+       \text{Numbers of echo in \gls{iir} filter} = 24 + 24 + \left \lfloor \frac{1000}{43}  \right \rfloor + \left \lfloor \frac{1000}{47}  \right \rfloor
+       \addunit{\si{1}}
     \end{equation}
 \centering
 $\Updownarrow$
-\begin{equation}\label{eq:reverb_defined_tal_mellem}
-        n \geq  \frac{ln(3)+ln{1000 \cdot T}}{ln(3)}
-        \addunit{\si{1}}
-    \end{equation}
-    $\Updownarrow$
-\begin{equation}\label{eq:reverb_defined_tal_res}
-        n \geq  4.56
+\begin{equation}\label{eq:reverb_parres}
+        \text{Numbers of echo in \gls{iir} filter} = 92
         \addunit{\si{1}}
     \end{equation}
  \end{subequations}
 
-Since the number of the \gls{reverb} unit only can be integer, the needed numbers of \gls{reverb} unit is 5.
+The following calculation \autoref{eq:reverb_ser} calculate the approximate resulting echo after the first \gls{fir} filter. Both the first and the second \gls{fir} have a prime number under 42, so each signal from the \gls{fir} filter will be repeated maximum of $24-1$ times before the signal is attenuated under \SI{60}{\decibel}.
 
-\newpage
+
+\begin{subequations}
+\begin{equation}\label{eq:reverb_ser}
+      \text{aprox numbers of echo from first \gls{fir} filter} = \sum_{x=1}^{23} 24-x + \sum_{x=1}^{20} 24-x + \sum_{x=1}^{18} 23-x + \sum_{x=1}^{14} 21-x
+       \addunit{\si{1}}
+    \end{equation}
+\centering
+$\Updownarrow$
+\begin{equation}\label{eq:reverb_seriel}
+        \text{aprox numbers of echo from first \gls{fir} filter} = 942
+        \addunit{\si{1}}
+    \end{equation}
+ \end{subequations}
+
+    \startexplain
+\explain{$20$ is calculated from each echo from the second \gls{iir} filter which is attenuated 10 percent, $echo=\left \lfloor 24-1 \cdot b_2 \right \rfloor$ }{\si{1}}
+\explain{$18$ is calculated from each echo from the third \gls{iir} filter which is attenuated 20 percent, $echo=\left \lfloor 23-1 \cdot b_3 \right \rfloor$ }{\si{1}}
+\explain{$14$ is calculated from each echo from the fourth \gls{iir} filter which is attenuated 30 percent, $echo=\left \lfloor 21-1 \cdot b_4 \right \rfloor$ }{\si{1}}
+    \stopexplain
+
+Since the echo density already is about 942 echo per second, the last \gls{fir} filter will ensure over 1000 echo per second from the output of the \gls{reverb} effect. The following \autoref{fig:reverb_block_design} shows a direct form 2 block diagram over the \gls{reverb} unit.
 
 \begin{figure} [htbp]
  \centering
@@ -206,12 +211,8 @@ Since the number of the \gls{reverb} unit only can be integer, the needed number
 \put(-944,-826){$b_3$}%
 \end{picture}%
   \caption{The figure shows a block diagram of a \gls{reverb} unit.}
-  \label{fig:reverb_block_des}
+  \label{fig:reverb_block_design}
 \end{figure}
-
-
-
-
 
 
 The equation for the \gls{reverb} can be written in six parts as:
@@ -245,7 +246,7 @@ A delay can be done in different ways digitally. One way is to use a ring buffer
 The idea of this data structure is that it takes values and only outputs them when it gets full, and overwrites the oldest after outputting it. It is a kind of a FIFO queue structure but where the start and the overwriting can start at any index. \\
 This means that the size of the buffer depends on the delay.  The buffer size must then be always up-to-date with the new delay value. \\ 
 
-The Matlab code for the delay effect is:
+The Matlab code for the delay effect is as following \autoref{code:delay}
 
 \begin{lstlisting}[language=Matlab, caption= Matlab code for delay effect]
 clear all
@@ -253,26 +254,32 @@ clear all
 %Group 641
 
 %insert your input in this table
-filename = 'E_1sec.wav';
+filename = 'inputtt.wav';
 [input, fs] = audioread(filename);
 
 %Pre define array and variable
 sample_no = length(input); %Length of the input
 g = 0.7; %Gain
-d = 2000;
-x = zeros(1,sample_no+(d*2));
-y = zeros(1,sample_no+(d*2));
+d = 3000;
+d_out = 17;
+x = zeros(1,sample_no+(d*d_out*g));
+y = zeros(1,sample_no+(d*d_out*g));
+w = zeros(1,sample_no+(d*d_out*g));
 
 %Input data to x
-for i = 1:1:sample_no-(d+1)
-    i = i+d+1;
-    x(i) = input(i,2);
+for i = 1:1:sample_no
+    x(i+d+1) = input(i,1);
 end
 
 %Making the delay
-for n = 1:1:sample_no %loop for an output with one delay value
+for n = 1:1:sample_no+(d*d_out*g)-d-1 %loop for an output with one delay value
     n = n+d+1;   
-    y(n) = (-g * x(n)) + (x(n-d)) + (g * y(n-d));
+    w(n) = g * w(n-d) + x(n);
+end
+
+for n = 1:1:sample_no+(d*d_out*g)-d-1 %loop for an output with one delay value
+    n = n+d+1;   
+    y(n) = -g * w(n) + w(n-d);
 end
 
 %plot
@@ -281,5 +288,15 @@ plot(y,'r')
 hold on
 grid
 plot(x,'b')
-\end{lstlisting}
+\end{lstlisting}\label{code:delay}
 
+
+
+Applying one sinus round gives the following result
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=1\textwidth]{delay}
+	\caption{The plot shows the result for the \autoref{code:delay}}
+	\label{fig:delay_plot}
+\end{figure}
