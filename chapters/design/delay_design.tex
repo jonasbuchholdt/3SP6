@@ -246,50 +246,9 @@ A delay can be done in different ways digitally. One way is to use a ring buffer
 The idea of this data structure is that it takes values and only outputs them when it gets full, and overwrites the oldest after outputting it. It is a kind of a FIFO queue structure but where the start and the overwriting can start at any index. \\
 This means that the size of the buffer depends on the delay.  The buffer size must then be always up-to-date with the new delay value. \\ 
 
-The Matlab code for the delay effect is as following \autoref{code:delay}
+The Matlab code for the delay effect is as following \autoref{code:delay_sim}
 
-\begin{lstlisting}[language=Matlab, caption= Matlab code for delay effect]
-clear all
-%Delay Effect
-%Group 641
-
-%insert your input in this table
-filename = 'inputtt.wav';
-[input, fs] = audioread(filename);
-
-%Pre define array and variable
-sample_no = length(input); %Length of the input
-g = 0.7; %Gain
-d = 3000;
-d_out = 17;
-x = zeros(1,sample_no+(d*d_out*g));
-y = zeros(1,sample_no+(d*d_out*g));
-w = zeros(1,sample_no+(d*d_out*g));
-
-%Input data to x
-for i = 1:1:sample_no
-    x(i+d+1) = input(i,1);
-end
-
-%Making the delay
-for n = 1:1:sample_no+(d*d_out*g)-d-1 %loop for an output with one delay value
-    n = n+d+1;   
-    w(n) = g * w(n-d) + x(n);
-end
-
-for n = 1:1:sample_no+(d*d_out*g)-d-1 %loop for an output with one delay value
-    n = n+d+1;   
-    y(n) = -g * w(n) + w(n-d);
-end
-
-%plot
-audiowrite('outf.wav',y,fs);
-plot(y,'r')
-hold on
-grid
-plot(x,'b')
-\end{lstlisting}\label{code:delay}
-
+\includeCode{delay.m}{matlab}{1}{39}{The delay simulation matlab code}{code:close}{code/design/}\label{code:delay_sim}
 
 
 Applying one sinus round gives the following result
