@@ -220,22 +220,19 @@ The equation for the \gls{reverb} can be written in six parts as:
 
 \begin{subequations}
 \begin{equation}\label{eq:reverb_eq_1}
-w_1[n] = - \alpha \cdot x[n] + x[n-d_1] + \alpha \cdot w_1[n-d_1]
+x_5[n] = ((x[n]+x_1[n-d_1]) \cdot b_1)+((x[n]+x_2[n-d_2]) \cdot b_2)+((x[n]+x_3[n-d_3]) \cdot b_3)+((x[n]+x_4[n-d_4]) \cdot b_4)
     \end{equation}
 \begin{equation}\label{eq:reverb_eq_2}
-w_2[n] = - \alpha \cdot w_1[n] + w_1[n-d_2] + \alpha \cdot w_2[n-d_2]
+x_6[n] = - \alpha_5 \cdot w_5[n] + w_5[n-d_5]
     \end{equation}
 \begin{equation}\label{eq:reverb_eq_3}
-w_3[n] = - \alpha \cdot w_2[n] + w_2[n-d_3] + \alpha \cdot w_3[n-d_3]
+w_5[n] = \alpha_5 \cdot w[n-d_5] + x_5[n] 
     \end{equation}
     \begin{equation}\label{eq:reverb_eq_4}
-w_4[n] = - \alpha \cdot w_3[n] + w_3[n-d_4] + \alpha \cdot w_4[n-d_4]
+y[n] = - \alpha_6 \cdot w_6[n] + w_6[n-d_6]
     \end{equation}
     \begin{equation}\label{eq:reverb_eq_5}
-w_5[n] = - \alpha \cdot w_4[n] + w_4[n-d_5] + \alpha \cdot w_5[n-d_5]
-    \end{equation}
-    \begin{equation}\label{eq:reverb_eq_6}
-y[n] = x[n]+w_5[n]
+w_6[n] = \alpha_6 \cdot w[n-d_6] + x_6[n] 
     \end{equation}
  \end{subequations}
 
