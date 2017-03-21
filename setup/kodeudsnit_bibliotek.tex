@@ -7,6 +7,7 @@
 \definecolor{cyan}{rgb}{0.0,0.6,0.6}
 \definecolor{lightblue}{rgb}{0.0,0.3,0.7}
 \definecolor{orange}{rgb}{0.8,0.3,0.0}
+\definecolor{matlabstring}{rgb}{.627,.126,.941}
 
 
 %Hvordan XML kode skal se ud
@@ -59,6 +60,30 @@ morecomment=[s][\color{javadocblue}]{/**}{*/},
   stringstyle=\color{orange},
 }
 
+%Hvordan Matlab kode skal se ud
+\lstdefinestyle{custommatlab}{
+basicstyle=\footnotesize\ttfamily,
+    breaklines=true,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},
+    %morekeywords=[2]{1}, 
+    keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},
+    morestring=[m]', % defines that strings are enclosed in double quotes
+    stringstyle=\color{matlabstring},
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{blue}, %some words to emphasise
+    emph=[2]{all,on},emphstyle=[2]\color{matlabstring}, 
+% matlat languate definition
+  comment=[l]\%,                              % comments
+  morecomment=[l]...,                         % comments
+  morecomment=[s]{\%\{}{\%\}},                % block comments
+  commentstyle=\color{Green},
+}
+
 %Hvordan VHDL kode skal se ud
 \lstdefinestyle{customVHDL}{
   belowcaptionskip=1\baselineskip,
@@ -90,7 +115,6 @@ morecomment=[s][\color{javadocblue}]{/**}{*/},
   emph            =[1]{php},
   emphstyle       =[1]\color{black},
 }
-
 %Commando til at indsætte kode i latex
 \newcommand{\includeCode}[7]{\lstinputlisting[caption=#5 | #1, style=custom#2, numbers=left, firstnumber=#3, firstline=#3, lastline=#4, label=#6]{#7#1}}
 
