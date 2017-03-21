@@ -6,17 +6,15 @@ s = tf('s');
 
 %% Shelving filter Low 1
 om_zero = 100;
-G = 5.7355;
-s_LS = s/om_zero
-Hs = (s_LS^2+sqrt(2*G)*s_LS+G)/(s_LS^2+sqrt(2)*s_LS+1);
-Hs_low = Hs;
+G = 2.9;
+Hs = 1+*G*om_zero/(s+om_zero);
+Hs_low = Hs^2;
 
 %% Shelving filter High 1
 om_zero = 6400;
 %G = 2;
-s_HS = om_zero/s
-Hs = (s_HS^2+sqrt(2*G)*s_HS+G)/(s_HS^2+sqrt(2)*s_HS+1);
-Hs_high = Hs;
+Hs_high_1 = 1+G*om_zero/(1/s+om_zero);
+Hs_high = Hs_low^(-1);
 
 % %% Shelving filter low 2
 % om_zero = 100;
