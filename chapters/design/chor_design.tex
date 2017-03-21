@@ -124,33 +124,33 @@ buffer = zeros(1,abs(round(max_delay)));
 %intializing the buffer array.
 
 for i = 1:1:sample_no  %Loop that treats a sample per iteration. 
-	delay = max_delay * cos(2*pi*i*(fl/fs)); %Calculate time varying delay 
-	%(unit is samples)
-	buffer = [buffer(2:end) input(i)]; 
-	%move the values in the buffer ==> first value overwritten, one new 
-	%value added at the end.
-	if abs(delay) < 1   %All delay values less than zero are considered as
-		%not having a delay
-		after_delay(i) = 0;
-	else
-		if floor(delay) == delay || abs(floor(delay)) >= floor(max_delay)
-			after_delay(i) = buffer(round(abs(delay))) * g;
-			%Treating the case when the delay is an integer and when it has a
-			%value bigger than the maximum delay. 
-		else %Treating the case when the delay is not an integer
-			x1 = abs(floor(delay));
-			x2 = x1 + 1;
-			y1 = buffer(x1);
-			y2 = buffer(x2);
-			coeff = (y1 - y2)/(x1 - x2);
-			%Making a linear approximation between the samples to increase
-			%precision
-			after_delay(i) = delay * coeff * g;  %sound from the delay line
-			%in the block diagram 
-		end
-	end
-	before_delay(i) = input(i);  %sound from the direct line
-	output(i) = after_delay(i) + before_delay(i); %output delayed signal 
+ delay = max_delay * cos(2*pi*i*(fl/fs)); %Calculate time varying delay 
+ %(unit is samples)
+ buffer = [buffer(2:end) input(i)]; 
+ %move the values in the buffer ==> first value overwritten, one new 
+ %value added at the end.
+ if abs(delay) < 1   %All delay values less than zero are considered as
+  %not having a delay
+  after_delay(i) = 0;
+ else
+  if floor(delay) == delay || abs(floor(delay)) >= floor(max_delay)
+   after_delay(i) = buffer(round(abs(delay))) * g;
+   %Treating the case when the delay is an integer and when it has a
+   %value bigger than the maximum delay. 
+  else %Treating the case when the delay is not an integer
+   x1 = abs(floor(delay));
+   x2 = x1 + 1;
+   y1 = buffer(x1);
+   y2 = buffer(x2);
+   coeff = (y1 - y2)/(x1 - x2);
+   %Making a linear approximation between the samples to increase
+   %precision
+   after_delay(i) = delay * coeff * g;  %sound from the delay line
+   %in the block diagram 
+  end
+ end
+ before_delay(i) = input(i);  %sound from the direct line
+ output(i) = after_delay(i) + before_delay(i); %output delayed signal 
 end
 output = output / max(abs(output)); %output is rescaled to values between
 % -1 and 1 to avoid clipping. 
@@ -205,37 +205,36 @@ max_delay = delay_s * fs
 buffer = zeros(1,abs(round(max_delay))); %create the buffer array 
 
 for i = 1:1:sample_no %loop that gives one output sample per iteration
-	buffer = [buffer(2:end) input(i)]; %moving buffer values
-	before_delay(i) = input(i); %Value before delay
-	output(i) = before_delay(i); %adding it to one output sample
-		for j = 1:1:lines %Generating delays and then samples after delay for 
-		%each chorus line
-			delay(j) = max_delay * cos(2*pi*i*(fl(j)/fs)); %Calculate time  
-			%varying delay (unit is samples)
-				if abs(delay(j)) < 1 %Treating the case where the delay is less 
-					%than one.
-					after_delay(j,i) =0;
-				else
-					if floor(delay(j)) == delay(j) || abs(floor(delay(j))) >= floor(max_delay)
-						after_delay(j,i) = buffer(round(abs(delay(j)))) * g(j);
-						%Treating the case when the delay is an integer and when it has a
-						%value bigger than the maximum delay. 
-					else  %Treating the case when the delay is not an integer
-						x1 = abs(floor(delay(j)));
-						x2 = x1 + 1;
-						y1 = buffer(x1);
-						y2 = buffer(x2);
-						coeff = (y1 - y2)/(x1 - x2);
-						%Making a linear approximation between the samples to increase
-						%precision
-						after_delay(j,i) = delay(j) * coeff * g(j);  
-						%sound from the delay line in the block diagram
-
-					end
-				end
-				output(i) = output(i) + after_delay(j,i);
-				%Signal output sample
-		end
+ buffer = [buffer(2:end) input(i)]; %moving buffer values
+ before_delay(i) = input(i); %Value before delay
+ output(i) = before_delay(i); %adding it to one output sample
+ for j = 1:1:lines %Generating delays and then samples after delay for 
+ %each chorus line
+   delay(j) = max_delay * cos(2*pi*i*(fl(j)/fs)); %Calculate time  
+   %varying delay (unit is samples)
+   if abs(delay(j)) < 1 %Treating the case where the delay is less 
+   %than one.
+	 after_delay(j,i) =0;
+   else
+	 if floor(delay(j)) == delay(j) || abs(floor(delay(j))) >= floor(max_delay)
+	   after_delay(j,i) = buffer(round(abs(delay(j)))) * g(j);
+	   %Treating the case when the delay is an integer and when it has a
+	   %value bigger than the maximum delay. 
+	 else  %Treating the case when the delay is not an integer
+	   x1 = abs(floor(delay(j)));
+	   x2 = x1 + 1;
+	   y1 = buffer(x1);
+	   y2 = buffer(x2);
+	   coeff = (y1 - y2)/(x1 - x2);
+	   %Making a linear approximation between the samples to increase
+	   %precision
+	   after_delay(j,i) = delay(j) * coeff * g(j);  
+	   %sound from the delay line in the block diagram
+	 end
+   end
+   output(i) = output(i) + after_delay(j,i);
+   %Signal output sample
+ end
 end
 output = output / max(abs(output)); %output is rescaled to values between
 % -1 and 1 to avoid clipping. 
@@ -249,5 +248,7 @@ plot(before_delay,'b') %plotting the input samples in blue on the same fig.
 
 
 \end{lstlisting}
+
+The codes where simulated on different audiofiles. 
 
 
