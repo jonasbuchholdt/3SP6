@@ -83,7 +83,7 @@ All the parts needed to make an equalizer have now been described. The parameter
 The equalizer will be inspired by the BOSS GE-7 which is an analog equalizer for an electric guitar. The equalizer designed in this report will have the same number of bands and have the same attenuation and amplification ranges as the BOSS GE-7 \citep{Boss_GE7}. Thus the equalizer will have seven bands and be able to amplify each band $\pm$ \SI{15}{\decibel}.
 The center frequencies of the 7 bands are also inspired by the BOSS GE-7 and is placed as in \autoref{tab:center_frequencies}.
 
-\begin{longtable}[h!]{ |m{\dimexpr 0.3\linewidth-2\tabcolsep}| 
+\begin{longtable}[htbp]{ |m{\dimexpr 0.3\linewidth-2\tabcolsep}| 
           m{\dimexpr 0.3\linewidth-2\tabcolsep}|    } 
 \caption{Center frequencies for the equalizer.} \label{tab:center_frequencies} \\ 
  
@@ -120,12 +120,12 @@ The gain has to be changeable within $\pm$ \SI{15}{\decibel}. The gain value for
 
 \begin{subequations}
 \begin{equation}\label{eq:shelving_gain}
-       20 \cdot \log_{10} \left(H_{norm}(j\cdot 1)\right) = 15 \addunit{$\SI{}{\decibel}$}
+       20 \cdot \log_{10} \left(H_{norm}(j\cdot 1)\right) = 15 \addunit{\SI{}{\decibel}}
     \end{equation}
  \centering
 $\Updownarrow$   
 \begin{equation}\label{eq:shelving_gain_value}
-       G = \mathopen|2.7328 + j5.0426\mathclose| = 5.73 \addunit{$\SI{}{1}$}
+       G = \mathopen|2.7328 + j5.0426\mathclose| = 5.73 \addunit{\SI{}{1}}
     \end{equation}
 \end{subequations}
 
@@ -136,12 +136,12 @@ What the gain should be for the band to amplify \SI{15}{\decibel} is found in \a
 
 \begin{subequations}
 \begin{equation}\label{eq:peak_gain}
-       20 \cdot \log_{10} \left(\mathopen|H_{peak}(j\omega_0)\mathclose|\right) = 20 \cdot \log_{10} \left(1+G\right) = 15 \addunit{$\SI{}{\decibel}$}
+       20 \cdot \log_{10} \left(\mathopen|H_{peak}(j\omega_0)\mathclose|\right) = 20 \cdot \log_{10} \left(1+G\right) = 15 \addunit{\SI{}{\decibel}}
     \end{equation}
 \centering
 $\Updownarrow$
 \begin{equation}\label{eq:peak_gain_value}
-        G = -1+10^{\frac{3}{4}} = 4.62 \addunit{$\SI{}{1}$}
+        G = -1+10^{\frac{3}{4}} = 4.62 \addunit{\SI{}{1}}
     \end{equation}
  \end{subequations}
 
