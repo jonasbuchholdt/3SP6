@@ -15,6 +15,6 @@ Based on the \autoref{ch:analysing}, the inverse bandpass filter requirements ar
 \end{requirement}
 
 \begin{requirement}\label{req:nverse_bandpass_filter_center}
-    \requirement{The inverse bandpass filters cross frequencies at \SI{0}{\decibel} must always be at the center frequency of the previous and the next bandpass filter at any gain value.}
-    \argument{In order to be able to obtain a flat frequency response on the attenuated frequency.}
+    \requirement{The bandpass filters must, at full amplification, drop to half the amplification, at $\omega = 1.5 \cdot \omega_0$ .}
+    \argument{In order to obtain a flat combined frequency response for the equalizer and to be able to amplify or attenuate one band, without effect the neighbouring bands.}
 \end{requirement}
