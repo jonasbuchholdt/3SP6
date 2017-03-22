@@ -220,7 +220,7 @@ The equation for the \gls{reverb} can be written in six parts as:
 
 \begin{subequations}
 \begin{equation}\label{eq:reverb_eq_1}
-x_5[n] = ((x[n]+x_1[n-d_1]) \cdot b_1)+((x[n]+x_2[n-d_2]) \cdot b_2)+((x[n]+x_3[n-d_3]) \cdot b_3)+((x[n]+x_4[n-d_4]) \cdot b_4)
+x_5[n] = ((x[n]+x_1[n-d_1] \cdot \alpha_1) \cdot b_1)+((x[n]+x_2[n-d_2] \cdot \alpha_2) \cdot b_2)+((x[n]+x_3[n-d_3] \cdot \alpha_3) \cdot b_3)+((x[n]+x_4[n-d_4] \cdot \alpha_4) \cdot b_4)
     \end{equation}
 \begin{equation}\label{eq:reverb_eq_2}
 x_6[n] = - \alpha_5 \cdot w_5[n] + w_5[n-d_5]
