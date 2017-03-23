@@ -3,25 +3,26 @@ This chapter aims to describe the design of an digital equalizer, for an electri
 To begin with, some design choices have to made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by as series connection of shelving filters and peak filters. The shelving filters are used the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters are normally kept as first or second order filters. 
 
 \subsection{Shelving filter}
-The transfer function for a second order normalized low shelving filter is as in \autoref{eq:analog_shelving_low}.
+The transfer function for a first order normalized low shelving filter is as in \autoref{eq:analog_shelving_low}.
 
 \begin{equation}\label{eq:analog_shelving_low}
-        H_{norm}(s) = \frac{s^2+\sqrt{2 \cdot G} \cdot s + G}{s^2+\sqrt{2} \cdot s +1}
+        H_{norm}(s) = G \cdot \frac{\omega_c}{s+\omega_c}
     \end{equation}
 
     \startexplain
-     \explain{$G$ is the transition frequency between the high and the low frequency regions.}{\si{\radian/\second}}
+     \explain{$G$ is the gain.}{\si{1}}
+	\explain{$\omega_c$ is the \SI{3}{\decibel} cutoff frequency.}{\si{\radian/\second}}
     \stopexplain
 
  The transfer function is then scaled by setting $H_{LS}(s)=H_{norm}(\frac{s}{\omega_0})$, where $\omega_0$ is the wanted \SI{3}{\decibel} cut-off frequency. The high shelving filters can also be made from the normalized low shelving filter by setting $H_{HS}(s) = H_{norm}(\frac{\Omega_0}{s})$.
 
     
-In \autoref{fig:low_and_high_shelving} a bodeplot of second order low- and high- shelving filters with different cut-off frequencies is shown.
+In \autoref{fig:low_and_high_shelving} a bodeplot of first order low- and high- shelving filters with different cut-off frequencies is shown.
 
 \begin{figure}
     \centering
         \includegraphics[width=\textwidth]{low_and_high_shelfing.pdf}
-        \caption{Bodeplot of second order low- and high- shelving filters with different transition frequencies.}
+        \caption{Bodeplot of first order low- and high- shelving filters with different transition frequencies.}
         \label{fig:low_and_high_shelving}
   \end{figure} 
   \todo[inline]{figure is now first order}
