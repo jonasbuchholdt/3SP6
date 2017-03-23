@@ -131,13 +131,13 @@ The \gls{reverb} unit require 1000 echo per second \citep{natural_sounding_revor
 
 \begin{subequations}
 \begin{equation}\label{eq:reverb_ser}
-      \text{aprox numbers of echo from first all pass filter} = \sum_{x=1}^{23} 24-x + \sum_{x=1}^{20} 24-x + \sum_{x=1}^{18} 24-x + \sum_{x=1}^{14} 24-x
+      \text{aprox  echo from first all pass filter} = \sum_{x=1}^{23} 24-x + \sum_{x=1}^{20} 24-x + \sum_{x=1}^{18} 24-x + \sum_{x=1}^{14} 24-x
        \addunit{\si{1}}
     \end{equation}
 \centering
 $\Updownarrow$
 \begin{equation}\label{eq:reverb_seriel}
-        \text{aprox numbers of echo from first all pass filter} = 1038
+        \text{aprox echo from first all pass filter} = 1038
         \addunit{\si{1}}
     \end{equation}
  \end{subequations}
@@ -150,6 +150,7 @@ $\Updownarrow$
 
 Since the echo density already is about 1038 echo per second, the last \gls{fir} filter will defenetly have a echo density of over 1000 echo per second for the output of the \gls{reverb} effect. In \citep{DAFX} Moorer suggests adding two extra \gls{iir} filter in parallel an making an early reflection network. The early reflection network is a simple multi tap \gls{fir} filter constellation. The following \autoref{fig:reverb_block_design} shows a direct form 2 block diagram over the \gls{reverb} unit.
 
+\newpage
 \begin{figure} [htbp]
  \centering
 \begin{picture}(0,0)%
