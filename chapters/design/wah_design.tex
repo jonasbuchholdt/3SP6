@@ -163,3 +163,73 @@ since $y(n)$ is known from \autoref{wah_eq_1}, \autoref{wah_eq_2} can be re-writ
 \begin{equation}
 			y_{b}(n) = \frac{1}{2} ((1-c)x(n) + d(1-c)x(n-1) + x(n-2) - d(1-c)y(n-1) + cy(n-2) )
 \end{equation}
+
+
+\section{Bandpass filter using Chamberlin}
+
+\autoref{fig:wah_bandpass_second} shows the general topology of the Chamberlin state variable filter.
+
+\begin{figure} [htbp]
+	\centering
+	\begin{picture}(0,0)%
+	\includegraphics[width=1\textwidth]{wah_bandpass_second.pdf}%
+	\end{picture}%
+	\setlength{\unitlength}{1973sp}% un scaled 3947sp
+	%
+	\begingroup\makeatletter\ifx\SetFigFont\undefined%
+	\gdef\SetFigFont#1#2#3#4#5{%
+		\reset@font\fontsize{#1}{#2pt}%
+		\fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+		\selectfont}%
+	\fi\endgroup%
+	\begin{picture}(13761,4974)(139,-5173)
+	\put(826,-3186){\textit{-}}%
+	
+	\put(6001,-2786){$z^{-1}$}%
+	
+	\put(10951,-3986){$z^{-1}$}%
+	
+	\put(3226,-950){\textit{Highpass}}%
+	
+	\put(6076,-1436){\textit{Bandpass}}%
+	
+	\put(12976,-2636){\textit{Lowpass}}%
+	
+	\put(12901,-1086){\textit{Bandreject}}%
+	
+	\put(9600,-2161){\textit{f}}%
+	
+	\put(3000,-2161){\textit{f}}%
+	
+	\put(4501,-3811){\textit{q}}%
+	
+	\put(1426,-3186){\textit{-}}%
+	
+	\end{picture}%
+	
+	
+	\caption{Block diagram the Chamberlin state variable filter topology \citep{}}
+	\label{fig:wah_bandpass_second}
+\end{figure}
+
+This topology can be used to obtain a bandpass filter with a variable center frequency. 
+
+The factor $f$ that is shown on \autoref{fig:wah_bandpass_second} is the frequency control coefficient defined as in the following equation:
+
+\begin{equation}
+      f = 2 \cdot sin(\frac{\pi \cdot f_{c}}{f_{s}})
+\end{equation}
+
+The factor $q$ is defined as the inverse of the Q-factor.
+
+\begin{equation}
+			q = \frac{1}{Q}
+\end{equation}
+
+The minimum value for the Q-factor is normally 0.5 while the maximum value of the frequency control coefficient $f$ is 1. 
+
+
+\begin{comment}
+sources:
+http://www.earlevel.com/main/2003/03/02/the-digital-state-variable-filter/
+\end{comment}
