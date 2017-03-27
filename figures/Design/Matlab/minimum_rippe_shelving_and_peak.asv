@@ -18,7 +18,7 @@ s = tf('s');
 
 min_ripple = 50;
 
-for j = 1:1
+for j = 1:50
 
 % Shelving filter Low 
 om_zero = 100;
@@ -112,7 +112,7 @@ diff_final
 figure(1)
 %bodemag(Hs_low_1,Hs_low_2,Hs_low_3,Hs_high_1,Hs_high_2,Hs_high_3)
 
-bodemag(Hs_low,H_final_BP_1,H_final_BP_2,H_final_BP_3,H_final_BP_4,H_final_BP_5,Hs_high,H_final)
+bodemag(Hs_low,H_final_BP_1,H_final_BP_2,H_final_BP_3,H_final_BP_4,H_final_BP_5,H_final,Hs_high)
 hold on
 grid on
 legend('Low shelving filter','Peak filter1','Peak filter2','Peak filter3','Peak filter4','Peak filter5','High shelving filter','Combined filter','Location','southwest')

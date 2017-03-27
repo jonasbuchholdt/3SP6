@@ -3,18 +3,28 @@ This chapter aims to describe the design of an digital equalizer, for an electri
 To begin with, some design choices have to made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by as series connection of shelving filters and peak filters. The shelving filters are used the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters are normally kept as first or second order filters. 
 
 \subsection{Shelving filter}
-The transfer function for a first order normalized low shelving filter is as in \autoref{eq:analog_shelving_low}.
+The transfer function for a first order low shelving filter is as in \autoref{eq:analog_shelving_low} \citep{Julius_smith}.
 
 \begin{equation}\label{eq:analog_shelving_low}
-        H_{norm}(s) = G \cdot \frac{\omega_c}{s+\omega_c}
+        H_{LS}(s) = 1+G \cdot \frac{\omega_c}{s+\omega_c}
     \end{equation}
 
     \startexplain
+    \explain{$H_{LS}(s)$ is the low shelving filters transfer function.}{\si{1}}
      \explain{$G$ is the gain.}{\si{1}}
-	\explain{$\omega_c$ is the \SI{3}{\decibel} cutoff frequency.}{\si{\radian/\second}}
+	\explain{$\omega_c$ is the transition frequency dividing low and high frequencies.}{\si{\radian/\second}}
+    \stopexplain
+    
+The transfer function for a first order high shelving filter is as in \autoref{eq:analog_shelving_low}.
+
+\begin{equation}\label{eq:analog_shelving_high}
+        H_{HS}(s) = 1+G \cdot \frac{s}{s+\omega_c}
+    \end{equation}
+
+    \startexplain
+    \explain{$H_{HS}(s)$ is the high shelving filters transfer function.}{\si{1}} 
     \stopexplain
 
- The transfer function is then scaled by setting $H_{LS}(s)=H_{norm}(\frac{s}{\omega_0})$, where $\omega_0$ is the wanted \SI{3}{\decibel} cut-off frequency. The high shelving filters can also be made from the normalized low shelving filter by setting $H_{HS}(s) = H_{norm}(\frac{\Omega_0}{s})$.
 
     
 In \autoref{fig:low_and_high_shelving} a bodeplot of first order low- and high- shelving filters with different cut-off frequencies is shown.
@@ -79,7 +89,7 @@ When deriving the transfer function from \autoref{fig:peak_filter_block}, the tr
         \label{fig:peak_filter}
   \end{figure} 
   
-\subsection{Design choices}
+\subsection{Design choices and calculation of filter parameters}
 All the parts needed to make an equalizer have now been described. The parameters after which the equalizer shall be designed, will now be presented. 
 The equalizer will be inspired by the BOSS GE-7 which is an analog equalizer for an electric guitar. The equalizer designed in this report will have the same number of bands and have the same attenuation and amplification ranges as the BOSS GE-7 \citep{Boss_GE7}. Thus the equalizer will have seven bands and be able to amplify each band $\pm$ \SI{15}{\decibel}.
 The center frequencies of the 7 bands are also inspired by the BOSS GE-7 and is placed as in \autoref{tab:center_frequencies}.
@@ -102,17 +112,27 @@ The center frequencies of the 7 bands are also inspired by the BOSS GE-7 and is 
 \end{table}
 
 The first and the seventh band will be made by shelving filters and band 2,3,4,5 and 6 will be made by peak filters. The aim of the design is to design an equalizer, where each band can be amplified $\pm$ \SI{15}{\decibel} and has a flat combined frequency response when each band is set to amplify \SI{15}{\decibel}.
-The shelving filters will be designed first, followed by the peak filters. Since the cut-off frequencies, $\omega_0$ for the low shelving filter and $\Omega_0$ for the high shelving filter, are found in \autoref{tab:center_frequencies}, the only unknown in \autoref{eq:analog_shelving_low} is the gain, $G$.
-The gain has to be changeable within $\pm$ \SI{15}{\decibel}. The gain value for a \SI{15}{\decibel} attenuation is found in \autoref{eq:shelving_gain_value}.
+The individual filters in the equalizer will coupled in parallel as seen in \autoref{fig:eq_parallel}.
+
+\begin{figure}[!h]
+\centering
+\def\svgwidth{0.72\columnwidth}
+\scalebox{1}{\input{figures/design/eq_parallel.pdf_tex}}
+\caption{Block diagram of the combined equalizer.}
+		\label{fig:eq_parallel}
+\end{figure}
+
+The shelving filters will be designed first, followed by the peak filters. Since the transition frequencies, $\omega_c$ for the low- filter and high shelving filters, are found in \autoref{tab:center_frequencies}, the only unknown in \autoref{eq:analog_shelving_low} is the gain, $G$.
+The gain has to be changeable within $\pm$ \SI{15}{\decibel}. It is chosen that it is the passband that will be amplified \SI{15}{\decibel} and not the transition frequency, $\omega_c$. Thus the shelving filters gain is found by setting $\omega_c =$ \SI{100}{\radian/\second} and then finding the gain for $\omega =$ \SI{1}{\radian/\second}. The gain value for a \SI{15}{\decibel} attenuation is found in \autoref{eq:shelving_gain_value}.
 
 \begin{subequations}
 \begin{equation}\label{eq:shelving_gain}
-       20 \cdot \log_{10} \left(H_{norm}(j\cdot 1)\right) = 15 \addunit{\SI{}{\decibel}}
+       20 \cdot \log_{10} \left( \mathopen| H_{LS}(j\cdot \omega) \mathclose| \right) = 15 \addunit{\SI{}{\decibel}}
     \end{equation}
  \centering
 $\Updownarrow$   
 \begin{equation}\label{eq:shelving_gain_value}
-       G = \mathopen|2.7328 + j5.0426\mathclose| = 5.73 \addunit{\SI{}{1}}
+       G = \frac{\sqrt{(\omega_c^2+\omega^2) \cdot 10^{\frac{12}{10}}-\omega^2}}{\omega_c} - 1 \Big|_{\omega = 1 \ and \ \omega_c = 100} = 4.62 \addunit{\SI{}{1}}
     \end{equation}
 \end{subequations}
 
@@ -132,20 +152,9 @@ $\Updownarrow$
     \end{equation}
  \end{subequations}
 
-The Q-value is then the only unknown in the design of the peak filters. In \autoref{req:bandpass_filter2} it is stated that at full amplification (\SI{15}{\decibel}), the amplification at $\omega = 1.5 \cdot \omega_0$ must diminished by one half (\SI{7.5}{\decibel}). The Q-value can be found by this relation and is calculated in \autoref{eq:peak_gain_value_half}
-
-\begin{subequations}
-\begin{equation}\label{eq:peak_gain_half}
-       20 \cdot \log_{10} \left(H_{peak}(j\omega_0 \cdot 1.5)\right) = 7.5 \addunit{\SI{}{\decibel}}
-    \end{equation}
-\centering
-$\Updownarrow$
-\begin{equation}\label{eq:peak_gain_value_half}
-        Q = \mathopen|j2.8456\mathclose| = 2.85 \addunit{\SI{}{1}}
-    \end{equation}
- \end{subequations}
- 
-All parameters for the peak filters are then found. 
+The Q-value is then the only unknown in the design of the peak filters. In \autoref{req:bandpass_filter2} it is stated that at full amplification (\SI{15}{\decibel}), the amplification at the neighbouring centerfrequencies must drop to (\SI{9}{\decibel}). 
+The Q-value will be chosen so it has the minimum ripple. This Q-value is found using a Matlab program, where the Q-value is increased in steps of 0.2 from 0 to 10. All gains on both the peak and the shelving filters are set to amplify \SI{15}{\decibel}. The optimal Q-value is hereby found to be 1.6, giving a ripple of $\pm$\SI{1.11}{\decibel}, in the frequency area from \SI{100}{\hertz} to \SI{6400}{\hertz}, when all filters are fully amplified. All parameters for the peak filters are then found. 
+When coupling the filters as in \autoref{fig:eq_parallel}, and plotting it in Matlab, the bodeblot of the equalizer with all filters fully amplified, is as in \autoref{}
 
 
 
