@@ -39,4 +39,4 @@ grid on
 plot(x,'b')
 ylabel('Magnitude [V]')
 xlabel('Time [S]')
-FigureToPDF(gcf, 'delay')
+FigureToPDF(gcf, '../../figures/design/delay')

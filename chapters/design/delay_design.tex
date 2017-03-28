@@ -3,7 +3,7 @@ In this section, the delay and the \gls{reverb} will be designed to fit intro a 
 
 
 \subsection{Obtaining the Differential Equation}
-The Delay and \gls{reverb} effect are very similar in their design so they will be presented and designed in the same section. The block diagram presented in \autoref{} is changed so it fit intro a direct form 2 construction. This effect both have \gls{iir} filter and \gls{fir} filter, but it is only the \gls{iir} filter which make the echo, the \gls{fir} filter is only applied to make a flat frequency respond. To get a naturally \gls{reverb} effect with the identical respond as a room acustic respond and avoiding fluttering, all the seriel \gls{reverb} unit needs to be an all pass filter and all parallel \gls{reverb} unit needs to be low pass filter. The low pass filter is used because the room akustic caristica is acting as a low pass filter, all low frequency signal will stay longer in the room than the high frequency \autoref{}.  The \gls{reverb} needs to have at least 1000 echo per second, and the best way to make the \gls{reverb} effect is with four low pass \gls{iir} filters and 2 all pass filter otherwise if all the all pass filter was in parallel, it will require forty all pass filter to make 1000 echo per second \citep{natural_sounding_revorb}. The block diagram \autoref{fig:reverb_block_des} is in direct form 2 to minimize the implementation program. The delay and \gls{reverb} effect can be obtained and is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is the one in red and black while the delay is only in red. 
+The Delay and \gls{reverb} effect are very similar in their design so they will be presented and designed in the same section. The block diagram presented in \autoref{} is changed so it fit intro a direct form 2 construction. The delay and \gls{reverb} effect both have \gls{iir} filter and \gls{fir} filter, but it is only the \gls{iir} filter which make the echo, the \gls{fir} filter is only applied to make a flat frequency respond in some of the internal unit. To get a naturally \gls{reverb} effect with the identical respond as a room acoustic respond and avoiding fluttering, all the serial \gls{reverb} unit needs to be an all pass filter and all parallel \gls{reverb} unit needs to be \gls{iir} low pass feedback comb filter \citep{LPCF}. The \gls{iir} low pass feedback comb filter is used because the room acoustic characteristics is acting as a low pass filter, all low frequency signal will stay longer in the room than the high frequency \autoref{}.  The \gls{reverb} needs to have at least 1000 echo per second, and the best way to make the \gls{reverb} effect is with four or six \gls{iir} filters in parallel and two all pass filter afterwords in serial, otherwise if there was not two all pass filter afterwords, it will require forty \gls{iir} low pass feedback comb filter to make 1000 echo per second \citep{natural_sounding_revorb}. The block diagram \autoref{fig:reverb_block_des} is in direct form 2 to minimize the implementation program. The delay and some of the \gls{reverb} effect can be obtained and is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is the one in red and black while the delay is only in red. 
 
 \newpage
 
@@ -91,17 +91,17 @@ $\Updownarrow$
     \end{equation}
  \end{subequations}
 
-\autoref{eq:reverb_defined_tal_res} then shows that the $\tau$ time is \SI{42}{\milli\second} with a total \gls{reverb} time $T$ of \SI{1}{second}. This achieve an echo density of 24 echo per second for each of the \gls{iir} low pass filter, but if all the filter have the same delay time some echo will interference. To avoid interference each filter delay time is chosen to its own prime numbers which lay beneath \SI{42}{\milli\second} and the shown prime number is the maximum size of the number, because the user shall have the possible to adjust the delay time to simulate a smaller room. Therefore all the prime number can be scaled by a factor from 1 to 0.1.  The chosen delay prime number is as following \autoref{tab:reverb_delay}, and there are chosen 2 extra delays, so it is possible to design a Moorer \gls{reverb} unit \citep{DAFX}. The same applies in the chose of \autoref{tab:reverb_bgain}.
+\autoref{eq:reverb_defined_tal_res} then shows that the $\tau$ time is \SI{42}{\milli\second} with a total \gls{reverb} time $T$ of \SI{1}{second}. This achieve an echo density of 24 echo per second for each of the \gls{iir} filter, but if all the filter have the same delay time some echo will interference. To avoid interference each filter delay time is chosen to its own prime numbers which lay beneath \SI{42}{\milli\second} The chosen delay prime number is as following \autoref{tab:reverb_delay}, and there are chosen 2 extra delays, so it is possible to design a Moorer \gls{reverb} unit \citep{DAFX}. The same applies in the chose of \autoref{tab:reverb_bgain}.
 
 \begin{table}[htbp]
 \centering
 \caption{The chosen delay prime numbers}
 \label{tab:reverb_delay}
 \begin{tabular}{lll}
-$d_1$ & = & 19 \\
-$d_2$ & = & 23 \\
-$d_3$ & = & 29 \\
-$d_4$ & = & 31 \\
+$d_1$ & = & 19 \\ 
+$d_2$ & = & 23 \\ 
+$d_3$ & = & 29 \\ 
+$d_4$ & = & 31 \\ 
 $d_5$ & = & 37 \\
 $d_6$ & = & 41 \\
 $d_7$ & = & 17 \\
@@ -126,12 +126,12 @@ $b_6$ & = & 0.5
 \end{table}
 
 
-The \gls{reverb} unit require 1000 echo per second \citep{natural_sounding_revorb}. To achieve 1000 echo per second there needs to be multiply all pass filter delay unit in serial after the four in parallel defined \gls{iir} low pass filter. It is defined by \citep{natural_sounding_revorb} that two all pass filter is required. To calculate the approximated number of echo in one second from the 4 \gls{iir} filter. Because each \gls{iir} filter have an unscaled prime beneath 42, the total numbers of echo is just adding each echo form each \gls{iir} filter together. The result is 96 echo per second. The following calculation \autoref{eq:reverb_ser} calculate the approximate resulting echo after the first all pass filter if non of the echo interference. Both the first and the second all pass have a prime number under 42, so each signal from the all pass filter will be repeated maximum of $24-1$ times before the signal is attenuated under \SI{60}{\decibel}.
+The \gls{reverb} unit require 1000 echo per second \citep{natural_sounding_revorb}. To achieve 1000 echo per second there needs to be multiply all pass filter delay unit in serial after the four in parallel defined \gls{iir} filter. It is defined by \citep{natural_sounding_revorb} that two all pass filter is required. To calculate the approximated number of echo in one second from the 4 \gls{iir} filter. Because each \gls{iir} filter have an unscaled prime beneath 42, the total numbers of echo is just adding each echo form each \gls{iir} filter together. The result is 96 echo per second. The following calculation \autoref{eq:reverb_ser} calculate the approximate resulting echo after the first all pass filter if non of the echo interference. Both the first and the second all pass have a prime number under 42, so each signal from the all pass filter will be repeated maximum of $24-1$ times before the signal is attenuated under \SI{60}{\decibel}.
 
 
 \begin{subequations}
 \begin{equation}\label{eq:reverb_ser}
-      \text{aprox  echo from first all pass filter} = \sum_{x=1}^{23} 24-x + \sum_{x=1}^{20} 24-x + \sum_{x=1}^{18} 24-x + \sum_{x=1}^{14} 24-x
+      \text{aprox  echo,first all pass} = \sum_{x=1}^{23} 24-x + \sum_{x=1}^{20} 24-x + \sum_{x=1}^{18} 24-x + \sum_{x=1}^{14} 24-x
        \addunit{\si{1}}
     \end{equation}
 \centering
@@ -148,7 +148,30 @@ $\Updownarrow$
 \explain{$16$ echo is calculated from each echo from the fourth \gls{iir} filter which is attenuated 30 percent, $echo=\left \lfloor 24-1 \cdot b_4 \right \rfloor$ }{\si{1}}
     \stopexplain
 
-Since the echo density already is about 1038 echo per second, the last \gls{fir} filter will defenetly have a echo density of over 1000 echo per second for the output of the \gls{reverb} effect. In \citep{DAFX} Moorer suggests adding two extra \gls{iir} filter in parallel an making an early reflection network. The early reflection network is a simple multi tap \gls{fir} filter constellation. The following \autoref{fig:reverb_block_design} shows a direct form 2 block diagram over the \gls{reverb} unit.
+Since the echo density already is about 1038 echo per second, the last \gls{fir} filter will defenetly have a echo density of over 1000 echo per second for the output of the \gls{reverb} effect. In \citep{DAFX} Moorer suggests adding two extra \gls{iir} filter in parallel an making an early reflection network. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests to inset a low pass filter in the feedback for the \gls{iir} filters, where the room is scaled by changing the feedback gain. The following formula \autoref{} shows the formula of the low pass feedback comb filter. 
+
+\begin{subequations}
+\begin{equation}\label{eq:reverb_comb_low}
+w_1[n] = x_1[n]+iirg \cdot w_1[n-1]
+       \addunit{\si{1}}
+    \end{equation}
+\centering
+$\Updownarrow$
+\begin{equation}\label{eq:reverb_comb_low2}
+x_2[n] = w_1[n]-iirg \cdot w_1[n-1]+f(1-iirg) \cdot x_2[n-d]
+        \addunit{\si{1}}
+    \end{equation}
+ \end{subequations}
+
+    \startexplain
+\explain{$f$ is defined as $f = roomsize = initialroom \cdot scaleoom + offsetroom$ and are used to scale the room}{\si{1}}
+\explain{$roomsize$ is defined to be $0.5$ }{\si{1}}
+\explain{$scaleoom$ is the user setting }{\si{1}}
+\explain{$offsetroom$ is defined to be the gain $\alpha$ }{\si{1}}
+\explain{$iirg$ is defined to be a gain value of $0.2$ }{\si{1}}
+    \stopexplain
+
+   The following \autoref{fig:reverb_block_design} shows a direct form 2 block diagram over the \gls{reverb} unit.
 
 \newpage
 \begin{figure} [htbp]
@@ -165,6 +188,7 @@ Since the echo density already is about 1038 echo per second, the last \gls{fir}
   \selectfont}%
 \fi\endgroup%
 \begin{picture}(6984,6549)(-2471,-3718)
+\put(3106,1244){$x_1[n]$}%
 \put(4186,-196){$y[n]$}%
 \put(1711,-421){$\Sigma$}%
 \put(721,-916){$z^{-d_7}$}%
@@ -179,16 +203,16 @@ Since the echo density already is about 1038 echo per second, the last \gls{fir}
 \put(-1664,119){$z^{-d_3}$}%
 \put(-1979,-241){$\alpha_3$}%
 \put(-2159,119){$\Sigma$}%
-\put(-1349,389){$x_3[n]$}%
+\put(-1349,389){$x_4[n]$}%
 \put(-1664,1199){$z^{-d_2}$}%
 \put(-2159,1199){$\Sigma$}%
 \put(-2024,839){$\alpha_2$}%
-\put(-1349,1469){$x_2[n]$}%
+\put(-1349,1469){$x_3[n]$}%
 \put(-2159,2279){$\Sigma$}%
 \put(-1664,2279){$z^{-d_1}$}%
-\put(-1349,2549){$x_1[n]$}%
+\put(-1349,2549){$x_2[n]$}%
 \put(-719,1379){$b_2$}%
-\put(-1349,-691){$x_4[n]$}%
+\put(-1349,-691){$x_5[n]$}%
 \put(-719,-781){$b_4$}%
 \put(-1664,-961){$z^{-d_4}$}%
 \put(-2159,-961){$\Sigma$}%
@@ -197,10 +221,10 @@ Since the echo density already is about 1038 echo per second, the last \gls{fir}
 \put(-2159,-2041){$\Sigma$}%
 \put(-1664,-2041){$z^{-d_5}$}%
 \put(-1979,-2401){$\alpha_5$}%
-\put(-1349,-1771){$x_5[n]$}%
+\put(-1349,-1771){$x_6[n]$}%
 \put(-1979,-3481){$\alpha_6$}%
 \put(-2159,-3121){$\Sigma$}%
-\put(-1349,-2851){$x_6[n]$}%
+\put(-1349,-2851){$x_7[n]$}%
 \put(-1664,-3121){$z^{-d_6}$}%
 \put(-719,-2941){$b_6$}%
 \put(-719,2459){$b_1$}%
@@ -216,34 +240,58 @@ Since the echo density already is about 1038 echo per second, the last \gls{fir}
 \put(1891,1739){$z^{-ed_3}$}%
 \put(2611,1739){$z^{-ed_4}$}%
 \put(-2024,1919){$\alpha_1$}%
-\put(-224,-106){$x_7[n]$}%
-\put(1936,-106){$x_8[n]$}%
+\put(-224,-106){$x_8[n]$}%
+\put(1936,-106){$x_9[n]$}%
 \end{picture}%
   \caption{The figure shows a block diagram of a \gls{reverb} unit.}
   \label{fig:reverb_block_design}
 \end{figure}
 
 
-The equation for the \gls{reverb} can be written in six parts as:
+The equation for the \gls{reverb} can be written in 12 parts as:
 
 
 \begin{subequations}
-\begin{equation}\label{eq:reverb_eq_1}
-x_5[n] = ((x[n]+x_1[n-d_1] \cdot \alpha_1) \cdot b_1)+((x[n]+x_2[n-d_2] \cdot \alpha_2) \cdot b_2)+((x[n]+x_3[n-d_3] \cdot \alpha_3) \cdot b_3)+((x[n]+x_4[n-d_4] \cdot \alpha_4) \cdot b_4)
+\begin{equation}\label{eq:reverb_eq_ed}
+		x_1[n] = x[n]+x[n-ed_1]+x[n-ed_2]+x[n-ed_3]
     \end{equation}
-\begin{equation}\label{eq:reverb_eq_2}
-x_6[n] = - \alpha_5 \cdot w_5[n] + w_5[n-d_5]
+\begin{equation}\label{eq:reverb_eq_iir1}
+x_2[n] = x_1[n-d_1]+(x_2[n-d_1 \cdot 2)) \cdot \alpha_1
     \end{equation}
-\begin{equation}\label{eq:reverb_eq_3}
-w_5[n] = \alpha_5 \cdot w[n-d_5] + x_5[n] 
+\begin{equation}\label{eq:reverb_eq_iir2}
+x_3[n] = x_4[n-d_2]+(x_3[n-d_2 \cdot 2)) \cdot \alpha_2
     \end{equation}
-    \begin{equation}\label{eq:reverb_eq_4}
-y[n] = - \alpha_6 \cdot w_6[n] + w_6[n-d_6]
+\begin{equation}\label{eq:reverb_eq_iir3}
+x_4[n] = x_1[n-d_3]+(x_4[n-d_3 \cdot 2)) \cdot \alpha_3
     \end{equation}
-    \begin{equation}\label{eq:reverb_eq_5}
-w_6[n] = \alpha_6 \cdot w[n-d_6] + x_6[n] 
+\begin{equation}\label{eq:reverb_eq_iir4}
+x_5[n] = x_1[n-d_4]+(x_5[n-d_4 \cdot 2)) \cdot \alpha_4
     \end{equation}
- \end{subequations}
+\begin{equation}\label{eq:reverb_eq_iir5}
+x_6[n] = x_1[n-d_5]+(x_6[n-d_5 \cdot 2)) \cdot \alpha_5
+    \end{equation}
+\begin{equation}\label{eq:reverb_eq_iir6}
+x_7[n] = x_1[n-d_6]+(x_7[n-d_6 \cdot 2)) \cdot \alpha_6
+    \end{equation}
+\begin{equation}\label{eq:reverb_eq_iir6}
+    \begin{array}[b]{r}
+      x_8[n] = x_2[n] \cdot b_1+x_3n] \cdot b_2+x_4[n] \cdot b_3\\
++x_5[n] \cdot b_4+x_6[n] \cdot b_5+x_7[n] \cdot b_6
+    \end{array}
+    \end{equation}
+    \begin{equation}\label{eq:reverb_eq_ap1}
+w_8[n] = \alpha_7 \cdot w[n-d_8] + x_8[n] 
+    \end{equation}
+\begin{equation}\label{eq:reverb_eq_ap12}
+x_9[n] = - \alpha_8 \cdot w_8[n] + w_8[n-d_7]
+    \end{equation}
+    \begin{equation}\label{eq:reverb_eq_ap2}
+w_9[n] = \alpha_8 \cdot w[n-d_8] + x_9[n] 
+    \end{equation}
+    \begin{equation}\label{eq:reverb_eq_ap22}
+y[n] = - \alpha_8 \cdot w_9[n] + w_9[n-d_8] + x_1[n]
+    \end{equation}
+\end{subequations}
 
 
 \subsection{Matlab Simulation}
