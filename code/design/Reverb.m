@@ -11,19 +11,19 @@ fs
 
 %user define array and variable
 g = 0.7; %Gain
-time = 10; % roomsize
 early = 2; % pre delay
-scaleroom = 0.99; %0.28 int
+scaleroom = 1; %0.28 int
 drywet = 1; % dry/wet
 
 %Pre define array and variable
 b = [1,0.9,0.8,0.7,0.6,0.5];
+time = 10; % roomsize
 iirg = 0.2;
 
 % filter delay time 
 Delay = [round(fs/1000*1.9*time),round(fs/1000*2.3*time),round(fs/1000*2.9*time),round(fs/1000*3.1*time),round(fs/1000*3.7*time),round(fs/1000*4.1*time),round(fs/1000*1.7*time),round(fs/1000*1.3*time)]
 Early_delay = [round(fs/1000*1.01*time*early),round(fs/1000*1.99*time*early),round(fs/1000*3.07*time*early),round(fs/1000*4.01*time*early)]
-row = length(Delay) %total-1 array row.
+row = length(Delay); %total-1 array row.
 d_out = (round(length(Delay)*g)+time); %total samples after the input is finist 
 d = sum(Delay); %total delay time.
 
