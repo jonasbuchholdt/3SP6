@@ -12,16 +12,18 @@ fs
 %user define array and variable
 g = 0.7; %Gain
 early = 2; % pre delay
-scaleroom = 1; %0.28 int
+scaleroom = 0.9; %0.28 int
+scaledamp = 0.4; %0.4 int
 drywet = 1; % dry/wet
 
 %Pre define array and variable
 b = [1,0.9,0.8,0.7,0.6,0.5];
 time = 10; % roomsize
-iirg = 0.2;
+damp = 0.5*scaledamp;
+room = 0.5*scaleroom+0.7;
 
 % filter delay time 
-Delay = [round(fs/1000*1.9*time),round(fs/1000*2.3*time),round(fs/1000*2.9*time),round(fs/1000*3.1*time),round(fs/1000*3.7*time),round(fs/1000*4.1*time),round(fs/1000*1.7*time),round(fs/1000*1.3*time)]
+Delay = [round(fs/1000*1.9*time),round(fs/1000*2.3*time),round(fs/1000*2.97*time),round(fs/1000*3.71*time),round(fs/1000*4.1*time),round(fs/1000*4.37*time),round(fs/1000*1.3*time),round(fs/1000*1.7*time)]
 Early_delay = [round(fs/1000*1.01*time*early),round(fs/1000*1.99*time*early),round(fs/1000*3.07*time*early),round(fs/1000*4.01*time*early)]
 row = length(Delay); %total-1 array row.
 d_out = (round(length(Delay)*g)+time); %total samples after the input is finist 
@@ -33,6 +35,7 @@ x = zeros(row+1,round(sample_no+(d*d_out*g)))';
 y = zeros(row+1,round(sample_no+(d*d_out*g)))';
 w = zeros(row+1,round(sample_no+(d*d_out*g)))';
 in = zeros(row+1,round(sample_no+(d*d_out*g)))';
+buf = zeros(row+1,round(sample_no+(d*d_out*g)))';
 
 %move all input data the total delay time to the left 
 for i = 1:1:sample_no
@@ -45,40 +48,44 @@ for n = 1:1:sample_no+(d*d_out*g)-d-1
     % Early reflection network
     x(n,1) = in(n,1) + in(n-Early_delay(1),1) + in(n-Early_delay(2),1) + in(n-Early_delay(3),1)+ in(n-Early_delay(4),1);
    
-    %x(n,2) = x(n-Delay(1),1)+(x(n-Delay(1)+Delay(1),2))*g;
-    %x(n,3) = x(n-Delay(2),1)+(x(n-Delay(2)+Delay(2),3))*g;
-    %x(n,4) = x(n-Delay(3),1)+(x(n-Delay(3)+Delay(3),4))*g;
-    %x(n,5) = x(n-Delay(4),1)+(x(n-Delay(4)+Delay(4),5))*g;
-    %x(n,6) = x(n-Delay(5),1)+(x(n-Delay(5)+Delay(5),6))*g;
-    %x(n,7) = x(n-Delay(6),1)+(x(n-Delay(6)+Delay(6),7))*g;
+    %w(n,1) = buf(n,1) + damp*w(n-1,1);
+    %x(n,1) = w(n,1)-damp*w(n-1,1);
+    %x(n,2) = x(n,1)+(x(n-Delay(1),2))*((room)*(1-damp));
+    %x(n,3) = x(n,1)+(x(n-Delay(2),3))*((room)*(1-damp));
+    %x(n,4) = x(n,1)+(x(n-Delay(3),4))*((room)*(1-damp));
+    %x(n,5) = x(n,1)+(x(n-Delay(4),5))*((room)*(1-damp));
+    %x(n,6) = x(n,1)+(x(n-Delay(5),6))*((room)*(1-damp));
+    %x(n,7) = x(n,1)+(x(n-Delay(6),7))*((room)*(1-damp));
     
-    %x(n,2) = x(n,1)-iirg*x(n-1,1)+iirg*x(n-1,2)+(g*(1-iirg)*x(n-Delay(1),2));
-    %x(n,3) = x(n,1)-iirg*x(n-1,1)+iirg*x(n-1,3)+(g*(1-iirg)*x(n-Delay(2),3));
-    %x(n,4) = x(n,1)-iirg*x(n-1,1)+iirg*x(n-1,4)+(g*(1-iirg)*x(n-Delay(3),4));
-    %x(n,5) = x(n,1)-iirg*x(n-1,1)+iirg*x(n-1,5)+(g*(1-iirg)*x(n-Delay(4),5));
-    %x(n,6) = x(n,1)-iirg*x(n-1,1)+iirg*x(n-1,6)+(g*(1-iirg)*x(n-Delay(5),6));
-    %x(n,7) = x(n,1)-iirg*x(n-1,1)+iirg*x(n-1,7)+(g*(1-iirg)*x(n-Delay(6),7));
+    
+    
+    %x(n,2) = x(n,1)-damp*x(n-1,1)+iirg*x(n-1,2)+((room)*(1-damp)*x(n-Delay(1),2));
+    %x(n,3) = x(n,1)-damp*x(n-1,1)+iirg*x(n-1,3)+((room)*(1-damp)*x(n-Delay(2),3));
+    %x(n,4) = x(n,1)-damp*x(n-1,1)+iirg*x(n-1,4)+((room)*(1-damp)*x(n-Delay(3),4));
+    %x(n,5) = x(n,1)-damp*x(n-1,1)+iirg*x(n-1,5)+((room)*(1-damp)*x(n-Delay(4),5));
+    %x(n,6) = x(n,1)-damp*x(n-1,1)+iirg*x(n-1,6)+((room)*(1-damp)*x(n-Delay(5),6));
+    %x(n,7) = x(n,1)-damp*x(n-1,1)+iirg*x(n-1,7)+((room)*(1-damp)*x(n-Delay(6),7));
     
     
     % Late reflection network
     
-    w(n,1) = x(n,1) + iirg*w(n-1,1);
-    x(n,2) = w(n,1)-iirg*w(n-1,1)+((0.5*scaleroom+g)*(1-iirg)*x(n-Delay(1),2));
+    w(n,1) = x(n,1) + damp*w(n-1,1) + ((room)*(1-damp)*x(n-Delay(1),2));
+    x(n,2) = w(n,1) - damp*w(n-1,1);
     
-    w(n,2) = x(n,1) + iirg*w(n-1,2);
-    x(n,3) = w(n,2)-iirg*w(n-1,2)+((0.5*scaleroom+g)*(1-iirg)*x(n-Delay(2),3));
+    w(n,2) = x(n,1) + damp*w(n-1,2) + ((room)*(1-damp)*x(n-Delay(2),3));
+    x(n,3) = w(n,2) - damp*w(n-1,2);
     
-    w(n,3) = x(n,1) + iirg*w(n-1,3);
-    x(n,4) = w(n,3)-iirg*w(n-1,3)+((0.5*scaleroom+g)*(1-iirg)*x(n-Delay(3),4));
+    w(n,3) = x(n,1) + damp*w(n-1,3) + ((room)*(1-damp)*x(n-Delay(3),4));
+    x(n,4) = w(n,3) - damp*w(n-1,3);
     
-    w(n,4) = x(n,1) + iirg*w(n-1,4);
-    x(n,5) = w(n,4)-iirg*w(n-1,4)+((0.5*scaleroom+g)*(1-iirg)*x(n-Delay(4),5));
+    w(n,4) = x(n,1) + damp*w(n-1,4) + ((room)*(1-damp)*x(n-Delay(4),5));
+    x(n,5) = w(n,4) - damp*w(n-1,4);
     
-    w(n,5) = x(n,1) + iirg*w(n-1,5);
-    x(n,6) = w(n,5)-iirg*w(n-1,5)+((0.5*scaleroom+g)*(1-iirg)*x(n-Delay(5),6));
+    w(n,5) = x(n,1) + damp*w(n-1,5) + ((room)*(1-damp)*x(n-Delay(5),6));
+    x(n,6) = w(n,5) - damp*w(n-1,5);
     
-    w(n,6) = x(n,1) + iirg*w(n-1,6);
-    x(n,7) = w(n,6)-iirg*w(n-1,6)+((0.5*scaleroom+g)*(1-iirg)*x(n-Delay(6),7));
+    w(n,6) = x(n,1) + damp*w(n-1,6) + ((room)*(1-damp)*x(n-Delay(6),7));
+    x(n,7) = w(n,6) - damp*w(n-1,6);
     
     x(n,8) = x(n,2)*b(1) + x(n,3)*b(2) + x(n,4)*b(3) + x(n,5)*b(4) + x(n,6)*b(5) + x(n,7)*b(6);
     
