@@ -41,7 +41,7 @@ G = G5_peak;
 Q = 1.6;
 Hs = s/(om_zero*Q);
 H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
-H_BP_1 = 1+G*H_LP*Hs;
+H_BP_1 = 1+G*H_LP*Hs
 
 % Peak filter 2
 om_zero = 400;
