@@ -11,18 +11,17 @@ Q = 1.6;
 G = 4.6234;
 s = tf('s');
 z = tf('z',Td);
-b1 = Q*4+om_zero_pw*2*Td+Q*om_zero_pw^2*Td^2;
-b2 = (-Q*8+2*Q*om_zero_pw^2*Td^2)/b1
-b3 = (Q*4-om_zero_pw*2*Td+Q*om_zero_pw^2*Td^2)/b1
-a1 = (Q*4+(G+1)*om_zero_pw*Td+Q*om_zero_pw^2*Td^2)/b1
-a2 = (-Q*8+2*Q*om_zero_pw*Td^2)/b1
-a3 = (Q*4-(G+1)*om_zero_pw*2*Td+Q*om_zero_pw^2*Td^2)/b1
-b1 = b1/b1
+a1 = Q*4+(G+1)*om_zero_pw*Td+Q*om_zero_pw^2*Td^2
+a2 = -Q*8+2*Q*om_zero_pw*Td^2
+a3 = Q*4-(G+1)*om_zero_pw*2*Td+Q*om_zero_pw^2*Td^2
+b1 = Q*4+om_zero_pw*2*Td+Q*om_zero_pw^2*Td^2
+b2 = -Q*8+2*Q*om_zero_pw^2*Td^2
+b3 = Q*4-om_zero_pw*2*Td+Q*om_zero_pw^2*Td^2
 numd1 = [a1 a2 a3];
 dend1 = [b1 b2 b3];
-H_z = (z^2*a1/b1+z*a2/b1+a3/b1)/(z^2*b1/b1+z*b2/b1+b3/b1)
+H_z = (z^2*a1+z*a2+a3)/(z^2*b1+z*b2+b3)
 % H_z = tf([numd1]/b1,[dend1]/b1,Td,'variable','z')
-
+H_z1 = tf(H_z);
 
 Hs = 1/(om_zero*Q);
 num = [Q (G*om_zero+om_zero) Q*om_zero^2];
@@ -49,7 +48,7 @@ bode(H_z,{0.1,10^6})
 
 
 figure(2)
-bodemag(H_LP_d,{0.1,10^6})
+bodemag(H_BP_1d,{0.1,10^6})
 
 figure(3)
 bodemag(H_z2,{10^(-5),10^6})
