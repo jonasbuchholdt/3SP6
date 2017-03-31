@@ -75,7 +75,7 @@ Hs = s/(om_zero*Q);
 H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
 H_BP_5 = 1+G*H_LP*Hs;
 
-H = 1+H_BP_1+H_BP_2+H_BP_3+H_BP_4+H_BP_5+Hs_low+Hs_high;
+H = 1+H_BP_1+H_BP_2+H_BP_3+Hs_low
 
 % Finding ripple
 fband = [100,6200];
