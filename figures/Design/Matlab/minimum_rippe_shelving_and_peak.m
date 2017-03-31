@@ -21,21 +21,21 @@ min_ripple = 50;
 for j = 1:1
 
 % Shelving filter Low 
-om_zero = 100;
+om_zero = 100*2*pi;
 G = G5_shelv;
 s_LS = s/om_zero;
 Hs = G*om_zero/(s+om_zero);
 Hs_low = 1+Hs;
 
 % Shelving filter High 
-om_zero = 6400;
+om_zero = 6400*2*pi;
 %G = 2;
 s_HS = om_zero/s;
 Hs = G*(s/(s+om_zero));
 Hs_high = 1+Hs;
 
 % Peak filter 1
-om_zero = 200;
+om_zero = 200*2*pi;
 x = 1;
 G = G5_peak;
 Q = 1.6;
@@ -44,7 +44,7 @@ H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
 H_BP_1 = 1+G*H_LP*Hs
 
 % Peak filter 2
-om_zero = 400;
+om_zero = 400*2*pi;
 G = G5_peak;
 %Q = 2;
 Hs = s/(om_zero*Q);
@@ -52,7 +52,7 @@ H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
 H_BP_2 = 1+G*H_LP*Hs;
 
 % Peak filter 3
-om_zero = 800;
+om_zero = 800*2*pi;
 G = G5_peak;
 %Q = 2;
 Hs = s/(om_zero*Q);
@@ -60,7 +60,7 @@ H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
 H_BP_3 = 1+G*H_LP*Hs;
 
 % Peak filter 4
-om_zero = 1600;
+om_zero = 1600*2*pi;
 G = G5_peak;
 %Q = 2;
 Hs = s/(om_zero*Q);
@@ -68,7 +68,7 @@ H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
 H_BP_4 = 1+G*H_LP*Hs;
 
 % Peak filter 5
-om_zero = 3200;
+om_zero = 3200*2*pi;
 G = G5_peak;
 %Q = 2;
 Hs = s/(om_zero*Q);
@@ -111,8 +111,9 @@ diff_final
 %% plotting
 figure(1)
 %bodemag(Hs_low_1,Hs_low_2,Hs_low_3,Hs_high_1,Hs_high_2,Hs_high_3)
-
-bodemag(Hs_low,H_final_BP_1,H_final_BP_2,H_final_BP_3,H_final_BP_4,H_final_BP_5,Hs_high,H_final)
+opts = bodeoptions('cstprefs');
+opts.FreqUnits = 'Hz';
+bodemag(Hs_low,H_final_BP_1,H_final_BP_2,H_final_BP_3,H_final_BP_4,H_final_BP_5,Hs_high,H_final,opts)
 hold on
 grid on
 legend('Low shelving filter','Peak filter1','Peak filter2','Peak filter3','Peak filter4','Peak filter5','High shelving filter','Combined filter','Location','southwest')
