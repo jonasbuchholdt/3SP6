@@ -98,15 +98,11 @@ $\Updownarrow$
 \centering
 \caption{The chosen delay prime numbers}
 \label{tab:reverb_delay}
-\begin{tabular}{lll}
-$d_1$ & = & 19 \\ 
-$d_2$ & = & 23 \\ 
-$d_3$ & = & 29 \\ 
-$d_4$ & = & 31 \\ 
-$d_5$ & = & 37 \\
-$d_6$ & = & 41 \\
-$d_7$ & = & 17 \\
-$d_8$ & = & 13
+\begin{tabular}{llllll}
+$d_1$ & = & 19 & $d_5$ & = & 37 \\ 
+$d_2$ & = & 23 & $d_6$ & = & 41 \\
+$d_3$ & = & 29 & $d_7$ & = & 17 \\
+$d_4$ & = & 31 & $d_8$ & = & 13
 \end{tabular}
 \end{table}
 
@@ -144,14 +140,14 @@ $\Updownarrow$
  \end{subequations}
 
     \startexplain
-\explain{$20$ echo is calculated from each echo from the second \gls{iir} filter which is attenuated 10 percent, $echo=\left \lfloor 20 \cdot b_2 \right \rfloor$ }{\si{1}}
-\explain{$18$ echo is calculated from each echo from the third \gls{iir} filter which is attenuated 20 percent, $echo=\left \lfloor 20 \cdot b_3 \right \rfloor$ }{\si{1}}
-\explain{$16$ echo is calculated from each echo from the fourth \gls{iir} filter which is attenuated 30 percent, $echo=\left \lfloor 20 \cdot b_4 \right \rfloor$ }{\si{1}}
-\explain{$16$ echo is calculated from each echo from the fourth \gls{iir} filter which is attenuated 40 percent, $echo=\left \lfloor 20 \cdot b_4 \right \rfloor$ }{\si{1}}
-\explain{$16$ echo is calculated from each echo from the fourth \gls{iir} filter which is attenuated 50 percent, $echo=\left \lfloor 20 \cdot b_4 \right \rfloor$ }{\si{1}}
+\explain{$17$ echo is calculated from the \gls{lpcf} which is attenuated 10 percent, $echo=\left \lfloor 20 \cdot b_2 \right \rfloor$ }{\si{1}}
+\explain{$15$ echo is calculated from the \gls{lpcf} which is attenuated 20 percent, $echo=\left \lfloor 20 \cdot b_3 \right \rfloor$ }{\si{1}}
+\explain{$14$ echo is calculated from the \gls{lpcf} which is attenuated 30 percent, $echo=\left \lfloor 20 \cdot b_4 \right \rfloor$ }{\si{1}}
+\explain{$11$ echo is calculated from the \gls{lpcf} which is attenuated 40 percent, $echo=\left \lfloor 20 \cdot b_5 \right \rfloor$ }{\si{1}}
+\explain{$9$ echo is calculated from the \gls{lpcf} which is attenuated 50 percent, $echo=\left \lfloor 20 \cdot b_6 \right \rfloor$ }{\si{1}}
     \stopexplain
 
-Since the echo density already is about 1038 echo per second, the last \gls{fir} filter will defenetly have a echo density of over 1000 echo per second for the output of the \gls{reverb} effect. In \citep{DAFX} Moorer suggests adding two extra \gls{iir} filter in parallel an making an early reflection network. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests to inset a low pass filter in the feedback for the \gls{iir} filters, where the room is scaled by changing the feedback gain. The following formula \autoref{eq:reverb_eq_eks} shows the formula of the low pass feedback comb filter \citep{LPCFfd}. 
+Since the echo density already is about 755 echo per second, the last all pass filter will certainly have a echo density of over 1000 echo per second for the output of the \gls{reverb} effect. In \citep{DAFX} Moorer suggests adding six \gls{lpcf} in parallel an making an early reflection network. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests to make the \gls{lpcf} feedback gain user variable to scaled the room size and damping. The following \autoref{eq:reverb_eq_eks} shows the formula of the \gls{lpcf} \citep{LPCFfd}. 
 
 \begin{subequations}\label{eq:reverb_eq_eks}
     \begin{equation}\label{eq:reverb_eq_iireks1}
@@ -163,8 +159,7 @@ x_2[n] = w_1[n] - L_D \cdot w_1[n-1]
  \end{subequations}
 
 Where:\\ \\
-
-The $f$ is defining the room size, and the equation of $f$ is as following \autoref{eq:reverb_eq_f} where scaleroom is used to scale the room size \citep{LPCFfd}.
+The $f$ is defining the room size, and the equation of $f$ is as following \autoref{eq:reverb_eq_f} where scaleroom is used to scale the room size by user \citep{LPCFfd}.
 
 \begin{subequations}\label{eq:reverb_eq_f}
 \begin{equation}\label{eq:reverb_eq_f1}
@@ -177,7 +172,7 @@ $\Updownarrow$
     \end{equation}
  \end{subequations}   
    
-The $L_D$ is defining the room damping, and the equation of $L_D$ is as following \autoref{eq:reverb_eq_L_D} where scaledamp is used to scale the room damping \citep{LPCFfd}.    
+The $L_D$ is defining the room damping, and the equation of $L_D$ is as following \autoref{eq:reverb_eq_L_D} where scaledamp is used to scale the room damping by user \citep{LPCFfd}.    
 
 \begin{subequations}\label{eq:reverb_eq_L_D}
 \begin{equation}\label{eq:reverb_eq_L_D1}
