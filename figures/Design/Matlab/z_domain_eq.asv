@@ -64,8 +64,6 @@ H_z5 = (z^2*a(1,5)+z*a(2,5)+a(3,5))/(z^2*b(1,5)+z*b(2,5)+b(3,5))
 H_z_HS = (z*c(1,2)+c(2,2))/(z*d(1,2)+d(2,2));
 
 H_z_01 = 1+H_z4+H_z5+H_z_HS;
-H_z_02 = 1+H_z2+H_z3+H_z4;
-H_z_03 = 1+ H_z_LS+H_z1+H_z2;
 
 
 % Plot
@@ -91,5 +89,5 @@ H_z_03 = 1+ H_z_LS+H_z1+H_z2;
 % bodemag(H_z_HS,{0.1,10^6})
 
 figure(8)
-bodemag(H_z_LS,H_z1,H_z2,H_z3,H_z4,H_z5,H_z_HS,H_z_01,H_z_02,H_z_03,{0.1,10^6})
+bodemag(H_z_LS,H_z1,H_z2,H_z3,H_z4,H_z5,H_z_HS,H_z,{0.1,10^6})
 
