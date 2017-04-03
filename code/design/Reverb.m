@@ -12,8 +12,8 @@ fs
 %user define array and variable
 g = 0.7; %Gain
 early = 1; % pre delay
-scaleroom = 0.99; %0.28 int
-scaledamp = 0.38; %0.4 int
+scaleroom = 0.40; %0.28 int
+scaledamp = 0.4; %0.4 int
 drywet = 0.5; % dry/wet
 
 %Pre define array and variable
@@ -49,25 +49,32 @@ for n = 1:1:sample_no+(d*d_out*g)-d-1
     x(n,1) = in(n,1) + in(n-Early_delay(1),1)*0.841 + in(n-Early_delay(2),1)*0.504 + in(n-Early_delay(3),1)*0.491 + in(n-Early_delay(4),1)*0.379;
    
     
+    %w(n,1) = x(n,1) + damp*w(n-1,1) + ((room)*(1-damp)*x(n-Delay(1),2));
+    %x(n,2) = w(n,1) - damp*w(n-1,1);
+    
+    %w(n,2) = x(n,1) + damp*w(n-1,2) + ((room)*(1-damp)*x(n-Delay(2),3));
+    %x(n,3) = w(n,2) - damp*w(n-1,2);
+    
+    %w(n,3) = x(n,1) + damp*w(n-1,3) + ((room)*(1-damp)*x(n-Delay(3),4));
+    %x(n,4) = w(n,3) - damp*w(n-1,3);
+    
+    %w(n,4) = x(n,1) + damp*w(n-1,4) + ((room)*(1-damp)*x(n-Delay(4),5));
+    %x(n,5) = w(n,4) - damp*w(n-1,4);
+    
+    %w(n,5) = x(n,1) + damp*w(n-1,5) + ((room)*(1-damp)*x(n-Delay(5),6));
+    %x(n,6) = w(n,5) - damp*w(n-1,5);
+    
+    %w(n,6) = x(n,1) + damp*w(n-1,6) + ((room)*(1-damp)*x(n-Delay(6),7));
+    %x(n,7) = w(n,6) - damp*w(n-1,6);
+    
     % Late reflection network
     
-    w(n,1) = x(n,1) + damp*w(n-1,1) + ((room)*(1-damp)*x(n-Delay(1),2));
-    x(n,2) = w(n,1) - damp*w(n-1,1);
-    
-    w(n,2) = x(n,1) + damp*w(n-1,2) + ((room)*(1-damp)*x(n-Delay(2),3));
-    x(n,3) = w(n,2) - damp*w(n-1,2);
-    
-    w(n,3) = x(n,1) + damp*w(n-1,3) + ((room)*(1-damp)*x(n-Delay(3),4));
-    x(n,4) = w(n,3) - damp*w(n-1,3);
-    
-    w(n,4) = x(n,1) + damp*w(n-1,4) + ((room)*(1-damp)*x(n-Delay(4),5));
-    x(n,5) = w(n,4) - damp*w(n-1,4);
-    
-    w(n,5) = x(n,1) + damp*w(n-1,5) + ((room)*(1-damp)*x(n-Delay(5),6));
-    x(n,6) = w(n,5) - damp*w(n-1,5);
-    
-    w(n,6) = x(n,1) + damp*w(n-1,6) + ((room)*(1-damp)*x(n-Delay(6),7));
-    x(n,7) = w(n,6) - damp*w(n-1,6);
+    x(n,2) = x(n,1) - damp*x(n-1,1) + damp*x(n-1,2) + ((room)*(1-damp)* x(n-Delay(1),2));
+    x(n,3) = x(n,1) - damp*x(n-1,1) + damp*x(n-1,3) + ((room)*(1-damp)* x(n-Delay(2),3));
+    x(n,4) = x(n,1) - damp*x(n-1,1) + damp*x(n-1,4) + ((room)*(1-damp)* x(n-Delay(3),4));
+    x(n,5) = x(n,1) - damp*x(n-1,1) + damp*x(n-1,5) + ((room)*(1-damp)* x(n-Delay(4),5));
+    x(n,6) = x(n,1) - damp*x(n-1,1) + damp*x(n-1,6) + ((room)*(1-damp)* x(n-Delay(5),6));
+    x(n,7) = x(n,1) - damp*x(n-1,1) + damp*x(n-1,7) + ((room)*(1-damp)* x(n-Delay(6),7));
     
     x(n,8) = x(n,2)*b(1) + x(n,3)*b(2) + x(n,4)*b(3) + x(n,5)*b(4) + x(n,6)*b(5) + x(n,7)*b(6);
     

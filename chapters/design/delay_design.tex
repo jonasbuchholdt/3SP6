@@ -1,10 +1,10 @@
 \section{Design of the Delay and \gls{reverb} Effect}
-In this section, the delay and the \gls{reverb} will be designed to fit intro a \gls{dsp}, which mean that a discreet block diagram is obtained and afterwords the equation to the implementation is made. All the equation will afterwords be simulated in MATLAB and then the assembly code is developed and implemented. 
+In this section, the delay and the \gls{reverb} will be designed to fit intro a \gls{dsp}, which mean that a discreet block diagram is obtained and afterwards the equation to the implementation is made. All the equation will afterwards be simulated in MATLAB and then the assembly code is developed and implemented. 
 
 
 \subsection{Obtaining the Differential Equation}
 The Delay effect use one of the effect block in the \gls{reverb} effect and therefore they will be presented and designed in the same section. The block diagram presented in \autoref{sec:reverberation} \autoref{fig:reverb_block} is changed so it fit intro a direct form 2 construction. 
-The delay and \gls{reverb} effect both have \gls{iir} filter and \gls{fir} filter, but it is only the \gls{iir} filter which make the echo, the \gls{fir} filter is only applied to make a flat frequency respond in er delay effect and the two all pass filter in the \gls{reverb} effect, the seven first \gls{fir} filter is explained later. To get a naturally \gls{reverb} effect with the identical respond as a room acoustic respond and avoiding fluttering, all the serial \gls{reverb} unit needs to be an all pass filter and all parallel \gls{reverb} unit needs to be an \gls{lpcf} \citep{LPCF}. The\gls{lpcf} is used because the room acoustic characteristics is acting as a low pass filter, all low frequency signal will stay longer in the room than the high frequency \citep{rfi}. The \gls{reverb} needs to have at least 1000 echo per second, and the best way to make the \gls{reverb} effect is with four or six \gls{iir} filters in parallel and two all pass filter afterwords in serial, otherwise if there was not two all pass filter afterwords, it will require forty \gls{lpcf} to make 1000 echo per second \citep{natural_sounding_revorb}. The block diagram \autoref{fig:reverb_block_des} is in direct form 2 to minimize the implementation program. The delay and some of the \gls{reverb} effect can be obtained and is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is the one in red and black while the delay is only in red. 
+The delay and \gls{reverb} effect both have \gls{iir} filter and \gls{fir} filter, but it is only the \gls{iir} filter which make the echo, the \gls{fir} filter is only applied to make a flat frequency respond in er delay effect and the two all pass filter in the \gls{reverb} effect, the seven first \gls{fir} filter is explained later. To get a naturally \gls{reverb} effect with the identical respond as a room acoustic respond and avoiding fluttering, all the serial \gls{reverb} unit needs to be an all pass filter and all parallel \gls{reverb} unit needs to be an \gls{lpcf} \citep{LPCF}. The\gls{lpcf} is used because the room acoustic characteristics is acting as a low pass filter, all low frequency signal will stay longer in the room than the high frequency \citep{rfi}. The \gls{reverb} needs to have at least 1000 echo per second, and the best way to make the \gls{reverb} effect is with four or six \gls{iir} filters in parallel and two all pass filter afterwords in serial, otherwise if there was not two all pass filter afterwords, it will require forty \gls{lpcf} to make 1000 echo per second \citep{natural_sounding_revorb}. The all pass filter in block diagram \autoref{fig:reverb_block_des} is in direct form 2 because for the delay length. The delay and some of the \gls{reverb} effect can be obtained and is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is the one in red and black while the delay is only in red. 
 
 \newpage
 
@@ -203,7 +203,7 @@ $\Updownarrow$
   \selectfont}%
 \fi\endgroup%
 \begin{picture}(6819,12186)(-3656,-5608)
-\put(-3194,-511){$f$}%
+\put(-2204,-4111){$f$}%
 \put(1711,-421){$\Sigma$}%
 \put(721,-916){$z^{-d_7}$}%
 \put( 91,-421){$\Sigma$}%
@@ -220,74 +220,69 @@ $\Updownarrow$
 \put(2701,-1636){$y[n]$}%
 \put(2431,-1861){$\Sigma$}%
 \put(-764,4934){$x_1[n]$}%
-\put(-2204,-3571){$-L_D$}%
-\put(-2339,-2941){$w_5[n]$}%
-\put(-2789,-3436){$z^{-1}$}%
-\put(-3239,-3571){$L_D$}%
-\put(-1484,-2941){$x_6[n]$}%
-\put(-3374,-3121){$\Sigma$}%
-\put(-1754,-3121){$\Sigma$}%
 \put(-764,-2941){$b_5$}%
-\put(-2789,-2806){$z^{-d_5}$}%
-\put(-3194,-2311){$f$}%
-\put(-2789,-5236){$z^{-1}$}%
-\put(-3239,-5371){$L_D$}%
-\put(-2204,-5371){$-L_D$}%
-\put(-3374,-4921){$\Sigma$}%
-\put(-1484,-4741){$x_7[n]$}%
-\put(-2339,-4741){$w_6[n]$}%
-\put(-2789,-4606){$z^{-d_6}$}%
-\put(-3194,-4111){$f$}%
-\put(-1754,-4921){$\Sigma$}%
 \put(-764,-4741){$b_6$}%
-\put(-2789,-1636){$z^{-1}$}%
-\put(-3374,-1321){$\Sigma$}%
-\put(-2204,-1771){$-L_D$}%
-\put(-3239,-1771){$L_D$}%
-\put(-1754,-1321){$\Sigma$}%
-\put(-2339,-1141){$w_4[n]$}%
-\put(-2789,-1006){$z^{-d_4}$}%
-\put(-1484,-1141){$x_5[n]$}%
 \put(-764,-1141){$b_4$}%
-\put(-3374,479){$\Sigma$}%
-\put(-2789,164){$z^{-1}$}%
-\put(-3239, 29){$L_D$}%
-\put(-1484,659){$x_4[n]$}%
-\put(-2204, 29){$-L_D$}%
 \put(-1754,479){$\Sigma$}%
-\put(-2789,794){$z^{-d_3}$}%
-\put(-2339,659){$w_3[n]$}%
-\put(-3194,1289){$f$}%
 \put(-764,659){$b_3$}%
-\put(-3374,2279){$\Sigma$}%
-\put(-3239,1829){$L_D$}%
-\put(-2789,1964){$z^{-1}$}%
-\put(-2204,1829){$-L_D$}%
-\put(-2789,2594){$z^{-d_2}$}%
-\put(-1754,2279){$\Sigma$}%
 \put(-764,2459){$b_2$}%
-\put(-1484,2459){$x_3[n]$}%
-\put(-2339,2459){$w_2[n]$}%
-\put(-3284,3089){$f$}%
-\put(-1754,4079){$\Sigma$}%
-\put(-3374,4079){$\Sigma$}%
-\put(-2789,4394){$z^{-d_1}$}%
-\put(-2789,3764){$z^{-1}$}%
 \put(-764,4259){$b_1$}%
-\put(-1484,4259){$x_2[n]$}%
-\put(-2339,4259){$w_1[n]$}%
-\put(-3239,3629){$L_D$}%
-\put(-2204,3629){$-L_D$}%
-\put(-3284,4889){$f$}%
 \put(-3464,6419){$x[n]$}%
 \put(-1439,5879){$z^{-ed_3}$}%
 \put(-719,5879){$z^{-ed_4}$}%
 \put(-2744,5384){$\Sigma$}%
 \put(-2024,5384){$\Sigma$}%
 \put(-1304,5384){$\Sigma$}%
-\put(-2159,5879){$z^{-ed_2}$}%
+\put(-2159,5879){$z^-ed_2$}%
 \put(-2879,5879){$z^{-ed_1}$}%
 \put(-584,5384){$\Sigma$}%
+\put(-2519,4079){$\Sigma$}%
+\put(-1844,4394){$z^{-d_1}$}%
+\put(-1394,4259){$x_2[n]$}%
+\put(-2789,3629){$-L_D$}%
+\put(-2249,3629){$L_D$}%
+\put(-3374,3764){$z^{-1}$}%
+\put(-1844,3764){$z^{-1}$}%
+\put(-2204,4889){$f$}%
+\put(-2519,2279){$\Sigma$}%
+\put(-1394,2459){$x_3[n]$}%
+\put(-1844,2594){$z^{-d_2}$}%
+\put(-1844,1964){$z^{-1}$}%
+\put(-2789,1829){$-L_D$}%
+\put(-2249,1829){$L_D$}%
+\put(-3374,1964){$z^{-1}$}%
+\put(-2204,3089){$f$}%
+\put(-1844,794){$z^{-d_3}$}%
+\put(-1394,659){$x_4[n]$}%
+\put(-1844,164){$z^{-1}$}%
+\put(-2249, 29){$L_D$}%
+\put(-2789, 29){$-L_D$}%
+\put(-2519,479){$\Sigma$}%
+\put(-3374,164){$z^{-1}$}%
+\put(-2204,1289){$f$}%
+\put(-2519,-1321){$\Sigma$}%
+\put(-2249,-1771){$L_D$}%
+\put(-1844,-1006){$z^{-d_4}$}%
+\put(-1394,-1141){$x_5[n]$}%
+\put(-1844,-1636){$z^{-1}$}%
+\put(-2789,-1771){$-L_D$}%
+\put(-3374,-1636){$z^{-1}$}%
+\put(-2204,-511){$f$}%
+\put(-2519,-3121){$\Sigma$}%
+\put(-1844,-3436){$z^{-1}$}%
+\put(-2789,-3571){$-L_D$}%
+\put(-2249,-3571){$L_D$}%
+\put(-1844,-2806){$z^{-d_5}$}%
+\put(-3374,-3436){$z^{-1}$}%
+\put(-2204,-2311){$f$}%
+\put(-1394,-2941){$x_6[n]$}%
+\put(-2519,-4921){$\Sigma$}%
+\put(-1844,-5236){$z^{-1}$}%
+\put(-1844,-4606){$z^{-d_6}$}%
+\put(-1394,-4741){$x_7[n]$}%
+\put(-2249,-5371){$L_D$}%
+\put(-2789,-5371){$-L_D$}%
+\put(-3374,-5236){$z^{-1}$}%
 \end{picture}%
   \caption{The figure shows a block diagram of a \gls{reverb} unit.}
   \label{fig:reverb_block_design}
@@ -300,48 +295,25 @@ The equation for the \gls{reverb} can be written in 18 parts as following \autor
 \begin{subequations}\label{eq:reverb_eq}
 \begin{equation}\label{eq:reverb_eq_ed}
 		x_1[n] = x[n]+x[n-ed_1]+x[n-ed_2]+x[n-ed_3]+x[n-ed_4]
-    \end{equation}
+    \end{equation}    
     
 \begin{equation}\label{eq:reverb_eq_iir1w}
-    w_1[n] = x_1[n] + L_D \cdot w_1[n-1] + f \cdot (1-L_D) \cdot x_2[n-d_1]
+    x_2[n] = x_1[n] + L_D \cdot x_1[n-1] + L_D \cdot x_2[n-1] + f \cdot (1-L_D) \cdot x_2[n-d_1]
     \end{equation}
-\begin{equation}\label{eq:reverb_eq_iir1x}
-x_2[n] = w_1[n] - L_D \cdot w_1[n-1]
-    \end{equation}
-    
 \begin{equation}\label{eq:reverb_eq_iir2w}
-    w_2[n] = x_1[n] + L_D \cdot w_2[n-1] + f \cdot (1-L_D) \cdot x_3[n-d_1]
-    \end{equation}
-\begin{equation}\label{eq:reverb_eq_iir2x}
-x_3[n] = w_2[n] - L_D \cdot w_2[n-1]
-    \end{equation}
-    
+    x_3[n] = x_1[n] + L_D \cdot x_1[n-1] + L_D \cdot x_3[n-1] + f \cdot (1-L_D) \cdot x_3[n-d_2]
+    \end{equation}    
 \begin{equation}\label{eq:reverb_eq_iir3w}
-    w_3[n] = x_1[n] + L_D \cdot w_3[n-1] + f \cdot (1-L_D) \cdot x_4[n-d_1]
-    \end{equation}
-\begin{equation}\label{eq:reverb_eq_iir3x}
-x_4[n] = w_3[n] - L_D \cdot w_3[n-1]
-    \end{equation}
-    
+    x_4[n] = x_1[n] + L_D \cdot x_1[n-1] + L_D \cdot x_4[n-1] + f \cdot (1-L_D) \cdot x_4[n-d_3]
+    \end{equation}    
 \begin{equation}\label{eq:reverb_eq_iir4w}
-    w_4[n] = x_1[n] + L_D \cdot w_4[n-1] + f \cdot (1-L_D) \cdot x_5[n-d_1]
-    \end{equation}
-\begin{equation}\label{eq:reverb_eq_iir4x}
-x_5[n] = w_4[n] - L_D \cdot w_4[n-1]
-    \end{equation}
-    
+    x_5[n] = x_1[n] + L_D \cdot x_1[n-1] + L_D \cdot x_5[n-1] + f \cdot (1-L_D) \cdot x_5[n-d_4]
+    \end{equation}   
 \begin{equation}\label{eq:reverb_eq_iir5w}
-    w_5[n] = x_1[n] + L_D \cdot w_5[n-1] + f \cdot (1-L_D) \cdot x_6[n-d_1]
-    \end{equation}
-\begin{equation}\label{eq:reverb_eq_iir5x}
-x_6[n] = w_5[n] - L_D \cdot w_5[n-1]
-    \end{equation}
-    
+    x_6[n] = x_1[n] + L_D \cdot x_1[n-1] + L_D \cdot x_6[n-1] + f \cdot (1-L_D) \cdot x_6[n-d_5]
+    \end{equation}    
 \begin{equation}\label{eq:reverb_eq_iir6w}
-    w_6[n] = x_1[n] + L_D \cdot w_6[n-1] + f \cdot (1-L_D) \cdot x_7[n-d_1]
-    \end{equation}
-\begin{equation}\label{eq:reverb_eq_iir6x}
-x_7[n] = w_6[n] - L_D \cdot w_6[n-1]
+    x_7[n] = x_1[n] + L_D \cdot x_1[n-1] + L_D \cdot x_7[n-1] + f \cdot (1-L_D) \cdot x_7[n-d_6]
     \end{equation}
     
 \begin{equation}\label{eq:reverb_eq_iirto}
