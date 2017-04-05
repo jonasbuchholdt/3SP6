@@ -126,14 +126,14 @@ $b_6$ & = & 0.5
 The \gls{reverb} unit require 1000 echo per second \citep{natural_sounding_revorb}. To achieve natural \gls{reverb} sound there needs to be multiply all pass filter delay unit in serial after the six \gls{lpcf} in parallel. It is defined by \citep{natural_sounding_revorb} that two all pass filter is required to make a natural \gls{reverb} sound.
 To calculate the approximated number of echo in one second from six \gls{lpcf}, the following is consiteret. The total numbers of echo over \SI{-60}{\decibel} is added together form each \gls{iir} filter because each \gls{lpcf} have its own prime number. The direct sound is added to the result. The result is 106 echo per second because each \gls{lpcf} make 20 echo but they is attenuated differently. The following calculation \autoref{eq:reverb_ser} calculate the resulting echo after the first all pass filter if non of the echo interference and the attenuation from \autoref{tab:reverb_bgain} is included. Both the first and the second all pass have a prime number under 50 and an $\alpha$ of 0.708, so each signal from the all pass filter will be repeated maximum of $20-1$ times before the signal is attenuated under \SI{60}{\decibel}. The formula is founded from the following MATLAB script \autoref{code:reverb_cal}
 
-\includeCode{echo_1_all_pass.m}{matlab}{6}{23}{The reverb echo calculation matlab code}{code:close}{code/design/}\label{code:reverb_cal}
+\includeCode{echo_1_all_pass.m}{matlab}{6}{23}{The reverb echo calculation matlab code}{code:reverb_cal}{code/design/}
 
 The output plot from the \gls{reverb} code where the input is guided through the upper \gls{lpcf} and afterwards through the first all pass filter is as following \autoref{fig:reverbcal_plot}. This plot shows only one echo from the all pass filter the blue line and the output of this pulse from the first all pass filter, the red line.
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\textwidth]{reverbcal}
-	\caption{The plot shows the result for the \autoref{code:delay}}
+	\caption{The plot shows the direct sound plus 19 echo }
 	\label{fig:reverbcal_plot}
 \end{figure}
 
@@ -152,11 +152,11 @@ $\Updownarrow$
  \end{subequations}
 
     \startexplain
-\explain{$19$ is calculated from the \gls{lpcf} which is attenuated 10 percent }{\si{1}}
-\explain{$19$ is calculated from the \gls{lpcf} which is attenuated 20 percent}{\si{1}}
-\explain{$18$ is calculated from the \gls{lpcf} which is attenuated 30 percent }{\si{1}}
-\explain{$18$ is calculated from the \gls{lpcf} which is attenuated 40 percent }{\si{1}}
-\explain{$17$ is calculated from the \gls{lpcf} which is attenuated 50 percent }{\si{1}}
+\explain{$19$ is calculated from the \gls{lpcf} which is attenuated 10 percent, $b = 0.9$ in \autoref{code:reverb_cal} }{\si{1}}
+\explain{$19$ is calculated from the \gls{lpcf} which is attenuated 20 percent, $b = 0.8$ in \autoref{code:reverb_cal}}{\si{1}}
+\explain{$18$ is calculated from the \gls{lpcf} which is attenuated 30 percent, $b = 0.7$ in \autoref{code:reverb_cal} }{\si{1}}
+\explain{$18$ is calculated from the \gls{lpcf} which is attenuated 40 percent, $b = 0.6$ in \autoref{code:reverb_cal} }{\si{1}}
+\explain{$17$ is calculated from the \gls{lpcf} which is attenuated 50 percent, $b = 0.5$ in \autoref{code:reverb_cal} }{\si{1}}
     \stopexplain
 
 Since the echo density already is 1079 echo per second, the last all pass filter will certainly have a echo density of over 1000 echo per second for the output of the \gls{reverb} effect. In \citep{DAFX} Moorer suggests adding six \gls{lpcf} in parallel an making an early reflection network. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests to make the \gls{lpcf} feedback gain user variable to scaled the room size and damping. The following \autoref{eq:reverb_eq_eks} shows the formula of the \gls{lpcf} \citep{LPCFfd}. 
@@ -167,7 +167,7 @@ Since the echo density already is 1079 echo per second, the last all pass filter
 
 
 
-Where:\\ \\
+Where:\\ 
 The $f$ is defining the room size, and the equation of $f$ is as following \autoref{eq:reverb_eq_f} where scaleroom is used to scale the room size by user \citep{LPCFfd}.
 
 \begin{subequations}\label{eq:reverb_eq_f}
@@ -176,7 +176,7 @@ The $f$ is defining the room size, and the equation of $f$ is as following \auto
     \end{equation}
 \centering
 $\Updownarrow$
-\begin{equation}\label{eq:reverb_eq_f1}
+\begin{equation}\label{eq:reverb_eq_f2}
     f = 0.5 \cdot \text{scaleoom} + 0.7
     \end{equation}
  \end{subequations}   
@@ -189,7 +189,7 @@ The $L_D$ is defining the room damping, and the equation of $L_D$ is as followin
     \end{equation}
 \centering
 $\Updownarrow$
-\begin{equation}\label{eq:reverb_eq_L_D1}
+\begin{equation}\label{eq:reverb_eq_L_D2}
     L_D = 0.5 \cdot \text{scaledamp}
     \end{equation}
  \end{subequations}   
@@ -356,7 +356,7 @@ This means that the size of the buffer depends on the delay.  The buffer size mu
 The Matlab code for the delay effect is as following \autoref{code:delay_sim}
 
 Applying one sinus round gives the following result
-\includeCode{delay.m}{matlab}{1}{39}{The delay simulation matlab code}{code:close}{code/design/}\label{code:delay_sim}
+\includeCode{delay.m}{matlab}{1}{39}{The delay simulation matlab code}{code:delay_sim}{code/design/}
 
 \begin{figure}[htbp]
 	\centering
@@ -365,12 +365,12 @@ Applying one sinus round gives the following result
 	\label{fig:delay_plot}
 \end{figure}
 
-\includeCode{reverb.m}{matlab}{1}{80}{The reverb simulation matlab code}{code:close}{code/design/}\label{code:reverb_sim}
+\includeCode{reverb.m}{matlab}{1}{80}{The reverb simulation matlab code}{code:reverb_sim}{code/design/}
 
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.8\textwidth]{reverb}
 	\caption{The plot shows the result for the \autoref{code:delay}}
-	\label{fig:delay_plot}
+	\label{fig:reverb_plot}
 \end{figure}
