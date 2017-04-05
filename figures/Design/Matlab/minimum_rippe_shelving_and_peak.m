@@ -18,30 +18,30 @@ s = tf('s');
 
 min_ripple = 50;
 
-for j = 1:1
+for j = 1:50
 
 % Shelving filter Low 
 om_zero = 100*2*pi;
 G = G5_shelv;
 s_LS = s/om_zero;
 Hs = G*om_zero/(s+om_zero);
-Hs_low = 1+Hs;
+Hs_low = Hs;
 
 % Shelving filter High 
 om_zero = 6400*2*pi;
 %G = 2;
 s_HS = om_zero/s;
 Hs = G*(s/(s+om_zero));
-Hs_high = 1+Hs;
+Hs_high = Hs;
 
 % Peak filter 1
 om_zero = 200*2*pi;
 x = 1;
 G = G5_peak;
-Q = 1.6;
+Q = 0.2*j;
 Hs = s/(om_zero*Q);
 H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
-H_BP_1 = 1+G*H_LP*Hs
+H_BP_1 = G*H_LP*Hs
 
 % Peak filter 2
 om_zero = 400*2*pi;
@@ -49,7 +49,7 @@ G = G5_peak;
 %Q = 2;
 Hs = s/(om_zero*Q);
 H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
-H_BP_2 = 1+G*H_LP*Hs;
+H_BP_2 = G*H_LP*Hs;
 
 % Peak filter 3
 om_zero = 800*2*pi;
@@ -57,7 +57,7 @@ G = G5_peak;
 %Q = 2;
 Hs = s/(om_zero*Q);
 H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
-H_BP_3 = 1+G*H_LP*Hs;
+H_BP_3 = G*H_LP*Hs;
 
 % Peak filter 4
 om_zero = 1600*2*pi;
@@ -65,7 +65,7 @@ G = G5_peak;
 %Q = 2;
 Hs = s/(om_zero*Q);
 H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
-H_BP_4 = 1+G*H_LP*Hs;
+H_BP_4 = G*H_LP*Hs;
 
 % Peak filter 5
 om_zero = 3200*2*pi;
@@ -73,9 +73,9 @@ G = G5_peak;
 %Q = 2;
 Hs = s/(om_zero*Q);
 H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
-H_BP_5 = 1+G*H_LP*Hs;
+H_BP_5 = G*H_LP*Hs;
 
-H = 1+H_BP_1+H_BP_2+H_BP_3+Hs_low
+H = 1+H_BP_1+H_BP_2+H_BP_3+H_BP_4+H_BP_5+Hs_low+Hs_high;
 
 % Finding ripple
 fband = [100,6200];
