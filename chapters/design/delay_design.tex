@@ -47,7 +47,7 @@ The delay and \gls{reverb} effect both have \gls{iir} filter and \gls{fir} filte
   \label{fig:reverb_block_des}
 \end{figure}
 
-From \autoref{fig:reverb_block_des}, the following differential equations \autoref{eq:delay_eq_sub} can be derived for the delay effect, where the number 8 is omitted since the delay effect only is the red all pass filter, $\x[n] = \alpha_8$.
+From \autoref{fig:reverb_block_des}, the following differential equations \autoref{eq:delay_eq_sub} can be derived for the delay effect, where the number 8 is omitted since the delay effect only is the red all pass filter, $x[n] = \alpha_8$.
 
 \begin{subequations}\label{eq:delay_eq_sub}
 \begin{equation}\label{eq:delay_eq}
@@ -124,7 +124,7 @@ $b_6$ & = & 0.5
 
 
 The \gls{reverb} unit require 1000 echo per second \citep{natural_sounding_revorb}. To achieve natural \gls{reverb} sound there needs to be multiply all pass filter delay unit in serial after the six \gls{lpcf} in parallel. It is defined by \citep{natural_sounding_revorb} that two all pass filter is required to make a natural \gls{reverb} sound.
-To calculate the approximated number of echo in one second from six \gls{lpcf}, the following is consiteret. The total numbers of echo over \SI{-60}{\decibel} is added together form each \gls{iir} filter because each \gls{lpcf} have its own prime number. The direct sound is added to the result. The result is 106 echo per second because each \gls{lpcf} make 20 echo but they is attenuated differently. The following calculation \autoref{eq:reverb_ser} calculate the resulting echo after the first all pass filter if non of the echo interference and the attenuation from \autoref{tab:reverb_bgain} is included. Both the first and the second all pass have a prime number under 50 and an $\alpha$ of 0.708, so each signal from the all pass filter will be repeated maximum of $20-1$ times before the signal is attenuated under \SI{60}{\decibel} ($1 \cdot 10^-3$). The formula is founded from the following MATLAB script \autoref{code:reverb_cal}
+To calculate the approximated number of echo in one second from six \gls{lpcf}, the following is consiteret. The total numbers of echo over \SI{-60}{\decibel} is added together form each \gls{iir} filter because each \gls{lpcf} have its own prime number. The direct sound is added to the result. The result is 106 echo per second because each \gls{lpcf} make 20 echo but they is attenuated differently. The following calculation \autoref{eq:reverb_ser} calculate the resulting echo after the first all pass filter if non of the echo interference and the attenuation from \autoref{tab:reverb_bgain} is included. Both the first and the second all pass have a prime number under 50 and an $\alpha$ of 0.708, so each signal from the all pass filter will be repeated maximum of $20-1$ times before the signal is attenuated under \SI{60}{\decibel} ($1 \cdot 10^{-3}$). The formula is founded from the following MATLAB script \autoref{code:reverb_cal}
 
 \includeCode{echo_1_all_pass.m}{matlab}{6}{23}{The reverb echo calculation matlab code}{code:reverb_cal}{code/design/}
 
