@@ -8,11 +8,11 @@ om_zero_sh = [100, 6400]*2*pi;
 om_zero_peak = [200,400,800,1600,3200]*2*pi;
 %om_zero_pw = 2/Td*tan(om_zero/2)
 %om_zero_pw = 2*atan(om_zero_peak*Td/2)
-% om_zero_pw = 2*Fs*tan(om_zero_peak/(2*Fs))
-% om_zero_pw_sh = 2*Fs*tan(om_zero_sh/(2*Fs))
-om_zero_pw = om_zero_peak;
-om_zero_pw_sh = om_zero_sh;
-Q = 1.4;
+om_zero_pw = 2*Fs*tan(om_zero_peak/(2*Fs))
+om_zero_pw_sh = 2*Fs*tan(om_zero_sh/(2*Fs))
+% om_zero_pw = om_zero_peak;
+% om_zero_pw_sh = om_zero_sh;
+Q = 1.4; 
 
 G1_peak = 0.4125;
 G2_peak = 0.9952;
@@ -116,10 +116,12 @@ H_z = 1+H_z1+H_z2+H_z3+H_z4+H_z5+H_z_LS+H_z_HS;
 figure(8)
 opts = bodeoptions('cstprefs');
 opts.FreqUnits = 'Hz';
-bodemag(1+H_z_LS,1+H_z1,1+H_z2,1/(1+H_z3),1+H_z4,1+H_z5,1+H_z_HS,H_z,{0.1,10^6},opts)
+bodemag(1+H_z_LS,1+H_z1,1+H_z2,(1+H_z3),1+H_z4,1+H_z5,1+H_z_HS,H_z,opts)
+legend('Low shelving filter','Peak filter1','Peak filter2','Peak filter3','Peak filter4','Peak filter5','High shelving filter','Combined filter','Location','southwest')
 hold on
 grid on
 hold off
+%FigureToPDF(gcf, '../eq_z_domain_comb')
 
 
 figure(9)

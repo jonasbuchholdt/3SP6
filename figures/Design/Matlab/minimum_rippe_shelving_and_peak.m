@@ -113,12 +113,13 @@ figure(1)
 %bodemag(Hs_low_1,Hs_low_2,Hs_low_3,Hs_high_1,Hs_high_2,Hs_high_3)
 opts = bodeoptions('cstprefs');
 opts.FreqUnits = 'Hz';
-bodemag(1+Hs_low,1+H_final_BP_1,1/(1+H_final_BP_2),1+H_final_BP_3,1+H_final_BP_4,1+H_final_BP_5,1+Hs_high,H_final,opts)
+bodemag(1+Hs_low,1+H_final_BP_1,(1+H_final_BP_2),1+H_final_BP_3,1+H_final_BP_4,1+H_final_BP_5,1+Hs_high,H_final,opts)
 hold on
 grid on
 legend('Low shelving filter','Peak filter1','Peak filter2','Peak filter3','Peak filter4','Peak filter5','High shelving filter','Combined filter','Location','southwest')
 % ylabel('Magnitude [dB]')
 % xlabel('Frequency [rad/s]')
 hold off
+FigureToPDF(gcf, '../eq_s_domain_comb')
 figure(2)
 bode(H_final)

@@ -153,9 +153,138 @@ $\Updownarrow$
  \end{subequations}
 
 The Q-value is then the only unknown in the design of the peak filters. In \autoref{req:bandpass_filter2} it is stated that at full amplification (\SI{15}{\decibel}), the amplification at the neighbouring centerfrequencies must drop to (\SI{9}{\decibel}). 
-The Q-value will be chosen so it has the minimum ripple. This Q-value is found using a Matlab program, where the Q-value is increased in steps of 0.2 from 0 to 10. All gains on both the peak and the shelving filters are set to amplify \SI{15}{\decibel}. The optimal Q-value is hereby found to be 1.6, giving a ripple of $\pm$\SI{1.11}{\decibel}, in the frequency area from \SI{100}{\hertz} to \SI{6400}{\hertz}, when all filters are fully amplified. All parameters for the peak filters are then found. 
-When coupling the filters as in \autoref{fig:eq_parallel}, and plotting it in Matlab, the bodeblot of the equalizer with all filters fully amplified, is as in \autoref{}
+The Q-value will be chosen so it has the minimum ripple. This Q-value is found using a Matlab program, where the Q-value is increased in steps of 0.2 from 0 to 10. All gains on both the peak and the shelving filters are set to amplify \SI{15}{\decibel}. The optimal Q-value is hereby found to be 1.4, giving a ripple of $\pm$\SI{1.11}{\decibel}, in the frequency area from \SI{100}{\hertz} to \SI{6400}{\hertz}, when all filters are fully amplified. All parameters for the peak filters are then found. 
+When coupling the filters as in \autoref{fig:eq_parallel}, and plotting it in Matlab, the bodeblot of the equalizer with all filters fully amplified, is as in \autoref{fig:eq_s_domain_comb}. In the figure all bands have their maximum gain value.
 
+\begin{figure}[!h]
+    \centering
+        \includegraphics[width=\textwidth]{eq_s_domain_comb.pdf}
+        \caption{Bodeplot of the combined equalizer in s-domain, with maximum gain on all bands.}
+        \label{fig:eq_s_domain_comb}
+  \end{figure}
+
+The ripple of the combined equalizer in s-domain, when all bands are fully amplified, is \SI{4.49}{\decibel}, in the frequency area from \SI{100}{\hertz} to \SI{6400}{\hertz}. This ripple is accepted as a compromise, in order to make each band independent from the neighbouring bands. 
+
+\subsection{Converting the equalizer to z-domain}
+In order to implement the equalizer on a \gls{dsp}, the now designed analog equalizer, has be to converted to a digital equalizer. This conversion will be made by using the bilinear transformation, which converts analog filters into digital IIR filters. In \autoref{eq:bilinear_transformation} the bilinear transformation method is shown.
+
+\begin{equation}\label{eq:bilinear_transformation}
+        H(z) = H(s) \Big|_{s = \frac{2}{T_s} \cdot \frac{z-1}{z+1}}
+    \end{equation}
+    
+    \startexplain
+     \explain{$H(z)$ is the digital transferfunction.}{\si{1}}
+     \explain{$T_s$ is the sample time.}{\si{\second}}
+    \stopexplain
+    
+Applying this conversion on the shelving and the peak filters, the digital transferfunctions becomes as in \autoref{eq:Hz_LS}, \autoref{eq:Hz_HS} and \autoref{eq:H_peak}.
+
+\begin{equation}\label{eq:Hz_LS}
+        H(z)_{LS} = G \cdot \frac{z \cdot a_{LS1} + a_{LS2}}{z \cdot b_{LS1} + b_{LS2}}
+    \end{equation}
+    
+    \startexplain
+     \explain{$H(z)_{LS}$ is the digital transferfunction for the low shelving filter.}{\si{1}}
+     \explain{$a_{LS1} = a_{LS2} = \omega_c \cdot T_s$ }{\si{1}}
+     \explain{$b_{LS1} = 2+\omega_c \cdot T_s$ }{\si{1}}
+     \explain{$b_{LS2} = -2+\omega_c \cdot T_s$ }{\si{1}}
+    \stopexplain
+    
+\begin{equation}\label{eq:Hz_HS}
+        H(z)_{HS} = G \cdot \frac{z \cdot a_{HS1} + a_{HS2}}{z \cdot b_{HS1} + b_{HS2}}
+    \end{equation}
+    
+    \startexplain
+     \explain{$H(z)_{HS}$ is the digital transferfunction for the high shelving filter.}{\si{1}}
+     \explain{$a_{HS1} = 2$ }{\si{1}}
+     \explain{$a_{HS2} = -2$ }{\si{1}}
+     \explain{$b_{HS1} = 2+\omega_c \cdot T_s$ }{\si{1}}
+     \explain{$b_{HS2} = -2+\omega_c \cdot T_s$ }{\si{1}}
+    \stopexplain
+
+\begin{equation}\label{eq:Hz_peak}
+        H(z)_{peak} = G \cdot \frac{z^2 \cdot a_{peak1} + a_{peak2}}{z^2 \cdot b_{peak1} + z \cdot b_{peak2} + b_{peak3}}
+    \end{equation}
+    
+    \startexplain
+     \explain{$H(z)_{peak}$ is the digital transferfunction for the peak filter.}{\si{1}}
+     \explain{$a_{peak1} = 2 \cdot \omega_0 \cdot T_s$ }{\si{1}}
+     \explain{$a_{peak2} = -2 \cdot \omega_0 \cdot T_s$ }{\si{1}}
+     \explain{$b_{peak1} = 4 \cdot Q + 2 \cdot \omega_c \cdot T_s + \omega_0^2 \cdot T_s^2 \cdot Q$ }{\si{1}}
+     \explain{$b_{peak2} = -8 \cdot Q + 2 \cdot  \omega_0^2 \cdot T_s^2 \cdot Q$ }{\si{1}}
+     \explain{$b_{peak3} = 4 \cdot Q - 2 \cdot \omega_c \cdot T_s + \omega_0^2 \cdot T_s^2 \cdot Q$ }{\si{1}}
+    \stopexplain
+
+When choosing the sampling frequency, $F_s =$ \SI{44.1}{\kilo \hertz}, and thereby $T_s = \frac{1}{F_s} =$ \SI{22.68}{\micro \second}, setting $Q = 1.4$, and using the frequencies in \autoref{tab:center_frequencies} as $\omega_c$ and $\omega_0$, the frequency response of the digital equalizer, with all bands fully amplified, looks like in \autoref{fig:eq_z_domain_comb}.
+
+\begin{figure}[!h]
+    \centering
+        \includegraphics[width=\textwidth]{eq_z_domain_comb.pdf}
+        \caption{Bodeplot of the combined equalizer in z-domain, with maximum gain on all bands.}
+        \label{fig:eq_z_domain_comb}
+  \end{figure}
+
+The conversion is made without prewarping, because the frequency response, when using prewarping, changed in an unwanted way at low frequencies.
+
+\subsection{Converting the equalizer to n-domain}
+The last step in making the equalizer implementable in a \gls{dsp}, is to convert the z-domain transferfunction, into a differential equation in n-domain. The procedure of doing this, will be shown for the peak filters, but the procedure is the same for the shelving filters. The conversion from z-domain to n-domain is shown in the equations \autoref{eq:z_to_n1} to \autoref{eq:z_to_n7} 
+
+\begin{subequations}
+\begin{equation}\label{eq:z_to_n1}
+       H(z)_{peak} = \frac{Y(z)}{X(z)} = G \cdot \frac{z^2 \cdot a_{peak1} + a_{peak2}}{z^2 \cdot b_{peak1} + z \cdot b_{peak2} + b_{peak3}}
+    \end{equation}
+
+\begin{equation}\label{eq:z_to_n2}
+        \frac{Y(z)}{X(z)} = G \cdot \frac{a_{peak1} + a_{peak2} \cdot z^{-2}}{b_{peak1} + b_{peak2} \cdot z^{-1} + b_{peak3} \cdot z^{-2}}
+    \end{equation}
+    \centering
+$\Updownarrow$
+\begin{equation}\label{eq:z_to_n3}
+        Y(z) \cdot (b_{peak1} + b_{peak2} \cdot z^{-1} + b_{peak3} \cdot z^{-2}) = X(z) \cdot G \cdot (a_{peak1} + a_{peak2} \cdot z^{-2})
+    \end{equation}
+       \centering
+$\Updownarrow$
+\begin{equation}\label{eq:z_to_n4}
+         Y(z) \cdot b_{peak1} + Y(z) \cdot b_{peak2} \cdot z^{-1} + Y(z) \cdot b_{peak3} \cdot z^{-2} =  G \cdot (X(z) \cdot a_{peak1} + X(z) \cdot a_{peak2} \cdot z^{-1})
+    \end{equation}
+    \centering
+    $\Downarrow Z^{-1}$
+\begin{equation}\label{eq:z_to_n5}
+         b_{peak1} \cdot y[n] + b_{peak2} \cdot y[n-1] + b_{peak3} \cdot y[n-2] =  G \cdot (a_{peak1} \cdot x[n] + a_{peak2} \cdot x[n-2])
+    \end{equation}
+    \centering
+    $\Updownarrow$
+\begin{equation}\label{eq:z_to_n6}
+         b_{peak1} \cdot y[n] =  G \cdot (a_{peak1} \cdot x[n] + a_{peak2} \cdot x[n-2]) -  b_{peak2} \cdot y[n-1] - b_{peak3} \cdot y[n-2]
+    \end{equation}
+    \centering
+    $\Updownarrow$
+\begin{equation}\label{eq:z_to_n7}
+         y_{peak}[n] = \frac{G \cdot a_{peak1}}{b_{peak1}} \cdot x[n] + \frac{G \cdot a_{peak2}}{b_{peak1}} \cdot x[n-2] -  \frac{b_{peak2}}{b_{peak1}} \cdot y_{peak}[n-1] - \frac{b_{peak3}}{b_{peak1}} \cdot y_{peak}[n-2]
+    \end{equation}
+    
+    \startexplain
+     \explain{$y[n]$ is the output sample.}{\si{1}}
+     \explain{$x[n]$ is the input sample.}{\si{1}}
+    \stopexplain
+ \end{subequations}
+ 
+
+\autoref{eq:z_to_n7} is the differential equation which is ready to be implemented digitally. When following the same procedure for the low shelving filter and the high shelving filter, their differential equations become as in \autoref{} and \autoref{}.
+
+\begin{equation}\label{eq:z_to_n_LS}
+        y_{LS}[n] = \frac{G \cdot a_{LS1}}{b_{LS1}} \cdot x[n] + \frac{G \cdot a_{LS2}}{b_{LS1}} \cdot x[n-1] -  \frac{b_{LS2}}{b_{LS1}} \cdot y_{LS}[n-1]
+    \end{equation}
+
+\begin{equation}\label{eq:z_to_n_LS}
+        y_{HS}[n] = \frac{G \cdot a_{HS1}}{b_{HS1}} \cdot x[n] + \frac{G \cdot a_{HS2}}{b_{HS1}} \cdot x[n-1] -  \frac{b_{HS2}}{b_{HS1}} \cdot y_{HS}[n-1]
+    \end{equation}
+
+When coupling the filters as in \autoref{fig:eq_parallel}, the final output of the equalizer becomes as in \autoref{}.
+
+\begin{equation}\label{eq:z_to_n_LS}
+        y_{final}[n] = x[n] + y_{LS}[n] + y_{HS}[n] + \sum_{j=1}^{5} y_{peak(j)}[n]
+    \end{equation}
 
 
 %Raised Cosine
