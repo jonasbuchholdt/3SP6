@@ -2,7 +2,7 @@
 In this section, the delay and the \gls{reverb} will be designed to fit intro a \gls{dsp}, which mean that a discreet block diagram is obtained and afterwards the equation to the implementation is made. All the equation will afterwards be simulated in MATLAB and then the assembly code is developed and implemented. 
 
 
-\subsection{Obtaining the Differential Equation}
+\subsection{Obtaining the Differential Equation}\label{sec:reverb_develop}
 The Delay effect use one of the effect block in the \gls{reverb} effect and therefore they will be presented and designed in the same section. The block diagram presented in \autoref{sec:reverberation} \autoref{fig:reverb_block} is changed so it fit intro a direct form 1 and 2 construction. 
 The delay and \gls{reverb} effect both have \gls{iir} filter and \gls{fir} filter, but it is only the \gls{iir} filter which make the echo.To get a naturally \gls{reverb} effect with the identical respond as a room acoustic respond and avoiding fluttering, all the serial \gls{reverb} unit needs to be an all pass filter and all parallel \gls{reverb} unit needs to be an \gls{lpcf} \citep{LPCF}. The \gls{lpcf} is used because the room acoustic characteristics is acting as a low pass filter, all low frequency signal will stay longer in the room than the high frequency \citep{rfi}. The \gls{reverb} needs to have at least 1000 echo per second, and the best way to make the \gls{reverb} effect is with six \gls{lpcf} filters in parallel \citep{DAFX}, and two all pass filter afterwords in serial. Otherwise if there was not two all pass filter afterwords, it will require forty \gls{lpcf} to make 1000 echo per second \citep{natural_sounding_revorb}. The all pass filter in block diagram \autoref{fig:reverb_block_des} is in direct form 2 because for the delay length. The delay and some of the \gls{reverb} effect can be obtained and is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is the one in red and black while the delay is only in red. 
 
@@ -299,7 +299,6 @@ $\Updownarrow$
 \newpage
 The equation for the \gls{reverb} can be written in 12 parts as following \autoref{eq:reverb_eq}
 
-
 \begin{subequations}\label{eq:reverb_eq}
 \begin{equation}\label{eq:reverb_eq_ed}
 		x_1[n] = x[n]+x[n-ed_1]+x[n-ed_2]+x[n-ed_3]+x[n-ed_4]
@@ -348,29 +347,36 @@ y[n] = - \alpha_8 \cdot w_9[n] + w_9[n-d_8] + x_1[n]
 
 
 \subsection{Matlab Simulation}
+This section will simulate the effect equation, which is developed in above \autoref{sec:reverb_develop}. The simulation is made in MATLAB and the code is attached in \autoref{app:reverb}. The simulation is made to avoid mistake before the assembly code is developed, because assembly is a time consuming development precess. MATLAB is easy to use and mistake can be observed graphical by plotting the output and every changes is fast to implement and redone the plot.
+
+The simulation is done by audioread one sinus round in MATLAB and afterwards generate all necessary arrays to in, out and intermediate calculations. The audioread and all user chance able settings is done as following \autoref{code:reverb_delay_startup}
+ 
+\includeCode{reverb.m}{matlab}{6}{14}{The reverb simulation matlab code}{code:reverb_delay_startup}{code/design/}
+
+
+Applying one sinus round in the delay effect gives the following result \autoref{fig:reverb_plot}. The MATLAB simulation code is included in \autoref{app:reverb} \autoref{code:delay_sim}.
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\textwidth]{delay}
+	\caption{The plot shows the result for the \autoref{code:delay_sim}}
+	\label{fig:delay_plot}
+\end{figure}
+
+
+
+Applying one sinus round in the \gls{reverb}  effect gives the following result \autoref{fig:delay_plot}. The MATLAB simulation code is included in \autoref{app:reverb} \autoref{code:reverb_sim}.
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.8\textwidth]{reverb}
+	\caption{The plot shows the result for the \autoref{code:reverb_sim}}
+	\label{fig:reverb_plot}
+\end{figure}
+
+\subsection{implementation}
+This section will design the assembly code, where the implementation method is very imported to do the program as efficiency as possible. The delay for example can be done in several ways where ether the data is moved or the pointer is moved, but if it is the data which is moved and there is 1000 data samples, it will require 1000 clock cycles because each data sample needs to be moved alone. If the pointer is moved it will only require one cycles for moving the input pointer and one cycles to move the output pointer, so the delay will be designed as a ring buffer where the input and output pointer is moved. 
+ 
+
 
 A delay can be done in different ways digitally. One way is to use a ring buffer also known as circular buffer. \\
 The idea of this data structure is that it takes values and only outputs them when it gets full, and overwrites the oldest after outputting it. It is a kind of a FIFO queue structure but where the start and the overwriting can start at any index. \\
 This means that the size of the buffer depends on the delay.  The buffer size must then be always up-to-date with the new delay value. \\ 
-
-The Matlab code for the delay effect is as following \autoref{code:delay_sim}
-
-Applying one sinus round gives the following result
-\includeCode{delay.m}{matlab}{1}{39}{The delay simulation matlab code}{code:delay_sim}{code/design/}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=1\textwidth]{delay}
-	\caption{The plot shows the result for the \autoref{code:delay}}
-	\label{fig:delay_plot}
-\end{figure}
-
-\includeCode{reverb.m}{matlab}{1}{80}{The reverb simulation matlab code}{code:reverb_sim}{code/design/}
-
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.8\textwidth]{reverb}
-	\caption{The plot shows the result for the \autoref{code:delay}}
-	\label{fig:reverb_plot}
-\end{figure}
