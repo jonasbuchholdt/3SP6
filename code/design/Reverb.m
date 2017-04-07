@@ -4,23 +4,23 @@ close all
 %Group 641
 
 %insert your input in this table
-filename = 'sin_out.wav';%'16Hz-20kHz-Lin-CA-10sec.mp3';
+filename = 'sin_out.wav';
 [input, fs] = audioread(filename);
-fs
 
-%user define array and variable
-g = 0.708; %Gain
+%user define variable
 early = 1; % pre delay
 scaleroom = 0.28; %0.28 int
 scaledamp = 0.4; %0.4 int
 drywet = 0.5; % dry/wet
-allscale = 0.07;
+ 
 
 %Pre define array and variable
+g = 0.708; %Gain
 b = [1,0.9,0.8,0.7,0.6,0.5];
-time = 30; % roomsize
+time = 10; % roomsize
 damp = 0.5*scaledamp;
 room = 0.5*scaleroom+0.7;
+allscale = 0.1;
 
 % filter delay time 
 Delay = [round(fs/1000*1.9*time),round(fs/1000*2.3*time),round(fs/1000*2.97*time),round(fs/1000*3.71*time),round(fs/1000*4.1*time),round(fs/1000*4.37*time),round(fs/1000*1.3*time*allscale),round(fs/1000*1.7*time*allscale)]
@@ -35,7 +35,6 @@ x = zeros(row+1,round(sample_no+(d*d_out*g)))';
 y = zeros(row+1,round(sample_no+(d*d_out*g)))';
 w = zeros(row+1,round(sample_no+(d*d_out*g)))';
 in = zeros(row+1,round(sample_no+(d*d_out*g)))';
-buf = zeros(row+1,round(sample_no+(d*d_out*g)))';
 
 %move all input data the total delay time to the left 
 for i = 1:1:sample_no
@@ -46,7 +45,7 @@ for n = 1:1:sample_no+(d*d_out*g)-d-1
     n = n+d+1;
     
     % Early reflection network
-    x(n,1) = in(n,1);% + in(n-Early_delay(1),1)*0.841 + in(n-Early_delay(2),1)*0.504 + in(n-Early_delay(3),1)*0.491 + in(n-Early_delay(4),1)*0.379;
+    x(n,1) = in(n,1) + in(n-Early_delay(1),1)*0.841 + in(n-Early_delay(2),1)*0.504 + in(n-Early_delay(3),1)*0.491 + in(n-Early_delay(4),1)*0.379;
   
     % Late reflection network
     x(n,2) = x(n,1) - damp*x(n-1,1) + damp*x(n-1,2) + ((room)*(1-damp)* x(n-Delay(1),2));
@@ -56,7 +55,7 @@ for n = 1:1:sample_no+(d*d_out*g)-d-1
     x(n,6) = x(n,1) - damp*x(n-1,1) + damp*x(n-1,6) + ((room)*(1-damp)* x(n-Delay(5),6));
     x(n,7) = x(n,1) - damp*x(n-1,1) + damp*x(n-1,7) + ((room)*(1-damp)* x(n-Delay(6),7));
     
-    x(n,8) =  x(n,2)*b(6);% + x(n,3)*b(2) + x(n,4)*b(3) + x(n,5)*b(4) + x(n,6)*b(5) + x(n,7)*b(6);
+    x(n,8) =  x(n,2)*b(6) + x(n,3)*b(2) + x(n,4)*b(3) + x(n,5)*b(4) + x(n,6)*b(5) + x(n,7)*b(6);
     
     w(n,8) = g * w(n-Delay(7),8) + x(n,8);
     x(n,9) = -g * w(n,8) + w(n-Delay(7),8);  
@@ -74,8 +73,8 @@ audiowrite('outfa.wav',y(:,1),fs);
 %plot(in(:,1),'b')
 hold on
 grid on
-plot(x(:,2),'b')
-plot(x(:,9),'r')
+plot(in(:,1),'b')
+plot(y(:,1),'r')
 ylabel('Magnitude [V]')
 xlabel('sample')
-FigureToPDF(gcf, '../../figures/design/reverb')
+%FigureToPDF(gcf, '../../figures/design/reverb')
