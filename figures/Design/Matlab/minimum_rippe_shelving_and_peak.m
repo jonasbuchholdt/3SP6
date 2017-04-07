@@ -18,7 +18,7 @@ s = tf('s');
 
 min_ripple = 50;
 
-for j = 1:50
+for j = 1:1
 
 % Shelving filter Low 
 om_zero = 100*2*pi;
@@ -38,7 +38,7 @@ Hs_high = Hs;
 om_zero = 200*2*pi;
 x = 1;
 G = G5_peak;
-Q = 0.2*j;
+Q = 1.4;
 Hs = s/(om_zero*Q);
 H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
 H_BP_1 = G*H_LP*Hs
@@ -113,7 +113,7 @@ figure(1)
 %bodemag(Hs_low_1,Hs_low_2,Hs_low_3,Hs_high_1,Hs_high_2,Hs_high_3)
 opts = bodeoptions('cstprefs');
 opts.FreqUnits = 'Hz';
-bodemag(Hs_low,H_final_BP_1,H_final_BP_2,H_final_BP_3,H_final_BP_4,H_final_BP_5,Hs_high,H_final,opts)
+bodemag(1+Hs_low,1+H_final_BP_1,1/(1+H_final_BP_2),1+H_final_BP_3,1+H_final_BP_4,1+H_final_BP_5,1+Hs_high,H_final,opts)
 hold on
 grid on
 legend('Low shelving filter','Peak filter1','Peak filter2','Peak filter3','Peak filter4','Peak filter5','High shelving filter','Combined filter','Location','southwest')

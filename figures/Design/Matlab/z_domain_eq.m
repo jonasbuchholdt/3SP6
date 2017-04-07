@@ -7,13 +7,19 @@ Td = 1/Fs;
 om_zero_sh = [100, 6400]*2*pi;
 om_zero_peak = [200,400,800,1600,3200]*2*pi;
 %om_zero_pw = 2/Td*tan(om_zero/2)
-%om_zero_pw = 2*atan(om_zero*Td/2)
-om_zero_pw = 2*Fs*tan(om_zero_peak/(2*Fs))*2*pi
-om_zero_pw_sh = 2*Fs*tan(om_zero_sh/(2*Fs))*2*pi
+%om_zero_pw = 2*atan(om_zero_peak*Td/2)
+% om_zero_pw = 2*Fs*tan(om_zero_peak/(2*Fs))
+% om_zero_pw_sh = 2*Fs*tan(om_zero_sh/(2*Fs))
 om_zero_pw = om_zero_peak;
 om_zero_pw_sh = om_zero_sh;
 Q = 1.4;
-G = 4.6234;
+
+G1_peak = 0.4125;
+G2_peak = 0.9952;
+G3_peak = 1.8183;
+G4_peak = 2.9810;
+G5_peak = 4.6234;
+
 G_shelv = 4.623;
 s = tf('s');
 z = tf('z',Td);
@@ -46,6 +52,10 @@ d(2,2) = -2+om_zero_pw_sh(2)*Td;
 % end
 
 for k = 1:5
+G = G5_peak;
+    if k == 3
+        G = G5_peak;
+    end
 b(1,k) = (4*Q+2*om_zero_pw(k)*Td+om_zero_pw(k)^2*Td^2*Q);
 b(2,k) = (-8*Q+2*om_zero_pw(k)^2*Td^2*Q);
 b(3,k) = (4*Q-om_zero_pw(k)*2*Td+om_zero_pw(k)^2*Td^2*Q);
@@ -106,7 +116,7 @@ H_z = 1+H_z1+H_z2+H_z3+H_z4+H_z5+H_z_LS+H_z_HS;
 figure(8)
 opts = bodeoptions('cstprefs');
 opts.FreqUnits = 'Hz';
-bodemag(1+H_z_LS,1+H_z1,1+H_z2,1+H_z3,1+H_z4,1+H_z5,1+H_z_HS,H_z,{0.1,10^6},opts)
+bodemag(1+H_z_LS,1+H_z1,1+H_z2,1/(1+H_z3),1+H_z4,1+H_z5,1+H_z_HS,H_z,{0.1,10^6},opts)
 hold on
 grid on
 hold off

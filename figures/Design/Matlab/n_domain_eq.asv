@@ -87,3 +87,5 @@ plot(t,sweep_out(:,1),'b')
 ylabel('Magnitude [V]')
 xlabel('second')
 hold off
+
+spectrogram(sweep_out(:,1),256,200,256,1e3,'yaxis')
