@@ -88,7 +88,7 @@ H_z_HS = (z*c(1,2)+c(2,2))/(z*d(1,2)+d(2,2));
 H_z_01 = H_z4+H_z5+H_z_HS;
 H_z_02 = 1+H_z2+H_z3+H_z4;
 H_z_03 = H_z_LS+H_z1+H_z2;
-H_z = 1+H_z1+H_z2+H_z3+H_z4+H_z5+H_z_LS+H_z_HS;
+H_z = 1/(1+H_z1+H_z2+H_z3+H_z4+H_z5+H_z_LS+H_z_HS);
 
 
 % Plot
@@ -116,12 +116,12 @@ H_z = 1+H_z1+H_z2+H_z3+H_z4+H_z5+H_z_LS+H_z_HS;
 figure(8)
 opts = bodeoptions('cstprefs');
 opts.FreqUnits = 'Hz';
-bodemag(1+H_z_LS,1+H_z1,1+H_z2,(1+H_z3),1+H_z4,1+H_z5,1+H_z_HS,H_z,opts)
-legend('Low shelving filter','Peak filter1','Peak filter2','Peak filter3','Peak filter4','Peak filter5','High shelving filter','Combined filter','Location','southwest')
+bodemag(1/(1+H_z_LS),1/(1+H_z1),1/(1+H_z2),1/(1+H_z3),1/(1+H_z4),1/(1+H_z5),1/(1+H_z_HS),H_z,opts)
+legend('Low shelving filter','Peak filter1','Peak filter2','Peak filter3','Peak filter4','Peak filter5','High shelving filter','Combined filter','Location','northwest')
 hold on
 grid on
 hold off
-%FigureToPDF(gcf, '../eq_z_domain_comb')
+%FigureToPDF(gcf, '../eq_z_domain_comb_inv')
 
 
 figure(9)

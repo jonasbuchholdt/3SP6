@@ -1,12 +1,12 @@
 \section{Design of the equalizer}
 This chapter aims to describe the design of an digital equalizer, for an electric guitar. 
-To begin with, some design choices have to made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by as series connection of shelving filters and peak filters. The shelving filters are used the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters are normally kept as first or second order filters. 
+To begin with, some design choices have to made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by a parallel connection of shelving filters and peak filters. The shelving filters are used the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters are normally kept as first or second order filters. 
 
 \subsection{Shelving filter}
 The transfer function for a first order low shelving filter is as in \autoref{eq:analog_shelving_low} \citep{Julius_smith}.
 
 \begin{equation}\label{eq:analog_shelving_low}
-        H_{LS}(s) = 1+G \cdot \frac{\omega_c}{s+\omega_c}
+        H_{LS}(s) = G \cdot \frac{\omega_c}{s+\omega_c}
     \end{equation}
 
     \startexplain
@@ -18,16 +18,15 @@ The transfer function for a first order low shelving filter is as in \autoref{eq
 The transfer function for a first order high shelving filter is as in \autoref{eq:analog_shelving_low}.
 
 \begin{equation}\label{eq:analog_shelving_high}
-        H_{HS}(s) = 1+G \cdot \frac{s}{s+\omega_c}
+        H_{HS}(s) = G \cdot \frac{s}{s+\omega_c}
     \end{equation}
 
     \startexplain
     \explain{$H_{HS}(s)$ is the high shelving filters transfer function.}{\si{1}} 
     \stopexplain
 
-
     
-In \autoref{fig:low_and_high_shelving} a bodeplot of first order low- and high- shelving filters with different cut-off frequencies is shown.
+When implementing \autoref{eq:analog_shelving_low} and \autoref{eq:analog_shelving_high}, individually in a feedforward loop, the bodeplots of first order low- and high- shelving filters with different cut-off frequencies, becomes as in\autoref{fig:low_and_high_shelving}.
 
 \begin{figure}
     \centering
@@ -62,7 +61,16 @@ The transfer function for the analog second order lowpass filter is as in \autor
         \label{fig:lin_function_&_2nd_order_LP}
   \end{figure} 
 
-To make a peak filter, the two functions in \autoref{fig:lin_function_&_2nd_order_LP} are combined as illustrated the blockdiagram in \autoref{fig:peak_filter_block}.
+To make a peak filter, the two functions in \autoref{fig:lin_function_&_2nd_order_LP} are connected in series to make the analog peak filter transferfuntion as in \autoref{eq:H_peak}.
+
+\begin{equation}\label{eq:H_peak}
+        H_{peak}(s) = G \cdot \frac{\frac{\omega_0}{Q}\cdot s}{s^2+\frac{\omega_0}{Q}\cdot s + \omega_0^2}
+    \end{equation}
+    
+    \startexplain
+    \explain{$H_{peak}(s)$ the analog transferfunction of the peak filter.}{\si{1}}
+     \explain{$G$ is the gain of the peak filter.}{\si{1}}
+    \stopexplain
 
 \begin{figure}[!h]
 \centering
@@ -72,15 +80,9 @@ To make a peak filter, the two functions in \autoref{fig:lin_function_&_2nd_orde
 		\label{fig:peak_filter_block}
 \end{figure}
 
-When deriving the transfer function from \autoref{fig:peak_filter_block}, the transfer function for the peak filter is as in \autoref{eq:H_peak}, with a bodeplot as in \autoref{fig:peak_filter}, where $Q = 4$, $\omega_0 = 1000$ and various gain values. 
+When implementing \autoref{eq:H_peak} in a feedforward loop as in \autoref{fig:peak_filter_block}, the bodeplot becomes as in \autoref{fig:peak_filter}, where $Q = 4$, $\omega_0 = 1000$ and various gain values. 
 
-\begin{equation}\label{eq:H_peak}
-        H_{peak}(s) = 1+G \cdot \frac{\frac{\omega_0}{Q}\cdot s}{s^2+\frac{\omega_0}{Q}\cdot s + \omega_0^2}
-    \end{equation}
-    
-    \startexplain
-     \explain{$G$ is the gain of the peak filter.}{\si{1}}
-    \stopexplain
+
 
 \begin{figure}[!h]
     \centering
@@ -215,6 +217,12 @@ Applying this conversion on the shelving and the peak filters, the digital trans
      \explain{$b_{peak3} = 4 \cdot Q - 2 \cdot \omega_c \cdot T_s + \omega_0^2 \cdot T_s^2 \cdot Q$ }{\si{1}}
     \stopexplain
 
+The combined transferfunction, when combining the transferfunctions as in \autoref{fig:eq_parallel}, becomes as in \autoref{}.
+
+\begin{equation}\label{eq:z_to_n_final}
+        H(z)_{comb} = 1 + H(z)_{LS} + H(z)_{HS} +  \sum_{j=1}^{5} H(z)_{peak(j)}
+    \end{equation}
+
 When choosing the sampling frequency, $F_s =$ \SI{44.1}{\kilo \hertz}, and thereby $T_s = \frac{1}{F_s} =$ \SI{22.68}{\micro \second}, setting $Q = 1.4$, and using the frequencies in \autoref{tab:center_frequencies} as $\omega_c$ and $\omega_0$, the frequency response of the digital equalizer, with all bands fully amplified, looks like in \autoref{fig:eq_z_domain_comb}.
 
 \begin{figure}[!h]
@@ -270,20 +278,73 @@ $\Updownarrow$
  \end{subequations}
  
 
-\autoref{eq:z_to_n7} is the differential equation which is ready to be implemented digitally. When following the same procedure for the low shelving filter and the high shelving filter, their differential equations become as in \autoref{} and \autoref{}.
+\autoref{eq:z_to_n7} is the differential equation which is ready to be implemented digitally. When following the same procedure for the low shelving filter and the high shelving filter, their differential equations become as in \autoref{eq:z_to_n_LS} and \autoref{eq:z_to_n_HS}.
 
 \begin{equation}\label{eq:z_to_n_LS}
         y_{LS}[n] = \frac{G \cdot a_{LS1}}{b_{LS1}} \cdot x[n] + \frac{G \cdot a_{LS2}}{b_{LS1}} \cdot x[n-1] -  \frac{b_{LS2}}{b_{LS1}} \cdot y_{LS}[n-1]
     \end{equation}
 
-\begin{equation}\label{eq:z_to_n_LS}
+\begin{equation}\label{eq:z_to_n_HS}
         y_{HS}[n] = \frac{G \cdot a_{HS1}}{b_{HS1}} \cdot x[n] + \frac{G \cdot a_{HS2}}{b_{HS1}} \cdot x[n-1] -  \frac{b_{HS2}}{b_{HS1}} \cdot y_{HS}[n-1]
     \end{equation}
 
-When coupling the filters as in \autoref{fig:eq_parallel}, the final output of the equalizer becomes as in \autoref{}.
+When coupling the filters as in \autoref{fig:eq_parallel}, the combined output of the equalizer becomes as in \autoref{eq:z_to_n_final}.
 
-\begin{equation}\label{eq:z_to_n_LS}
-        y_{final}[n] = x[n] + y_{LS}[n] + y_{HS}[n] + \sum_{j=1}^{5} y_{peak(j)}[n]
+\begin{equation}\label{eq:z_to_n_final}
+        y_{comb}[n] = x[n] + y_{LS}[n] + y_{HS}[n] + \sum_{j=1}^{5} y_{peak(j)}[n]
+    \end{equation}
+
+It is now possible for the equalizer to amplify different frequency areas.
+
+\subsection{The inverse equalizer}
+The equalizer should also be able to attenuate the specified bands in \autoref{tab:center_frequencies}. 
+This can be done by implementing the transferfunction in a feedback loop instead of a feedforward loop. A blockdiagram of how to implement the attenuating part of the equalizer is seen in \autoref{fig:eq_parallel_inv}
+
+%This can be done by making an inverse function of the amplifying transferfunction. This method is shown in \autoref{eq:inverse_eq}, where it is done in the peak filters.
+%
+%\begin{equation}\label{eq:inverse_eq}
+%         H(z)_{peak-inv} = \frac{1}{H(z)_{peak}} = \frac{z^2 \cdot b_{peak1} + z \cdot b_{peak2} + b_{peak3}}{G \cdot z \cdot a_{peak1} + a_{peak2}}
+%    \end{equation}
+%    
+%    \startexplain
+%     \explain{$H(z)_{peak-inv}$ is transferfunction for the inverse peak filter.}{\si{1}}
+%    \stopexplain
+%    
+%When applying this method on the combined z-domain transferfunction, the bodeplot becomes as in \autoref{fig:eq_z_domain_comb_inv}.
+%
+%\begin{figure}[!h]
+%    \centering
+%        \includegraphics[width=\textwidth]{eq_z_domain_comb_inv.pdf}
+%        \caption{Bodeplot of the combined equalizer in z-domain, with maximum gain on all bands.}
+%        \label{fig:eq_z_domain_comb_inv}
+%  \end{figure}
+%
+%When converting the inverse transferfunctions from z-domain to n-domain, the differential equations becomes as in \autoref{eq:z_to_n_LS_inv}, \autoref{eq:z_to_n_HS_inv} and \autoref{eq:z_to_n_peak_inv}.
+%
+%\begin{equation}\label{eq:z_to_n_LS_inv}
+%        y_{LS-inv}[n] = \frac{b_{LS1}}{G \cdot a_{LS1}} \cdot x[n] + \frac{b_{LS2}}{G \cdot a_{LS1}} \cdot x[n-1] -  \frac{a_{LS2}}{a_{LS1}} \cdot y_{LS-inv}[n-1]
+%    \end{equation}
+%
+%\begin{equation}\label{eq:z_to_n_HS_inv}
+%        y_{HS-inv}[n] = \frac{b_{HS1}}{G \cdot a_{HS1}} \cdot x[n] + \frac{b_{HS2}}{G \cdot a_{HS1}} \cdot x[n-1] -  \frac{a_{HS2}}{a_{HS1}} \cdot y_{HS}[n-1]
+%    \end{equation}
+%
+%\begin{equation}\label{eq:z_to_n_peak_inv}
+%         y_{peak-inv}[n] = \frac{b_{peak1}}{G \cdot a_{peak1}} \cdot x[n] + \frac{b_{peak2}}{G \cdot a_{peak1}} \cdot x[n-1] + \frac{b_{peak3}}{G \cdot a_{peak1}} \cdot x[n-2] - \frac{a_{peak2}}{a_{peak1}} \cdot y_{peak-inv}[n-2]
+%    \end{equation}
+
+\begin{figure}[!h]
+\centering
+\def\svgwidth{0.72\columnwidth}
+\scalebox{1}{\input{figures/design/eq_parallel_with_inv.pdf_tex}}
+\caption{Block diagram of the combined equalizer.}
+		\label{fig:eq_parallel_inv}
+\end{figure}
+
+The combined differential equation of the attenuating part of the equalizer, can be derived from \autoref{fig:eq_parallel_inv} to be as in \autoref{}.
+
+\begin{equation}\label{eq:z_to_n_final}
+        y_{comb-inv}[n] = x[n] - (y_{LS}[n] + y_{HS}[n] + \sum_{j=1}^{5} y_{peak(j)}[n])
     \end{equation}
 
 

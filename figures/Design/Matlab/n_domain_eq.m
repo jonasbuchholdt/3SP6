@@ -54,6 +54,8 @@ y(n,6) = y(n,6)+y(n,j);
 end
 end
 
+
+
 audiowrite('outeq.wav',y(:,6),fs);
 audiowrite('sweep.wav',sweep(:,1),fs);
 
@@ -72,7 +74,7 @@ sweep_out(2,1) = y(2,1)-sweep(2,1);
 for n = 3:1:sweep_l
 y(n,j) = a(1,j)/b(1,j)*x(n,1)+a(3,j)/b(1,j)*x(n-2,1)-b(2,j)/b(1,j)*y(n-1,j)-b(3,j)/b(1,j)*y(n-2,j); %peak 1
 y(n,6) = y(n,6)+y(n,j);
-sweep_out(n,1) = y(n,3);
+sweep_out(n,1) = x(n,1)-y(n,3);
 
 end
 end
