@@ -114,13 +114,13 @@ The center frequencies of the 7 bands are also inspired by the BOSS GE-7 and is 
 \end{table}
 
 The first and the seventh band will be made by shelving filters and band 2,3,4,5 and 6 will be made by peak filters. The aim of the design is to design an equalizer, where each band can be amplified $\pm$ \SI{15}{\decibel} and has a flat combined frequency response when each band is set to amplify \SI{15}{\decibel}.
-The individual filters in the equalizer will coupled in parallel as seen in \autoref{fig:eq_parallel}.
+The individual filters in the amplifying equalizer will coupled in parallel as seen in \autoref{fig:eq_parallel}.
 
 \begin{figure}[!h]
 \centering
 \def\svgwidth{0.72\columnwidth}
 \scalebox{1}{\input{figures/design/eq_parallel.pdf_tex}}
-\caption{Block diagram of the combined equalizer.}
+\caption{Block diagram of the combined amplifying equalizer.}
 		\label{fig:eq_parallel}
 \end{figure}
 
@@ -166,6 +166,23 @@ When coupling the filters as in \autoref{fig:eq_parallel}, and plotting it in Ma
   \end{figure}
 
 The ripple of the combined equalizer in s-domain, when all bands are fully amplified, is \SI{4.49}{\decibel}, in the frequency area from \SI{100}{\hertz} to \SI{6400}{\hertz}. This ripple is accepted as a compromise, in order to make each band independent from the neighbouring bands. 
+
+It is chosen that the equalizer shall be able to amplify each band in five different steps from \SI{0}{\decibel} to \SI{15}{\decibel}. Using \autoref{eq:shelving_gain} and \autoref{eq:peak_gain}, and changing the value on the right side of the equality sign, the gain values for the five steps are found. The gain values are shown in \autoref{}. 
+
+\begin{table}[htbp]
+\centering
+\caption{Center frequencies for the equalizer.}
+\label{tab:center_frequencies}
+\begin{tabular}{|l|l|l|}
+\cline{1-3}
+\textbf{Amplification [dB]} & \textbf{Gain value (shelving)} & \textbf{Gain value (peak)} \\ \cline{1-3} 
+3 & 0.41 & 0.41 \\  \cline{1-3} 
+6 & 0.99 & 0.99 \\ \cline{1-3} 
+9 & 1.18 & 1.81 \\ \cline{1-3} 
+12 & 2.98 & 2.98 \\ \cline{1-3} 
+15 & 4.62 & 4.62 \\ \cline{1-3} 
+\end{tabular}
+\end{table}
 
 \subsection{Converting the equalizer to z-domain}
 In order to implement the equalizer on a \gls{dsp}, the now designed analog equalizer, has be to converted to a digital equalizer. This conversion will be made by using the bilinear transformation, which converts analog filters into digital IIR filters. In \autoref{eq:bilinear_transformation} the bilinear transformation method is shown.
@@ -337,16 +354,35 @@ This can be done by implementing the transferfunction in a feedback loop instead
 \centering
 \def\svgwidth{0.72\columnwidth}
 \scalebox{1}{\input{figures/design/eq_parallel_with_inv.pdf_tex}}
-\caption{Block diagram of the combined equalizer.}
+\caption{Block diagram of the combined inverse equalizer.}
 		\label{fig:eq_parallel_inv}
 \end{figure}
 
-The combined differential equation of the attenuating part of the equalizer, can be derived from \autoref{fig:eq_parallel_inv} to be as in \autoref{}.
+The combined differential equation of the attenuating part of the equalizer, can be derived from \autoref{fig:eq_parallel_inv} to be as in \autoref{eq:z_to_n_inv_comb}.
 
-\begin{equation}\label{eq:z_to_n_final}
+\begin{equation}\label{eq:z_to_n_inv_comb}
         y_{comb-inv}[n] = x[n] - (y_{LS}[n] + y_{HS}[n] + \sum_{j=1}^{5} y_{peak(j)}[n])
     \end{equation}
+    
+The amplifying- and the attenuating- part of the equalizer, will be coupled in series as shown in \autoref{fig:eq_comb}
 
+\begin{figure}[!h]
+\centering
+\def\svgwidth{0.72\columnwidth}
+\scalebox{1}{\input{figures/design/eq_amplify_attenuate.pdf_tex}}
+\caption{Block diagram of the combined equalizer.}
+		\label{fig:eq_comb}
+\end{figure}
+
+This implementation entails that only one of the bands with the same center frequency, can have $G \ne 0$, e.g. when it is chosen to amplify the band with $\omega_0 =$ \SI{400}{\hertz}, the gain for the filter with this center frequency in the feedback loop,  function has to be zero. 
+In \autoref{fig:eq_z_domain_final} a bodeplot of the final equalizer's dynamic range is shown.
+
+\begin{figure}[!h]
+    \centering
+        \includegraphics[width=\textwidth]{eq_z_domain_final.pdf}
+        \caption{Bodeplot of the final equalizer's dynamic range in z-domain, with all bands fully amplified and fully attenuated.}
+        \label{fig:eq_z_domain_final}
+  \end{figure}
 
 %Raised Cosine
 
