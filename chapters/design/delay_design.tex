@@ -147,7 +147,7 @@ As seen in \autoref{fig:reverb_block_design} the output of the six \gls{lpcf} is
 This simulation is done six times, where the gain of the \gls{lpcf} is changed each time. The first simulation e.g. is when $b = b_1$. Here it is seen that 210 outputs will be produced, before the \SI{-60}{\decibel} limit is reached. The number 210 is found from that when an input is sent to the \gls{lpcf}, the \gls{lpcf} will produce 20 outputs above \SI{-60}{\decibel}. Then when the first output of the \gls{lpcf} is made as the input to the allpass filter, the allpass filter will produce 20 outputs. The second output from the \gls{lpcf} will produce 19 outputs from the allpass filter. It appears that the number of outputs from a single \gls{lpcf} and a single allpass filter can be expressed as in \autoref{eq:rev_out_gen}.
 
 \begin{equation}\label{eq:rev_out_gen}
-        \text{y} = \sum_{x=1}^{m} x
+        y = \sum_{x=1}^{m} x
         \addunit{\si{1}}
     \end{equation} 
     
@@ -156,7 +156,30 @@ This simulation is done six times, where the gain of the \gls{lpcf} is changed e
 \explain{$m$ is the maximum number of outputs from the allpass filter, with a single output from the \gls{lpcf}, as the input}{\si{1}}
     \stopexplain
 
-because each \gls{lpcf} make 20 echo but they is attenuated differently. The following calculation \autoref{eq:reverb_ser} calculate the resulting echo after the first all pass filter if non of the echo interference and the attenuation from \autoref{tab:reverb_bgain} is included. Both the first and the second all pass have a prime number under 50 and an $\alpha$ of 0.708, so each signal from the all pass filter will be repeated maximum of $20-1$ times before the signal is attenuated under \SI{60}{\decibel} ($1 \cdot 10^{-3}$). The formula is founded from the following MATLAB script \autoref{code:reverb_cal}
+$m$ in \autoref{eq:rev_out_gen} changes as the \gls{lpcf} gain, $b$, changes. For $m = 20 \big|_{b=b_1}$, $m = 19 \big|_{b=b_2 \ and \ b=b_3}$, $m = 18 \big|_{b=b_4 \ and \ b=b_5}$, and $m = 17 \big|_{b=b_6}$.  
+The total number of outputs from the six \gls{lpcf} in parallel, followed by an allpass filter i serial, can then be found as in \autoref{}.
+
+\begin{subequations}
+\begin{equation}\label{eq:reverb_ser}
+      \text{Echo} + \text{direct sound} = \sum_{x=1}^{20} x + \sum_{x=1}^{19} x + \sum_{x=1}^{19} x + \sum_{x=1}^{18} x+ \sum_{x=1}^{18} x+ \sum_{x=1}^{17} x -5
+    \end{equation}
+\centering
+$\Updownarrow$
+\begin{equation}\label{eq:reverb_seriel}
+        \text{Echo} + \text{direct sound}= 1080
+        \addunit{\si{1}}
+    \end{equation}
+ \end{subequations}
+%
+%    \startexplain
+%\explain{$19$ is calculated from the \gls{lpcf} which is attenuated 10 percent, $b = 0.9$ in \autoref{code:reverb_cal} }{\si{1}}
+%\explain{$19$ is calculated from the \gls{lpcf} which is attenuated 20 percent, $b = 0.8$ in \autoref{code:reverb_cal}}{\si{1}}
+%\explain{$18$ is calculated from the \gls{lpcf} which is attenuated 30 percent, $b = 0.7$ in \autoref{code:reverb_cal} }{\si{1}}
+%\explain{$18$ is calculated from the \gls{lpcf} which is attenuated 40 percent, $b = 0.6$ in \autoref{code:reverb_cal} }{\si{1}}
+%\explain{$17$ is calculated from the \gls{lpcf} which is attenuated 50 percent, $b = 0.5$ in \autoref{code:reverb_cal} }{\si{1}}
+%    \stopexplain
+    
+Both the first and the second all pass have a prime number under 50 and an $\alpha$ of 0.708, so each signal from the all pass filter will be repeated maximum of $20-1$ times before the signal is attenuated under \SI{60}{\decibel} ($1 \cdot 10^{-3}$). The formula is founded from the following MATLAB script \autoref{code:reverb_cal}
 
 \includeCode{echo_1_all_pass.m}{matlab}{6}{23}{The reverb echo calcul6ation matlab code}{code:reverb_cal}{code/design/}
 
@@ -171,25 +194,7 @@ The output plot from the \gls{reverb} code where the input is guided through the
 
 Form the MATLAB script \autoref{code:reverb_cal} the formula of calculation echo after the first all pass filter is as following \autoref{eq:reverb_ser}. The $-5$ is included because only one of the direct sound is taken to acound in the formula.
 
-\begin{subequations}
-\begin{equation}\label{eq:reverb_ser}
-      \text{Echo} + \text{direct sound} = \sum_{x=1}^{20} x + \sum_{x=1}^{19} x + \sum_{x=1}^{19} x + \sum_{x=1}^{18} x+ \sum_{x=0}^{18} x+ \sum_{x=1}^{17} x -5
-    \end{equation}
-\centering
-$\Updownarrow$
-\begin{equation}\label{eq:reverb_seriel}
-        \text{Echo} + \text{direct sound}= 1080
-        \addunit{\si{1}}
-    \end{equation}
- \end{subequations}
 
-    \startexplain
-\explain{$19$ is calculated from the \gls{lpcf} which is attenuated 10 percent, $b = 0.9$ in \autoref{code:reverb_cal} }{\si{1}}
-\explain{$19$ is calculated from the \gls{lpcf} which is attenuated 20 percent, $b = 0.8$ in \autoref{code:reverb_cal}}{\si{1}}
-\explain{$18$ is calculated from the \gls{lpcf} which is attenuated 30 percent, $b = 0.7$ in \autoref{code:reverb_cal} }{\si{1}}
-\explain{$18$ is calculated from the \gls{lpcf} which is attenuated 40 percent, $b = 0.6$ in \autoref{code:reverb_cal} }{\si{1}}
-\explain{$17$ is calculated from the \gls{lpcf} which is attenuated 50 percent, $b = 0.5$ in \autoref{code:reverb_cal} }{\si{1}}
-    \stopexplain
 
 Since the echo density already is 1079 echo per second, the last all pass filter will certainly have a echo density of over 1000 echo per second for the output of the \gls{reverb} effect. In \citep{DAFX} Moorer suggests adding six \gls{lpcf} in parallel an making an early reflection network. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests to make the \gls{lpcf} feedback gain user variable to scaled the room size and damping. The following \autoref{eq:reverb_eq_eks} shows the formula of the \gls{lpcf} \citep{LPCFfd}. 
 
