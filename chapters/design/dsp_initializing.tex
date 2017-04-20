@@ -1,0 +1,21 @@
+\label{ch:disinit}
+In this chapter the \gls{dsp} initializing will be designed. This include \gls{adc}, \gls{dac} and sound in and out. All the \gls{dsp} initializing will be written C and the audio in and out will be written in assembly. 
+
+\section{Sample frequency}
+In this section the sample frequency will be designed and initialized to the \gls{dsp} in C. 
+%From http://www.ti.com.cn/cn/lit/ml/slaa557/slaa557.pdf 
+the necessary reset is done as following \autoref{code:dsp_reset}
+
+\includeCode{aic3204_init.c}{c}{12}{13}{The \gls{adc}/\gls{dac} reset code}{code:dsp_reset}{code/design/}
+
+The necessary initializing for the sample frequency can be derived as \autoref{code:dsp_init}
+
+\includeCode{aic3204_init.c}{c}{22}{13}{The \gls{adc}/\gls{dac} reset code}{code:dsp_init}{code/design/}
+
+\autoref{} can be derived  
+
+
+\begin{equation}\label{eq:reverb_defined_tal}
+       T = \frac{60}{-20 \cdot log10(0.708)} \cdot \tau
+       \addunit{\si{\second}}
+    \end{equation}
