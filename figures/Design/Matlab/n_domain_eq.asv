@@ -84,10 +84,10 @@ x = sweep;
 %shelving filters
 for j = 1:2
 %filter:
-y_sh(1,j) = c(1,1)/d(1,1)*x(1,1);
-y_sh(2,j) = c(1,1)/d(1,1)*x(2,1)+c(2,1)/d(1,1)*x(1,1)-d(2,1)/d(1,1)*y_sh(1,j);
-sweep_out(1,1) = y(1,1);
-sweep_out(2,1) = y(2,1);
+y_sh(1,j) = a(1,j)/b(1,j)*x(1,1);
+y_sh(2,j) = a(1,j)/b(1,j)*x(2,1)-b(2,j)/b(1,j)*y_sh(2-1,j);
+sweep_out(1,1) = y(1,1)-sweep(1,1);
+sweep_out(2,1) = y(2,1)-sweep(2,1);
 for n = 3:1:sweep_l
 y_sh(n,j) = a(1,j)/b(1,j)*x(n,1)+a(3,j)/b(1,j)*x(n-2,1)-b(2,j)/b(1,j)*y_sh(n-1,j)-b(3,j)/b(1,j)*y_sh(n-2,j); %shelving 1
 

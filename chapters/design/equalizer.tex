@@ -129,12 +129,12 @@ The gain has to be changeable within $\pm$ \SI{15}{\decibel}. It is chosen that 
 
 \begin{subequations}
 \begin{equation}\label{eq:shelving_gain}
-       20 \cdot \log_{10} \left( \mathopen| H_{LS}(j\cdot \omega) \mathclose| \right) = 15 \addunit{\SI{}{\decibel}}
+       20 \cdot \log_{10} \left( \mathopen|1 + H_{LS}(j\cdot \omega) \mathclose| \right) = 15 \addunit{\SI{}{\decibel}}
     \end{equation}
  \centering
 $\Updownarrow$   
 \begin{equation}\label{eq:shelving_gain_value}
-       G = \frac{\sqrt{(\omega_c^2+\omega^2) \cdot 10^{\frac{12}{10}}-\omega^2}}{\omega_c} - 1 \Big|_{\omega = 1 \ and \ \omega_c = 100} = 4.62 \addunit{\SI{}{1}}
+       G_{LS-boost} = \frac{\sqrt{(\omega_c^2+\omega^2) \cdot 10^{\frac{12}{10}}-\omega^2}}{\omega_c} - 1 \Big|_{\omega = 1 \ and \ \omega_c = 100} = 4.62 \addunit{\SI{}{1}}
     \end{equation}
 \end{subequations}
 
@@ -145,14 +145,29 @@ What the gain should be for the band to amplify \SI{15}{\decibel} is found in \a
 
 \begin{subequations}
 \begin{equation}\label{eq:peak_gain}
-       20 \cdot \log_{10} \left(\mathopen|H_{peak}(j\omega_0)\mathclose|\right) = 20 \cdot \log_{10} \left(1+G\right) = 15 \addunit{\SI{}{\decibel}}
+       20 \cdot \log_{10} \left(\mathopen|1 + H_{peak}(j\omega_0)\mathclose|\right) = 20 \cdot \log_{10} \left(1+G_{peak-boost}\right) = 15 \addunit{\SI{}{\decibel}}
     \end{equation}
 \centering
 $\Updownarrow$
 \begin{equation}\label{eq:peak_gain_value}
-        G = -1+10^{\frac{3}{4}} = 4.62 \addunit{\SI{}{1}}
+        G_{peak-boost} = -1+10^{\frac{3}{4}} = 4.62 \addunit{\SI{}{1}}
     \end{equation}
  \end{subequations}
+ 
+The final equalizer should be able to both amplify and attenuate each band. Therefore the gain values for attenuating a band must also be calculated. The gain for attenuating a peak filter \SI{15}{\decibel} is found in \autoref{}
+
+\begin{subequations}
+\begin{equation}\label{eq:peak_gain_at}
+       20 \cdot \log_{10} \left(\Big|\frac{1}{1 + H_{peak}(j\omega_0)}\Big|\right) = 20 \cdot \log_{10} \left(\frac{1}{1+G_{peak-cut}}\right) = 15 \addunit{\SI{}{\decibel}}
+    \end{equation}
+\centering
+$\Updownarrow$
+\begin{equation}\label{eq:peak_gain_value_at}
+        G_{peak-cut} = -1+10^{\frac{-15}{20}} = -0.49 \addunit{\SI{}{1}}
+    \end{equation}
+ \end{subequations}
+
+In the final gain for the attenuation, the gain has to be added with one, thus $G_{peak-cut} = -0.49 + 1 = 0.51$ 
 
 The Q-value is then the only unknown in the design of the peak filters. In \autoref{req:bandpass_filter2} it is stated that at full amplification (\SI{15}{\decibel}), the amplification at the neighbouring centerfrequencies must drop to (\SI{9}{\decibel}). 
 The Q-value will be chosen so it has the minimum ripple. This Q-value is found using a Matlab program, where the Q-value is increased in steps of 0.2 from 0 to 10. All gains on both the peak and the shelving filters are set to amplify \SI{15}{\decibel}. The optimal Q-value is hereby found to be 1.4, giving a ripple of $\pm$\SI{1.11}{\decibel}, in the frequency area from \SI{100}{\hertz} to \SI{6400}{\hertz}, when all filters are fully amplified. All parameters for the peak filters are then found. 
