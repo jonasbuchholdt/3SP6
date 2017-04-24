@@ -26,16 +26,17 @@ NADC       & AOSR & MDAC & NDAC & DOSR &      \\ \hline
 
 
 The TLV320AIC3204 chip is then with following C code  \autoref{code:dsp_init}.
-
 \includeCode{aic3204_init.c}{c}{25}{33}{The \gls{adc}/\gls{dac} reset code}{code:dsp_init}{code/design/}
 
 \section{Sound in and out}
 In this section the $I^2S$ connection will be initialized and used as connection between the \gls{dsp} and audio stereo chip. The spectrum digital stereoloop start code all ready use the $I^2S$ connection as default audio transfer between the \gls{dsp} and the audio stereo chip, so the only needed initializing is starting up the $I^2S$ connection. The startup code is as following \autoref{code:i2s_init}
-
 \includeCode{aic3204_init.c}{c}{69}{71}{The start up of $I^2S$ connection}{code:i2s_init}{code/design/}
 
-After the $I^2S$ connection is started up, the audio in and audio out is designed is assembly, to make the most efficiency code. The following \autoref{code:audio_in} is designed to load audio data into a register, so it is possible to work with the audio data. 
-
+After the $I^2S$ connection is started up, the audio in and audio out is designed in assembly, to make the most efficiency code. The following \autoref{code:audio_in} is designed to load audio data into a register, so it is possible to work with the audio data. 
 \includeCode{sound_in.asm}{assembly}{1}{11}{Reading the \gls{adc} data}{code:audio_in}{code/design/}
 
+After the audio data is processed, the audio data is written to the \gls{dac} as following \autoref{code:audio_out}.
 \includeCode{sound_out.asm}{assembly}{1}{11}{Writing data to the \gls{dac}}{code:audio_out}{code/design/}
+
+\section{Circular buffer}
+In this section the Circular buffer will be explained and designed.
