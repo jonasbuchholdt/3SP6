@@ -3,9 +3,9 @@ In this section, the delay and the \gls{reverb} will be designed to fit into a \
 
 
 \subsection{Obtaining the Differential Equation}\label{sec:reverb_develop}
-The Delay effect is a simpler version of the \gls{reverb} effect and therefore they will be presented and designed in the same section. The \gls{reverb} effect be designed first and then the delay effect can be made by using only a part of the \gls{reverb} effect. The block diagram presented in \autoref{sec:reverberation} \autoref{fig:reverb_block} is changed so it fits into a direct form 1 and 2 construction.
+The Delay effect is a simpler version of the \gls{reverb} effect and therefore they will be presented and designed in the same section. The block diagram presented in \autoref{sec:reverberation} \autoref{fig:reverb_block} is changed so it fits into a direct form 1 and 2 construction.
 A way to design a \gls{reverb}, which imitates the natural reverberation of a room, is with a serial connection of two blocks. The first block is a parallel connection of \gls{lpcf}, and the second block is a serial connection of allpass filters \citep{natural_sounding_revorb}. 
-The \gls{lpcf} is used because the room acoustic characteristics is acting as a low pass filter. All low frequency signals will stay longer in the room than the high frequency \citep{rfi}. The \gls{reverb} needs to have at least 1000 echo per second, and this can be obtained with six \gls{lpcf} filters in parallel \citep{DAFX}, and two all pass filter afterwords in serial. Otherwise if there was not two all pass filters afterwords, it would require 40 \gls{lpcf} to make 1000 echo per second \citep{natural_sounding_revorb}. The all pass filter in \autoref{fig:reverb_block_des} is in direct form 2 because of the delay length. The delay effect and some of the \gls{reverb} effect is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is both the one in red and black while the delay is only the red block. 
+The \gls{lpcf} is used because the room acoustic characteristics is acting as a low pass filter. All low frequency signals will stay longer in the room than the high frequency \citep{rfi}. The \gls{reverb} needs to have at least 1000 echo per second, and this can be obtained with six \gls{lpcf} filters in parallel, and two all pass filter afterwords in serial \citep{DAFX}. Otherwise if there was not two all pass filters afterwords, it would require 40 \gls{lpcf} to make 1000 echo per second \citep{natural_sounding_revorb}. The all pass filter in \autoref{fig:reverb_block_des} is in direct form 2 because of the delay length. The delay effect and some of the \gls{reverb} effect is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is both the one in red and black while the delay is only the red block. 
 
 \newpage
 
@@ -126,7 +126,7 @@ $d_4$ & = & 31 & $d_8$ & = & 13
 
 
 The \gls{reverb} unit requires 1000 echoes per second \citep{natural_sounding_revorb}. To achieve a natural \gls{reverb} sound, multiple all pass filter delay units have to be connected in serial after the six \gls{lpcf} in parallel. It is defined by \citep{natural_sounding_revorb} that two all pass filter is required to make a natural \gls{reverb} sound.
-To calculate the approximated number of echoes in one second from six \gls{lpcf}, the following calculations are made. The total numbers of echoes over \SI{-60}{\decibel} is added together from each \gls{lpcf} filter because each \gls{lpcf} has its own prime number. The result is maximum $6 \cdot 20 = 260$ echoes per second. The reason of this is that each \gls{lpcf} makes 20 echoes that is above \SI{-60}{\decibel}. In \autoref{fig:reverb_block_design} it is seen that each \gls{lpcf} is followed by an individual gain called $b_1$ to $b_6$. These gain values are chosen as in \autoref{tab:reverb_bgain}
+To calculate the approximated number of echoes in one second from six \gls{lpcf}, the following calculations are made. The total numbers of echoes over \SI{-60}{\decibel} is added together from each \gls{lpcf} filter because each \gls{lpcf} has its own prime number. The result is maximum $6 \cdot 20 = 260$ echoes per second. The reason of this is that each \gls{lpcf} makes 20 echoes that is above \SI{-60}{\decibel}. The number of echoes from the six \gls{lpcf}'s is different from the number of outputs from the six \gls{lpcf}'s, because a direct input is sent through each \gls{lpcf}, which is not counted as an echo. These six direct inputs arrives at the same time, so they are counted as one output. The number of outputs from each \gls{lpcf} is therefore 21, and the maximum number of outputs from the six parallel \gls{lpcf}'s is $6 \cdot 20 + 1 = 261$.  In \autoref{fig:reverb_block_design} it is seen that each \gls{lpcf} is followed by an individual gain called $b_1$ to $b_6$. These gain values are chosen as in \autoref{tab:reverb_bgain}
 
 \begin{table}[htbp]
 \centering
@@ -144,7 +144,7 @@ $b_6$ & = & 0.5
 
 This means that only the \gls{lpcf} with $b = 1$ will produce 20 echoes above \SI{-60}{\decibel}. The \gls{lpcf}s where $b$ is less than one will therefore reach the \SI{-60}{\decibel} limit faster, and will therefore produce less echoes above \SI{-60}{\decibel}.
 As seen in \autoref{fig:reverb_block_design} the output of the six \gls{lpcf} is then sent through two allpass filters. The number of echoes after the first allpass filter can be found from a simulation in MATLAB. The simulation is done with a serial connection of only one \gls{lpcf} and one allpass filter. It is then checked how many outputs of the allpass filter above \SI{-60}{\decibel} the circuit will produce.  
-This simulation is done six times, where the gain of the \gls{lpcf} is changed each time. The first simulation e.g. is when $b = b_1$. Here it is seen that 210 outputs will be produced, before the \SI{-60}{\decibel} limit is reached. The number 210 is found from that when an input is sent to the \gls{lpcf}, the \gls{lpcf} will produce 20 outputs above \SI{-60}{\decibel}. Then when the first output of the \gls{lpcf} is made as the input to the allpass filter, the allpass filter will produce 20 outputs. The second output from the \gls{lpcf} will produce 19 outputs from the allpass filter. It appears that the number of outputs from a single \gls{lpcf} and a single allpass filter can be expressed as in \autoref{eq:rev_out_gen}.
+This simulation is done six times, where the gain of the \gls{lpcf} is changed each time. The first simulation e.g. is when $b = b_1$. Here it is seen that 210 outputs will be produced, before the \SI{-60}{\decibel} limit is reached. The number 210 is found from that when an input is sent to the \gls{lpcf}, the \gls{lpcf} will produce 21 outputs above \SI{-60}{\decibel}. Then when the first output of the \gls{lpcf} is made as the input to the allpass filter, the allpass filter will produce 20 outputs. The second output from the \gls{lpcf} will produce 19 outputs from the allpass filter. It appears that the number of outputs from a single \gls{lpcf} and a single allpass filter can be expressed as in \autoref{eq:rev_out_gen}.
 
 \begin{equation}\label{eq:rev_out_gen}
         y = \sum_{x=1}^{m} x
@@ -170,42 +170,35 @@ $\Updownarrow$
         \addunit{\si{1}}
     \end{equation}
  \end{subequations}
-%
-%    \startexplain
-%\explain{$19$ is calculated from the \gls{lpcf} which is attenuated 10 percent, $b = 0.9$ in \autoref{code:reverb_cal} }{\si{1}}
-%\explain{$19$ is calculated from the \gls{lpcf} which is attenuated 20 percent, $b = 0.8$ in \autoref{code:reverb_cal}}{\si{1}}
-%\explain{$18$ is calculated from the \gls{lpcf} which is attenuated 30 percent, $b = 0.7$ in \autoref{code:reverb_cal} }{\si{1}}
-%\explain{$18$ is calculated from the \gls{lpcf} which is attenuated 40 percent, $b = 0.6$ in \autoref{code:reverb_cal} }{\si{1}}
-%\explain{$17$ is calculated from the \gls{lpcf} which is attenuated 50 percent, $b = 0.5$ in \autoref{code:reverb_cal} }{\si{1}}
-%    \stopexplain
+
+The subtraction of five in \autoref{eq:reverb_ser} is, as mentioned earlier, because each \gls{lpcf} sends through a direct input, which arrives at the same time, and is therefore counted as one output.
+The second allpass filter in \autoref{fig:reverb_block_design} is set to have the same parameters as the first allpass filter. There only a few requirements for the second allpass filter, because the number of echoes is already higher than 1000. Therefore the only requirements for the second allpass filter is that it has to be an allpass filter and it must not decrease the number of echoes. This is fulfilled by copying the first allpass filter. 
     
-Both the first and the second all pass have a prime number under 50 and an $\alpha$ of 0.708, so each signal from the all pass filter will be repeated maximum of $20-1$ times before the signal is attenuated under \SI{60}{\decibel} ($1 \cdot 10^{-3}$). The formula is founded from the following MATLAB script \autoref{code:reverb_cal}
+%
+%\includeCode{echo_1_all_pass.m}{matlab}{6}{23}{The reverb echo calcul6ation matlab code}{code:reverb_cal}{code/design/}
 
-\includeCode{echo_1_all_pass.m}{matlab}{6}{23}{The reverb echo calcul6ation matlab code}{code:reverb_cal}{code/design/}
+%The output plot from the \gls{reverb} code where the input is guided through the upper \gls{lpcf} and afterwards through the first all pass filter is as following \autoref{fig:reverbcal_plot}. This plot shows only one echo from the all pass filter the blue line and the output of this pulse from the first all pass filter, the red line.
+%
+%\begin{figure}[htbp]
+%	\centering
+%	\includegraphics[width=0.9\textwidth]{reverbcal}
+%	\caption{The plot shows the direct sound plus 19 echo }
+%	\label{fig:reverbcal_plot}
+%\end{figure}
 
-The output plot from the \gls{reverb} code where the input is guided through the upper \gls{lpcf} and afterwards through the first all pass filter is as following \autoref{fig:reverbcal_plot}. This plot shows only one echo from the all pass filter the blue line and the output of this pulse from the first all pass filter, the red line.
+%Form the MATLAB script \autoref{code:reverb_cal} the formula of calculation echo after the first all pass filter is as following \autoref{eq:reverb_ser}. The $-5$ is included because only one of the direct sound is taken to acound in the formula.
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.9\textwidth]{reverbcal}
-	\caption{The plot shows the direct sound plus 19 echo }
-	\label{fig:reverbcal_plot}
-\end{figure}
-
-Form the MATLAB script \autoref{code:reverb_cal} the formula of calculation echo after the first all pass filter is as following \autoref{eq:reverb_ser}. The $-5$ is included because only one of the direct sound is taken to acound in the formula.
-
-
-
-Since the echo density already is 1079 echo per second, the last all pass filter will certainly have a echo density of over 1000 echo per second for the output of the \gls{reverb} effect. In \citep{DAFX} Moorer suggests adding six \gls{lpcf} in parallel an making an early reflection network. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests to make the \gls{lpcf} feedback gain user variable to scaled the room size and damping. The following \autoref{eq:reverb_eq_eks} shows the formula of the \gls{lpcf} \citep{LPCFfd}. 
+In \citep{DAFX} Moorer suggests adding an early reflection network before the six \gls{lpcf}'s. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests making the \gls{lpcf} feedback gain as a variable, so the user can change the room size and damping. The following \autoref{eq:reverb_eq_eks} shows the differential equation for one of the \gls{lpcf}'s \citep{LPCFfd}. 
 
     \begin{equation}\label{eq:reverb_eq_eks}
-        x_2[n] = x_1[n] + L_D \cdot x_1[n-1] + L_D \cdot x_2[n-1] + f \cdot (1-L_D) \cdot x_2[n-d_1]
+        x_2[n] = x_1[n] - L_D \cdot x_1[n-1] + L_D \cdot x_2[n-1] + f \cdot (1-L_D) \cdot x_2[n-d_1]
     \end{equation}
+    
+    \startexplain
+\explain{$f$ is defining the room size}{\si{1}}
+    \stopexplain
 
-
-
-Where:\\ 
-The $f$ is defining the room size, and the equation of $f$ is as following \autoref{eq:reverb_eq_f} where scaleroom is used to scale the room size by user \citep{LPCFfd}.
+$f$ is found as described in \autoref{eq:reverb_eq_f}, where scaleroom is used to scale the room size by the user \citep{LPCFfd}.
 
 \begin{subequations}\label{eq:reverb_eq_f}
 \begin{equation}\label{eq:reverb_eq_f1}
@@ -218,7 +211,7 @@ $\Updownarrow$
     \end{equation}
  \end{subequations}   
    
-The $L_D$ is defining the room damping, and the equation of $L_D$ is as following \autoref{eq:reverb_eq_L_D} where scaledamp is used to scale the room damping by user \citep{LPCFfd}.    
+The $L_D$ is defining the room damping, and the equation for $L_D$ is as in \autoref{eq:reverb_eq_L_D}, where scaledamp is used to scale the room damping by the user \citep{LPCFfd}.    
 
 \begin{subequations}\label{eq:reverb_eq_L_D}
 \begin{equation}\label{eq:reverb_eq_L_D1}
@@ -232,7 +225,7 @@ $\Updownarrow$
  \end{subequations}   
 
 
-   The following \autoref{fig:reverb_block_design} shows the block diagram over the \gls{reverb} unit.
+   The following \autoref{fig:reverb_block_design} shows the block diagram over the \gls{reverb} unit, where $g = f \cdot (1-L_D)$.
 
 
 \begin{figure} [htbp]
@@ -284,37 +277,37 @@ $\Updownarrow$
 \put(-1394,4259){$x_2[n]$}%
 \put(-3374,3764){$z^{-1}$}%
 \put(-1844,3764){$z^{-1}$}%
-\put(-2204,4889){$f$}%
+\put(-2204,4889){$g$}%
 \put(-2519,2279){$\Sigma$}%
 \put(-1394,2459){$x_3[n]$}%
 \put(-1844,2594){$z^{-d_2}$}%
 \put(-1844,1964){$z^{-1}$}%
 \put(-3374,1964){$z^{-1}$}%
-\put(-2204,3089){$f$}%
+\put(-2204,3089){$g$}%
 \put(-1844,794){$z^{-d_3}$}%
 \put(-1394,659){$x_4[n]$}%
 \put(-1844,164){$z^{-1}$}%
 \put(-2519,479){$\Sigma$}%
 \put(-3374,164){$z^{-1}$}%
-\put(-2204,1289){$f$}%
+\put(-2204,1289){$g$}%
 \put(-2519,-1321){$\Sigma$}%
 \put(-1844,-1006){$z^{-d_4}$}%
 \put(-1394,-1141){$x_5[n]$}%
 \put(-1844,-1636){$z^{-1}$}%
 \put(-3374,-1636){$z^{-1}$}%
-\put(-2204,-511){$f$}%
+\put(-2204,-511){$g$}%
 \put(-2519,-3121){$\Sigma$}%
 \put(-1844,-3436){$z^{-1}$}%
 \put(-1844,-2806){$z^{-d_5}$}%
 \put(-3374,-3436){$z^{-1}$}%
-\put(-2204,-2311){$f$}%
+\put(-2204,-2311){$g$}%
 \put(-1394,-2941){$x_6[n]$}%
 \put(-2519,-4921){$\Sigma$}%
 \put(-1844,-5236){$z^{-1}$}%
 \put(-1844,-4606){$z^{-d_6}$}%
 \put(-1394,-4741){$x_7[n]$}%
 \put(-3374,-5236){$z^{-1}$}%
-\put(-2204,-4111){$f$}%
+\put(-2204,-4111){$g$}%
 \put(-2249,3674){$L_D$}%
 \put(-2249,1874){$L_D$}%
 \put(-2249, 74){$L_D$}%
@@ -329,12 +322,12 @@ $\Updownarrow$
 \put(-2789,3314){$-L_D$}%
 \put(1936,-196){$x_8[n]$}%
 \end{picture}%
-  \caption{The figure shows a block diagram of a \gls{reverb} unit.}
+  \caption{Block diagram of a \gls{reverb} unit.}
   \label{fig:reverb_block_design}
 \end{figure}
 
 \newpage
-The equation for the \gls{reverb} can be written in 12 parts as following \autoref{eq:reverb_eq}
+The differential equation for the \gls{reverb} can be written in 12 parts as following in \autoref{eq:reverb_eq}.
 
 \begin{subequations}\label{eq:reverb_eq}
 \begin{equation}\label{eq:reverb_eq_ed}
