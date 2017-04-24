@@ -12,7 +12,7 @@ G2_peak = 0.9952;
 G3_peak = 1.8183;
 G4_peak = 2.9810;
 G5_peak = 4.6234;
-G = G4_peak;
+G = G3_peak;
 
 %insert your input in this table
 filename = 'gtr-jazz-3.wav';%'16Hz-20kHz-Lin-CA-10sec.mp3';
@@ -74,7 +74,7 @@ sweep_out(2,1) = y(2,1)-sweep(2,1);
 for n = 3:1:sweep_l
 y(n,j) = a(1,j)/b(1,j)*x(n,1)+a(3,j)/b(1,j)*x(n-2,1)-b(2,j)/b(1,j)*y(n-1,j)-b(3,j)/b(1,j)*y(n-2,j); %peak 1
 y(n,6) = y(n,6)+y(n,j);
-sweep_out(n,1) = x(n,1)-y(n,3);
+sweep_out(n,1) = x(n,1)-y(n,1);
 
 end
 end
