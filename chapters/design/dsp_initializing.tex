@@ -2,20 +2,32 @@
 In this chapter the \gls{dsp} initializing will be designed. This include \gls{adc}, \gls{dac} and sound in and out. All the \gls{dsp} initializing will be written C and the audio in and out will be written in assembly. 
 
 \section{Sample frequency}
-In this section the sample frequency will be designed and initialized to the \gls{dsp} in C. 
-%From http://www.ti.com.cn/cn/lit/ml/slaa557/slaa557.pdf 
-the necessary reset is done as following \autoref{code:dsp_reset}
+In this section the sample frequency will be designed and initialized to the \gls{dsp} in C. \citep{slaa557}
+On the TMS320C5515 eZdsp USB Stick there is a \gls{dsp} with an external stereo \gls{adc} and \gls{dac} TLV320AIC3204 Ultra Low Power Stereo Audio Codec \citep{TLV320AIC3204}. The initializing is done by written the initializing code on the \gls{dsp} and afterwards transfer the data through an $I^2C$ connection. The audio data is afterwards transferred with an $I^2S$ connection between the \gls{dsp} and the TLV320AIC3204 chip.
+The following \autoref{code:dsp_reset} is made to reset the TLV320AIC3204 chip.
 
 \includeCode{aic3204_init.c}{c}{12}{13}{The \gls{adc}/\gls{dac} reset code}{code:dsp_reset}{code/design/}
 
-The necessary initializing for the sample frequency can be derived as \autoref{code:dsp_init}
+Afterwards the clock shall be designed and and initialized. It is chosen that the \gls{dsp} shall be as fast as possible, so it is possible to run more than one effect in serial. In according to \citep{slaa557} the initializing with \SI{44.1}{\kilo\hertz} shall be initialized as following \autoref{tab:fs_clk} with an master clock from the dsp at \SI{12}{\mega\hertz}
 
-\includeCode{aic3204_init.c}{c}{22}{13}{The \gls{adc}/\gls{dac} reset code}{code:dsp_init}{code/design/}
+\begin{table}[]
+\centering
+\caption{tab:fs_clk}
+\label{tab:fs_clk}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\multicolumn{6}{|l|}{$f_s=44.1kHz$}           \\ \hline
+MCLK (MHz) & PLLP & PLLR & PLLJ & PLLD & MADC \\ \hline
+12         & 1    & 1    & 7    & 560  & 3    \\ \hline
+NADC       & AOSR & MDAC & NDAC & DOSR &      \\ \hline
+5          & 128  & 3    & 5    & 128  &      \\ \hline
+\end{tabular}
+\end{table}
 
-\autoref{} can be derived  
+
+The TLV320AIC3204 chip is then with following C code  \autoref{code:dsp_init}.
+
+\includeCode{aic3204_init.c}{c}{25}{33}{The \gls{adc}/\gls{dac} reset code}{code:dsp_init}{code/design/}
 
 
-\begin{equation}\label{eq:reverb_defined_tal}
-       T = \frac{60}{-20 \cdot log10(0.708)} \cdot \tau
-       \addunit{\si{\second}}
-    \end{equation}
+
