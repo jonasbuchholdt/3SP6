@@ -60,6 +60,32 @@ morecomment=[s][\color{javadocblue}]{/**}{*/},
   stringstyle=\color{orange},
 }
 
+%Hvordan ASM kode skal se ud
+\lstdefinestyle{customassembly}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  %language=assembly,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+%where there is a space  
+  numbers=left,%
+  numberstyle={\tiny \color{black}},% size of the numbers
+  numbersep=9pt, % this defines how far the numbers are from the text
+  commentstyle=\itshape\color{javagreen},
+  %assembly structure
+  emph=[1]{equ,text,data,word,set},emphstyle=[1]\color{matlabstring}, 
+  %commands
+  emph=[2]{MOV,mov,BTST,BCC,NOP,RET},emphstyle=[2]\color{gray}, 
+  %label
+  emph=[3]{in,recieve_flag,out,transmit_flag},emphstyle=[3]\color{blue},
+  identifierstyle=\color{black},
+  stringstyle=\color{blue},
+    comment=[l];,                              % comments
+}
+
 %Hvordan Matlab kode skal se ud
 \lstdefinestyle{custommatlab}{
 basicstyle=\footnotesize\ttfamily,

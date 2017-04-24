@@ -4,7 +4,7 @@ close all
 %Group 641
 
 %insert your input in this table
-filename = 'sin_out.wav';
+filename = 'gtr-jazz-3.wav';
 [input, fs] = audioread(filename);
 
 %user define variable
@@ -20,7 +20,7 @@ b = [1,0.9,0.8,0.7,0.6,0.5];
 time = 10; % roomsize
 damp = 0.5*scaledamp;
 room = 0.5*scaleroom+0.7;
-allscale = 0.1;
+allscale = 0.9;
 
 % filter delay time 
 Delay = [round(fs/1000*1.9*time),round(fs/1000*2.3*time),round(fs/1000*2.97*time),round(fs/1000*3.71*time),round(fs/1000*4.1*time),round(fs/1000*4.37*time),round(fs/1000*1.3*time*allscale),round(fs/1000*1.7*time*allscale)]
