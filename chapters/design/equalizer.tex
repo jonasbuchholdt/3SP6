@@ -1,6 +1,6 @@
 \section{Design of the equalizer}
 This chapter aims to describe the design of an digital equalizer, for an electric guitar. 
-To begin with, some design choices have to made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by a parallel connection of shelving filters and peak filters. The shelving filters are used the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters are normally kept as first or second order filters. 
+To begin with, some design choices have to made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by a combination of shelving filters and peak filters. The shelving filters are used for the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters are normally kept as first or second order filters. 
 
 \subsection{Shelving filter}
 The transfer function for a first order low shelving filter is as in \autoref{eq:analog_shelving_low} \citep{Julius_smith}.
@@ -26,7 +26,15 @@ The transfer function for a first order high shelving filter is as in \autoref{e
     \stopexplain
 
     
-When implementing \autoref{eq:analog_shelving_low} and \autoref{eq:analog_shelving_high}, individually in a feedforward loop, the bodeplots of first order low- and high- shelving filters with different cut-off frequencies, becomes as in\autoref{fig:low_and_high_shelving}.
+When implementing \autoref{eq:analog_shelving_low} and \autoref{eq:analog_shelving_high}, individually in a feedforward loop, as in \autoref{fig:shelving_block}, the bodeplots of first order low- and high- shelving filters with different cut-off frequencies, becomes as in \autoref{fig:low_and_high_shelving}.
+
+\begin{figure}[!h]
+\centering
+\def\svgwidth{0.72\columnwidth}
+\scalebox{1}{\input{figures/design/shelving_filter_block.pdf_tex}}
+\caption{Block diagram of the shelving filter.}
+		\label{fig:shelving_block}
+\end{figure}
 
 \begin{figure}
     \centering
@@ -154,20 +162,7 @@ $\Updownarrow$
     \end{equation}
  \end{subequations}
  
-The final equalizer should be able to both amplify and attenuate each band. Therefore the gain values for attenuating a band must also be calculated. The gain for attenuating a peak filter \SI{15}{\decibel} is found in \autoref{}
-
-\begin{subequations}
-\begin{equation}\label{eq:peak_gain_at}
-       20 \cdot \log_{10} \left(\Big|\frac{1}{1 + H_{peak}(j\omega_0)}\Big|\right) = 20 \cdot \log_{10} \left(\frac{1}{1+G_{peak-cut}}\right) = 15 \addunit{\SI{}{\decibel}}
-    \end{equation}
-\centering
-$\Updownarrow$
-\begin{equation}\label{eq:peak_gain_value_at}
-        G_{peak-cut} = -1+10^{\frac{-15}{20}} = -0.49 \addunit{\SI{}{1}}
-    \end{equation}
- \end{subequations}
-
-In the final gain for the attenuation, the gain has to be added with one, thus $G_{peak-cut} = -0.49 + 1 = 0.51$ 
+ 
 
 The Q-value is then the only unknown in the design of the peak filters. In \autoref{req:bandpass_filter2} it is stated that at full amplification (\SI{15}{\decibel}), the amplification at the neighbouring centerfrequencies must drop to (\SI{9}{\decibel}). 
 The Q-value will be chosen so it has the minimum ripple. This Q-value is found using a Matlab program, where the Q-value is increased in steps of 0.2 from 0 to 10. All gains on both the peak and the shelving filters are set to amplify \SI{15}{\decibel}. The optimal Q-value is hereby found to be 1.4, giving a ripple of $\pm$\SI{1.11}{\decibel}, in the frequency area from \SI{100}{\hertz} to \SI{6400}{\hertz}, when all filters are fully amplified. All parameters for the peak filters are then found. 
@@ -193,7 +188,7 @@ It is chosen that the equalizer shall be able to amplify each band in five diffe
 \textbf{Amplification [dB]} & \textbf{Gain value (shelving)} & \textbf{Gain value (peak)} \\ \cline{1-3} 
 3 & 0.41 & 0.41 \\  \cline{1-3} 
 6 & 0.99 & 0.99 \\ \cline{1-3} 
-9 & 1.18 & 1.81 \\ \cline{1-3} 
+9 & 1.81 & 1.81 \\ \cline{1-3} 
 12 & 2.98 & 2.98 \\ \cline{1-3} 
 15 & 4.62 & 4.62 \\ \cline{1-3} 
 \end{tabular}
@@ -329,56 +324,88 @@ When coupling the filters as in \autoref{fig:eq_parallel}, the combined output o
 It is now possible for the equalizer to amplify different frequency areas.
 
 \subsection{The inverse equalizer}
-The equalizer should also be able to attenuate the specified bands in \autoref{tab:center_frequencies}. 
-This can be done by implementing the transferfunction in a feedback loop instead of a feedforward loop. A blockdiagram of how to implement the attenuating part of the equalizer is seen in \autoref{fig:eq_parallel_inv}
-
-%This can be done by making an inverse function of the amplifying transferfunction. This method is shown in \autoref{eq:inverse_eq}, where it is done in the peak filters.
-%
-%\begin{equation}\label{eq:inverse_eq}
-%         H(z)_{peak-inv} = \frac{1}{H(z)_{peak}} = \frac{z^2 \cdot b_{peak1} + z \cdot b_{peak2} + b_{peak3}}{G \cdot z \cdot a_{peak1} + a_{peak2}}
-%    \end{equation}
-%    
-%    \startexplain
-%     \explain{$H(z)_{peak-inv}$ is transferfunction for the inverse peak filter.}{\si{1}}
-%    \stopexplain
-%    
-%When applying this method on the combined z-domain transferfunction, the bodeplot becomes as in \autoref{fig:eq_z_domain_comb_inv}.
-%
-%\begin{figure}[!h]
-%    \centering
-%        \includegraphics[width=\textwidth]{eq_z_domain_comb_inv.pdf}
-%        \caption{Bodeplot of the combined equalizer in z-domain, with maximum gain on all bands.}
-%        \label{fig:eq_z_domain_comb_inv}
-%  \end{figure}
-%
-%When converting the inverse transferfunctions from z-domain to n-domain, the differential equations becomes as in \autoref{eq:z_to_n_LS_inv}, \autoref{eq:z_to_n_HS_inv} and \autoref{eq:z_to_n_peak_inv}.
-%
-%\begin{equation}\label{eq:z_to_n_LS_inv}
-%        y_{LS-inv}[n] = \frac{b_{LS1}}{G \cdot a_{LS1}} \cdot x[n] + \frac{b_{LS2}}{G \cdot a_{LS1}} \cdot x[n-1] -  \frac{a_{LS2}}{a_{LS1}} \cdot y_{LS-inv}[n-1]
-%    \end{equation}
-%
-%\begin{equation}\label{eq:z_to_n_HS_inv}
-%        y_{HS-inv}[n] = \frac{b_{HS1}}{G \cdot a_{HS1}} \cdot x[n] + \frac{b_{HS2}}{G \cdot a_{HS1}} \cdot x[n-1] -  \frac{a_{HS2}}{a_{HS1}} \cdot y_{HS}[n-1]
-%    \end{equation}
-%
-%\begin{equation}\label{eq:z_to_n_peak_inv}
-%         y_{peak-inv}[n] = \frac{b_{peak1}}{G \cdot a_{peak1}} \cdot x[n] + \frac{b_{peak2}}{G \cdot a_{peak1}} \cdot x[n-1] + \frac{b_{peak3}}{G \cdot a_{peak1}} \cdot x[n-2] - \frac{a_{peak2}}{a_{peak1}} \cdot y_{peak-inv}[n-2]
-%    \end{equation}
+The attenuating part of the equalizer will be made from a series connection of feedback loops. The initial idea was to implement the attenuating part as a parallel connection of feedback loops, where the differential equations from the amplifying part could be reused. The initial idea was changed because of problems when inverting the parallel feedback connection. 
+The attenuating part will be implemented as illustrated in \autoref{fig:eq_attenuate_block}.
 
 \begin{figure}[!h]
 \centering
 \def\svgwidth{0.72\columnwidth}
-\scalebox{1}{\input{figures/design/eq_parallel_with_inv.pdf_tex}}
-\caption{Block diagram of the combined inverse equalizer.}
-		\label{fig:eq_parallel_inv}
+\scalebox{1}{\input{figures/design/eq_attenuate_block.pdf_tex}}
+\caption{Block diagram of the attenuating equalizer.}
+		\label{fig:eq_attenuate_block}
 \end{figure}
 
-The combined differential equation of the attenuating part of the equalizer, can be derived from \autoref{fig:eq_parallel_inv} to be as in \autoref{eq:z_to_n_inv_comb}.
+The differential equations for each feedback loop are derived by the same method as for the amplifying part, but with different analog transferfunctions. The attenuating analog transferfunction reuse the amplifying analog transferfunction, but in as a feedback loop, as shown in \autoref{eq:analog_attenuate}.
 
-\begin{equation}\label{eq:z_to_n_inv_comb}
-        y_{comb-inv}[n] = x[n] - (y_{LS}[n] + y_{HS}[n] + \sum_{j=1}^{5} y_{peak(j)}[n])
+\begin{equation}\label{eq:analog_attenuate}
+        H_{cut}(s) = \frac{1}{1 + H_{boost}}
     \end{equation}
     
+    \startexplain
+     \explain{$H_{cut}(s)$ is the attenuating transferfunction.}{\si{1}}
+     \explain{$H_{boost}$ can be either $H_{LS}(s)$, $H_{HS}(s)$ or $H_{peak}(s)$.}{\si{1}}
+    \stopexplain
+    
+The three new transferfunctions from \autoref{eq:analog_attenuate} are bilinear transformed and converted from z-domain to n-domain, the same way as the amplifying part. The z-domain transferfunctions for the attenuating low shelving-, high shelving- and peak filter, are shown in \autoref{}, \autoref{} and \autoref{}.
+
+\begin{equation}\label{eq:Hz_LS_att}
+        H(z)_{LS-cut} =\frac{z \cdot a_{LS1-cut} + a_{LS2-cut}}{z \cdot b_{LS1-cut} + b_{LS2-cut}}
+    \end{equation}
+    
+    \startexplain
+     \explain{$H(z)_{LS-cut}$ is the digital transferfunction for the attenuating low shelving filter.}{\si{1}}
+     \explain{$b_{LS1-cut} = G \cdot T_s \cdot \omega_c + T_s \cdot \omega_c +2$ }{\si{1}}
+     \explain{$b_{LS2-cut} = G \cdot T_s \cdot \omega_c + T_s \cdot \omega_c -2$ }{\si{1}}
+     \explain{$a_{LS1-cut} = 2+\omega_c \cdot T_s$ }{\si{1}}
+     \explain{$a_{LS2-cut} = -2+\omega_c \cdot T_s$ }{\si{1}}
+    \stopexplain
+    
+\begin{equation}\label{eq:Hz_HS_att}
+        H(z)_{HS-cut} = \frac{z \cdot a_{HS1-cut} + a_{HS2-cut}}{z \cdot b_{HS1-cut} + b_{HS2-cut}}
+    \end{equation}
+    
+    \startexplain
+     \explain{$H(z)_{HS-cut}$ is the digital transferfunction for the attenuating high shelving filter.}{\si{1}}
+     \explain{$b_{HS1-cut} = T_s \cdot \omega_c + 2 \cdot G +2$ }{\si{1}}
+     \explain{$b_{HS2-cut} = T_s \cdot \omega_c - 2 \cdot G -2$ }{\si{1}}
+     \explain{$a_{HS1-cut} = 2+\omega_c \cdot T_s$ }{\si{1}}
+     \explain{$a_{HS2-cut} = -2+\omega_c \cdot T_s$ }{\si{1}}
+    \stopexplain
+
+\begin{equation}\label{eq:Hz_peak_att}
+        H(z)_{peak-cut} =  \frac{z^2 \cdot a_{peak1-cut} + z \cdot a_{peak2-cut} + a_{peak3-cut}}{z^2 \cdot b_{peak1-cut} + z \cdot b_{peak2-cut} + b_{peak3-cut}}
+    \end{equation}
+    
+    \startexplain
+     \explain{$H(z)_{peak-cut}$ is the digital transferfunction for the attenuating peak filter.}{\si{1}}
+     \explain{$b_{peak1-cut} = 4 \cdot Q + \omega_0 \cdot(1+G) \cdot T_s \cdot 2 + \omega_0^2 \cdot T_s^2 \cdot Q  $ }{\si{1}}
+     \explain{$b_{peak2-cut} =-8 \cdot Q + 2 \cdot  \omega_0^2 \cdot T_s^2 \cdot Q$ }{\si{1}}
+     \explain{$b_{peak3-cut} = 4 \cdot Q - 2 \cdot \omega_c \cdot T_s \cdot (1+G) + \omega_0^2 \cdot T_s^2 \cdot Q$ }{\si{1}}
+     \explain{$a_{peak1-cut} = 4 \cdot Q + 2 \cdot \omega_c \cdot T_s + \omega_0^2 \cdot T_s^2 \cdot Q$ }{\si{1}}
+     \explain{$a_{peak2-cut} = -8 \cdot Q + 2 \cdot  \omega_0^2 \cdot T_s^2 \cdot Q$ }{\si{1}}
+     \explain{$a_{peak3-cut} = 4 \cdot Q - 2 \cdot \omega_c \cdot T_s + \omega_0^2 \cdot T_s^2 \cdot Q$ }{\si{1}}
+    \stopexplain
+    
+The differential equations for the attenuating low shelving-, high shelving- and peak- filter, are then found as in \autoref{}, \autoref{} and \autoref{}.
+
+\begin{equation}\label{eq:z_to_n_LS}
+        y_{LS-cut}[n] = \frac{a_{LS1-cut}}{b_{LS1-cut}} \cdot x[n] + \frac{a_{LS2-cut}}{b_{LS1-cut}} \cdot x[n-1] -  \frac{b_{LS2-cut}}{b_{LS1-cut}} \cdot y_{LS-cut}[n-1]
+    \end{equation}
+
+\begin{equation}\label{eq:z_to_n_HS}
+        y_{HS-cut}[n] = \frac{a_{HS1-cut}}{b_{HS1-cut}} \cdot x[n] + \frac{a_{HS2-cut}}{b_{HS1-cut}} \cdot x[n-1] -  \frac{b_{HS2-cut}}{b_{HS1-cut}} \cdot y_{HS-cut}[n-1]
+    \end{equation}
+    
+\begin{equation}
+\begin{aligned}
+y_{peak-cut}[n] = \frac{a_{peak1-cut}}{b_{peak1-cut}} \cdot x[n] + \frac{a_{peak2-cut}}{b_{peak1-cut}} \cdot x[n-1]+ \frac{a_{peak3-cut}} {b_{peak1-cut}} \cdot x[n-2] \\
+- \frac{b_{peak2-cut}}{b_{peak1-cut}} \cdot y_{peak-cut}[n-1] - \frac{b_{peak3-cut}}{b_{peak1-cut}} \cdot y_{peak-cut}[n-2]
+\end{aligned}
+\end{equation}
+
+The attenuating part of the equalizer is a serial connection and therefore the output of the first feedback loop, should be the input of the second feedback loop and so forth.
+The gain values for attenuating are the same as in \autoref{tab:eq_gain_values}. If it is wanted to attenuate a band \SI{9}{\decibel} e.g. the gain should be set to 1.81.
+
 The amplifying- and the attenuating- part of the equalizer, will be coupled in series as shown in \autoref{fig:eq_comb}
 
 \begin{figure}[!h]

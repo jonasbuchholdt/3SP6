@@ -18,7 +18,7 @@ s = tf('s');
 
 min_ripple = 50;
 
-for j = 1:1
+for j = 1:50
 
 % Shelving filter Low 
 om_zero = 100*2*pi;
@@ -38,7 +38,7 @@ Hs_high = Hs;
 om_zero = 200*2*pi;
 x = 1;
 G = G5_peak;
-Q = 1.4;
+Q = 0.2*j;
 Hs = s/(om_zero*Q);
 H_LP = om_zero^2/(s^2+om_zero/Q*s+om_zero^2);
 H_BP_1 = G*H_LP*Hs
@@ -78,14 +78,14 @@ H_BP_5 = G*H_LP*Hs;
 H = 1+H_BP_1+H_BP_2+H_BP_3+H_BP_4+H_BP_5+Hs_low+Hs_high;
 
 % Finding ripple
-fband = [100,6200];
+fband = [100*2*pi,6400*2*pi];
 [gpeak,fpeak] = getPeakGain(H,0.01,fband);
 [gmin,fmin] = getPeakGain(H^(-1),0.01,fband);
 Maximum = 20*log10(gpeak);
 Minimum = 20*log10(gmin);
 ripple = Maximum-abs(Minimum);
 
-fband2 =[400,500];
+fband2 =[400*2*pi,500*2*pi];
 [gpeak2,fpeak2] = getPeakGain(H_BP_1);
 [gpeak3,fpeak3] = getPeakGain(H_BP_1,0.01,fband2);
 w_0 = 20*log10(gpeak2);
@@ -120,6 +120,6 @@ legend('Low shelving filter','Peak filter1','Peak filter2','Peak filter3','Peak 
 % ylabel('Magnitude [dB]')
 % xlabel('Frequency [rad/s]')
 hold off
-FigureToPDF(gcf, '../eq_s_domain_comb')
+%FigureToPDF(gcf, '../eq_s_domain_comb')
 figure(2)
 bode(H_final)
