@@ -2,9 +2,9 @@
 
 \subsection{Obtaining the Differential Equation}
 
-The flanger and chorus effect are very similar in their design so they will be presented in the same section. \\
+The flanger- and chorus- effect are similar in their design so they will be presented in the same section. \\
 
-From the block diagram presented in section \autoref{chor_flang}, a block diagram in the discrete time domain for the flanger and chorus effect can be obtained and is shown in \autoref{fig:chorus_diag_des}. \\ 
+From the block diagram presented in section \autoref{sec:chorus}, a block diagram in the discrete time domain for the flanger and chorus effect can be obtained and is shown in \autoref{fig:chorus_diag_des}. \\ 
 The chorus effect is the one in red and black while the flanger is only in black.  
 \begin{figure} [htbp!]
 	\centering
@@ -43,35 +43,35 @@ The chorus effect is the one in red and black while the flanger is only in black
 
 From \autoref{fig:chorus_diag_des}, the following differential equations can be inferred:
 
-The equation for the flanger can be written as:
+The equation for the flanger can be written as in \autoref{eq:flang_eq}
 \begin{equation}
-\label{flang_eq}
+\label{eq:flang_eq}
 		y[n] = x[n] + x[n- d_{1}] \cdot g_{1}  
 \end{equation}
 
-The equation for the chorus can be written as:
+The equation for the chorus can be written as in \autoref{eq:chor_eq}:
 
 \begin{equation}
-\label{chor_eq}
+\label{eq:chor_eq}
 y[n] = x[n] + \sum_{j=1}^{i}  (x[n- d_{j}] \cdot g_{j})
 \end{equation}
 
-The index $i$ represents the number of delays that are being implemented in the chorus effect which is also the chorus size. Index $n$ represents the number of samples that are being modulated. \\
-If the implementation is done using a time varying delay, equations \ref{flang_eq} and \ref{chor_eq} can be re-written as:
+The index $i$ represents the number of delays that are being implemented in the chorus effect which is also the chorus size. Index $n$ represents the present sample. \\
+If the implementation is done using a time varying delay, equations \ref{flang_eq} and \ref{chor_eq} can be re-written as \autoref{eq:flang_eq2} and \autoref{eq:chor_eq2}:
 
 \begin{equation}
-\label{flang_eq2}
+\label{eq:flang_eq2}
 y[n] = x[n] + x[n- d_{1}[n]] \cdot g_{1}  
 \end{equation}
 
 \begin{equation}
-\label{chor_eq2}
+\label{eq:chor_eq2}
 y[n] = x[n] + \sum_{j=1}^{i}  (x[n- d_{j}[n]] \cdot g_{j})
 \end{equation}
 
-The delay value has to be a periodic function that is varying in a user-defined range. 
+The delay value has to be a periodic function that is varying in a user-defined range. As illustrated in \autoref{fig:chorus_diag_des}, this varying delay can be made from a \gls{lfo}.
 
-From the difference equation, it can be seen that the design is using a FIR Comb filter but where the delay value varies. 
+From the difference equation, it can be seen that the design is using a FIR Comb filter but where the delay value varies. \todo[inline]{Why is it FIR comb filter?}
 
 
 \subsection{Matlab Simulation}
@@ -86,7 +86,11 @@ The delay can then be written as:
 	d[n]= A \cdot sin(2\pi  \cdot \frac{f_{l}}{f_{s}} n)
 \end{equation}
 
-$A$ is the value of the user-defined range which is also the depth. $f_{l}$ is the frequency of the \gls{lfo} and $f_{s}$ the sampling frequency. 
+\startexplain
+     \explain{$A$ is the value of the user-defined range which is also the depth.}{\si{1}}
+     \explain{$f_{s}$ the sampling frequency.}{\si{\hertz}}
+     \explain{$f_{l}$ is the frequency of the \gls{lfo}.}{\si{\hertz}}
+    \stopexplain 
 
 The Matlab code for the flanger effect is:
 
