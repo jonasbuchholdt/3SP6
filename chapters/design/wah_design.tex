@@ -30,11 +30,9 @@ The block diagram of the wah-wah effect has been presented in the analysis and i
 	\label{fig:wah_diag_2}
 \end{figure}
 
-In signal processing, different types of filters can be implemented using the first and second order allpass filters. In the case of the wah-wah, it can be inferred from \autoref{fig:wah_diag_2} that a bandpass filter is need where the center frequency is controller in order to choose where the filter is working in the frequency spectrum. \\
+Different types of filters can be implemented using the first and second order allpass filters. In the case of the wah-wah, it can be inferred from \autoref{fig:wah_diag_2} that a bandpass filter is needed as a part of the feedforward loop. 
 
-With a first order allpass filter, it is possible to design a circuit to make  lowpass and highpass filter but not bandpass or bandreject. Thus, the focus will be on the second order allpass filter since a bandpass one is needed. \\
-
-\autoref{fig:wah_allpass} shows the block diagram of the second order allpass filter.
+With a first order allpass filter, it is possible to design a circuit to make lowpass- and highpass- filters, but not bandpass- or bandreject- filters. Thus, the focus will be on the second order allpass filter, since a second order allpass filter can be used to obtain the bandpass filter, which is needed. \autoref{fig:wah_allpass} shows the block diagram of the second order allpass filter.
 
 \begin{figure} [htbp]
 	\centering

@@ -39,4 +39,15 @@ After the audio data is processed, the audio data is written to the \gls{dac} as
 \includeCode{sound_out.asm}{assembly}{1}{11}{Writing data to the \gls{dac}}{code:audio_out}{code/design/}
 
 \section{Circular buffer}
-In this section the Circular buffer will be explained and designed.
+
+The circular buffer is tool needed in different effects like flanger and chorus. Coding it in assembly can drastically optimize real-time signal possessing. \\
+
+The code is presented in \autoref{code:buffer_asm}. The first lines are used for initialization. The main data page as well as the circular buffer address are initialized in line 5. In line 6, it is chosen from which address should the buffer memory start. Then, the size is the buffer is chosen in line 9 and the pointer position in line 10. The fact that the pointer is circular needs to be indicated which is done in line 10, it means that after the fourth value of the buffer it will go back to the first one.\\
+
+The remaining line are an example of the buffer usage, line 12 and 13 are for loading something in the buffer and the rest is to take a value from the buffer. 
+
+
+\includeCode{buffer.asm}{assembly}{1}{18}{Circular Buffer in Assembly code}{code:buffer_asm}{code/design/}
+
+
+

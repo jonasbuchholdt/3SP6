@@ -24,16 +24,16 @@ This chapter lists the requirements for the effects presented in the analysis.
 	\label{fig:use_case}
 \end{figure}
 
-From \autoref{ch:analysing_cl} it is seen that some of the effects can be designed together, because the effects use the same parts but multiple times or with a small modification. The following description tells shortly about the difference in the effect blocks and which effect that can be designed together.
+From \autoref{ch:analysing_cl} it is seen that some of the effects can be designed together, because the effects use the same parts but multiple times or with a small modification. The following description tells shortly about the difference in the effect blocks and which effects that can be designed together.
 
 \paragraph*{Basic filtering}
-The only basis filter explained in \autoref{ch:analysing}, which is a basic filter without delay or frequency scaling, is the Equalizer.
+The only effect in \autoref{ch:analysing}, where a basis filter is used, which is a basic filter without frequency scaling, is in the Equalizer.
 
 \paragraph{Frequency scaling filter}
-The only frequency scaling filter explained in \autoref{ch:analysing} is the Wah-Wah.
+The only effect in \autoref{ch:analysing}, where a frequency scaling filter is used is in the Wah-Wah effect.
 
 \paragraph{Delay}
-All the delay based effects have at least one delay block and have both fast and slow delay. All the analysed delayed based effects in \autoref{ch:analysing} are:
+All the delay based effects have at least one delay block and have both short and long delays. The analysed delay-based effects in \autoref{ch:analysing} are:
 \begin{itemize}
 	\item Delay
 	\item \gls{reverb}
@@ -41,29 +41,26 @@ All the delay based effects have at least one delay block and have both fast and
 	\item Chorus
 \end{itemize} 
 
-The block diagram in each effect shows that pair wise effects have a common structure. The chorus is the flanger with the same effect added more than once. The same is the case for delay and \gls{reverb} respectively. Then the only two effect which needed to be designed is Chorus and \gls{reverb} because Flanger and Delay can easily be made by removing the multiply parts in their respective effect.
+The block diagram in each effect, shows that pair wise effects have a common structure. The chorus is the flanger with the same effect added more than once. The same is the case for the delay and the \gls{reverb}. Then the only two effect which needs to be designed is the chorus and the \gls{reverb}, because the flanger and the delay can be made by removing parts in the chorus and the \gls{reverb} respectively.
 
 \paragraph{Non-linear processing}
+From the effects described in \autoref{ch:analysing}, it is found that the two effects that use non-linear processing are:
 \begin{itemize}
 	\item Distortion
 	\item Overdrive
 \end{itemize} 
 
-\subsection{Block}
-
-The requirements are divided into units, based on the effect analysis \autoref{ch:analysing}, since it is concluded in \autoref{ch:analysing_cl} that only six general units need to be designed and all the presented effects can be created from these. The units that are going to be designed are the:
-
-
-
+\subsection{Choice of effects to be designed}
+Six out of the eight effects that where analysed in \autoref{ch:analysing}, will be selected to be designed. The six effects are:
 \begin{itemize}
-	\item Bandpass filter
-	\item Inverse bandpass filter
+	\item \gls{reverb}
 	\item Delay
-	\item Gain
-	\item Clipping
-	\item \gls{lfo}
-\end{itemize} 
+	\item Chorus
+	\item Flanger
+	\item Equalizer
+	\item Wah-Wah
+\end{itemize}
 
- Besides the fact that each unit shall be designed individually, each unit interface should fit in the effect that is using it. Each unit has its own section where the requirements and their arguments are presented. To ensure that the units can fit and work together, basic requirements  are made to the processing component.
+Requirements will be made for the overall system and for each effect individually 
  
  

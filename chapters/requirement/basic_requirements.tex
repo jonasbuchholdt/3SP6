@@ -5,7 +5,7 @@
 Based on \autoref{ch:analysing}, the basic requirements are as follows:
 
 \begin{requirement}\label{req:dsp}
-    \requirement{Each unit must be implemented digitally.}
+    \requirement{All effects must be implemented digitally.}
     \argument{This requirement is made according to the problem analysis conclusion \autoref{ch:analysing_cl}.}
 \end{requirement}
 
@@ -15,7 +15,13 @@ Based on \autoref{ch:analysing}, the basic requirements are as follows:
     \argument{The processing component must be fast enough to calculate at least one effect between two samples.}
 \end{requirement}
 
-\begin{requirement}\label{req:power}
-    \requirement{The product shall be powered by a \SI{9}{\volt} power supply}
-    \argument{Only a design choose.}
+\begin{requirement}\label{req:SNR}
+    \requirement{The \gls{snr} in the final system must be larger than the \gls{snr} in the guitar.}
+    \argument{The final system must not decrease the sound quality noise wise.}
 \end{requirement}
+
+\begin{requirement}\label{req:power}
+    \requirement{The product shall be powered by a \SI{9}{\volt} power supply.}
+    \argument{Design choose.}
+\end{requirement}
+

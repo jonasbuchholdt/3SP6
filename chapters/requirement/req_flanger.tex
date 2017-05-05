@@ -1,20 +1,20 @@
-\newcommand{\reqInversebandpassfilter}{The delay unit must delay the input signal, in time defined by external unit.}
+%\newcommand{\reqInversebandpassfilter}{The delay unit must delay the input signal, in time defined by external unit.}
 
-\reqPrefix{IBF}
-\section{Inverse bandpass filter (\reqPrefixName)}
-Based on the \autoref{ch:analysing}, the inverse bandpass filter requirements are as follows:
+\reqPrefix{Flanger}
+\section{Flanger}
+Based on the \autoref{ch:analysing}, the following requirements are made for the flanger effect:
 
-\begin{requirement}\label{req:Inverse_bandpass_filter_ex}
+\begin{requirement}\label{req:flanger1}
     \requirement{The inverse bandpass filter unit must be able to attenuate the gain in its stop-band.}
     \argument{In order to be able to attenuate the specified frequencies of a signal.}
 \end{requirement}
 
-\begin{requirement}\label{req:Inverse_bandpass_filter_time}
+\begin{requirement}\label{req:flanger2}
     \requirement{The center frequency must be defined by internal preset.}
     \argument{In order to be able to work in respect to the preset frequency separation of the equalizer.}
 \end{requirement}
 
-\begin{requirement}\label{req:nverse_bandpass_filter_center}
+\begin{requirement}\label{req:flanger3}
     \requirement{The bandpass filters must, at full amplification, drop \SI{6}{\decibel} at the neighbouring centerfrequencies .}
     \argument{In order to be able to amplify or attenuate one band, without effect the neighbouring bands.}
 \end{requirement}
