@@ -5,16 +5,11 @@
 Based on the \autoref{ch:analysing}, the following requirements are made for the flanger effect:
 
 \begin{requirement}\label{req:flanger1}
-    \requirement{The inverse bandpass filter unit must be able to attenuate the gain in its stop-band.}
-    \argument{In order to be able to attenuate the specified frequencies of a signal.}
+    \requirement{The \gls{lfo} in the chorus effect must make a sine wave from \SI{0.1}{\hertz} to \SI{10}{\hertz}  }
+    \argument{Functional requirement. }
 \end{requirement}
 
 \begin{requirement}\label{req:flanger2}
-    \requirement{The center frequency must be defined by internal preset.}
-    \argument{In order to be able to work in respect to the preset frequency separation of the equalizer.}
-\end{requirement}
-
-\begin{requirement}\label{req:flanger3}
-    \requirement{The bandpass filters must, at full amplification, drop \SI{6}{\decibel} at the neighbouring centerfrequencies .}
-    \argument{In order to be able to amplify or attenuate one band, without effect the neighbouring bands.}
+    \requirement{The user must be able to change the gain in the flanger effect.}
+    \argument{Design choice to make the effect flexible for the user.}
 \end{requirement}

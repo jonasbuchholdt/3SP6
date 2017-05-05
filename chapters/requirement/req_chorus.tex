@@ -5,12 +5,12 @@
 Based on \autoref{ch:analysing}, the following requirements are made for the chorus effect:
 
 \begin{requirement}\label{req:chorus1}
-    \requirement{The \gls{lfo} unit must have a frequency from \SI{0.1}{\hertz} to \SI{10}{\hertz}  }
-    \argument{In order to be able to make a signal which is under the audibility range. }
+    \requirement{The \gls{lfo} in the chorus effect must make a sine wave from \SI{0.1}{\hertz} to \SI{10}{\hertz}  }
+    \argument{Functional requirement. }
 \end{requirement}
 
 \begin{requirement}\label{req:chorus2}
-    \requirement{The \gls{lfo} unit shall be able to make sinus, triangle, squared and sawtooth waveforms.}
-    \argument{In order to create different effects like chorus, flanger and wah-wah.}
+    \requirement{The user must be able to choose the number of delay lines in the chorus effect.}
+    \argument{Design choice to make the effect flexible for the user.}
 \end{requirement}
 
