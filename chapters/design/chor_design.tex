@@ -81,6 +81,50 @@ The delay time for the flanging effect should be between 1 and 20 ms while the d
 
 From the difference equation, it can be seen that the design is using a FIR Comb filter but where the delay value varies. \todo[inline]{Why is it FIR comb filter?}
 
+\subsection{Making the LFO by Cordic algorithm}
+The \gls{lfo} in both the chorus- and the flanger- effect is, as stated in \autoref{}, should be able to make sine waves from \SI{0.1}{\kilo\hertz} to \SI{10}{\kilo\hertz}. A \gls{dsp} is not necessarily able to calculate sine values and therefore an algorithm has to be implemented in order to make this possible. A way to do this is by using the \gls{cordic} algorithm, which can be used to calculate both sine, cosine, square roots etc \citep{cordic}. 
+The idea of \gls{cordic} is to use pseudo rotations round the unitcircle to approximate the desired angle and the thereby finding the sine and cosine of the angle. When using the real rotation, and not the pseudo rotations, cosine and sine to an angle is found by \autoref{eq:cordic_x} and \autoref{eq:cordic_y}, which is also illustrated in \autoref{fig:cordic_ro_pseudo_ro}.
+
+\begin{equation}
+\label{eq:cordic_x}
+		x' = x \cdot \cos(\theta) - y \cdot \cdot \sin(\theta) 
+\end{equation}
+\startexplain
+     \explain{$x'$ is the first coordinate to the vector with length 1 and angle $\theta$.}{\si{1}}
+     \explain{$x$ is the first coordinate of the start vector (Initialized to 1).}{\si{1}}
+     \explain{$y$ is the second coordinate of the start vector (Initialized to 0).}{\si{1}}
+    \stopexplain 
+
+\begin{equation}
+\label{eq:cordic_y}
+		y' = y \cdot \cos(\theta) + x \cdot \sin(\theta) 
+\end{equation}
+\startexplain
+     \explain{$y'$ is the second coordinate to the vector with length 1 and angle $\theta$.}{\si{1}}
+\stopexplain
+
+\begin{figure}[!h]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{cordic_ro_pseudo_ro.png}
+        \caption{Illustration of the \gls{cordic} algorithms rotations versus the real rotations \citep{cordic}.}
+        \label{fig:cordic_ro_pseudo_ro}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{cordic_algorithm.png}
+        \caption{Illustration of the \gls{cordic} algorithm \citep{cordic}.}
+        \label{fig:tiger}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+    %(or a blank line to force the subfigure onto a new line)
+    \caption{Pictures of animals}\label{fig:animals}
+\end{figure}
+
+The aim of the \gls{cordic} is to reduce the calculations so they only contain additions, multiplications and bit shifts. 
+
+
 
 \subsection{Matlab Simulation}
 
