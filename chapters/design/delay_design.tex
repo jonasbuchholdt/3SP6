@@ -386,26 +386,25 @@ The differential equation for the \gls{reverb} can be written in 12 parts as fol
     
 \begin{equation}\label{eq:reverb_eq_iirto}
     \begin{array}[b]{r}
-      x_8[n] = x_2[n] \cdot b_1+x_3n] \cdot b_2+x_4[n] \cdot b_3\\
+      x_8[n] = x_2[n] \cdot b_1+x_3[n] \cdot b_2+x_4[n] \cdot b_3\\
 +x_5[n] \cdot b_4+x_6[n] \cdot b_5+x_7[n] \cdot b_6
     \end{array}
     \end{equation}
     
     \begin{equation}\label{eq:reverb_eq_ap1}
-w_8[n] = \alpha \cdot w[n-d_7] + x_8[n] 
+w_8[n] = \alpha \cdot w_8[n-d_7] + x_8[n] 
     \end{equation}
 \begin{equation}\label{eq:reverb_eq_ap12}
 x_9[n] = - \alpha \cdot w_8[n] + w_8[n-d_7]
     \end{equation}
     
     \begin{equation}\label{eq:reverb_eq_ap2}
-w_9[n] = \alpha \cdot w[n-d_8] + x_9[n] 
+w_9[n] = \alpha \cdot w_9[n-d_8] + x_9[n] 
     \end{equation}
     \begin{equation}\label{eq:reverb_eq_ap22}
 y[n] = - \alpha \cdot w_9[n] + w_9[n-d_8] + x_1[n]
     \end{equation}
 \end{subequations}
-
 
 \subsection{Matlab Simulation}
 This section will simulate the effect equation, which is developed in above \autoref{sec:reverb_develop}. The simulation is made in MATLAB and the code is attached in \autoref{app:reverb}. The simulation is made to avoid mistake before the assembly code is developed, because assembly is a time consuming development precess. MATLAB is easy to use and mistake can be observed graphical by plotting the output and every changes is fast to implement and redone the plot.
@@ -418,7 +417,7 @@ The simulation is done by audioread one sinus round in MATLAB and afterwards gen
 Applying one sinus round in the delay effect gives the following result \autoref{fig:reverb_plot}. The MATLAB simulation code is included in \autoref{app:reverb} \autoref{code:delay_sim}.
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.8\textwidth]{delay}
+	\includegraphics[width=0.7\textwidth]{delay}
 	\caption{The plot shows the result for the \autoref{code:delay_sim}}
 	\label{fig:delay_plot}
 \end{figure}
@@ -428,16 +427,129 @@ Applying one sinus round in the delay effect gives the following result \autoref
 Applying one sinus round in the \gls{reverb}  effect gives the following result \autoref{fig:delay_plot}. The MATLAB simulation code is included in \autoref{app:reverb} \autoref{code:reverb_sim}.
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.7\textwidth]{reverb}
+	\includegraphics[width=0.6\textwidth]{reverb}
 	\caption{The plot shows the result for the \autoref{code:reverb_sim}}
 	\label{fig:reverb_plot}
 \end{figure}
 
+\newpage
 \subsection{implementation}
 This section will design the assembly code, where the implementation method is very imported to do the program as efficiency as possible. The delay for example can be done in several ways where ether the data is moved or the pointer is moved, but if it is the data which is moved and there is 1000 data samples, it will require 1000 clock cycles because each data sample needs to be moved alone. If the pointer is moved it will only require one cycles for moving the input pointer and one cycles to move the output pointer, so the delay will be designed as a ring buffer where the input and output pointer is moved. 
- 
+The .... only have three circular data buffers size register, where buffer register BK03 will be used to delay samples. \gls{reverb} have the longest delay time, so the data buffers size will be calculated in this section. First the time between 2 samples needs to be calculated, and the calculation is done as following \autoref{eq:sample_time}
 
+\begin{subequations}\label{eq:sample_time}
+    \begin{equation}
+t_s=\frac{1}{f_s}
+    \end{equation}
+\centering
+$\Updownarrow$
+    \begin{equation}
+\SI{22.7}{\micro\second}=\frac{1}{\SI{44100}{\hertz}}
+    \end{equation}
+\end{subequations}
 
-A delay can be done in different ways digitally. One way is to use a ring buffer also known as circular buffer. \\
-The idea of this data structure is that it takes values and only outputs them when it gets full, and overwrites the oldest after outputting it. It is a kind of a FIFO queue structure but where the start and the overwriting can start at any index. \\
-This means that the size of the buffer depends on the delay.  The buffer size must then be always up-to-date with the new delay value. \\ 
+According to \autoref{tab:reverb_delay} the longest delay time is \SI{41}{\milli\second} and as calculated in \autoref{eq:sample_time} the time between samples is \SI{22.7}{\micro\second}. To calculate the number of needed samples in the buffer is done as following \autoref{eq:sample_number}
+
+\begin{subequations}\label{eq:sample_number}
+    \begin{equation}
+s=\frac{delay}{t_s}+1
+    \end{equation}
+\centering
+$\Updownarrow$
+    \begin{equation}
+1807=\frac{\SI{41}{\milli\second}}{\SI{22.7}{\micro\second}}+1
+    \end{equation}
+\end{subequations}
+
+Convertet to hex, the data buffers size register shall have a size of 0x70F and the memory over view will be as following \autoref{fig:reverb_mem_map}
+
+\begin{figure}[htbp]
+	\centering
+\begin{picture}(0,0)%
+\includegraphics{Reverb_mem.pdf}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(6147,8124)(6241,-7498)
+\put(9631,-4471){Coeff}%
+\put(8101,389){0x0000}%
+\put(8101,-646){0x070E}%
+\put(8101,-961){0x070E}%
+\put(8101,-1996){0x0E1D}%
+\put(8101,-2311){0x0E1E}%
+\put(8101,-3346){0x152C}%
+\put(8101,-3661){0x152D}%
+\put(8101,-4696){0x1C3B}%
+\put(8101,-5011){0x1C3C}%
+\put(8101,-6046){0x234A}%
+\put(8101,-6361){0x234B}%
+\put(8101,-7396){0x2A59}%
+\put(11476,389){0x2A5A}%
+\put(11476,-646){0x3168}%
+\put(11476,-961){0x3169}%
+\put(11476,-1996){0x3877}%
+\put(11476,-2311){0x3878}%
+\put(11476,-3346){0x3F86}%
+\put(11476,-3661){0x3F87}%
+\put(11476,-4336){0x3F96}%
+\put(11476,-4696){0x3FA5}%
+\put(11476,-4021){0x3F95}%
+\put(9496,-3796){All Pass}%
+\put(9811,-2806){Tab}%
+\put(9496,-781){All Pass}%
+\put(6256,-3526){LPCF}%
+\end{picture}%
+	\caption{The plot shows the result for the \autoref{code:reverb_sim}}
+	\label{fig:reverb_mem_map}
+\end{figure}
+
+After the Allocation of memory, all the coefficient needs to be calculated to a hex number that can be used in assembly. It is chosen that the point of coefficient all ways are placed as following \autoref{fig:coeff_bit}
+
+\begin{figure}[htbp]
+	\centering
+\begin{picture}(0,0)%
+\includegraphics{coeff_bit.pdf}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(3624,274)(6064,352)
+\put(6121,434){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}S}%
+}}}}
+\put(7651,434){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}14 Fraction bit}%
+}}}}
+\put(6346,434){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}X}%
+}}}}
+\put(6481,389){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0},}%
+}}}}
+\end{picture}%
+	\caption{The plot shows the result for the \autoref{code:reverb_sim}}
+	\label{fig:coeff_bit}
+\end{figure}
+
+Because the point is situated in the front of bit 14 from LSB, the coefficient is allowed to be between 0 and >2 in decimal. The coefficient is therefore multiplied by $2^{14}$ to get the integer and afterwards converted to hex.   The coefficient is done as following \autoref{eq:coeff_cal}
+
+    \begin{equation}\label{eq:coeff_cal}
+\text{coeff} \cdot 2^{14}
+    \end{equation}
+
+The calculated coefficient to \gls{reverb} is placed in BK47 data buffer register with a memory offset of 0x3F96 and are shown in \autoref{code:reverb_coeff}
+
+\includeCode{main_buffer.asm}{assembly}{31}{45}{The reverb coeff code}{code:reverb_coeff}{code/design/}
+
+\newpage
+
+%A delay can be done in different ways digitally. One way is to use a ring buffer also known as circular buffer. \\
+%The idea of this data structure is that it takes values and only outputs them when it gets full, and overwrites the oldest after outputting it. It is a kind of a FIFO queue structure but where the start and the overwriting can start at any index. \\
+%This means that the size of the buffer depends on the delay.  The buffer size must then be always up-to-date with the new delay value. \\ 
