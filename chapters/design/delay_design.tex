@@ -280,7 +280,7 @@ This transfer function is plotted in MATLAB with a sweep from \SI{16}{\hertz} to
 \put(1261,-196){$-\alpha$}%
 \put(271,-1006){$\alpha$}%
 \put(-449,-421){$\Sigma$}%
-\put(-224,-106){$x_7[n]$}%
+\put(-224,-106){$x_8[n]$}%
 \put( 91,-1861){$\Sigma$}%
 \put(1711,-1861){$\Sigma$}%
 \put(271,-2446){$\alpha$}%
@@ -351,7 +351,7 @@ This transfer function is plotted in MATLAB with a sweep from \SI{16}{\hertz} to
 \put(-2789,1514){$-L_D$}%
 \put(-2789,-5686){$-L_D$}%
 \put(-2789,3314){$-L_D$}%
-\put(1936,-196){$x_8[n]$}%
+\put(1936,-196){$x_9[n]$}%
 \end{picture}%
   \caption{Block diagram of a \gls{reverb} unit.}
   \label{fig:reverb_block_design}
@@ -392,17 +392,17 @@ The differential equation for the \gls{reverb} can be written in 12 parts as fol
     \end{equation}
     
     \begin{equation}\label{eq:reverb_eq_ap1}
-w_8[n] = \alpha_7 \cdot w[n-d_8] + x_8[n] 
+w_8[n] = \alpha \cdot w[n-d_7] + x_8[n] 
     \end{equation}
 \begin{equation}\label{eq:reverb_eq_ap12}
-x_9[n] = - \alpha_8 \cdot w_8[n] + w_8[n-d_7]
+x_9[n] = - \alpha \cdot w_8[n] + w_8[n-d_7]
     \end{equation}
     
     \begin{equation}\label{eq:reverb_eq_ap2}
-w_9[n] = \alpha_8 \cdot w[n-d_8] + x_9[n] 
+w_9[n] = \alpha \cdot w[n-d_8] + x_9[n] 
     \end{equation}
     \begin{equation}\label{eq:reverb_eq_ap22}
-y[n] = - \alpha_8 \cdot w_9[n] + w_9[n-d_8] + x_1[n]
+y[n] = - \alpha \cdot w_9[n] + w_9[n-d_8] + x_1[n]
     \end{equation}
 \end{subequations}
 
