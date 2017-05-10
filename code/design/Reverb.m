@@ -8,10 +8,10 @@ filename = 'gtr-jazz-3.wav';
 [input, fs] = audioread(filename);
 
 %user define variable
-early = 1; % pre delay
-scaleroom = 0.28; %0.28 int
+early = 1; %0.5 int pre delay
+scaleroom = 0.35; %0.28 int
 scaledamp = 0.4; %0.4 int
-drywet = 0.5; % dry/wet
+drywet = 1; % dry/wet
  
 
 %Pre define array and variable
@@ -24,7 +24,7 @@ allscale = 0.9;
 
 % filter delay time 
 Delay = [round(fs/1000*1.9*time),round(fs/1000*2.3*time),round(fs/1000*2.97*time),round(fs/1000*3.71*time),round(fs/1000*4.1*time),round(fs/1000*4.37*time),round(fs/1000*1.3*time*allscale),round(fs/1000*1.7*time*allscale)]
-Early_delay = [round(fs/1000*4.3*early),round(fs/1000*21.5*early),round(fs/1000*22.5*early),round(fs/1000*26.8*early)]
+Early_delay = [round(fs/1000*18.3*early),round(fs/1000*21.5*early),round(fs/1000*22.5*early),round(fs/1000*26.8*early)]
 row = length(Delay); %total-1 array row.
 d_out = (round(length(Delay)*g)+time); %total samples after the input is finist 
 d = sum(Delay); %total delay time.
