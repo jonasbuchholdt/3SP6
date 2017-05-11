@@ -188,26 +188,69 @@ The second allpass filter in \autoref{fig:reverb_block_design} is set to have th
 
 %Form the MATLAB script \autoref{code:reverb_cal} the formula of calculation echo after the first all pass filter is as following \autoref{eq:reverb_ser}. The $-5$ is included because only one of the direct sound is taken to acound in the formula.
 
-In \citep{DAFX} Moorer suggests adding an early reflection network before the six \gls{lpcf}'s. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests making the \gls{lpcf} feedback gain as a variable, so the user can change the room size and damping. To design the \gls{lpcf} filter the standard comp filter needs to be changed  \citep{LPCFfd}. The standard comb filter have the following transfer function \autoref{eq:comb_filter}
+In \citep{DAFX} Moorer suggests adding an early reflection network before the six \gls{lpcf}s. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests making the \gls{lpcf} feedback gain as a variable, so the user can change the room size and damping. To design the \gls{lpcf} filter the standard comp filter needs to be changed  \citep{LPCFfd}. The standard comb filter have the following transfer function \autoref{eq:comb_filter}
 
 \begin{equation}\label{eq:comb_filter}
-H(z)=\frac{1}{1-a \cdot z^d}
+H(z)=\frac{1}{1-c \cdot z^{-d}}
 \end{equation}
 
     \startexplain
 \explain{$a$ is the amplification of the combs }{\si{1}}
     \stopexplain
 
-To change the comb filter caretictica, so the magnitude in the high frequency is lower than the magnitude in the low frequency, $a$ needs to be changed to a low pass filter. The low pass filter have the following transfer function \autoref{eq:comb_filter_lp} 
+To change the comb filter caracteristics, so the magnitude in the high frequency is lower than the magnitude in the low frequency, $a$ needs to be changed to a low pass filter. \\
+
+In the frequency domain, the low pass filter have the following transfer function \autoref{eq:comb_filter_freq} 
+
+
+\begin{equation}\label{eq:comb_filter_freq}
+	G(s) = f \cdot \frac{\omega_{0}}{s+w_{0}}
+\end{equation}
+
+\autoref{eq:s2z} will be used in order to pass from the $frequency$ to the $z-domain$:
+
+\begin{equation}\label{eq:s2z}
+	s = \frac{1-z^{-1}}{T}
+\end{equation}
+
+Where:
+
+$T$ is the sampling time, the inverse of the sampling frequency $f_{s}$. \\
+
+By inserting \autoref{eq:s2z} into \autoref{eq:comb_filter_freq}, \autoref{eq:s2z2} is obtained:
+
+\begin{equation}\label{eq:s2z2}
+	G(z) = f \cdot \frac{\omega_{0}}{\frac{1 - z^{-1}}{T} + \omega_{0}}
+\end{equation}
+
+Which also gives:
+
+\begin{equation}
+	G(z) = f \cdot \frac{\frac{\omega_{0} \cdot T}{1 + \omega_{0} \cdot T}}{1 - \frac{1}{1+ \omega_{0} \cdot T} \cdot z^{-1}}
+\end{equation}
+
+The numerator is an expression containing only constants which will be represented by $b$. The same goes for the coefficient of $z^{-1}$ in the denominator which will be represented by $a$. \autoref{eq:before_final} is then obtained:
+
+\begin{equation}\label{eq:before_final}
+	G(z) = f \cdot \frac{b}{1 - a \cdot z^{-1}}
+\end{equation}
+
+Adding $a$ and $b$ gives 1, the following relation between $a$ and $b$ can be inferred:
+
+\begin{equation}
+	b = 1 - a
+\end{equation} 
+
+\autoref{eq:before_final} can be re-written as:
 
 \begin{equation}\label{eq:comb_filter_lp}
-G(z)=f \frac{1-d}{1-d \cdot z^1}
+G(z)=f \frac{1-a}{1-a \cdot z^{-1}}
 \end{equation}
- 
-Which gives the final transfer function of the \gls{lpcf} \autoref{eq:comb_filter_lp_final}
+  
+Recalling \autoref{eq:comb_filter} and replacing $c$ by $G(z)$ from \autoref{eq:comb_filter_lp}, the final transfer function of the \gls{lpcf} is in \autoref{eq:comb_filter_lp_final}
 
  \begin{equation}\label{eq:comb_filter_lp_final}
-H(z)=\frac{1}{1-f \frac{1-d}{1-d \cdot z^1} \cdot z^d}
+H(z)=\frac{1}{1-f \frac{1-a}{1-a \cdot z^{-1}} \cdot z^{-d}}
 \end{equation}
 
  The following \autoref{eq:reverb_eq_eks} shows the differential equation for the \gls{lpcf}'s. 
