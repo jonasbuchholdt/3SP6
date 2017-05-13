@@ -270,7 +270,7 @@ $f$ is found as described in \autoref{eq:reverb_eq_f}, where scaleroom is used t
     f = \text{roomsize} = \text{initialroom} \cdot \text{scaleroom} + \text{offsetroom}
     \end{equation}
 \centering
-$\Updownarrow$
+%$\Updownarrow$
 \begin{equation}\label{eq:reverb_eq_f2}
     f = 0.5 \cdot \text{scaleoom} + 0.7
     \end{equation}
@@ -283,7 +283,7 @@ The $L_D$ is defining the room damping, and the equation for $L_D$ is as in \aut
     L_D = \text{damp} = \text{initialdamp} \cdot \text{scaledamp}
     \end{equation}
 \centering
-$\Updownarrow$
+%$\Updownarrow$
 \begin{equation}\label{eq:reverb_eq_L_D2}
     L_D = 0.5 \cdot \text{scaledamp}
     \end{equation}
@@ -293,14 +293,12 @@ This transfer function is plotted in MATLAB with a sweep from \SI{16}{\hertz} to
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=1\textwidth]{lpcf_sweep}
+	\includegraphics[width=0.6\textwidth]{lpcf_sweep}
 	\caption{The plot shows the result for a sweep from \SI{16}{\hertz} to \SI{20}{\kilo\hertz} of the \gls{lpcf}}
 	\label{fig:lpcf_sweep}
 \end{figure}
 
-
    The following \autoref{fig:reverb_block_design} shows the block diagram over the \gls{reverb} unit, where $g = f \cdot (1-L_D)$.
-
 
 \begin{figure} [htbp]
  \centering
@@ -315,8 +313,8 @@ This transfer function is plotted in MATLAB with a sweep from \SI{16}{\hertz} to
   \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
   \selectfont}%
 \fi\endgroup%
-\begin{picture}(6819,12342)(-3656,-5764)
-\put(-314,4934){$x_1[n]$}%
+\begin{picture}(6819,10935)(-3656,-5764)
+\put(541,-1681){$w_9[n]$}%
 \put(1711,-421){$\Sigma$}%
 \put(721,-916){$z^{-d_7}$}%
 \put( 91,-421){$\Sigma$}%
@@ -337,15 +335,6 @@ This transfer function is plotted in MATLAB with a sweep from \SI{16}{\hertz} to
 \put(-764,659){$b_3$}%
 \put(-764,2459){$b_2$}%
 \put(-764,4259){$b_1$}%
-\put(-3464,6419){$x[n]$}%
-\put(-1439,5879){$z^{-ed_3}$}%
-\put(-719,5879){$z^{-ed_4}$}%
-\put(-2744,5384){$\Sigma$}%
-\put(-2024,5384){$\Sigma$}%
-\put(-1304,5384){$\Sigma$}%
-\put(-2159,5879){$z^{-ed_2}$}%
-\put(-2879,5879){$z^{-ed_1}$}%
-\put(-584,5384){$\Sigma$}%
 \put(-2519,4079){$\Sigma$}%
 \put(-1844,4394){$z^{-d_1}$}%
 \put(-1394,4259){$x_2[n]$}%
@@ -395,12 +384,21 @@ This transfer function is plotted in MATLAB with a sweep from \SI{16}{\hertz} to
 \put(-2789,-5686){$-L_D$}%
 \put(-2789,3314){$-L_D$}%
 \put(1936,-196){$x_9[n]$}%
+\put(1126,4349){$z^{-ed_3}$}%
+\put(1846,4349){$z^{-ed_4}$}%
+\put(1261,3854){$\Sigma$}%
+\put(406,4349){$z^{-ed_2}$}%
+\put(1981,3854){$\Sigma$}%
+\put(541,3854){$\Sigma$}%
+\put(-359,4349){$z^{-ed_1}$}%
+\put(-899,4889){$x[n]$}%
+\put(2566,3854){$x_1[n]$}%
+\put(541,-241){$w_8[n]$}%
 \end{picture}%
   \caption{Block diagram of a \gls{reverb} unit.}
   \label{fig:reverb_block_design}
 \end{figure}
 
-\newpage
 The differential equation for the \gls{reverb} can be written in 12 parts as following in \autoref{eq:reverb_eq}.
 
 \begin{subequations}\label{eq:reverb_eq}
@@ -458,6 +456,7 @@ The simulation is done by audioread one sinus round in MATLAB and afterwards gen
 
 
 Applying one sinus round in the delay effect gives the following result \autoref{fig:reverb_plot}. The MATLAB simulation code is included in \autoref{app:reverb} \autoref{code:delay_sim}.
+
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.7\textwidth]{delay}
