@@ -1,4 +1,4 @@
-\section{Design of the Delay and \gls{reverb} Effect}\label{sec:rev_del}
+\section{Design of the Delay and \gls{reverb} Effect}
 In this section, the delay and the \gls{reverb} will be designed to fit into a \gls{dsp}, which means that a discreet block diagram is obtained and afterwards the differential equations to implement in the \gls{dsp} will be made. The effects will be simulated in MATLAB and then the assembly code will be developed and implemented. 
 
 
@@ -188,26 +188,69 @@ The second allpass filter in \autoref{fig:reverb_block_design} is set to have th
 
 %Form the MATLAB script \autoref{code:reverb_cal} the formula of calculation echo after the first all pass filter is as following \autoref{eq:reverb_ser}. The $-5$ is included because only one of the direct sound is taken to acound in the formula.
 
-In \citep{DAFX} Moorer suggests adding an early reflection network before the six \gls{lpcf}'s. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests making the \gls{lpcf} feedback gain as a variable, so the user can change the room size and damping. To design the \gls{lpcf} filter the standard comp filter needs to be changed  \citep{LPCFfd}. The standard comb filter have the following transfer function \autoref{eq:comb_filter}
+In \citep{DAFX} Moorer suggests adding an early reflection network before the six \gls{lpcf}s. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests making the \gls{lpcf} feedback gain as a variable, so the user can change the room size and damping. To design the \gls{lpcf} filter the standard comp filter needs to be changed  \citep{LPCFfd}. The standard comb filter have the following transfer function \autoref{eq:comb_filter}
 
 \begin{equation}\label{eq:comb_filter}
-H(z)=\frac{1}{1-a \cdot z^d}
+H(z)=\frac{1}{1-c \cdot z^{-d}}
 \end{equation}
 
     \startexplain
 \explain{$a$ is the amplification of the combs }{\si{1}}
     \stopexplain
 
-To change the comb filter caretictica, so the magnitude in the high frequency is lower than the magnitude in the low frequency, $a$ needs to be changed to a low pass filter. The low pass filter have the following transfer function \autoref{eq:comb_filter_lp} 
+To change the comb filter caracteristics, so the magnitude in the high frequency is lower than the magnitude in the low frequency, $a$ needs to be changed to a low pass filter. \\
+
+In the frequency domain, the low pass filter have the following transfer function \autoref{eq:comb_filter_freq} 
+
+
+\begin{equation}\label{eq:comb_filter_freq}
+	G(s) = f \cdot \frac{\omega_{0}}{s+w_{0}}
+\end{equation}
+
+\autoref{eq:s2z} will be used in order to pass from the $frequency$ to the $z-domain$:
+
+\begin{equation}\label{eq:s2z}
+	s = \frac{1-z^{-1}}{T}
+\end{equation}
+
+Where:
+
+$T$ is the sampling time, the inverse of the sampling frequency $f_{s}$. \\
+
+By inserting \autoref{eq:s2z} into \autoref{eq:comb_filter_freq}, \autoref{eq:s2z2} is obtained:
+
+\begin{equation}\label{eq:s2z2}
+	G(z) = f \cdot \frac{\omega_{0}}{\frac{1 - z^{-1}}{T} + \omega_{0}}
+\end{equation}
+
+Which also gives:
+
+\begin{equation}
+	G(z) = f \cdot \frac{\frac{\omega_{0} \cdot T}{1 + \omega_{0} \cdot T}}{1 - \frac{1}{1+ \omega_{0} \cdot T} \cdot z^{-1}}
+\end{equation}
+
+The numerator is an expression containing only constants which will be represented by $b$. The same goes for the coefficient of $z^{-1}$ in the denominator which will be represented by $a$. \autoref{eq:before_final} is then obtained:
+
+\begin{equation}\label{eq:before_final}
+	G(z) = f \cdot \frac{b}{1 - a \cdot z^{-1}}
+\end{equation}
+
+Adding $a$ and $b$ gives 1, the following relation between $a$ and $b$ can be inferred:
+
+\begin{equation}
+	b = 1 - a
+\end{equation} 
+
+\autoref{eq:before_final} can be re-written as:
 
 \begin{equation}\label{eq:comb_filter_lp}
-G(z)=f \frac{1-d}{1-d \cdot z^1}
+G(z)=f \frac{1-a}{1-a \cdot z^{-1}}
 \end{equation}
- 
-Which gives the final transfer function of the \gls{lpcf} \autoref{eq:comb_filter_lp_final}
+  
+Recalling \autoref{eq:comb_filter} and replacing $c$ by $G(z)$ from \autoref{eq:comb_filter_lp}, the final transfer function of the \gls{lpcf} is in \autoref{eq:comb_filter_lp_final}
 
  \begin{equation}\label{eq:comb_filter_lp_final}
-H(z)=\frac{1}{1-f \frac{1-d}{1-d \cdot z^1} \cdot z^d}
+H(z)=\frac{1}{1-f \frac{1-a}{1-a \cdot z^{-1}} \cdot z^{-d}}
 \end{equation}
 
  The following \autoref{eq:reverb_eq_eks} shows the differential equation for the \gls{lpcf}'s. 
@@ -227,7 +270,7 @@ $f$ is found as described in \autoref{eq:reverb_eq_f}, where scaleroom is used t
     f = \text{roomsize} = \text{initialroom} \cdot \text{scaleroom} + \text{offsetroom}
     \end{equation}
 \centering
-$\Updownarrow$
+%$\Updownarrow$
 \begin{equation}\label{eq:reverb_eq_f2}
     f = 0.5 \cdot \text{scaleoom} + 0.7
     \end{equation}
@@ -240,7 +283,7 @@ The $L_D$ is defining the room damping, and the equation for $L_D$ is as in \aut
     L_D = \text{damp} = \text{initialdamp} \cdot \text{scaledamp}
     \end{equation}
 \centering
-$\Updownarrow$
+%$\Updownarrow$
 \begin{equation}\label{eq:reverb_eq_L_D2}
     L_D = 0.5 \cdot \text{scaledamp}
     \end{equation}
@@ -250,14 +293,12 @@ This transfer function is plotted in MATLAB with a sweep from \SI{16}{\hertz} to
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=1\textwidth]{lpcf_sweep}
+	\includegraphics[width=0.6\textwidth]{lpcf_sweep}
 	\caption{The plot shows the result for a sweep from \SI{16}{\hertz} to \SI{20}{\kilo\hertz} of the \gls{lpcf}}
 	\label{fig:lpcf_sweep}
 \end{figure}
 
-
    The following \autoref{fig:reverb_block_design} shows the block diagram over the \gls{reverb} unit, where $g = f \cdot (1-L_D)$.
-
 
 \begin{figure} [htbp]
  \centering
@@ -272,8 +313,8 @@ This transfer function is plotted in MATLAB with a sweep from \SI{16}{\hertz} to
   \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
   \selectfont}%
 \fi\endgroup%
-\begin{picture}(6819,12342)(-3656,-5764)
-\put(-314,4934){$x_1[n]$}%
+\begin{picture}(6819,10935)(-3656,-5764)
+\put(541,-1681){$w_9[n]$}%
 \put(1711,-421){$\Sigma$}%
 \put(721,-916){$z^{-d_7}$}%
 \put( 91,-421){$\Sigma$}%
@@ -294,15 +335,6 @@ This transfer function is plotted in MATLAB with a sweep from \SI{16}{\hertz} to
 \put(-764,659){$b_3$}%
 \put(-764,2459){$b_2$}%
 \put(-764,4259){$b_1$}%
-\put(-3464,6419){$x[n]$}%
-\put(-1439,5879){$z^{-ed_3}$}%
-\put(-719,5879){$z^{-ed_4}$}%
-\put(-2744,5384){$\Sigma$}%
-\put(-2024,5384){$\Sigma$}%
-\put(-1304,5384){$\Sigma$}%
-\put(-2159,5879){$z^{-ed_2}$}%
-\put(-2879,5879){$z^{-ed_1}$}%
-\put(-584,5384){$\Sigma$}%
 \put(-2519,4079){$\Sigma$}%
 \put(-1844,4394){$z^{-d_1}$}%
 \put(-1394,4259){$x_2[n]$}%
@@ -352,12 +384,21 @@ This transfer function is plotted in MATLAB with a sweep from \SI{16}{\hertz} to
 \put(-2789,-5686){$-L_D$}%
 \put(-2789,3314){$-L_D$}%
 \put(1936,-196){$x_9[n]$}%
+\put(1126,4349){$z^{-ed_3}$}%
+\put(1846,4349){$z^{-ed_4}$}%
+\put(1261,3854){$\Sigma$}%
+\put(406,4349){$z^{-ed_2}$}%
+\put(1981,3854){$\Sigma$}%
+\put(541,3854){$\Sigma$}%
+\put(-359,4349){$z^{-ed_1}$}%
+\put(-899,4889){$x[n]$}%
+\put(2566,3854){$x_1[n]$}%
+\put(541,-241){$w_8[n]$}%
 \end{picture}%
   \caption{Block diagram of a \gls{reverb} unit.}
   \label{fig:reverb_block_design}
 \end{figure}
 
-\newpage
 The differential equation for the \gls{reverb} can be written in 12 parts as following in \autoref{eq:reverb_eq}.
 
 \begin{subequations}\label{eq:reverb_eq}
@@ -415,6 +456,7 @@ The simulation is done by audioread one sinus round in MATLAB and afterwards gen
 
 
 Applying one sinus round in the delay effect gives the following result \autoref{fig:reverb_plot}. The MATLAB simulation code is included in \autoref{app:reverb} \autoref{code:delay_sim}.
+
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.7\textwidth]{delay}
@@ -501,7 +543,7 @@ Convertet to hex, the data buffers size register shall have a size of 0x70F and 
 \put(11476,-4696){0x3FA5}%
 \put(11476,-4021){0x3F95}%
 \put(9496,-3796){All Pass}%
-\put(9811,-2806){Tab}%
+\put(9811,-2806){Tab(X_1[N])}%
 \put(9496,-781){All Pass}%
 \put(6256,-3526){LPCF}%
 \end{picture}%
@@ -509,6 +551,7 @@ Convertet to hex, the data buffers size register shall have a size of 0x70F and 
 	\label{fig:reverb_mem_map}
 \end{figure}
 
+\newpage
 After the Allocation of memory, all the coefficient needs to be calculated to a hex number that can be used in assembly. It is chosen that the point of coefficient all ways are placed as following \autoref{fig:coeff_bit}
 
 \begin{figure}[htbp]
@@ -525,18 +568,16 @@ After the Allocation of memory, all the coefficient needs to be calculated to a 
   \selectfont}%
 \fi\endgroup%
 \begin{picture}(3624,274)(6064,352)
-\put(6121,434){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}S}%
-}}}}
-\put(7651,434){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}14 Fraction bit}%
-}}}}
-\put(6346,434){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}X}%
-}}}}
+\put(6121,434){S}%
+\put(7651,434){14 Fraction bit}%
+\put(6346,434){X}%
 \put(6481,389){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0},}%
 }}}}
 \end{picture}%
 	\caption{The plot shows the result for the \autoref{code:reverb_sim}}
 	\label{fig:coeff_bit}
 \end{figure}
+
 
 Because the point is situated in the front of bit 14 from LSB, the coefficient is allowed to be between 0 and >2 in decimal. The coefficient is therefore multiplied by $2^{14}$ to get the integer and afterwards converted to hex.   The coefficient is done as following \autoref{eq:coeff_cal}
 
@@ -546,10 +587,23 @@ Because the point is situated in the front of bit 14 from LSB, the coefficient i
 
 The calculated coefficient to \gls{reverb} is placed in BK47 data buffer register with a memory offset of 0x3F96 and are shown in \autoref{code:reverb_coeff}
 
-\includeCode{main_buffer.asm}{assembly}{31}{45}{The reverb coeff code}{code:reverb_coeff}{code/design/}
+\includeCode{main_buffer.asm}{assembly}{31}{46}{The reverb coeff code}{code:reverb_coeff}{code/design/}
 
-\newpage
 
-%A delay can be done in different ways digitally. One way is to use a ring buffer also known as circular buffer. \\
-%The idea of this data structure is that it takes values and only outputs them when it gets full, and overwrites the oldest after outputting it. It is a kind of a FIFO queue structure but where the start and the overwriting can start at any index. \\
-%This means that the size of the buffer depends on the delay.  The buffer size must then be always up-to-date with the new delay value. \\ 
+\subsection{Reverb Assembly code}
+The reverb implementation in Assembly is done by being inspired from the differential equation in \autoref{eq:reverb_eq}. The assembly code is in the file \textit{reverb.asm} and stored in the ZIP file. In the following, each subsection will represent either a subroutine or a macro routine. 
+
+\subsection{The \textit{reverb_pre} Subroutine}
+
+\includeCode{reverb.asm}{assembly}{68}{78}{The reverb coeff code}{code:reverb_coeff}{code/design/}
+
+Since the same buffer is used for all the effects and for different purposes in the same effect, the address of the buffer that contains the needed coefficients for this subroutine is set in the first two lines. The $z^{-ed_n}$ buffer is also moved to the \textit{X_1[N]} buffer. This subroutine is destined to compute the pre \gls{reverb}, the part just before the comb filter. This part is shown in figure \autoref{fig:pre_reverb_block_design}, a fraction of the whole effect diagram in figure \autoref{fig:reverb_block_design}. The idea in the code is to point on different parts of \textit{X_1[N]}  which contains values of \textit{X[N-ed_n]}, the more the pointer has a lower negative number, the bigger the delay. Different values at the pre-calculated delays \textit{ed1}, \textit{ed2}, \textit{ed3} and \textit{ed4} are added together to give $X_{1}[N]$ and then stored in the memory area of  *AR5. \\
+
+\subsection{The \textit{reverb_lpcf} Subroutine}
+This subroutine is responsible for computing the equations of the 6 comb filters. The first part is reserved for calculating the different coefficients needed in the calculations, $LD$ and $g$. The beginning of the macro command marks the end of coefficients calculations and the beginning of the equations processing. The choice of a macro implementation here comes after observing big similarities between the six comb filters. The only differences lie in the $b_{i}$ gains, $x_{i}$ values and $d_{i}$ values. This is why they are macro entries. The macro is simply the computation of the equations \ref{eq:reverb_eq_iir1w} to \ref{eq:reverb_eq_iir6w}. The circular buffer AR0 is the one that contains the values of $x_{i}$. AR4 and CDP the pointer which contains the coefficients, gains and delay values.
+After the macro section, it is called with the different comb filter settings in a row. 
+
+\subsection{The \textit{reverb_allpass} Subroutine}
+The subroutine is the one that takes into account the final part of the \gls{reverb} effect which is the two all-pass filters. It also involves the use of a macro as the previous section since the two all-pass filters have considerable resemblance. Again, *AR0 is used as a buffer pointer for the $x_{i}$ values and *AR4 for the coefficients and the delay values. The other registers and accumulators are used for temporary purposes.
+Last but not least, the data is moved to T2 that plays the role of the output. 
+Another crucial step is to move the pointer of the AR0 buffer so that in the next iteration the values are not overwritten but inserted in a new slot.
