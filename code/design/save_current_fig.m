@@ -1,1 +1,1 @@
-FigureToPDF(gcf, '../../figures/design/preamp_frequency_responce_phase')
+FigureToPDF(gcf, '../../figures/design/reverb_run_time')
