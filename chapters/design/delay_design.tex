@@ -490,18 +490,13 @@ T_s=\frac{1}{f_s} = \frac{1}{\SI{44100}{\hertz}} = 22.7 \addunit{\SI{}{\micro\se
 
 According to \autoref{tab:reverb_delay} the longest delay time is \SI{41}{\milli\second} and as calculated in \autoref{eq:sample_time} the time between samples is \SI{22.7}{\micro\second}. To calculate the number of needed samples in the buffer is done by following \autoref{eq:sample_number}
 
-\begin{subequations}\label{eq:sample_number}
-    \begin{equation}
-s=\frac{delay}{t_s}+1
-    \end{equation}
-\centering
-$\Updownarrow$
-    \begin{equation}
-1807=\frac{\SI{41}{\milli\second}}{\SI{22.7}{\micro\second}}+1
-    \end{equation}
-\end{subequations}
+\begin{equation} \label{eq:sample_number}
+\text{number of samples}=\frac{\text{delay time}}{T_s}+1 = 
+1807    
+\end{equation}
 
-Convertet to hex, the data buffers size register shall have a size of 0x70F and the memory over view will be as following \autoref{fig:reverb_mem_map}
+
+Convertet to hex, the data buffers size register shall have a size of 0x70F and the memory over view will be as follows \autoref{fig:reverb_mem_map}
 
 \begin{figure}[htbp]
 	\centering
@@ -541,7 +536,7 @@ Convertet to hex, the data buffers size register shall have a size of 0x70F and 
 \put(11476,-4696){0x3FA5}%
 \put(11476,-4021){0x3F95}%
 \put(9496,-3796){All Pass}%
-\put(9811,-2806){Tab(X_1[N])}%
+\put(9811,-2806){Pre}%
 \put(9496,-781){All Pass}%
 \put(6256,-3526){LPCF}%
 \end{picture}%
@@ -550,7 +545,7 @@ Convertet to hex, the data buffers size register shall have a size of 0x70F and 
 \end{figure}
 
 \newpage
-After the Allocation of memory, all the coefficient needs to be calculated to a hex number that can be used in assembly. It is chosen that the point of coefficient all ways are placed as following \autoref{fig:coeff_bit}
+After the allocation of memory, all the coefficient needs to be calculated to a hex numbers that can be used in assembly. It is chosen that the point of coefficients always is placed as follows \autoref{fig:coeff_bit}
 
 \begin{figure}[htbp]
 	\centering
@@ -577,13 +572,13 @@ After the Allocation of memory, all the coefficient needs to be calculated to a 
 \end{figure}
 
 
-Because the point is situated in the front of bit 14 from LSB, the coefficient is allowed to be between 0 and >2 in decimal. The coefficient is therefore multiplied by $2^{14}$ to get the integer and afterwards converted to hex.   The coefficient is done as following \autoref{eq:coeff_cal}
+Because the point is situated in the front of bit 14 from LSB, the coefficient is allowed to be between 0 and <2 in decimal. The coefficient is therefore multiplied by $2^{14}$ and rounded up to get the integer and afterwards converted to hex. The coefficients are calculated as in \autoref{eq:coeff_cal}.
 
     \begin{equation}\label{eq:coeff_cal}
-\text{coeff} \cdot 2^{14}
+\text{usable coeff} = \lceil\text{coeff} \cdot 2^{14}\rceil
     \end{equation}
 
-The calculated coefficient to \gls{reverb} is placed in BK47 data buffer register with a memory offset of 0x3F96 and are shown in \autoref{code:reverb_coeff}
+The calculated coefficient to \gls{reverb} is placed in the BK47 data buffer register with a memory offset of 0x3F96 and are shown in \autoref{code:reverb_coeff}
 
 \includeCode{main_buffer.asm}{assembly}{31}{46}{The reverb coeff code}{code:reverb_coeff}{code/design/}
 
@@ -592,13 +587,14 @@ The calculated coefficient to \gls{reverb} is placed in BK47 data buffer registe
 The reverb implementation in Assembly is done by being inspired from the differential equation in \autoref{eq:reverb_eq}. The assembly code is in the file \textit{reverb.asm} and stored in the ZIP file. In the following, each subsection will represent either a subroutine or a macro routine. 
 
 \subsection{The \textit{reverb_pre} Subroutine}
+Here the subroutine for the \gls{fir} filters, \autoref{code:reverb_FIR_coeff}, will be described.
 
-\includeCode{reverb.asm}{assembly}{68}{78}{The reverb coeff code}{code:reverb_coeff}{code/design/}
+\includeCode{reverb.asm}{assembly}{68}{78}{The reverb coeff code}{code:reverb_FIR_coeff}{code/design/}
 
-Since the same buffer is used for all the effects and for different purposes in the same effect, the address of the buffer that contains the needed coefficients for this subroutine is set in the first two lines. The $z^{-ed_n}$ buffer is also moved to the \textit{X_1[N]} buffer. This subroutine is destined to compute the pre \gls{reverb}, the part just before the comb filter. This part is shown in figure \autoref{fig:pre_reverb_block_design}, a fraction of the whole effect diagram in figure \autoref{fig:reverb_block_design}. The idea in the code is to point on different parts of \textit{X_1[N]}  which contains values of \textit{X[N-ed_n]}, the more the pointer has a lower negative number, the bigger the delay. Different values at the pre-calculated delays \textit{ed1}, \textit{ed2}, \textit{ed3} and \textit{ed4} are added together to give $X_{1}[N]$ and then stored in the memory area of  *AR5. \\
+Since the same buffer is used for all the effects and for different purposes in the same effect, the address of the buffer that contains the needed coefficients for this subroutine is set in the first two lines. The $X[N-ed_n]$ buffer is also moved to the \textit{X_1[N]} buffer. This subroutine is used to compute the pre \gls{reverb}, the part just before the comb filter. This part is shown in figure \autoref{fig:pre_reverb_block_design} \todo[inline]{Put in figure}, a fraction of the whole effect diagram in figure \autoref{fig:reverb_block_design}. The idea in the code is to point on different parts of \textit{X_1[N]}  which contains values of \textit{X[N-ed_n]}, the more the pointer has a lower negative number, the bigger the delay. Different values at the pre-calculated delays \textit{ed1}, \textit{ed2}, \textit{ed3} and \textit{ed4} are added together to give $X_{1}[N]$ and then stored in the memory area of  *AR5. \\
 
 \subsection{The \textit{reverb_lpcf} Subroutine}
-This subroutine is responsible for computing the equations of the 6 comb filters. The first part is reserved for calculating the different coefficients needed in the calculations, $LD$ and $g$. The beginning of the macro command marks the end of coefficients calculations and the beginning of the equations processing. The choice of a macro implementation here comes after observing big similarities between the six comb filters. The only differences lie in the $b_{i}$ gains, $x_{i}$ values and $d_{i}$ values. This is why they are macro entries. The macro is simply the computation of the equations \ref{eq:reverb_eq_iir1w} to \ref{eq:reverb_eq_iir6w}. The circular buffer AR0 is the one that contains the values of $x_{i}$. AR4 and CDP the pointer which contains the coefficients, gains and delay values.
+This subroutine is responsible for computing the equations of the 6 comb filters. The first part is reserved for calculating the different coefficients needed in the calculations, $L_D$ and $g$. The beginning of the macro command marks the end of coefficients calculations and the beginning of the equations processing. The choice of a macro implementation here comes after observing big similarities between the six comb filters. The only differences lie in the $b_{i}$ gains, $x_{i}$ values and $d_{i}$ values. This is why they are macro entries. The macro is simply the computation of the equations \ref{eq:reverb_eq_iir1w} to \ref{eq:reverb_eq_iir6w}. The circular buffer AR0 is the one that contains the values of $x_{i}$. AR4 and CDP are the pointers which contains the coefficients, gains and delay values.
 After the macro section, it is called with the different comb filter settings in a row. 
 
 \subsection{The \textit{reverb_allpass} Subroutine}
