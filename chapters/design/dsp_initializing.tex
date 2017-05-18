@@ -29,10 +29,10 @@ The TLV320AIC3204 chip is then initialized with C code  \autoref{code:dsp_init}.
 \includeCode{aic3204_init.c}{c}{25}{37}{The \gls{adc}/\gls{dac} reset code}{code:dsp_init}{code/design/}
 
 \section{Sound in and out}
-In this section the $I^2S$ connection will be initialized and used as connection between the \gls{dsp} and audio stereo chip. The spectrum digital stereoloop start code all ready use the $I^2S$ connection as default audio transfer between the \gls{dsp} and the audio stereo chip, so the only needed initializing is starting up the $I^2S$ connection. The startup code is as following \autoref{code:i2s_init}
+In this section the $I^2S$ connection will be initialized and used as connection between the \gls{dsp} and the audio stereo chip. The spectrum digital stereoloop start code \citep{stereoloop} all ready use the $I^2S$ connection as default audio transfer between the \gls{dsp} and the audio stereo chip. So the only thing needed when initializing, is starting up the $I^2S$ connection. The startup code is as in \autoref{code:i2s_init}
 \includeCode{aic3204_init.c}{c}{69}{71}{The start up of $I^2S$ connection}{code:i2s_init}{code/design/}
 
-After the $I^2S$ connection is started up, the audio in and audio out is designed in assembly, to make the most efficiency code. The following \autoref{code:audio_in} is designed to load audio data into a register, so it is possible to work with the audio data. 
+After the $I^2S$ connection is started up, the audio in and audio out will be designed in assembly for efficiency. The following \autoref{code:audio_in} is designed to load audio data into a register, so it is possible to work with the audio data. 
 \includeCode{sound_in.asm}{assembly}{1}{11}{Reading the \gls{adc} data}{code:audio_in}{code/design/}
 
 After the audio data is processed, the audio data is written to the \gls{dac} as following \autoref{code:audio_out}.
@@ -40,9 +40,9 @@ After the audio data is processed, the audio data is written to the \gls{dac} as
 
 \section{Circular buffer}
 
-The circular buffer is tool needed in different effects like flanger and chorus. Coding it in assembly can drastically optimize real-time signal possessing. \\
+The circular buffer is needed in different effects like flanger and chorus. Coding it in assembly can drastically optimize real-time signal possessing. \\
 
-The code is presented in \autoref{code:buffer_asm}. The first lines are used for initialization. The main data page as well as the circular buffer address are initialized in line 5. In line 6, it is chosen from which address should the buffer memory start. Then, the size is the buffer is chosen in line 9 and the pointer position in line 10. The fact that the pointer is circular needs to be indicated which is done in line 10, it means that after the fourth value of the buffer it will go back to the first one.\\
+The code is presented in \autoref{code:buffer_asm}. The first lines are used for initialization. The main data page as well as the circular buffer address are initialized in line 5. In line 6, it is chosen from which address the buffer memory should start. Then, the size of the buffer is chosen in line 9 and the pointer position in line 10. The fact that the pointer is circular needs to be indicated which is done in line 10, it means that after the fourth value of the buffer it will go back to the first one.\\
 
 The remaining line are an example of the buffer usage, line 12 and 13 are for loading something in the buffer and the rest is to take a value from the buffer. 
 
