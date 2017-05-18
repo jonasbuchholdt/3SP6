@@ -1,10 +1,11 @@
 clear all;
-filename = '../opamp_zi_v0.csv';
+filename = '../opamp_zo_v2.csv';
 delimiterIn = ',';
 headerlinesIn = 6;
 A = importdata(filename,delimiterIn,headerlinesIn);
 
 %dat = iddata(A.data(:,1),A.data(:,2));
+
 
 figure
 plot(A.data(:,1),A.data(:,2))
@@ -15,4 +16,6 @@ grid on
 ylabel('Magnitude [V]')
 xlabel('Time [S]')
 hold off
+
+%FigureToPDF(gcf, '../opamp_zi_v0')
 
