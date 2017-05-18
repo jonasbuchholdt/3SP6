@@ -56,11 +56,13 @@ to[short] (2,1)
 to[short] (-1.5,-2)
 node[ground]{}
 (5,.5)to[R=$R_L$] (7.5,.5)
-to[sV=$V_S$] (7.5,-2)
+to[sV=$V_1$] (7.5,-2)
 node[ground]{}
-(5,.5)to[sV=$V_2$] (5,-2)
+(5,.5)to[sV=$V_3$] (5,-2)
 node[ground]{}
-
+(7.5,.5)to[short] (9,.5)
+to[sV=$V_S$] (9,-2)
+node[ground]{}
 ;\end{circuitikz}
 \caption{Test setup for measuring output impedance of an \gls{opamp}, where $R_S = R_L = $\SI{1}{\kilo\ohm}.}
 \label{fig:opamp_zo}
@@ -91,7 +93,7 @@ For the input impedance the steps are as follows:
     
 For the output impedance the steps are as follows:
 \begin{itemize}
-\item Measure the amplitude of the signal at $V_S$.
+\item Measure the amplitude of the signal at $V_S$ with $V_3$.
 \item Measure the amplitude of the signal at $V_2$ 
 \item Subtract $V_2$ from $V_S$ to get the amplitude of $V_1$. 
 \item Use \autoref{eq:opamp_zo} to calculate the input impedance.
