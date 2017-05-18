@@ -157,9 +157,9 @@ This simulation is done six times, where the gain of the \gls{lpcf} is changed e
     \stopexplain
 
 $m$ in \autoref{eq:rev_out_gen} changes as the \gls{lpcf} gain, $b$, changes. For $m = 20 \big|_{b=b_1}$, $m = 19 \big|_{b=b_2 \ and \ b=b_3}$, $m = 18 \big|_{b=b_4 \ and \ b=b_5}$, and $m = 17 \big|_{b=b_6}$.  
-The total number of outputs from the six \gls{lpcf} in parallel, followed by an allpass filter i serial, can then be found as in \autoref{}.
+The total number of outputs from the six \gls{lpcf} in parallel, followed by an allpass filter i serial, can then be found as in \autoref{eq:reverb_echo_plus_direct}.
 
-\begin{subequations}
+\begin{subequations}\label{eq:reverb_echo_plus_direct}
 \begin{equation}\label{eq:reverb_ser}
       \text{Echo} + \text{direct sound} = \sum_{x=1}^{20} x + \sum_{x=1}^{19} x + \sum_{x=1}^{19} x + \sum_{x=1}^{18} x+ \sum_{x=1}^{18} x+ \sum_{x=1}^{17} x -5
     \end{equation}
@@ -172,7 +172,7 @@ $\Updownarrow$
  \end{subequations}
 
 The subtraction of five in \autoref{eq:reverb_ser} is, as mentioned earlier, because each \gls{lpcf} sends through a direct input, which arrives at the same time, and is therefore counted as one output.
-The second allpass filter in \autoref{fig:reverb_block_design} is set to have the same parameters as the first allpass filter. There only a few requirements for the second allpass filter, because the number of echoes is already higher than 1000. Therefore the only requirements for the second allpass filter is that it has to be an allpass filter and it must not decrease the number of echoes. This is fulfilled by copying the first allpass filter. 
+The second allpass filter in \autoref{fig:reverb_block_design} is set to have the same parameters as the first allpass filter. There are only a few requirements for the second allpass filter, because the number of echoes is already higher than 1000. Therefore the only requirements for the second allpass filter is that it has to be an allpass filter and it must not decrease the number of echoes. This is fulfilled by copying the first allpass filter. 
     
 %
 %\includeCode{echo_1_all_pass.m}{matlab}{6}{23}{The reverb echo calcul6ation matlab code}{code:reverb_cal}{code/design/}
@@ -188,26 +188,23 @@ The second allpass filter in \autoref{fig:reverb_block_design} is set to have th
 
 %Form the MATLAB script \autoref{code:reverb_cal} the formula of calculation echo after the first all pass filter is as following \autoref{eq:reverb_ser}. The $-5$ is included because only one of the direct sound is taken to acound in the formula.
 
-In \citep{DAFX} Moorer suggests adding an early reflection network before the six \gls{lpcf}s. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests making the \gls{lpcf} feedback gain as a variable, so the user can change the room size and damping. To design the \gls{lpcf} filter the standard comp filter needs to be changed  \citep{LPCFfd}. The standard comb filter have the following transfer function \autoref{eq:comb_filter}
+In \citep{DAFX} Moorer suggests adding an early reflection network before the six \gls{lpcf}s. The early reflection network is a simple multi tap \gls{fir} filter constellation. Moorer also suggests making the \gls{lpcf} feedback gain as a variable, so the user can change the room size and damping. To design the \gls{lpcf} filter the standard comp filter needs to be changed  \citep{LPCFfd}. The standard comb filter have the following transfer function \autoref{eq:comb_filter}.
 
 \begin{equation}\label{eq:comb_filter}
 H(z)=\frac{1}{1-c \cdot z^{-d}}
 \end{equation}
 
     \startexplain
-\explain{$a$ is the amplification of the combs }{\si{1}}
+\explain{$c$ is the amplification of the combs }{\si{1}}
     \stopexplain
 
-To change the comb filter caracteristics, so the magnitude in the high frequency is lower than the magnitude in the low frequency, $a$ needs to be changed to a low pass filter. \\
-
-In the frequency domain, the low pass filter have the following transfer function \autoref{eq:comb_filter_freq} 
-
+To change the comb filter characteristics, so the magnitude in the high frequency is lower than the magnitude in the low frequency, $c$ needs to be changed to a low pass filter. In the frequency domain, the low pass filter have the following transfer function \autoref{eq:comb_filter_freq}. 
 
 \begin{equation}\label{eq:comb_filter_freq}
 	G(s) = f \cdot \frac{\omega_{0}}{s+w_{0}}
 \end{equation}
 
-\autoref{eq:s2z} will be used in order to pass from the $frequency$ to the $z-domain$:
+\autoref{eq:s2z} will be used in order to pass from $s-domain$ to the $z-domain$:
 
 \begin{equation}\label{eq:s2z}
 	s = \frac{1-z^{-1}}{T}
@@ -223,9 +220,9 @@ By inserting \autoref{eq:s2z} into \autoref{eq:comb_filter_freq}, \autoref{eq:s2
 	G(z) = f \cdot \frac{\omega_{0}}{\frac{1 - z^{-1}}{T} + \omega_{0}}
 \end{equation}
 
-Which also gives:
+Which can be rewritten as in \autoref{eq:s2z3}:
 
-\begin{equation}
+\begin{equation}\label{eq:s2z3}
 	G(z) = f \cdot \frac{\frac{\omega_{0} \cdot T}{1 + \omega_{0} \cdot T}}{1 - \frac{1}{1+ \omega_{0} \cdot T} \cdot z^{-1}}
 \end{equation}
 
@@ -235,25 +232,25 @@ The numerator is an expression containing only constants which will be represent
 	G(z) = f \cdot \frac{b}{1 - a \cdot z^{-1}}
 \end{equation}
 
-Adding $a$ and $b$ gives 1, the following relation between $a$ and $b$ can be inferred:
+It is seen that adding $a$ and $b$ gives 1, therefore the following relation in \autoref{eq:b_and_a} between $a$ and $b$ can be inferred:
 
-\begin{equation}
+\begin{equation}\label{eq:b_and_a}
 	b = 1 - a
 \end{equation} 
 
-\autoref{eq:before_final} can be re-written as:
+\autoref{eq:before_final} can be re-written as in \autoref{eq:comb_filter_lp}:
 
 \begin{equation}\label{eq:comb_filter_lp}
 G(z)=f \frac{1-a}{1-a \cdot z^{-1}}
 \end{equation}
   
-Recalling \autoref{eq:comb_filter} and replacing $c$ by $G(z)$ from \autoref{eq:comb_filter_lp}, the final transfer function of the \gls{lpcf} is in \autoref{eq:comb_filter_lp_final}
+Recalling \autoref{eq:comb_filter} and replacing $c$ by $G(z)$ from \autoref{eq:comb_filter_lp}, the final transfer function of the \gls{lpcf} is as in \autoref{eq:comb_filter_lp_final}.
 
  \begin{equation}\label{eq:comb_filter_lp_final}
-H(z)=\frac{1}{1-f \frac{1-a}{1-a \cdot z^{-1}} \cdot z^{-d}}
+H(z)= \frac{Y(z)}{X(z)} =\frac{1}{1-f \frac{1-a}{1-a \cdot z^{-1}} \cdot z^{-d}}
 \end{equation}
 
- The following \autoref{eq:reverb_eq_eks} shows the differential equation for the \gls{lpcf}'s. 
+When replacing $a$ by $L_D$, the following \autoref{eq:reverb_eq_eks} shows the differential equation for the first \gls{lpcf}. 
 
     \begin{equation}\label{eq:reverb_eq_eks}
         x_2[n] = x_1[n] - L_D \cdot x_1[n-1] + L_D \cdot x_2[n-1] + f \cdot (1-L_D) \cdot x_2[n-d_1]
@@ -261,6 +258,7 @@ H(z)=\frac{1}{1-f \frac{1-a}{1-a \cdot z^{-1}} \cdot z^{-d}}
     
     \startexplain
 \explain{$f$ is defining the room size}{\si{1}}
+\explain{$L_D$ is the damping factor}{\si{1}}
     \stopexplain
 
 $f$ is found as described in \autoref{eq:reverb_eq_f}, where scaleroom is used to scale the room size by the user \citep{LPCFfd}.
@@ -272,7 +270,7 @@ $f$ is found as described in \autoref{eq:reverb_eq_f}, where scaleroom is used t
 \centering
 %$\Updownarrow$
 \begin{equation}\label{eq:reverb_eq_f2}
-    f = 0.5 \cdot \text{scaleoom} + 0.7
+    f = 0.5 \cdot \text{scaleroom} + 0.7
     \end{equation}
  \end{subequations}   
    
@@ -287,9 +285,10 @@ The $L_D$ is defining the room damping, and the equation for $L_D$ is as in \aut
 \begin{equation}\label{eq:reverb_eq_L_D2}
     L_D = 0.5 \cdot \text{scaledamp}
     \end{equation}
- \end{subequations}   
+ \end{subequations} 
+    
 
-This transfer function is plotted in MATLAB with a sweep from \SI{16}{\hertz} to \SI{20}{\kilo\hertz} and gives the following result \autoref{fig:lpcf_sweep}, where the red sine wave is the input and the blue sine wave is the output.
+The transfer function in \autoref{eq:reverb_eq_eks} is plotted in MATLAB with a sweep from \SI{16}{\hertz} to \SI{20}{\kilo\hertz} as the input. The output of the \gls{lpcf} is shown in \autoref{fig:lpcf_sweep}, where the red signal is the input and the blue signal is the output.
 
 \begin{figure}[htbp]
 	\centering
@@ -399,7 +398,7 @@ This transfer function is plotted in MATLAB with a sweep from \SI{16}{\hertz} to
   \label{fig:reverb_block_design}
 \end{figure}
 
-The differential equation for the \gls{reverb} can be written in 12 parts as following in \autoref{eq:reverb_eq}.
+The differential equation for the \gls{reverb} can be written in 12 parts as follows in \autoref{eq:reverb_eq}.
 
 \begin{subequations}\label{eq:reverb_eq}
 \begin{equation}\label{eq:reverb_eq_ed}
@@ -448,9 +447,9 @@ y[n] = - \alpha \cdot w_9[n] + w_9[n-d_8] + x_1[n]
 \end{subequations}
 
 \subsection{Matlab Simulation}
-This section will simulate the effect equation, which is developed in above \autoref{sec:reverb_develop}. The simulation is made in MATLAB and the code is attached in \autoref{app:reverb}. The simulation is made to avoid mistake before the assembly code is developed, because assembly is a time consuming development precess. MATLAB is easy to use and mistake can be observed graphical by plotting the output and every changes is fast to implement and redone the plot.
+This section will simulate the \gls{reverb} effect equations, which is developed in above \autoref{sec:reverb_develop}. The simulation is made in MATLAB and the code is attached in \autoref{app:reverb}. The simulation is made to avoid mistake before the assembly code is developed, because assembly is a time consuming development precess. MATLAB is easy to use and mistakes can be observed graphically by plotting the output.
 
-The simulation is done by audioread one sinus round in MATLAB and afterwards generate all necessary arrays to in, out and intermediate calculations. The audioread and all user chance able settings is done as following \autoref{code:reverb_delay_startup}
+The simulation is done by audioread one sinus round in MATLAB and afterwards generate all necessary arrays to in, out and intermediate calculations. The audioread and all user changeable settings are done as in \autoref{code:reverb_delay_startup}.
  
 \includeCode{reverb.m}{matlab}{6}{14}{The reverb simulation matlab code}{code:reverb_delay_startup}{code/design/}
 
@@ -476,21 +475,20 @@ Applying one sinus round in the \gls{reverb}  effect gives the following result 
 
 \newpage
 \subsection{implementation}
-This section will design the assembly code, where the implementation method is very imported to do the program as efficiency as possible. The delay for example can be done in several ways where ether the data is moved or the pointer is moved, but if it is the data which is moved and there is 1000 data samples, it will require 1000 clock cycles because each data sample needs to be moved alone. If the pointer is moved it will only require one cycles for moving the input pointer and one cycles to move the output pointer, so the delay will be designed as a ring buffer where the input and output pointer is moved. 
-The .... only have three circular data buffers size register, where buffer register BK03 will be used to delay samples. \gls{reverb} have the longest delay time, so the data buffers size will be calculated in this section. First the time between 2 samples needs to be calculated, and the calculation is done as following \autoref{eq:sample_time}
+This section will design the assembly code, where the implementation method is very important to do the program as efficient as possible. The delay for example can be done in several ways where ether the data is moved or the pointer is moved, but if it is the data which is moved and there is 1000 data samples, it will require 1000 clock cycles because each data sample needs to be moved alone. If the pointer is moved it will only require one cycles for moving the input pointer and one cycle to move the output pointer, so the delay will be designed as a ring buffer where the input- and output- pointer is moved. 
+The \gls{cpu} of the \gls{dsp} has three circular data buffers size register, where buffer register BK03 will be used to delay samples. The data buffers size will be made to fit the \gls{reverb} effect, therefore it is calculated in this section. First the time between two samples needs to be calculated, and the calculation is done as in \autoref{eq:sample_time}
 
-\begin{subequations}\label{eq:sample_time}
-    \begin{equation}
-t_s=\frac{1}{f_s}
+    \begin{equation}\label{eq:sample_time}
+T_s=\frac{1}{f_s} = \frac{1}{\SI{44100}{\hertz}} = 22.7 \addunit{\SI{}{\micro\second}}
     \end{equation}
-\centering
-$\Updownarrow$
-    \begin{equation}
-\SI{22.7}{\micro\second}=\frac{1}{\SI{44100}{\hertz}}
-    \end{equation}
-\end{subequations}
 
-According to \autoref{tab:reverb_delay} the longest delay time is \SI{41}{\milli\second} and as calculated in \autoref{eq:sample_time} the time between samples is \SI{22.7}{\micro\second}. To calculate the number of needed samples in the buffer is done as following \autoref{eq:sample_number}
+\startexplain
+\explain{$T_s$ is the sampling time}{\si{\second}}
+\explain{$f_s$ is the sampling frequency}{\si{\hertz}}
+    \stopexplain
+
+
+According to \autoref{tab:reverb_delay} the longest delay time is \SI{41}{\milli\second} and as calculated in \autoref{eq:sample_time} the time between samples is \SI{22.7}{\micro\second}. To calculate the number of needed samples in the buffer is done by following \autoref{eq:sample_number}
 
 \begin{subequations}\label{eq:sample_number}
     \begin{equation}
