@@ -1,5 +1,6 @@
 \chapter{Test of effect run time}\label{app:effect_run_time}
-A test was made to get a view of the time consumption of each effect.
+
+The tests of the time needed to run effects are presented in this appendix.
 
 \section*{Materials and setup}
 To measure the time consumption of each effect, the following materials are used:
@@ -13,28 +14,28 @@ To measure the time consumption of each effect, the following materials are used
 \begin{figure}[htbp!]
 	\centering
 		\includegraphics[width=0.5\textwidth]{run_time.pdf}
-		\caption{Illustration of the measuer point on the Ezdsp}
+		\caption{Illustration showing the location of the measurement point on the EZdsp}
 		\label{fig:run_time_test_point}
 \end{figure}
 
-\includeCode{mainas.asm}{assembly}{12}{21}{Example of run time testing main program}{code:mainas_asm}{code/design/}
+\includeCode{mainas.asm}{assembly}{12}{21}{Example of runtime testing main program}{code:mainas_asm}{code/design/}
 
 \section*{Test procedure}
 \begin{enumerate}
 \item The materials are set up as in \autoref{fig:run_time_test_point}.
 \item The Digilent Waveform 2015 is set as a Scope.
-\item  The XF led bit is set at the beginning of the program and cleared in the end of the program, in the mainas file, see example \autoref{code:mainas_asm}.
-\item  The Scope is then used to measure the XF LED on time 
+\item  The XF led bit is set at the beginning of the program and cleared in the end of the program, in the mainas file, see example \autoref{code:mainas_asm}. The time from when the LED is being illuminated until it is turned off is the runtime, also measured using the magnitude as shown in \autoref{fig:run_time_test_point}. 
+\item  The Scope is then used to measure the XF LED runtime 
 \item The data is plotted in MATLAB.
 \end{enumerate}
 
 \section*{Reverb run time}
-The following measurement \autoref{fig:reverb_time_test} shows the \gls{reverb} program run time.
+The following \autoref{fig:reverb_time_test} shows the measurement results of the \gls{reverb} assembly program runtime.
 \begin{figure}[htbp!]
 	\centering
 		\includegraphics[width=1\textwidth]{reverb_run_time.pdf}
-		\caption{The figure shows the run time of the \gls{reverb} assembly program}
+		\caption{The figure shows the runtime of the \gls{reverb} assembly program}
 		\label{fig:reverb_time_test}
 \end{figure}
 
-According to \autoref{fig:reverb_time_test} the \gls{reverb} run time is \SI{2.25}{\micro\second}
+According to \autoref{fig:reverb_time_test}, the \gls{reverb} runtime is \SI{2.25}{\micro\second}
