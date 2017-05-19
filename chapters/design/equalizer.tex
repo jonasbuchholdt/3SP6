@@ -1,5 +1,5 @@
 \section{Design of the equalizer}
-This chapter aims to describe the design of an digital equalizer, for an electric guitar. 
+This chapter aims to describe the design of an digital graphic equalizer, for an electric guitar. By graphic equalizer it is meant that only the gain of each band is changeable for the user.  
 To begin with, some design choices have to made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by a combination of shelving filters and peak filters. The shelving filters are used for the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters are normally kept as first or second order filters. 
 
 \subsection{Shelving filter}
@@ -42,7 +42,7 @@ When implementing \autoref{eq:analog_shelving_low} and \autoref{eq:analog_shelvi
         \caption{Bodeplot of first order low- and high- shelving filters with different transition frequencies.}
         \label{fig:low_and_high_shelving}
   \end{figure} 
-  \todo[inline]{figure is now first order}
+  %\todo[inline]{figure is now first order}
 
 \subsection{Peak filter}
 The peak filters for the in between bands can be made from a number of design topologies. One of these are the constant-Q design. This design is sufficient the way that it keeps a specified bandwidth of the filter and therefore each individual filter's impact on the neighbouring filters can be controlled \citep{constant_Q}.
@@ -102,7 +102,7 @@ When implementing \autoref{eq:H_peak} in a feedforward loop as in \autoref{fig:p
 \subsection{Design choices and calculation of filter parameters}
 All the parts needed to make an equalizer have now been described. The parameters after which the equalizer shall be designed, will now be presented. 
 The equalizer will be inspired by the BOSS GE-7 which is an analog equalizer for an electric guitar. The equalizer designed in this report will have the same number of bands and have the same attenuation and amplification ranges as the BOSS GE-7 \citep{Boss_GE7}. Thus the equalizer will have seven bands and be able to amplify each band $\pm$ \SI{15}{\decibel}.
-The center frequencies of the 7 bands are also inspired by the BOSS GE-7 and is placed as in \autoref{tab:center_frequencies}.
+The center frequencies of the seven bands are also inspired by the BOSS GE-7 and is placed as in \autoref{tab:center_frequencies}.
 
 \begin{table}[htbp]
 \centering
@@ -164,9 +164,9 @@ $\Updownarrow$
  
  
 
-The Q-value is then the only unknown in the design of the peak filters. In \autoref{req:bandpass_filter2} it is stated that at full amplification (\SI{15}{\decibel}), the amplification at the neighbouring centerfrequencies must drop to (\SI{9}{\decibel}). 
-The Q-value will be chosen so it has the minimum ripple. This Q-value is found using a Matlab program, where the Q-value is increased in steps of 0.2 from 0 to 10. All gains on both the peak and the shelving filters are set to amplify \SI{15}{\decibel}. The optimal Q-value is hereby found to be 1.4, giving a ripple of $\pm$\SI{1.11}{\decibel}, in the frequency area from \SI{100}{\hertz} to \SI{6400}{\hertz}, when all filters are fully amplified. All parameters for the peak filters are then found. 
-When coupling the filters as in \autoref{fig:eq_parallel}, and plotting it in Matlab, the bodeblot of the equalizer with all filters fully amplified, is as in \autoref{fig:eq_s_domain_comb}. In the figure all bands have their maximum gain value.
+The Q-value is then the only unknown in the design of the peak filters. In \autoref{req:equalizer2} it is stated that at full amplification (\SI{15}{\decibel}), the amplification at the neighbouring centerfrequencies must drop to (\SI{9}{\decibel}). 
+The Q-value will be chosen so it has the minimum ripple. This Q-value is found using a MATLAB program, where the Q-value is increased in steps of 0.2 from 0 to 10. All gains on both the peak and the shelving filters are set to amplify \SI{15}{\decibel}. The optimal Q-value is hereby found to be 1.4, giving a ripple of $\pm$\SI{1.11}{\decibel}, in the frequency area from \SI{100}{\hertz} to \SI{6400}{\hertz}, when all filters are fully amplified. All parameters for the peak filters are then found. 
+When coupling the filters as in \autoref{fig:eq_parallel}, and plotting it in MATLAB, the bodeblot of the equalizer with all filters fully amplified, is as in \autoref{fig:eq_s_domain_comb}. In the figure all bands have their maximum gain value.
 
 \begin{figure}[!h]
     \centering
@@ -244,13 +244,13 @@ Applying this conversion on the shelving and the peak filters, the digital trans
      \explain{$b_{peak3} = 4 \cdot Q - 2 \cdot \omega_c \cdot T_s + \omega_0^2 \cdot T_s^2 \cdot Q$ }{\si{1}}
     \stopexplain
 
-The combined transferfunction, when combining the transferfunctions as in \autoref{fig:eq_parallel}, becomes as in \autoref{}.
+The combined transferfunction, when combining the transferfunctions as in \autoref{fig:eq_parallel}, becomes as in \autoref{fig:eq_z_domain_comb}.
 
 \begin{equation}\label{eq:z_to_n_final}
         H(z)_{comb} = 1 + H(z)_{LS} + H(z)_{HS} +  \sum_{j=1}^{5} H(z)_{peak(j)}
     \end{equation}
 
-When choosing the sampling frequency, $F_s =$ \SI{44.1}{\kilo \hertz}, and thereby $T_s = \frac{1}{F_s} =$ \SI{22.68}{\micro \second}, setting $Q = 1.4$, and using the frequencies in \autoref{tab:center_frequencies} as $\omega_c$ and $\omega_0$, the frequency response of the digital equalizer, with all bands fully amplified, looks like in \autoref{fig:eq_z_domain_comb}.
+When choosing the sampling frequency, $f_s =$ \SI{44.1}{\kilo \hertz}, and thereby $T_s = \frac{1}{f_s} =$ \SI{22.68}{\micro \second}, setting $Q = 1.4$, and using the frequencies in \autoref{tab:center_frequencies} as $\omega_c$ and $\omega_0$, the frequency response of the digital equalizer, with all bands fully amplified, looks like in \autoref{fig:eq_z_domain_comb}.
 
 \begin{figure}[!h]
     \centering
@@ -346,7 +346,7 @@ The differential equations for each feedback loop are derived by the same method
      \explain{$H_{boost}$ can be either $H_{LS}(s)$, $H_{HS}(s)$ or $H_{peak}(s)$.}{\si{1}}
     \stopexplain
     
-The three new transferfunctions from \autoref{eq:analog_attenuate} are bilinear transformed and converted from z-domain to n-domain, the same way as the amplifying part. The z-domain transferfunctions for the attenuating low shelving-, high shelving- and peak filter, are shown in \autoref{}, \autoref{} and \autoref{}.
+The three new transferfunctions from \autoref{eq:analog_attenuate} are bilinear transformed and converted from z-domain to n-domain, the same way as the amplifying part. The z-domain transferfunctions for the attenuating low shelving-, high shelving- and peak filter, are shown in \autoref{eq:Hz_LS_att}, \autoref{eq:Hz_HS_att} and \autoref{eq:Hz_peak_att}.
 
 \begin{equation}\label{eq:Hz_LS_att}
         H(z)_{LS-cut} =\frac{z \cdot a_{LS1-cut} + a_{LS2-cut}}{z \cdot b_{LS1-cut} + b_{LS2-cut}}
@@ -386,17 +386,17 @@ The three new transferfunctions from \autoref{eq:analog_attenuate} are bilinear 
      \explain{$a_{peak3-cut} = 4 \cdot Q - 2 \cdot \omega_c \cdot T_s + \omega_0^2 \cdot T_s^2 \cdot Q$ }{\si{1}}
     \stopexplain
     
-The differential equations for the attenuating low shelving-, high shelving- and peak- filter, are then found as in \autoref{}, \autoref{} and \autoref{}.
+The differential equations for the attenuating low shelving-, high shelving- and peak- filter, are then found as in \autoref{eq:z_to_n_LS_att}, \autoref{eq:z_to_n_HS_att} and \autoref{eq:z_to_n_peak_att}.
 
-\begin{equation}\label{eq:z_to_n_LS}
+\begin{equation}\label{eq:z_to_n_LS_att}
         y_{LS-cut}[n] = \frac{a_{LS1-cut}}{b_{LS1-cut}} \cdot x[n] + \frac{a_{LS2-cut}}{b_{LS1-cut}} \cdot x[n-1] -  \frac{b_{LS2-cut}}{b_{LS1-cut}} \cdot y_{LS-cut}[n-1]
     \end{equation}
 
-\begin{equation}\label{eq:z_to_n_HS}
+\begin{equation}\label{eq:z_to_n_HS_att}
         y_{HS-cut}[n] = \frac{a_{HS1-cut}}{b_{HS1-cut}} \cdot x[n] + \frac{a_{HS2-cut}}{b_{HS1-cut}} \cdot x[n-1] -  \frac{b_{HS2-cut}}{b_{HS1-cut}} \cdot y_{HS-cut}[n-1]
     \end{equation}
     
-\begin{equation}
+\begin{equation}\label{eq:z_to_n_peak_att}
 \begin{aligned}
 y_{peak-cut}[n] = \frac{a_{peak1-cut}}{b_{peak1-cut}} \cdot x[n] + \frac{a_{peak2-cut}}{b_{peak1-cut}} \cdot x[n-1]+ \frac{a_{peak3-cut}} {b_{peak1-cut}} \cdot x[n-2] \\
 - \frac{b_{peak2-cut}}{b_{peak1-cut}} \cdot y_{peak-cut}[n-1] - \frac{b_{peak3-cut}}{b_{peak1-cut}} \cdot y_{peak-cut}[n-2]

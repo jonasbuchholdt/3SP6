@@ -1,6 +1,7 @@
 %% n-domain equalizer
 
 clear all;
+format long g;
 
 om_zero_sh = [100, 6400]*2*pi;
 om_zero_peak = [200,400,800,1600,3200]*2*pi;
@@ -12,7 +13,7 @@ G2_peak = 0.9952;
 G3_peak = 1.8183;
 G4_peak = 2.9810;
 G5_peak = 4.6234;
-G = 0.75;
+G = 1;
 G_shelv = 1/(1+G2_peak);
 
 %insert your input in this table
@@ -104,10 +105,15 @@ sweep_out(2,1) = y(2,1);
 for n = 3:1:sweep_l
 y(n,j) = a(1,j)/b(1,j)*x(n,1)+a(3,j)/b(1,j)*x(n-2,1)-b(2,j)/b(1,j)*y(n-1,j)-b(3,j)/b(1,j)*y(n-2,j); %peak 1
 %y(n,6) = y(n,6)+y(n,j);
-sweep_out(n,1) = x(n,1)-y(n,3);
+sweep_out(n,1) = x(n,1)+y(n,3);
 
 end
 end
+
+A1= a(1,1)/b(1,1)
+A3= a(3,1)/b(1,1)
+B1 = b(2,1)/b(1,1)
+B2 = b(3,1)/b(1,1)
 
 % %shelving filters
 % for j = 1:2
