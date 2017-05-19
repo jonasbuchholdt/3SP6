@@ -29,13 +29,19 @@ to[short] (1,2)
 to[short] (1,1)
 to[short] (2,1)
 (-1,0)to[short](-1.5,0)
-to[sV=$V_S$] (-1.5,-2)
+(-1.5,0)to[short](-1.5,-0.5)
+(-1,-1) node[oscillator,box]{}node[right]{$V_1$} 
+(-1.5,-1.5)to[short] (-1.5,-2)
 node[ground]{}
-(1,0)to[sV=$V_2$] (1,-2)
+(-1,0)to[short](-3.5,0)
+to[sV=$V_S$] (-3.5,-2)
+node[ground]{}
+(1,0)to[short](1,-0.5)
+(1.5,-1) node[oscillator,box]{}node[right]{$V_1$} 
+(1,-1.5)to[short] (1,-2)
 node[ground]{}
 (5,.5)to[R=$R_L$] (5,-2)
 node[ground]{}
-
 ;\end{circuitikz}
 \caption{Test setup for measuring input impedance of an \gls{opamp}, where $R_S =$\SI{1}{\mega\ohm} and $R_L = $\SI{1}{\kilo\ohm}.}
 \label{fig:opamp_zi}
@@ -56,10 +62,15 @@ to[short] (2,1)
 to[short] (-1.5,-2)
 node[ground]{}
 (5,.5)to[R=$R_L$] (7.5,.5)
-to[sV=$V_1$] (7.5,-2)
+%to[sV=$V_3$] (7.5,-2)
+(7.5,.5)to[short](7.5,-0.5)
+(8,-1) node[oscillator,box]{}node[right]{$V_1$} 
+(7.5,-1.5)to[short] (7.5,-2)
 node[ground]{}
-(5,.5)to[sV=$V_3$] (5,-2)
-node[ground]{}
+(5,.5)to[short](5,-0.5)
+(5.5,-1) node[oscillator,box]{}node[right]{$V_3$} 
+(5,-1.5)to[short] (5,-2)
+(5,-2)node[ground]{}
 (7.5,.5)to[short] (9,.5)
 to[sV=$V_S$] (9,-2)
 node[ground]{}
@@ -67,7 +78,6 @@ node[ground]{}
 \caption{Test setup for measuring output impedance of an \gls{opamp}, where $R_S = R_L = $\SI{1}{\kilo\ohm}.}
 \label{fig:opamp_zo}
 \end{figure}
-
 
 
 \section{Test Procedure}
