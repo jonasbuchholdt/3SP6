@@ -33,9 +33,7 @@ Int16 aic3204_init( )
     AIC3204_rset( 14, 0x80 );  // Lo_Byte(DOSR) for DOSR = 128 decimal or 0x0080
     AIC3204_rset( 20, 0x80 );  // AOSR for AOSR = 128 decimal or 0x0080 for decimation filters 1 to 6
     AIC3204_rset( 30, 0x88 );  // For 32 bit clocks per frame in Master mode ONLY  
-
-
-    AIC3204_rset( 18, 0x88 );  // Power up NADC and set NADC value to 8
+	AIC3204_rset( 18, 0x88 );  // Power up NADC and set NADC value to 8
     AIC3204_rset( 19, 0x82 );  // Power up MADC and set MADC value to 2
     /* DAC ROUTING and Power Up */
     AIC3204_rset( 0, 1 );      // Select page 1
@@ -71,4 +69,5 @@ Int16 aic3204_init( )
     I2S0_ICMR = 0x3f;    // Enable interrupts
     /* start input output */
     return 0;
+    
 }
