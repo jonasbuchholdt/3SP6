@@ -1,4 +1,4 @@
-\section{Design of the Chorus and Flanger Effect}
+\section{Design of the Chorus and Flanger Effect}\label{chor_des}
 
 \subsection{Obtaining the Differential Equation}
 
@@ -71,23 +71,34 @@ y[n] = x[n] + \sum_{j=1}^{i}  (x[n- d_{j}[n]] \cdot g_{j})
 
 The delay value has to be a periodic function that is varying in a user-defined range. As illustrated in \autoref{fig:chorus_diag_des}, this varying delay can be made from a \gls{lfo}.
 
-The LFO that makes the delay varies is a sine wave in the chorus and the flanger effect. In the case of the flanger, the user can set the LFO frequency between 0,1 and 10 Hz and only the boundaries for the chorus. \\
+The LFO that makes the delay vary is a sine wave in the chorus and the flanger effect. In the case of the flanger, the user can set the LFO frequency between 0,1 and 10 Hz and only the boundaries for the chorus. 
+The gain for the flanger effect can be chosen by the user. For the chorus, the user can choose the boundaries of the gain value that will be randomly selected for each of the delay lines. 
+The number of delay lines for the chorus effect is also a choice but should not exceed 4, the reason is that after 4 lines it has been found that the effect has a strange sound. 
+The delay time for the flanging effect should be between 1 and \SI{20}{\milli\second} while the delay time in the chorus should be longer than \SI{20}{\milli\second}. 
 
-The gain for the flanger effect can be chosen by the user. For the chorus, the user can choose the boundaries of the gain value that will be randomly selected for each of the delay lines. \\
+A delay can be done in different ways digitally. One way is to use a ring buffer also known as circular buffer. \\
+The idea of this data structure is that it takes values and only outputs them when it gets full, and overwrites the oldest after outputting it. It is a kind of a FIFO queue structure but where the start and the overwriting can start at any index. \\
+This means that the size of the buffer depends on the delay.  The buffer size must then be always up-to-date with the new delay value. \\ 
+The value of the delay is determined by a periodic function as said before, different waveforms can be used as said in \autoref{chor_flang}. A common periodic function that can be used is the sine. Since it varies between 0 and 1, it can be then multiplied with the user-defined range. 
+The delay can then be written as in \autoref{eq:sine_delay}.
 
-The number of delay lines for the chorus effect is also a choice but should not exceed 4, the reason is that after 4 lines it has been found that the effect has a strange sound. \\
+\begin{equation}\label{eq:sine_delay}
+	d[n]= A \cdot sin(2\pi  \cdot \frac{f_{l}}{f_{s}} n)
+\end{equation}
 
-The delay time for the flanging effect should be between 1 and 20 ms while the delay time in the chorus should be longer than 20ms. \\
-
-From the difference equation, it can be seen that the design is using a FIR Comb filter but where the delay value varies. \todo[inline]{Why is it FIR comb filter?}
+\startexplain
+     \explain{$A$ is the value of the user-defined range which is also the depth.}{\si{1}}
+     \explain{$f_{s}$ the sampling frequency.}{\si{\hertz}}
+     \explain{$f_{l}$ is the frequency of the \gls{lfo}.}{\si{\hertz}}
+    \stopexplain 
 
 \subsection{Making the LFO by Cordic algorithm}
-The \gls{lfo} in both the chorus- and the flanger- effect should, as stated in \autoref{}, be able to make sine waves from \SI{0.1}{\kilo\hertz} to \SI{10}{\kilo\hertz}. A \gls{dsp} is not necessarily able to calculate sine values and therefore an algorithm has to be implemented in order to make this possible. A way to do this is by using the \gls{cordic} algorithm, which can be used to calculate both sine, cosine, square roots etc \citep{cordic}. 
+The \gls{lfo} in both the chorus- and the flanger- effect should, as stated in \autoref{chor_des}, be able to make sine waves from \SI{0.1}{\kilo\hertz} to \SI{10}{\kilo\hertz}. A \gls{dsp} is not necessarily able to calculate sine values and therefore an algorithm has to be implemented in order to make this possible. A way to do this is by using the \gls{cordic} algorithm, which can be used to calculate both sine, cosine, square roots etc \citep{cordic}. 
 When using the \gls{cordic} algorithm for for an \gls{lfo} the two equations \autoref{eq:cordic_x} and \autoref{eq:cordic_y} are almost all what is needed.
 
 \begin{equation}
 \label{eq:cordic_x}
-		x_{n+1} = x_n \cdot \cos(\theta) - y_n \cdot \cdot \sin(\theta) 
+		x_{n+1} = x_n \cdot \cos(\theta) - y_n \cdot \sin(\theta) 
 \end{equation}
 \startexplain
      \explain{$x_{n+1}$ is the present cosine value.}{\si{1}}
@@ -108,18 +119,26 @@ The algorithm works by initializing $x_0$ to 1 and $y_0$ to 0. This way $x_1$ be
 
 \begin{equation}
 \label{eq:cordic_freq}
-		\theta = 2 \cdot \pi \cdot \frac{F}{F_s} 
+		\theta = 2 \cdot \pi \cdot \frac{f}{f_s} 
 \end{equation}
 \startexplain
-     \explain{$F$ is the wanted frequency of the sine wave.}{\si{\hertz}}
-     \explain{$F_s$ is the sampling frequency.}{\si{\hertz}}
+     \explain{$f$ is the wanted frequency of the sine wave.}{\si{\hertz}}
+     \explain{$f_s$ is the sampling frequency.}{\si{\hertz}}
 \stopexplain 
 
-This way the \gls{cordic} algorithm will have $\frac{F_s}{F}$ steps round the unitcircle and thereby produce a sine wave with frequency $F$ and sine values between $\pm$1.
-A MATLAB simulation of the \gls{cordic} algorithm was made and set to produce a \SI{10}{\hertz} sine wave. The result of the simulation is shown in \autoref{}.
+This way the \gls{cordic} algorithm will have $\frac{f_s}{f}$ steps round the unitcircle and thereby produce a sine wave with frequency $f$ and sine values between $\pm$1.
+A MATLAB simulation of the \gls{cordic} algorithm was made and set to produce a \SI{10}{\hertz} sine wave. The result of the simulation is shown in \autoref{fig:cordic_1Hz}.
 
 \begin{figure}[!h]
     \centering
+<<<<<<< HEAD
+        \includegraphics[width=\textwidth]{cordic_1Hz.pdf}
+        \caption{Simulation of the \gls{cordic} algorithm, set to produce a \SI{1}{\hertz} sine wave.}
+        \label{fig:cordic_1Hz}
+  \end{figure}
+  
+When implementing the \gls{cordic} algorithm on a \gls{dsp}, a gain value might have to be implemented in \autoref{eq:cordic_x} and \autoref{eq:cordic_y} on $x_n$ and $y_n$ to make the algorithm stable. 
+=======
         \includegraphics[width=1\textwidth]{cordic_1Hz.pdf}
         \caption{Simulation of the \gls{cordic} algorithm, set to produce a \SI{10}{\hertz} sine wave.}
         \label{fig:cordic_10Hz}
@@ -127,186 +146,12 @@ A MATLAB simulation of the \gls{cordic} algorithm was made and set to produce a 
   
 When implementing the \gls{cordic} algorithm on a \gls{dsp}, a gain value smaller than 1, might have to be implemented in \autoref{eq:cordic_x} and \autoref{eq:cordic_y} on $x_n$ and $y_n$ to make the algorithm stable. 
 
+>>>>>>> master
 
 \subsection{Matlab Simulation}
 
-A delay can be done in different ways digitally. One way is to use a ring buffer also known as circular buffer. \\
-The idea of this data structure is that it takes values and only outputs them when it gets full, and overwrites the oldest after outputting it. It is a kind of a FIFO queue structure but where the start and the overwriting can start at any index. \\
-This means that the size of the buffer depends on the delay.  The buffer size must then be always up-to-date with the new delay value. \\ 
-The value of the delay is determined by a periodic function as said before, different waveforms can be used as said in \autoref{chor_flang}. A common periodic function that can be used is the sine. Since it varies between 0 and 1, it can be then multiplied with the user-defined range. 
-The delay can then be written as:
-
-\begin{equation}
-	d[n]= A \cdot sin(2\pi  \cdot \frac{f_{l}}{f_{s}} n)
-\end{equation}
-
-\startexplain
-     \explain{$A$ is the value of the user-defined range which is also the depth.}{\si{1}}
-     \explain{$f_{s}$ the sampling frequency.}{\si{\hertz}}
-     \explain{$f_{l}$ is the frequency of the \gls{lfo}.}{\si{\hertz}}
-    \stopexplain 
-
-The Matlab code for the flanger effect is:
-
-\begin{lstlisting}[language=Matlab, caption= Matlab code for flanger effect]
-
-%Flanger Effect
-%Group 641
-%Mohamed Gabr, Jonas and Sebastian
-
-
-filename = 'inputttt.wav'; 
-%The filename is inserted here, should be in the same directory as the
-%codefile.
-[input, fs] = audioread(filename, 'native');
-%input samples and sample rate are extracted from the file.
-input = input / (max(abs(input)));
-%the input is rescaled in order to have values between -1 and 1. 
-fl = 100;  
-%LFO Frequency is chosen here.
-sample_no = length(input); 
-%Length of the input samples table.
-g = 100; 
-%Gain
-delay_s = 0.0050; 
-% The maximum delay in seconds.
-after_delay = (1:1:sample_no); 
-before_delay = (1:1:sample_no);
-output = (1:1:sample_no);
-%Needed tables in the code are intialized to make the code faster.
-disp('max delay')
-max_delay = delay_s * fs  
-%Convert the maximum delay from delay in seconds to delay in samples.
-
-buffer = zeros(1,abs(round(max_delay))); 
-%intializing the buffer array.
-
-for i = 1:1:sample_no  %Loop that treats a sample per iteration. 
- delay = max_delay * cos(2*pi*i*(fl/fs)); %Calculate time varying delay 
- %(unit is samples)
- buffer = [buffer(2:end) input(i)]; 
- %move the values in the buffer ==> first value overwritten, one new 
- %value added at the end.
- if abs(delay) < 1   %All delay values less than zero are considered as
-  %not having a delay
-  after_delay(i) = 0;
- else
-  if floor(delay) == delay || abs(floor(delay)) >= floor(max_delay)
-   after_delay(i) = buffer(round(abs(delay))) * g;
-   %Treating the case when the delay is an integer and when it has a
-   %value bigger than the maximum delay. 
-  else %Treating the case when the delay is not an integer
-   x1 = abs(floor(delay));
-   x2 = x1 + 1;
-   y1 = buffer(x1);
-   y2 = buffer(x2);
-   coeff = (y1 - y2)/(x1 - x2);
-   %Making a linear approximation between the samples to increase
-   %precision
-   after_delay(i) = delay * coeff * g;  %sound from the delay line
-   %in the block diagram 
-  end
- end
- before_delay(i) = input(i);  %sound from the direct line
- output(i) = after_delay(i) + before_delay(i); %output delayed signal 
-end
-output = output / max(abs(output)); %output is rescaled to values between
-% -1 and 1 to avoid clipping. 
-audiowrite('out_flan.wav',output,fs); %Writing the values in a file, 
-% PS: audiowrite will clip if the values are not between -1 and 1. 
-plot(output,'r') %plotting the output samples in red.
-hold on
-grid
-plot(before_delay,'b') %plotting the input samples in blue on the same fig.
 
 
 
-
-\end{lstlisting}
-
-
-The code is commented for the user's instruction.\\
-
-The Matlab code for the chorus effect is:
-
-\begin{lstlisting}[language=Matlab, caption= Matlab code for chorus effect]
-
-%Chorus Effect
-%Group 641
-%Mohamed, Jonas and Sebastian
-
-filename = 'inputttt.wav'; %Typing the filename, should be in same 
-%directory as the codefile
-[input, fs] = audioread(filename);
-%input samples and sample rate are extracted from the file.
-input = input / (max(abs(input)));
-%the input is rescaled in order to have values between -1 and 1.
-lines = 5; %number of chorus lines 
-fl = randi(10,1,lines);
-%LFO Frequencies for each line are generated.
-delay = (1:1:lines);
-%Delay table generated here to speed the coding. 
-sample_no = length(input); 
-%Length of the input samples
-g = rand(1,lines); 
-%Gain values generated here
-delay_s = 0.025; 
-% Maximum delay in seconds 
-after_delay = rand(lines, sample_no); 
-before_delay = (1:1:sample_no);
-output = (1:1:sample_no);
-% Generating tables to speed the code. 
-max_delay = delay_s * fs  
-%convert the delay from delay in seconds to delay in samples. 
-
-
-buffer = zeros(1,abs(round(max_delay))); %create the buffer array 
-
-for i = 1:1:sample_no %loop that gives one output sample per iteration
- buffer = [buffer(2:end) input(i)]; %moving buffer values
- before_delay(i) = input(i); %Value before delay
- output(i) = before_delay(i); %adding it to one output sample
- for j = 1:1:lines %Generating delays and then samples after delay for 
- %each chorus line
-   delay(j) = max_delay * cos(2*pi*i*(fl(j)/fs)); %Calculate time  
-   %varying delay (unit is samples)
-   if abs(delay(j)) < 1 %Treating the case where the delay is less 
-   %than one.
-	 after_delay(j,i) =0;
-   else
-	 if floor(delay(j)) == delay(j) || abs(floor(delay(j))) >= floor(max_delay)
-	   after_delay(j,i) = buffer(round(abs(delay(j)))) * g(j);
-	   %Treating the case when the delay is an integer and when it has a
-	   %value bigger than the maximum delay. 
-	 else  %Treating the case when the delay is not an integer
-	   x1 = abs(floor(delay(j)));
-	   x2 = x1 + 1;
-	   y1 = buffer(x1);
-	   y2 = buffer(x2);
-	   coeff = (y1 - y2)/(x1 - x2);
-	   %Making a linear approximation between the samples to increase
-	   %precision
-	   after_delay(j,i) = delay(j) * coeff * g(j);  
-	   %sound from the delay line in the block diagram
-	 end
-   end
-   output(i) = output(i) + after_delay(j,i);
-   %Signal output sample
- end
-end
-output = output / max(abs(output)); %output is rescaled to values between
-% -1 and 1 to avoid clipping. 
-audiowrite('out_chor.wav',output,fs); %Writing the values in a file, 
-% PS: audiowrite will clip if the values are not between -1 and 1.
-plot(output,'r') %plotting the output samples in red.
-hold on
-grid
-plot(before_delay,'b') %plotting the input samples in blue on the same fig.
-
-
-
-\end{lstlisting}
-
-The codes where simulated on different audiofiles. 
 
 
