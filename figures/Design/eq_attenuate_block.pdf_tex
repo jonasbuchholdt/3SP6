@@ -54,14 +54,14 @@
     \put(0,0){\includegraphics[width=\unitlength,page=1]{eq_attenuate_block.pdf}}%
     \put(0.07736626,0.17987768){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{+}}}%
     \put(0.14251679,0.11472713){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{-}}}%
-    \put(-0,0.17173386){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{X}}}%
-    \put(0.1995235,0.02921707){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{GC}}}%
-    \put(0.34204029,0.02921707){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{H}}}%
-    \put(0.48455709,0.17173386){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Y}}}%
+    \put(-0,0.17173386){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$X$}}}%
+    \put(0.1995235,0.02921707){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$G_C$}}}%
+    \put(0.34204029,0.02921707){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$H_{C}$}}}%
+    \put(0.48455709,0.17173386){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$Y$}}}%
     \put(0.53138403,0.17784172){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{+}}}%
     \put(0.59857047,0.11472713){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{-}}}%
-    \put(0.65557724,0.02921707){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{GC}}}%
-    \put(0.79809401,0.02921707){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{H}}}%
-    \put(0.94061085,0.17173386){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Y2}}}%
+    \put(0.65557724,0.02921707){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$G_C$}}}%
+    \put(0.79809401,0.02921707){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$H_{C}$}}}%
+    \put(0.94061085,0.17173386){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$Y_2$}}}%
   \end{picture}%
 \endgroup%
