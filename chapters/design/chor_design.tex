@@ -1,4 +1,4 @@
-\section{Design of the Chorus and Flanger Effect}
+\section{Design of the Chorus and Flanger Effect}\label{chor_des}
 
 \subsection{Obtaining the Differential Equation}
 
@@ -82,12 +82,12 @@ The delay time for the flanging effect should be between 1 and 20 ms while the d
 From the difference equation, it can be seen that the design is using a FIR Comb filter but where the delay value varies. \todo[inline]{Why is it FIR comb filter?}
 
 \subsection{Making the LFO by Cordic algorithm}
-The \gls{lfo} in both the chorus- and the flanger- effect should, as stated in \autoref{}, be able to make sine waves from \SI{0.1}{\kilo\hertz} to \SI{10}{\kilo\hertz}. A \gls{dsp} is not necessarily able to calculate sine values and therefore an algorithm has to be implemented in order to make this possible. A way to do this is by using the \gls{cordic} algorithm, which can be used to calculate both sine, cosine, square roots etc \citep{cordic}. 
+The \gls{lfo} in both the chorus- and the flanger- effect should, as stated in \autoref{chor_des}, be able to make sine waves from \SI{0.1}{\kilo\hertz} to \SI{10}{\kilo\hertz}. A \gls{dsp} is not necessarily able to calculate sine values and therefore an algorithm has to be implemented in order to make this possible. A way to do this is by using the \gls{cordic} algorithm, which can be used to calculate both sine, cosine, square roots etc \citep{cordic}. 
 When using the \gls{cordic} algorithm for for an \gls{lfo} the two equations \autoref{eq:cordic_x} and \autoref{eq:cordic_y} are almost all what is needed.
 
 \begin{equation}
 \label{eq:cordic_x}
-		x_{n+1} = x_n \cdot \cos(\theta) - y_n \cdot \cdot \sin(\theta) 
+		x_{n+1} = x_n \cdot \cos(\theta) - y_n \cdot \sin(\theta) 
 \end{equation}
 \startexplain
      \explain{$x_{n+1}$ is the present cosine value.}{\si{1}}
