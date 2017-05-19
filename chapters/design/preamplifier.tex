@@ -160,7 +160,7 @@ The approximated amplification of a non inverting \gls{opamp} is given by \autor
         \explain{$G$ is the amplification of $G1$}{\si{1}}
     \stopexplain
 
-Then  $R_1$ is founded to \SI{5}{\kilo\ohm} by isolate $R_1$ in the above \autoref{eq:preamp_amplification}.
+Since the tested guitar have en amplitude of \SI{1}{\volt} it is chosen that the \gls{preamp} only shall be able to amplify by a factor of 2. Then  $R_1$ is founded to be \SI{5}{\kilo\ohm} by isolate $R_1$ in the above \autoref{eq:preamp_amplification}.
  
    
 \subsection{Design of $G1$ DC offset}
@@ -263,10 +263,20 @@ to[short] (2,-3.5)
 
 $C_{In}$ will be designed to have a cut-off frequency a decade beneath the audibility area. This result in a cut-off frequency of \SI{2}{\hertz}. The calculation of $C_{In}$ is done by following \autoref{eq:preamp_cin}.
 
-\begin{equation}\label{eq:preamp_cin}
+    
+\begin{subequations}\label{eq:preamp_cin}
+\begin{equation}
         C_{In} \geq  \frac{1}{2 \pi \cdot Z_{In_{G1}} \cdot f}
         \addunit{\si{\farad}}
     \end{equation}
+\centering
+$\Updownarrow$
+\begin{equation}
+        \SI{80}{\nano\farad} \geq  \frac{1}{2 \pi \cdot 1M\ohm \cdot 2Hz}
+        \addunit{\si{\farad}}
+    \end{equation}
+ \end{subequations}    
+    
 
     \startexplain
          \explain{$C_{In}$ is the input capacitor}{\si{\farad}}
@@ -276,10 +286,19 @@ $C_{In}$ will be designed to have a cut-off frequency a decade beneath the audib
     
 $C_{Out}$ will be designed to have a cut-off frequency at a decade over the audibility area, which will result in a cross frequency of \SI{200}{\kilo\hertz}. The calculation of $C_{Out}$ is done by following \autoref{eq:preamp_cout}.
 
-\begin{equation}\label{eq:preamp_cout}
+
+\begin{subequations}\label{eq:preamp_cout}
+\begin{equation}
         C_{In} \geq  \frac{1}{2 \pi \cdot Z_{In,\gls{dsp}} \cdot f}
         \addunit{\si{\farad}}
     \end{equation}
+\centering
+$\Updownarrow$
+\begin{equation}
+         \SI{400}{\pico\farad} \geq  \frac{1}{2 \pi \cdot 20k\ohm \cdot 20kHz}
+        \addunit{\si{\farad}}
+    \end{equation}
+ \end{subequations}    
 
     \startexplain
      \explain{$C_{Out}$ is the output capacitor}{\si{\farad}}
@@ -287,7 +306,7 @@ $C_{Out}$ will be designed to have a cut-off frequency at a decade over the audi
  \explain{$f$ is the cut-off frequency}{\si{\hertz}}
     \stopexplain
     
-The $C_{Offset}$ is selected to be separated into one \SI{100}{\nano\farad}- and one \SI{1}{\micro\farad}- capacitor.
+The $C_{Offset}$ is selected to be separated into one \SI{100}{\nano\farad}- and one \SI{1}{\micro\farad}- capacitor, and both $C_{In}$ and $C_{Out}$ is chosen to be  \SI{10}{\micro\farad} 
  
 \subsection{\gls{pcb} layout} 
 The signal cable will have a capacitive effect on the signal, from the guitar to the \gls{preamp}, and this will cause a low pass filter. In order to avoid the low pass problem with the cable, the \gls{preamp} will be designed to fit inside a \SI{6.35}{\milli\meter} Jack connector house. This requires that the \gls{pcb} has a maximum size of  \SI{1}{\centi\meter} times \SI{2.5}{\centi\meter}. The used cable from the \gls{dsp} to the \gls{preamp} is a balanced cable, where the shield is used as ground to both signal and power. The red wire is used as signal wire and the black wire is used as positive power wire. The resulting \gls{preamp} layout is as in \autoref{fig:preamp_layout}.

@@ -45,7 +45,15 @@
 \input{chapters/Implementation/reverb_imp}
 
 %%
-\part{Tests}\label{pt:tests} 
+ \graphicspath{{figures/tests/}}
+\part{Tests}\label{pt:tests}
+\chapter{Test of the Effects}
+
+\input{chapters/tests/reverb_test}
+
+\chapter{Test of the Components}
+\input{chapters/tests/preamp_jack}
+ 
 %%
 \part{Conclusions}\label{pt:conclusions} 
 %
@@ -56,13 +64,11 @@
 %\input{chapters/appendices/_appendices} % Include appendices
 %Appendix:
 
-
  \graphicspath{{figures/appendix/}}
 \part{Appendix}\label{pt:appendix}
 \input{chapters/appendix/guitar_frequency_test}
 \input{chapters/appendix/guitar_max_amplitude_test}
 \input{chapters/appendix/guitar_output_impedance_test}
-\input{chapters/appendix/opamp_impedance_test}
 \input{chapters/appendix/reverb_sim_test}
 \input{chapters/appendix/chorus_flanger_matlab_test}
 \input{chapters/appendix/SNR_test}
