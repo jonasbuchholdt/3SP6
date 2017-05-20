@@ -21,7 +21,7 @@ preamp = importdata(filename,delimiterIn,headerlinesIn);
 
 figure
 plot(preamp.data(:,1),preamp.data(:,2),'m')
-axis([-2 2 -0.5 0.5]) %([-0.0000005 0.000003 0 6])
+axis([-5 5 -0.5 0.5]) %([-0.0000005 0.000003 0 6])
 set(gca,'fontsize',18)
 hold on
 grid on
