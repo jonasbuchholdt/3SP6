@@ -1,1 +1,1 @@
-FigureToPDF(gcf, '../../figures/appendix/cordic_435mHz')
+FigureToPDF(gcf, '../../figures/appendix/flanger_run_time')
