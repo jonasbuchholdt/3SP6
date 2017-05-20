@@ -1,1 +1,1 @@
-FigureToPDF(gcf, '../../figures/design/reverb_run_time')
+FigureToPDF(gcf, '../../figures/appendix/cordic_435mHz')
