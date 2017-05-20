@@ -127,7 +127,7 @@ The algorithm works by initializing $x_0$ to 1 and $y_0$ to 0. This way $x_1$ be
 \stopexplain 
 
 This way the \gls{cordic} algorithm will have $\frac{f_s}{f}$ steps round the unitcircle and thereby produce a sine wave with frequency $f$ and sine values between $\pm$1.
-A MATLAB simulation of the \gls{cordic} algorithm was made and set to produce a \SI{10}{\hertz} sine wave. The result of the simulation is shown in \autoref{fig:cordic_1Hz}.
+A MATLAB simulation of the \gls{cordic} algorithm was made and set to produce a \SI{1}{\hertz} sine wave. The result of the simulation is shown in \autoref{fig:cordic_1Hz}.
 
 \begin{figure}[!h]
     \centering
@@ -137,6 +137,23 @@ A MATLAB simulation of the \gls{cordic} algorithm was made and set to produce a 
   \end{figure}
   
 When implementing the \gls{cordic} algorithm on a \gls{dsp}, a gain value might have to be implemented in \autoref{eq:cordic_x} and \autoref{eq:cordic_y} on $x_n$ and $y_n$ to make the algorithm stable. 
+
+\subsection{Implementation of the CORDIC algorithm}
+When implementing the CORDIC algorithm on the \gls{dsp}, some choices have to be made to begin with. The first choice is the resolution of the calculations. Because the \gls{lfo} has to produce such low frequencies, it is chosen to work in 32-bit precision. Since all the values in the CORDIC calculations are between $\pm$ 1, it is chosen to divide the 32-bits into one sign bit, one integer bit and 30 fraction bits, which should make the CORDIC algorithm able to produce a \SI{0.4}{\hertz}.
+It is mainly the two equations \autoref{eq:cordic_x} and \autoref{eq:cordic_y} that has to be implemented. Because it is chosen to operate in 32-bits precision all calculations have to be made twice. Multiplication is e.g. done by the following algorithm:
+\begin{itemize}
+\item The two variables $a$ and $b$ both have a high (16-bits) and a low part (16-bits).
+\item At first the low part of $a$ is multiplied with high part of $b$ and saved in $c_{LH}$.
+\item Then the low part of $a$ is multiplied with the low part of $b$ and saved in $c_{LL}$.
+\item $c_{LH}$ and $c_{LL}$ are then added in $d_L$ which is a 32-bit value containing [$c_{LH}$ $c_{LL}$].
+\item Afterwords the high part of $a$ is multiplied with the high part of $b$ and saved in $c_{HH}$.
+\item Then the high part of $a$ is multiplied with the low part of $b$ and saved in $c_{HL}$.
+\item $c_{HH}$ and $c_{HL}$ are then added in $d_H$ which is a 32-bit value containing [$c_{HH}$ $c_{HL}$].
+\item The final result of the multiplication is then found by shifting $d_L$ to a 16-bit value and add it to the 32-bit value $d_H$.
+\end{itemize}
+
+An example of this in the \gls{cordic} algorithm is in \autoref{code:cordic_2} where the 32-bit value $x_n$ is multiplied with the 32-bit value $\cos{\theta}$.
+\includeCode{cordic_2.asm}{assembly}{19}{59}{Multiplying $x_n$ with $\cos{\theta}$ in the CORDIC algorithm}{code:cordic_2}{code/design/}
 
 \subsection{Matlab Simulation}
 
