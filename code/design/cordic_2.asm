@@ -1,6 +1,4 @@
-		;.global _cordic_sine
-		
-		;.data
+
 		
 		.text
 cordic_2:

@@ -155,10 +155,95 @@ It is mainly the two equations \autoref{eq:cordic_x} and \autoref{eq:cordic_y} t
 An example of this in the \gls{cordic} algorithm is in \autoref{code:cordic_2} where the 32-bit value $x_n$ is multiplied with the 32-bit value $\cos(\theta)$.
 \includeCode{cordic_2.asm}{assembly}{19}{59}{Multiplying $x_n$ with $\cos(\theta)$ in the CORDIC algorithm}{code:cordic_2}{code/design/}
 
-\subsection{Matlab Simulation}
+\subsection{Approximation of Values Lying between Two Samples}
+
+In some cases during the chorus and the flanger effect, the delay value require an approximation between two of the delayed samples in the buffer. It happens when the delay is between two samples and not at an exact sample. In order to solve this problem, a linear approximation between the two samples has to be made. \\
+
+Here is an illustration in the figure \ref{fig:signal_approx} of the distances and segments that are involved in the approximation. \\
 
 
 
+\begin{figure}[htbp]
+	\centering
+	\begin{picture}(0,0)%
+\includegraphics{flang_approx.pdf}%
+\end{picture}%
+\setlength{\unitlength}{3947sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(1874,4161)(4261,-4876)
+\put(5251,-886){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$Y_{2}$}%
+}}}}
+\put(5551,-1411){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0} $\Delta Y$}%
+}}}}
+\put(4351,-1936){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0} $\Delta X$}%
+}}}}
+\put(4876,-1561){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$Y'$}%
+}}}}
+\put(4351,-4861){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$X_{1}$}%
+}}}}
+\put(5251,-4786){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$X_{2}$}%
+}}}}
+\put(4276,-1561){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$Y_{1}$}%
+}}}}
+\end{picture}%
+\caption{Linear approximation of the signal}
+	\label{fig:signal_approx}
+\end{figure}
+
+The goal is to determine the length of red line. The red line is the sum of $Y_{1}$ and $Y'$. $Y_{1}$ is known and $Y'$ is the unknown length to be determined by calculations. \\
+
+The equation is:
+
+\begin{equation}
+	Y' = \Delta X - (\Delta X \cdot \Delta Y)
+\end{equation}
+
+$\Delta Y$ is determined by doing the difference between $Y_{1}$ and $Y_{2}$. 
+
+\subsection{Memory Mapping for the Chorus and the Flanger Effect Coefficients and Data}
+
+
+Here is the memory mapping for the chorus and flanger effect in figure \ref{fig:memory_map_chor}.
+
+\begin{figure}[htbp]
+	\centering
+
+\begin{picture}(0,0)%
+\includegraphics{Flang_chor_mem.pdf}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(3312,1419)(9076,-4798)
+\put(11476,-4696){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}0x46EA}%
+}}}}
+\put(9136,-4516){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}Coefficients}%
+}}}}
+\put(9091,-3796){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}Delay Buffer}%
+}}}}
+\put(11476,-3661){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}0x3FCB}%
+}}}}
+\put(11476,-4021){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}0x46D9}%
+}}}}
+\put(11476,-4336){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}0x46DA}%
+}}}}
+\end{picture}%
+
+
+\caption{Memory Mapping for the Chorus and the Flanger Effects}
+	\label{fig:memory_map_chor}
+\end{figure}
 
 
 
