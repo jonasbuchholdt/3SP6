@@ -136,7 +136,7 @@ A MATLAB simulation of the \gls{cordic} algorithm was made and set to produce a 
         \label{fig:cordic_1Hz}
   \end{figure}
   
-When implementing the \gls{cordic} algorithm on a \gls{dsp}, a gain value might have to be implemented in \autoref{eq:cordic_x} and \autoref{eq:cordic_y} on $x_n$ and $y_n$ to make the algorithm stable. 
+When implementing the \gls{cordic} algorithm on a \gls{dsp}, the calculated $\cos(\theta)$ and $\sin(\theta)$ values in \autoref{eq:cordic_x} and \autoref{eq:cordic_y}, might have to be changed a bit to make the algorithm stable. 
 
 \subsection{Implementation of the CORDIC algorithm}
 When implementing the CORDIC algorithm on the \gls{dsp}, some choices have to be made to begin with. The first choice is the resolution of the calculations. Because the \gls{lfo} has to produce such low frequencies, it is chosen to work in 32-bit precision. Since all the values in the CORDIC calculations are between $\pm$ 1, it is chosen to divide the 32-bits into one sign bit, one integer bit and 30 fraction bits, which should make the CORDIC algorithm able to produce a \SI{0.4}{\hertz}.
@@ -152,8 +152,8 @@ It is mainly the two equations \autoref{eq:cordic_x} and \autoref{eq:cordic_y} t
 \item The final result of the multiplication is then found by shifting $d_L$ to a 16-bit value and add it to the 32-bit value $d_H$.
 \end{itemize}
 
-An example of this in the \gls{cordic} algorithm is in \autoref{code:cordic_2} where the 32-bit value $x_n$ is multiplied with the 32-bit value $\cos{\theta}$.
-\includeCode{cordic_2.asm}{assembly}{19}{59}{Multiplying $x_n$ with $\cos{\theta}$ in the CORDIC algorithm}{code:cordic_2}{code/design/}
+An example of this in the \gls{cordic} algorithm is in \autoref{code:cordic_2} where the 32-bit value $x_n$ is multiplied with the 32-bit value $\cos(\theta)$.
+\includeCode{cordic_2.asm}{assembly}{19}{59}{Multiplying $x_n$ with $\cos(\theta)$ in the CORDIC algorithm}{code:cordic_2}{code/design/}
 
 \subsection{Matlab Simulation}
 
