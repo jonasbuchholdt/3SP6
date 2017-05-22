@@ -5,23 +5,23 @@
 Based on the \autoref{ch:analysing}, the following requirements are made for Pre-Amplifier:
 
 \begin{requirement}\label{req:preamp1}
-    \requirement{The Pre-Amplifier should not change the signal amplitude for more than 1dB between 20 Hz and 20 kHz}
+    \requirement{The Pre-Amplifier must not change the signal amplitude more than 1dB between 20 Hz and 20 kHz}
     \argument{The hearing range for the human being is between 20 Hz and 20 kHz, thus no radical changes between those values means that the user will not feel any difference.}
 \end{requirement}
 
 \begin{requirement}\label{req:preamp2}
-    \requirement{The input impedance of the pre-amplifier should be ten times higher than the maximum tested output impedance of the guitar, which means that value will vary according to the used guitar.}
-    \argument{This requirement is to limit as much as possible the signal loss between the guitar and the pre-amplifier.}
+    \requirement{The input impedance of the pre-amplifier must be ten times higher than the maximum tested output impedance of the guitar, which means that value will vary according to the used guitar.}
+    \argument{To reduce the signal loss between the guitar and the pre-amplifier.}
 \end{requirement}
 
 \begin{requirement}\label{req:preamp3}
-    \requirement{The output impedance of the pre-amplifier should be ten times lower than the maximum tested input impedance of the of the \gls{dsp}, which means that value will vary according to the used \gls{dsp}.}
-    \argument{This requirement is to limit as much as possible the signal loss between the \gls{dsp} and the pre-amplifier.}
+    \requirement{The output impedance of the pre-amplifier must be ten times lower than the maximum input impedance of the of the \gls{dsp}, which means that value will vary according to the used \gls{dsp}.}
+    \argument{To reduce the signal loss between the \gls{dsp} and the pre-amplifier.}
 \end{requirement}
 
 \begin{requirement}\label{req:preamp4}
-    \requirement{The maximum delivered power should not exceed nine Volts.}
-    \argument{It is based on the fifth basic requirement \ref{req:power2} above which states that the used power supply is of 9 Volts.}
+    \requirement{The supply for the pre-amplifier must have a maximum supply voltage of \SI{9}{\volt}.}
+    \argument{It is based on the fifth basic requirement \ref{req:power2} above which states that the used power supply is \SI{9}{\volt}.}
 \end{requirement}
 
 \begin{requirement}\label{req:preamp5}
