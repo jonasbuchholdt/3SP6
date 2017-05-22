@@ -1,8 +1,8 @@
-\section{Design of the Delay and \gls{reverb} Effect}
+\section{Design of the Delay and \gls{reverb} Effect}\label{sec:reverb_develop}
 In this section, the delay and the \gls{reverb} will be designed to fit into a \gls{dsp}, which means that a discreet block diagram is obtained and afterwards the differential equations to implement in the \gls{dsp} will be made. The effects will be simulated in MATLAB and then the assembly code will be developed and implemented. 
 
 
-\subsection{Obtaining the Differential Equation}\label{sec:reverb_develop}
+\subsection{Obtaining the Differential Equation}
 The Delay effect is a simpler version of the \gls{reverb} effect and therefore they will be presented and designed in the same section. The block diagram presented in \autoref{sec:reverberation} \autoref{fig:reverb_block} is changed so it fits into a direct form 1 and 2 construction.
 A way to design a \gls{reverb}, which imitates the natural reverberation of a room, is with a serial connection of two blocks. The first block is a parallel connection of \gls{lpcf}, and the second block is a serial connection of allpass filters \citep{natural_sounding_revorb}. 
 The \gls{lpcf} is used because the room acoustic characteristics is acting as a low pass filter. All low frequency signals will stay longer in the room than the high frequency \citep{rfi}. The \gls{reverb} needs to have at least 1000 echo per second, and this can be obtained with six \gls{lpcf} filters in parallel, and two all pass filter afterwords in serial \citep{DAFX}. Otherwise if there was not two all pass filters afterwords, it would require 40 \gls{lpcf} to make 1000 echo per second \citep{natural_sounding_revorb}. The all pass filter in \autoref{fig:reverb_block_des} is in direct form 2 because of the delay length. The delay effect and some of the \gls{reverb} effect is shown in \autoref{fig:reverb_block_des}. The \gls{reverb} effect is both the one in red and black while the delay is only the red block. 
@@ -476,10 +476,14 @@ Applying one sinus round in the \gls{reverb}  effect gives the following result 
 \newpage
 \subsection{implementation}
 This section will design the assembly code, where the implementation method is very important to do the program as efficient as possible. The delay for example can be done in several ways where ether the data is moved or the pointer is moved, but if it is the data which is moved and there is 1000 data samples, it will require 1000 clock cycles because each data sample needs to be moved alone. If the pointer is moved it will only require one cycles for moving the input pointer and one cycle to move the output pointer, so the delay will be designed as a ring buffer where the input- and output- pointer is moved. 
-The \gls{cpu} of the \gls{dsp} has three circular data buffers size register, where buffer register BK03 will be used to delay samples. The data buffers size will be made to fit the \gls{reverb} effect, therefore it is calculated in this section. First the time between two samples needs to be calculated, and the calculation is done as in \autoref{eq:sample_time}
+The \gls{cpu} of the \gls{dsp} has tow circular data buffers size register and one coefficient buffers size register, where buffer register BK03 will be used to long delay samples and register BK47 will be used to short delay and coefficients together with BKC. The data buffers size will be made to fit the \gls{reverb} effect and flanger, therefore the needed sample is calculated in this section. To avoid long unused buffer length the delay effect will be designed with the same buffer length as \gls{reverb}, which have the maximum length of \SI{41}{\milli\second}. To get a longer delay time in delay effect, buffer BK03 needs to be reinitialized every time switching between \gls{reverb} and delay effect
+
+
+\subsection{implementation of \gls{reverb}}
+ First the time between two samples needs to be calculated, and the calculation is done as in \autoref{eq:sample_time}
 
     \begin{equation}\label{eq:sample_time}
-T_s=\frac{1}{f_s} = \frac{1}{\SI{44100}{\hertz}} = 22.7 \addunit{\SI{}{\micro\second}}
+T_s=\frac{1}{f_s} = \frac{1}{\SI{44100}{\hertz}} = 22.7\micro \addunit{\SI{}{\second}}
     \end{equation}
 
 \startexplain
@@ -492,11 +496,11 @@ According to \autoref{tab:reverb_delay} the longest delay time is \SI{41}{\milli
 
 \begin{equation} \label{eq:sample_number}
 \text{number of samples}=\frac{\text{delay time}}{T_s}+1 = 
-1807    
+1807    \addunit{1}
 \end{equation}
 
 
-Convertet to hex, the data buffers size register shall have a size of 0x70F and the memory over view will be as follows \autoref{fig:reverb_mem_map}
+Convertet to hex, the data buffers size register shall have a size of 0x70F and the memory overall view will be as follows \autoref{fig:reverb_mem_map}
 
 \begin{figure}[htbp]
 	\centering
@@ -578,7 +582,7 @@ Because the point is situated in the front of bit 14 from LSB, the coefficient i
 \text{usable coeff} = \lceil\text{coeff} \cdot 2^{14}\rceil
     \end{equation}
 
-The calculated coefficient to \gls{reverb} is placed in the BK47 data buffer register with a memory offset of 0x3F96 and are shown in \autoref{code:reverb_coeff}
+The calculated coefficient to \gls{reverb} is placed in the BK47 data buffer register with a memory offset of 0x3F98 and are shown in \autoref{code:reverb_coeff}
 
 \includeCode{main_buffer.asm}{assembly}{31}{46}{The reverb coeff code}{code:reverb_coeff}{code/design/}
 
@@ -591,20 +595,51 @@ Here the subroutine for the \gls{fir} filters, \autoref{code:reverb_FIR_coeff}, 
 
 \includeCode{reverb.asm}{assembly}{20}{30}{The reverb coeff code}{code:reverb_FIR_coeff}{code/design/}
 
-Since the same buffer is used for all the effects and for different purposes in the same effect, the address of the buffer that contains the needed coefficients for this subroutine is set in the first two lines. The $X[N-ed_n]$ buffer is also moved to the \textit{X_1[N]} buffer. This subroutine is used to compute the pre \gls{reverb}, the part just before the comb filter. This part is shown in figure \autoref{fig:pre_reverb_block_design} \todo[inline]{Put in figure}, a fraction of the whole effect diagram in figure \autoref{fig:reverb_block_design}. The idea in the code is to point on different parts of \textit{X_1[N]}  which contains values of \textit{X[N-ed_n]}, the more the pointer has a lower negative number, the bigger the delay. Different values at the pre-calculated delays \textit{ed1}, \textit{ed2}, \textit{ed3} and \textit{ed4} are added together to give $X_{1}[N]$ and then stored in the memory area of  *AR5. \\
+Since the same buffer is used for all the effects and for different purposes in the same effect, the address of the buffer that contains the needed coefficients for this subroutine is set in the first two lines. The $X[N-ed_{n}]$ buffer is also moved to the \textit{X_1[N]} buffer. This subroutine is used to compute the pre \gls{reverb}, the part just before the comb filter. This part is shown in figure \autoref{fig:pre_reverb_block_design} \todo[inline]{Put in figure}, a fraction of the whole effect diagram in figure \autoref{fig:reverb_block_design}. The idea in the code is to point on different parts of \textit{X_1[N]}  which contains values of \textit{X[N-ed_n]}, the more the pointer has a lower negative number, the bigger the delay. Different values at the pre-calculated delays \textit{ed1}, \textit{ed2}, \textit{ed3} and \textit{ed4} are added together to give $X_{1}[N]$ and then stored in the memory area of  *AR5. \\
 
 \subsection{The \textit{reverb_lpcf} Subroutine}
 Here the subroutine for the \gls{lpcf}, \autoref{code:reverb_lpcf_coeff}, will be described.
 
-\includeCode{reverb.asm}{assembly}{69}{80}{The reverb coeff code}{code:reverb_lpcf_coeff}{code/design/}
+\includeCode{reverb.asm}{assembly}{69}{80}{The reverb \gls{lpcf} code}{code:reverb_lpcf_coeff}{code/design/}
 
-This subroutine is responsible for computing the equations of the 6 comb filters. The first part is reserved for calculating the different coefficients needed in the calculations, $L_D$ and $g$. The beginning of the macro command marks the end of coefficients calculations and the beginning of the equations processing. The choice of a macro implementation here comes after observing big similarities between the six comb filters. The only differences lie in the $b_{i}$ gains, $x_{i}$ values and $d_{i}$ values. This is why they are macro entries. The macro is simply the computation of the equations \ref{eq:reverb_eq_iir1w} to \ref{eq:reverb_eq_iir6w}. The circular buffer AR0 is the one that contains the values of $x_{i}$. AR4 and CDP are the pointers which contains the coefficients, gains and delay values.
+This subroutine is responsible for computing the equations of the 6 comb filters. The first part is reserved for calculating the different coefficients needed in the calculations, $L_D$ and $g$. The beginning of the macro command marks the end of coefficients calculations and the beginning of the equations processing. The choice of a macro implementation here comes after observing big similarities between the six comb filters. The only differences lie in the $b_{i}$ gains, $x_{i}$ values and $d_{i}$ values. This is why they are macro entries. The macro is simply the computation of the equations \ref{eq:reverb_eq_iir1w} to \ref{eq:reverb_eq_iir6w}. The circular buffer AR0 is the one that contains the values of $x_{i}$. AR4 and CDP are the pointers which contains the coefficients, gains values.
 After the macro section, it is called with the different comb filter settings in a row. 
 
-\subsection{The \textit{reverb_allpass} Subroutine}
+\subsection{The \textit{reverb_allpass} Subroutine} \label{imp:reverb_allpass}
 Here the subroutine for the allpass, \autoref{code:reverb_allpass_coeff}, will be described.
 
-\includeCode{reverb.asm}{assembly}{90}{110}{The reverb coeff code}{code:reverb_allpass_coeff}{code/design/}
+\includeCode{reverb.asm}{assembly}{90}{110}{The reverb allpass code}{code:reverb_allpass_coeff}{code/design/}
 The subroutine is the one that takes into account the final part of the \gls{reverb} effect which is the two all-pass filters. It also involves the use of a macro as the previous section since the two all-pass filters have considerable resemblance. Again, *AR0 is used as a buffer pointer for the $x_{i}$ values and *AR4 for the coefficients and the delay values. The other registers and accumulators are used for temporary purposes.
 Last but not least, the data is moved to T2 that plays the role of the output. 
 Another crucial step is to move the pointer of the AR0 buffer so that in the next iteration the values are not overwritten but inserted in a new slot.
+
+\subsection{implementation of delay}
+As shown in \autoref{fig:reverb_block_des} delay is a copy past of the \gls{reverb} all pass filter and are implementet as \autoref{imp:reverb_allpass} without macro. \gls{reverb} and delay can only run at the same time with only \SI{41}{\milli\second} delay because of the required reinitializing of data buffer register size for longer delays. The coefficient is in the same memory area as \gls{reverb} and are located at the last location. The data buffers size register shall then have a size of 0x70F and the memory overall view will be as follows \autoref{fig:delay_mem_map}
+
+\begin{figure}[htbp]
+	\centering
+\begin{picture}(0,0)%
+\includegraphics{delay_mem.pdf}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(2907,2634)(9481,-3448)
+\put(9496,-2806){Delay}%
+\put(11476,-1051){0x3F98}%
+\put(11476,-1411){0x3FA8}%
+\put(9496,-1186){Coeff}%
+\put(11476,-2311){0x46EB}%
+\put(11476,-3346){0x4DF9}%
+\end{picture}%
+	\caption{The plot shows the result for the \autoref{code:reverb_sim}}
+	\label{fig:delay_mem_map}
+\end{figure}
+
+
+
