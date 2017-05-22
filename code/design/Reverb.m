@@ -4,15 +4,17 @@ close all
 %Group 641
 
 %insert your input in this table
-filename = 'gtr-jazz-3.wav';
+filename = '10kHz.wav';
 [input, fs] = audioread(filename);
-
+fs 
 %user define variable
 early = 1; %0.5 int pre delay
-scaleroom = 0.35; %0.28 int
+scaleroom = 0.36; %0.28 int
 scaledamp = 0.4; %0.4 int
-drywet = 1; % dry/wet
- 
+drywet = 0.5; % dry/wet
+
+Td = 1/fs
+t = 0:Td:107908/44100; %round(3000/44100)
 
 %Pre define array and variable
 g = 0.708; %Gain
@@ -20,11 +22,12 @@ b = [1,0.9,0.8,0.7,0.6,0.5];
 time = 10; % roomsize
 damp = 0.5*scaledamp;
 room = 0.5*scaleroom+0.7;
-allscale = 0.9;
+allscale = 1;
 
 % filter delay time 
-Delay = [round(fs/1000*1.9*time),round(fs/1000*2.3*time),round(fs/1000*2.97*time),round(fs/1000*3.71*time),round(fs/1000*4.1*time),round(fs/1000*4.37*time),round(fs/1000*1.3*time*allscale),round(fs/1000*1.7*time*allscale)]
-Early_delay = [round(fs/1000*18.3*early),round(fs/1000*21.5*early),round(fs/1000*22.5*early),round(fs/1000*26.8*early)]
+Delay = [round((1.9*time)/(1/fs)/1000),round((2.3*time)/(1/fs)/1000),round(fs/1000*2.9*time),round(fs/1000*3.1*time),round(fs/1000*3.7*time),round(fs/1000*4.1*time),round(fs/1000*1.3*time*allscale),round(fs/1000*1.7*time*allscale)]
+Early_delay = [round((5.81)/(1/fs)/1000),round(fs/1000*5.83*early),round(fs/1000*5.85 *early),round(fs/1000*5.88*early)]
+%Early_delay = [round((15.6)/(1/fs)/1000),round(fs/1000*21.5*early),round(fs/1000*22.5*early),round(fs/1000*26.8*early)]
 row = length(Delay); %total-1 array row.
 d_out = (round(length(Delay)*g)+time); %total samples after the input is finist 
 d = sum(Delay); %total delay time.
@@ -66,15 +69,26 @@ end
 
 % keeps the output of maximum a gain of one.
 maximum = 1 / max(abs(y(:,1)));
-y(:,1) = y(:,1)*maximum*0.98;
+y(:,1) = y(:,1)*maximum*0.05;
+
+
+
+filename = 'reverb_impuls_response_10kHz.csv'; %fasen ligger i nr 4
+delimiterIn = ',';
+headerlinesIn = 6;
+preamp = importdata(filename,delimiterIn,headerlinesIn);
 
 %write and plot
 audiowrite('outfa.wav',y(:,1),fs);
 %plot(in(:,1),'b')
 hold on
 grid on
-plot(in(:,1),'b')
-plot(y(:,1),'r')
+%plot(in(:,1),'b')
+t = t-0.210;
+plot(t,y(:,1),'r')
+plot(preamp.data(:,1),preamp.data(:,2),'b')
+legend('Simulated 10kHz impulse response','Measured 10kHz impulse response')
+axis([-0.15 1.35 -0.1 0.1])
 ylabel('Magnitude [V]')
-xlabel('sample')
+xlabel('Time [s]')
 %FigureToPDF(gcf, '../../figures/design/reverb')
