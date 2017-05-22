@@ -30,14 +30,14 @@ to[short] (1,1)
 to[short] (2,1)
 (-1,0)to[short](-1.5,0)
 (-1.5,0)to[short](-1.5,-0.5)
-(-1,-1) node[oscillator,box]{}node[right]{$V_1$} 
+(-1,-1) node[oscillator,box]{}node[right]{$V_3$} 
 (-1.5,-1.5)to[short] (-1.5,-2)
 node[ground]{}
 (-1,0)to[short](-3.5,0)
 to[sV=$V_S$] (-3.5,-2)
 node[ground]{}
 (1,0)to[short](1,-0.5)
-(1.5,-1) node[oscillator,box]{}node[right]{$V_1$} 
+(1.5,-1) node[oscillator,box]{}node[right]{$V_2$} 
 (1,-1.5)to[short] (1,-2)
 node[ground]{}
 (5,.5)to[R=$R_L$] (5,-2)
@@ -64,11 +64,11 @@ node[ground]{}
 (5,.5)to[R=$R_L$] (7.5,.5)
 %to[sV=$V_3$] (7.5,-2)
 (7.5,.5)to[short](7.5,-0.5)
-(8,-1) node[oscillator,box]{}node[right]{$V_1$} 
+(8,-1) node[oscillator,box]{}node[right]{$V_3$} 
 (7.5,-1.5)to[short] (7.5,-2)
 node[ground]{}
 (5,.5)to[short](5,-0.5)
-(5.5,-1) node[oscillator,box]{}node[right]{$V_3$} 
+(5.5,-1) node[oscillator,box]{}node[right]{$V_2$} 
 (5,-1.5)to[short] (5,-2)
 (5,-2)node[ground]{}
 (7.5,.5)to[short] (9,.5)
@@ -84,9 +84,9 @@ node[ground]{}
 
 For the input impedance the steps are as follows:
 \begin{itemize}
-\item Measure the amplitude of the signal at $V_S$.
+\item Measure the amplitude of the signal at $V_3$.
 \item Measure the amplitude of the signal at $V_2$ 
-\item Subtract $V_2$ from $V_S$ to get the amplitude of $V_1$. 
+\item Subtract $V_2$ from $V_3$ to get the amplitude of $V_1$. 
 \item Use \autoref{eq:opamp_zi_nom} to calculate the input impedance.
 \end{itemize}
 
@@ -103,7 +103,7 @@ For the input impedance the steps are as follows:
     
 For the output impedance the steps are as follows:
 \begin{itemize}
-\item Measure the amplitude of the signal at $V_S$ with $V_3$.
+\item Measure the amplitude of the signal at $V_3$ with $V_3$.
 \item Measure the amplitude of the signal at $V_2$ 
 \item Subtract $V_2$ from $V_S$ to get the amplitude of $V_1$. 
 \item Use \autoref{eq:opamp_zo_nom} to calculate the input impedance.

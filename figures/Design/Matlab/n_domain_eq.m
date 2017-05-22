@@ -95,6 +95,10 @@ y_sh(n,j) = c(1,j)/d(1,j)*x(n,1)+c(2,j)/d(1,j)*x(n-1,1)-d(2,j)/d(1,j)*y_sh(n-1,j
 end
 end
 
+C1 = c(1,2)/d(1,2)
+C2 = c(2,2)/d(1,2)
+D1 = d(2,2)/d(1,2)
+
 %peak filters
 for j = 1:1:filter_no
 %filter:
