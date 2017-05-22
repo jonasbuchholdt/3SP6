@@ -266,3 +266,4 @@ The calculation is simply the one presented in equation \ref{eq:Chor_Flan_EQ}. I
 \includeCode{flanger.asm}{assembly}{47}{58}{Calculation of $\Delta Y$ and $\Delta X$ in one of the cases}{code:flang_code4}{code/design/}
 The calculation of the equation itself is made under the subroutine $final$ since it is the same for the two cases once $\Delta Y$ and $\Delta X$ are obtained. \\
 Finally, it is multiplied by the gain, added to the un-delayed value which is T2 the input but also plays the role of the output. \\
+The implementation of the chorus is done with a macro, since the chorus is simply like the flanger with multiple delay lines. The only problem that has to be overcome in the future is the creation of multiple CORDIC algorithms because for each line a different LFO is needed. \\
