@@ -1,15 +1,14 @@
-In all cases, the requirement \ref{req:dsp} is fulfilled since all the effects are coded in Assembly.
-
-
 \section{Test of the Reverb Effect}
-
 In this part, tests for the reverb effect that show wether it fulfills the requirement are presented. 
 
-\subsection{Test of the Requirement \ref{req:speed}}
 
-In the Appendix \ref{app:effect_run_time}, the runtime of the reverb effect, which gives the elapsed time from the moment a new sample arrives until it is loaded for output, has been tested. \\
-Figure \ref{fig:reverb_time_test} shows that only 2.5 microseconds are needed to run the effect, clearly faster than the sampling time of the \gls{dsp} which is 23 microseconds. It can be concluded that the effect is real-time, faster than the sampling frequency thus the requirement \ref{req:speed} is fullfiled. 
+\subsection{Test of requirement \autoref{req:reverb1}}
+According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reverb} have at least 1000 echo. The test is done by sending a single known sinus impulse intro the \gls{reverb} effect, and afterwards the echo is counted. This is done with 6 different frequency. 
 
-\subsection{Test of the Requirement \ref{req:power}}
 
-\subsection{Test of the Requirements \ref{req:reverb1}, \ref{req:reverb2} and \ref{req:reverb3}}
+
+
+\subsection{Test of requirement \autoref{req:reverb2}}
+
+\subsection{Test of requirement \autoref{req:reverb3}}
+
