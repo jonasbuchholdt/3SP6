@@ -22,7 +22,7 @@ The Raspberry pi 3 model B has a 1.2 GHz Quad-core ARM processor, supports wirel
 The Raspberry Pi is Linux based, but can also run Windows \cite{sparkfun_Raspberry_pi}. This makes the Raspberry pi 3 model B suited for a wide range of projects. This is both its advantage and its disadvantage if a specialized platform is wanted. 
 
 \subsection{Digital Signal Processor}
-A \gls{dsp} is a processor, which is optimized for high-speed numerical operations such as: Addition, subtraction, multiplication and division. A typical \gls{dsp} system includes an anti-aliasing filter, an \gls{adc}, a \gls{dsp}, a host interface, a \gls{dac} and a anti-imaging filter. A block diagram of the typical \gls{dsp} system is shown in \autoref{fig:typ_dsp}.
+A \gls{dsp} is a processor, which is optimized for high-speed numerical operations such as: Addition, subtraction and multiplication. A typical \gls{dsp} system includes an anti-aliasing filter, an \gls{adc}, a \gls{dsp}, a host interface, a \gls{dac} and a anti-imaging filter. A block diagram of the typical \gls{dsp} system is shown in \autoref{fig:typ_dsp}.
 
 \begin{figure}
 \centering
@@ -40,12 +40,12 @@ Two terms are commonly used for describing the processing power of a \gls{dsp}. 
     \end{equation}
 
     \startexplain
-        \explain{$DSP_{speed}$ is the \gls{dsp}'s processing power}{1}
+        \explain{$DSP_{speed}$ is the \gls{dsp}'s processing power}{MOPS}
         \explain{$Operations$  is the number of operations}{1}
         \explain{$T_s$ is the sampling interval}{\si{\second}}
     \stopexplain
 
 
-\gls{mips} and \gls{mops} are not the same, but related in the way that each \gls{dsp} instruction containe a numbers for operation  \cite{AnalogDialogue}. Eg a \gls{dsp} with 4 \gls{mips} and 8 \gls{mops} means that the \gls{dsp} can preform 2 operation for each instruction.
+\gls{mips} and \gls{mops} are not the same, but related in the way that each \gls{dsp} instruction containe a numbers for operation  \cite{AnalogDialogue}. E.g. a \gls{dsp} with 4 \gls{mips} and 8 \gls{mops} means that the \gls{dsp} can preform 2 operation for each instruction.
 
 

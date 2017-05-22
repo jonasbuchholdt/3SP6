@@ -95,6 +95,10 @@ y_sh(n,j) = c(1,j)/d(1,j)*x(n,1)+c(2,j)/d(1,j)*x(n-1,1)-d(2,j)/d(1,j)*y_sh(n-1,j
 end
 end
 
+C1 = c(1,2)/d(1,2)
+C2 = c(2,2)/d(1,2)
+D1 = d(2,2)/d(1,2)
+
 %peak filters
 for j = 1:1:filter_no
 %filter:
@@ -110,10 +114,10 @@ sweep_out(n,1) = x(n,1)+y(n,3);
 end
 end
 
-A1= a(1,3)/b(1,3)
-A3= a(3,3)/b(1,3)
-B1 = b(2,3)/b(1,3)
-B2 = b(3,3)/b(1,3)
+A1= a(1,5)/b(1,5)
+A3= a(3,5)/b(1,5)
+B1 = b(2,5)/b(1,5)
+B2 = b(3,5)/b(1,5)
 
 % %shelving filters
 % for j = 1:2
