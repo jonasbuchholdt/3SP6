@@ -155,7 +155,7 @@ It is mainly the two equations \autoref{eq:cordic_x} and \autoref{eq:cordic_y} t
 An example of this in the \gls{cordic} algorithm is in \autoref{code:cordic_2} where the 32-bit value $x_n$ is multiplied with the 32-bit value $\cos(\theta)$.
 \includeCode{cordic_2.asm}{assembly}{19}{59}{Multiplying $x_n$ with $\cos(\theta)$ in the CORDIC algorithm}{code:cordic_2}{code/design/}
 
-\subsection{Approximation of Values Lying between Two Samples}
+\subsection{Approximation of Values Lying between Two Samples}\label{flang_approx_subsec}
 
 In some cases during the chorus and the flanger effect, the delay value require an approximation between two of the delayed samples in the buffer. It happens when the delay is between two samples and not at an exact sample. In order to solve this problem, a linear approximation between the two samples has to be made. \\
 
@@ -200,7 +200,7 @@ The goal is to determine the length of red line. The red line is the sum of $Y_{
 
 The equation is:
 
-\begin{equation}
+\begin{equation}\label{eq:Chor_Flan_EQ}
 	Y' = \Delta X - (\Delta X \cdot \Delta Y)
 \end{equation}
 
@@ -246,4 +246,19 @@ Here is the memory mapping for the chorus and flanger effect in figure \ref{fig:
 \end{figure}
 
 
+\subsection{Implementation of the Chorus and Flanger Effects in Assembly}
 
+This subsection will present the implementation of those two effects on the TMS320C5515 using assembly. \\
+Since the chorus design comes from the flanger. It is with the flanger that the implementation started. \\
+The flanger needs space in the coefficient buffer (AC4) in order to store values like the gain, the maximum delay, the values coming from the CORDIC and other temporary uses that cannot be done with the temporary registers. \\
+The implementation of the flanger without the approximation stated in the subsection \ref{flang_approx_subsec}, so the one with the approximation is going to be explained. \\
+The first step in the code is the well positioning in the memory map and reseting the position of the pointer (line xx to xx) and getting the variables needed for the calculation from the CORDIC.\\ 
+The variables from the CORDIC represent the position of pointing into the delay buffer (AC0 here). There is a high part which is in AR4(7) representing the integer part of the delay and the low part in AR4(10) representing the fraction/decimal part of the delay. If no approximation is done, only the higher part is considered. Otherwise, a linear approximation between the integer in the higher part and the one that follows it is needed (see subsection \ref{flang_approx_subsec}). 
+The value of the higher part is saved in that follows it is then calculated and saved. \\
+The values are negated because they will point backwards in the buffer. \\
+What complicates the approximation is that it is not the same way depending on the sign of the sample and the monotony of the signal between the two integers considered. Thus, there are four cases: positive and ascending, negative and ascending, positive and descending, negative and descending. \\
+Luckily enough, the cases positive-ascending and negative descending will have the same calculation and same goes for the two others. So actually only two cases are to be implemented. \\
+This is why two tests are being made, a sign test followed by another one to test the monotony. Redirection is made to the appropriate case depending on the results in those tests. 
+The calculation is simply the one presented in equation \ref{eq:Chor_Flan_EQ}. Inside the cases, only the part of calculating $\Delta Y$ and $\Delta X$ is covered since this whats makes the difference between the two cases. \\
+The calculation of the equation itself is made under the subroutine $final$ since it is the same for the two cases once $\Delta Y$ and $\Delta X$ are obtained. \\
+Finally, it is multiplied by the gain, added to the un-delayed value which is T2 the input but also plays the role of the output. \\
