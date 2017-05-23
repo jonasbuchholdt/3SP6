@@ -4,8 +4,15 @@ In this part, all the requirements related to the equalizer will be tested if th
 
 
 \subsection{Test of requirement \autoref{req:equalizer}}
-According to \autoref{req:equalizer}, the gain value in each individual filter must be changeable by the user. This requirement has not been completely fulfilled since there has not been made an actual user interface for the effect. It is possible to change the gain of each individual filter, but only by writing it directly in the program. This is proved in \autoref{}(appendix) \autoref{}(figure), where the peak filter with $\omega_0 =$ \SI{200}{\hertz} and $\omega_0 =$ \SI{3200}{\hertz} is set to amplify respectively \SI{6}{\decibel} and \SI{12}{\decibel}. 
+According to \autoref{req:equalizer}, the gain value in each individual filter must be changeable by the user. This requirement has not been completely fulfilled since there has not been made an actual user interface for the effect. It is possible to change the gain of each individual filter, but only by writing it directly in the program. A test was made to prove this, where the peak filters with $\omega_0 =$ \SI{200}{\hertz} and $\omega_0 =$ \SI{3200}{\hertz} is set to amplify respectively \SI{6}{\decibel} and \SI{12}{\decibel}. 
+\autoref{fig:tests:eq_gain} show the result of the test.
 
+\begin{figure}[htbp!]
+    \centering
+        \includegraphics[width=\textwidth]{eq_200Hz_6db_3200Hz_12db.pdf}
+        \caption{Measurement of the equalizer, where the peak filters with $\omega_0 =$ \SI{200}{\hertz} and $\omega_0 =$ \SI{3200}{\hertz} is set to amplify respectively \SI{6}{\decibel} and \SI{12}{\decibel}.}
+        \label{fig:tests:eq_gain}
+  \end{figure}
 
 
 
