@@ -1,15 +1,19 @@
 \section{Test of the Basic requirement}
-In this part, tests for the rBasic requirement that show wether it fulfills the requirement are presented. 
+This section discusses whether the basic requirements stated in section \ref{basic_req} are fulfilled or not. 
 In all cases, the requirement \ref{req:dsp} is fulfilled since all the effects are coded in Assembly.
-
-
-\subsection{Test of the Requirement \autoref{req:power}}
-
 
 
 \subsection{Test of the Requirement \autoref{req:speed}}
 
 In the Appendix \ref{app:effect_run_time}, the runtime of the reverb effect, which gives the elapsed time from the moment a new sample arrives until it is loaded for output, has been tested. \\
-Figure \ref{fig:reverb_time_test} shows that only 2.5 microseconds are needed to run the effect, clearly faster than the sampling time of the \gls{dsp} which is 23 microseconds. It can be concluded that the effect is real-time, faster than the sampling frequency thus the requirement \ref{req:speed} is fullfiled. 
+Figure \ref{fig:reverb_time_test} shows that only 2.5 microseconds are needed to run the effect. \\
+Figure \ref{fig:flanger_time_test} shows that the flanger runtime is 2.3 microseconds. \\
+The results show that the runtimes of the effects are clearly faster than the sampling time of the \gls{dsp} which is 23 microseconds. \\
+It can be concluded that the effects are real-time, faster than the sampling frequency thus the requirement \ref{req:speed} is fulfilled. \\
+
+
+
+
+
 
 \subsection{Test of the Requirement \autoref{req:power}}
