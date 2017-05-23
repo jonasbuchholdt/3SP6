@@ -67,7 +67,7 @@ According to \autoref{fig:reverb_block_design} there is a gain called wet and dr
 Dry = \text{user settings}
     \end{equation}
 \begin{equation}
-Wet = 1-\frac{\text{user settings}}{1} \cdot \text{user settings}
+Wet = 1-\frac{\text{user settings}}{1} 
     \end{equation}
  \end{subequations}
     \startexplain
@@ -79,4 +79,27 @@ Since the user interface not is implemented, \autoref{req:reverb2} is conditiona
 
 
 \subsection{Test of requirement \autoref{req:reverb3}}
+According to \autoref{eq:reverb_eq_f} and the following formulas in \autoref{sec:reverb_develop} the gain of every \gls{lpcf} can be changed, which will decrease or increase the number of echo from the six \gls{lpcf}. Since the number of echo can be changed, the \autoref{req:reverb2} is approved
 
+\subsection{Test review of the Reverb Effect}
+In this subsection, a short review will be shown of the \gls{reverb} effect test.
+
+\begin{table}[H]
+\centering
+\caption{Recap of the requirements fulfillments for the chorus and flanger}
+\label{test_of_reverb_table}
+\begin{tabular}{|l|l|}
+\hline
+\rowcolor[HTML]{9B9B9B} 
+\textbf{Requirement} & \textbf{Fulfillment State} \\ \hline
+\textbf{\ref{req:reverb1}}    & \cmark                     \\ \hline
+\textbf{\ref{req:reverb2}}    & \cmark*                     \\ \hline
+\textbf{\ref{req:reverb3}}    & \cmark                     \\ \hline
+\end{tabular}
+\end{table}
+
+    \startexplain
+     \explain{\cmark  \hspace{4mm} is approved}{$\cdot$}
+     \explain{\cmark* \hspace{1mm} is conditionally approved}{$\cdot$}
+     \explain{\xmark \hspace{5mm} is not fulfilled}{$\cdot$}
+    \stopexplain
