@@ -1,3 +1,4 @@
+\newpage
 \section{Test of the equalizer}
 In this part, all the requirements related to the equalizer will be tested if they are fulfilled. 
 
@@ -18,5 +19,35 @@ According to \autoref{req:equalizer2}, each individual band must, when fully amp
         \label{fig:tests:eq_filters}
   \end{figure}
   
- In \autoref{} \todo[inline]{Insert figure} it is seen that e.g. the peak filter with $\omega_0 =$ \SI{800}{\hertz} has dropped approximately \SI{6.5}{\decibel} at \SI{400}{\hertz} and \SI{1600}{\hertz}. Thus the requirement is fulfilled. 
+ In \autoref{fig:tests:eq_filters} it is seen that e.g. the peak filter with $\omega_0 =$ \SI{800}{\hertz} has dropped approximately \SI{6.5}{\decibel} at \SI{400}{\hertz} and \SI{1600}{\hertz}. It is also seen that at some frequencies, especially the high frequencies, the frequency response seems to oscillate. A measurement of the \gls{dsp}'s frequency response was made to investigate this. The result of the test i seen in \autoref{fig:tests:direct_dsp_gain}.
+
+\begin{figure}[htbp!]
+    \centering
+        \includegraphics[width=\textwidth]{direct_dsp_gain.pdf}
+        \caption{Measurement of the \gls{dsp}'s frequency response}
+        \label{fig:tests:direct_dsp_gain}
+  \end{figure}
+
+\autoref{fig:tests:direct_dsp_gain} shows that the oscillations in \autoref{fig:tests:eq_filters} is because of the frequency response of the \gls{dsp}.
+Thus the requirement is fulfilled. 
+
+\subsection{Test review of the requirements for the equalizer}
+In \autoref{tab:test_of_eq_table} the conclusion for the requirements related to the equalizer is summed.
+
+\begin{table}[H]
+\centering
+\caption{Recap of the requirements fulfilments for the equalizer test}
+\label{tab:test_of_eq_table}
+\begin{tabular}{|l|l|}
+\hline
+\rowcolor[HTML]{9B9B9B} 
+\textbf{Requirement} & \textbf{Fulfillment State} \\ \hline
+\textbf{\ref{req:equalizer}}    & \cmark *                     \\ \hline
+\textbf{\ref{req:equalizer2}}    & \cmark                      \\ \hline
+
+\end{tabular}
+\end{table}
+
+
+
 
