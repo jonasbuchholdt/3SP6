@@ -6,7 +6,8 @@ In this part, tests for the reverb effect that show wether it fulfills the requi
 \subsection{Test of requirement \autoref{req:reverb1}}
 According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reverb} have at least 1000 echo. The test is done by sending a single known sinus impulse intro the \gls{reverb} effect, and afterwards the echo should haven been counted, but the scope have a limitation of 16k samples on each measurements samples, and the plotted version in this subsection is not really easy to count on. Instead the measurement will be compared to the same simulation test for the MATLAB coded \gls{reverb}. The MATLAB plot and the implemented test plot will be situated side by side, than it is easy to compare. This is done with five different frequency. 
 
-\paragraph{impulse response of \SI{20}{\hertz}}
+\subsubsection*{impulse response of \SI{20}{\hertz}}
+
 
 \begin{figure}[htbp!]
     \centering
@@ -15,7 +16,9 @@ According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reve
         \label{fig:tests:reverb:20Hz}
   \end{figure}
   
-\paragraph{impulse response of \SI{50}{\hertz}}
+  \newpage
+  
+\subsubsection*{impulse response of \SI{50}{\hertz}}
 
 \begin{figure}[htbp!]
     \centering
@@ -24,7 +27,7 @@ According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reve
         \label{fig:tests:reverb:50Hz}
   \end{figure}
 
-\paragraph{impulse response of \SI{200}{\hertz}}
+\subsubsection*{impulse response of \SI{200}{\hertz}}
 
 \begin{figure}[htbp!]
     \centering
@@ -33,7 +36,8 @@ According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reve
         \label{fig:tests:reverb:200Hz}
   \end{figure}
 
-\paragraph{impulse response of \SI{1}{\kilo\hertz}}
+  \newpage
+\subsubsection*{impulse response of \SI{1}{\kilo\hertz}}
 
 \begin{figure}[htbp!]
     \centering
@@ -43,7 +47,7 @@ According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reve
   \end{figure}
   
   
- \paragraph{impulse response of \SI{5}{\kilo\hertz}}
+ \subsubsection*{impulse response of \SI{5}{\kilo\hertz}}
 
 \begin{figure}[htbp!]
     \centering
@@ -52,8 +56,27 @@ According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reve
         \label{fig:tests:reverb:5kHz}
   \end{figure}
   
+According to \autoref{sec:reverb_develop} the simulated data has more 1000 echo, and since the measured data are closely equal to the simulated data, \autoref{req:reverb1} is approved
+  
   
 \subsection{Test of requirement \autoref{req:reverb2}}
+According to \autoref{fig:reverb_block_design} there is a gain called wet and dry, which is able to adjust the factor between the \gls{reverb} effect and the direct sound as following \autoref{eq:test:wetdry}
+
+\begin{subequations}\label{eq:test:wetdry}
+\begin{equation}
+Dry = \text{user settings}
+    \end{equation}
+\begin{equation}
+Wet = 1-\frac{\text{user settings}}{1} \cdot \text{user settings}
+    \end{equation}
+ \end{subequations}
+    \startexplain
+     \explain{$\text{user settings}$ is a user defined number between 0 and 1}{\si{1}}
+    \stopexplain
+
+
+Since the user interface not is implemented, \autoref{req:reverb2} is conditionally approved
+
 
 \subsection{Test of requirement \autoref{req:reverb3}}
 
