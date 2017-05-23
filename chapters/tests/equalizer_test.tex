@@ -9,5 +9,14 @@ According to \autoref{req:equalizer}, the gain value in each individual filter m
 
 
 \subsection{Test of requirement \autoref{req:equalizer2}}
-According to \autoref{req:equalizer2}, each individual band must, when fully amplified, drop \SI{6}{\decibel} at the neighbouring center frequencies. In \autoref{}(appendix) all the individual, fully amplified, filters and the combined filter, with all filters fully amplified, were tested. In \autoref{} \todo[inline]{Insert figure} it is seen that e.g. the peak filter with $\omega_0 =$ \SI{800}{\hertz} has dropped approximately \SI{6.5}{\decibel} at \SI{400}{\hertz} and \SI{1600}{\hertz}. Thus the requirement is fulfilled. 
+According to \autoref{req:equalizer2}, each individual band must, when fully amplified, drop \SI{6}{\decibel} at the neighbouring center frequencies. A test was made using  the setup in \autoref{}(appendix), where all the individual, fully amplified, filters and the combined filter, with all filters fully amplified, were tested. \autoref{fig:tests:eq_filters} shows the result of the test, where the upper blue graph is the combined equalizer and the others are the individual filters.
+
+\begin{figure}[htbp!]
+    \centering
+        \includegraphics[width=\textwidth]{tested_eq.pdf}
+        \caption{Measurement of the individual filters in the equalizer and the combined filter.}
+        \label{fig:tests:eq_filters}
+  \end{figure}
+  
+ In \autoref{} \todo[inline]{Insert figure} it is seen that e.g. the peak filter with $\omega_0 =$ \SI{800}{\hertz} has dropped approximately \SI{6.5}{\decibel} at \SI{400}{\hertz} and \SI{1600}{\hertz}. Thus the requirement is fulfilled. 
 
