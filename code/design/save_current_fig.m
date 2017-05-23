@@ -1,1 +1,1 @@
-FigureToPDF(gcf, '../../figures/tests/10kHz_impulse_response')
+FigureToPDF(gcf, '../../figures/appendix/eq_run_time')
