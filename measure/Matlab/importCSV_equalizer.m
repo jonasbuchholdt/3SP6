@@ -15,12 +15,14 @@ filename = '../shelving_100Hz.csv';
 F = importdata(filename,delimiterIn,headerlinesIn);
 filename = '../shelving_6400Hz.csv';
 G = importdata(filename,delimiterIn,headerlinesIn);
+filename = '../combined_eq.csv';
+H = importdata(filename,delimiterIn,headerlinesIn);
 
 %dat = iddata(A.data(:,1),A.data(:,2));
 
 
 figure
-semilogx(A.data(:,1),A.data(:,3),A.data(:,1),B.data(:,3),A.data(:,1),C.data(:,3),A.data(:,1),D.data(:,3),A.data(:,1),E.data(:,3),A.data(:,1),F.data(:,3),A.data(:,1),G.data(:,3))
+semilogx(A.data(:,1),A.data(:,3),A.data(:,1),B.data(:,3),A.data(:,1),C.data(:,3),A.data(:,1),D.data(:,3),A.data(:,1),E.data(:,3),A.data(:,1),F.data(:,3),A.data(:,1),G.data(:,3),A.data(:,1),H.data(:,3))
 axis([20 20000 -20 10])
 set(gca,'fontsize',18)
 hold on
@@ -29,5 +31,5 @@ ylabel('Magnitude [dB]')
 xlabel('Frequency [Hz]')
 hold off
 
-%FigureToPDF(gcf, '../opamp_zi_v0')
+%FigureToPDF(gcf, '../tested_eq')
 
