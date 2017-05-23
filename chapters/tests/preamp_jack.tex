@@ -49,6 +49,11 @@ $\Updownarrow$
 
 The calculated input impedance is higher than the required input impedance, so \autoref{req:preamp2} is approved
 
+\subsection{\autoref{req:preamp3}}
+According to the data sheet of the converter \citep{}, the input impedance of the \gls{adc} is \SI{20}{\kilo\ohm} and according to the test of the output impedance for the preamp, which is measured to \SI{9.06}{\kilo\ohm}, \autoref{req:preamp3} is not fulfilled 
+
+\subsection{\autoref{req:preamp4}}
+The \gls{preamp} is designed to be supplied of a 5 to 9 voltage supply, and the \gls{preamp} will be supplied from a \SI{9}{\volt} battery. The \autoref{req:preamp4} is therefore approved.
 
 \subsection{\autoref{req:preamp5} and \autoref{req:preamp6}}
 According to \autoref{req:preamp6}, a test was made to ensure that the \gls{preamp} \gls{pcb} including cable mound fits intro the Jack connector house. The first \autoref{fig:tests:preamp_pcb} shows the \gls{pcb} mounded on the jack connector and the cable is mounted on the \gls{preamp}
@@ -87,8 +92,8 @@ In this subsection, a short review will be shown of the \gls{preamp} test.
 \textbf{Requirement} & \textbf{Fulfillment State} \\ \hline
 \textbf{\ref{req:preamp1}}    & \cmark                     \\ \hline
 \textbf{\ref{req:preamp2}}    & \cmark                     \\ \hline
-\textbf{\ref{req:preamp3}}    &                      \\ \hline
-\textbf{\ref{req:preamp4}}    &                      \\ \hline
+\textbf{\ref{req:preamp3}}    & \xmark                     \\ \hline
+\textbf{\ref{req:preamp4}}    & \cmark                      \\ \hline
 \textbf{\ref{req:preamp5}}    & \cmark                     \\ \hline
 \textbf{\ref{req:preamp6}}    & \cmark                     \\ \hline
 \end{tabular}
