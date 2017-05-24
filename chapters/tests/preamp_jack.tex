@@ -1,30 +1,30 @@
 \newpage
-\section{Preamp test}
-This section will test all requirements on the \gls{preamp} 
+\section{Pre-amplifier test}
+This section will test all requirements related to the \gls{preamp}. 
 
 
 \subsection{\autoref{req:preamp1}}
-According to \autoref{req:preamp1}, a test was made to ensure that the \gls{preamp} not change the signal amplitude more than $\pm$\SI{1}{\decibel} between 20 Hz and 20 kHz. A test was made and is descried in \autoref{app:preamp_frequency_response} and the result is as following \autoref{fig:tests:appendix:amplitude}
+According to \autoref{req:preamp1}, a test was made to ensure that the \gls{preamp} does not change the signal amplitude more than $\pm$\SI{1}{\decibel} between 20 Hz and 20 kHz. A test was made and is descried in \autoref{app:preamp_frequency_response} and the result is seen in \autoref{fig:tests:appendix:amplitude}.
 
 \begin{figure}[htbp!]
 	\centering
 		\includegraphics[width=1\textwidth]{preamp_frequency_responce.pdf}
-		\caption{Measurement of the real output impedance of the three pickup settings.}
+		\caption{Measurement of the frequency response of the \gls{preamp}.}
 		\label{fig:tests:appendix:amplitude}
 \end{figure}
 
-The amplitude is within $\pm$\SI{1}{\decibel} so \autoref{req:preamp1} is approved
+The amplitude is within $\pm$\SI{1}{\decibel} so \autoref{req:preamp1} is approved.
 
 
 \subsection{\autoref{req:preamp2}}
-According to \autoref{req:preamp2}, a test was made to ensure that the \gls{preamp} have an input impedance 10 times more than the highest output impedance of the guitar. According to \autoref{app:output_impedance} and the requirements the \gls{preamp} shall have an input impedance of at least \SI{730.8}{\kilo\ohm}. To ensure that the input impedance is over \SI{730.8}{\mega\ohm}, the input impedance of the \gls{opamp} is measured, and the result is to \SI{9.18}{\mega\ohm} according to \autoref{app:opamp_impedance}. Applying the input impedance to the following \autoref{eq:tests:preamp_result}, where $A$ is at least \SI{70}{\decibel}, according to ??  
+According to \autoref{req:preamp2}, a test was made to ensure that the \gls{preamp} have an input impedance 10 times higher than the highest output impedance of the guitar. According to \autoref{app:output_impedance} and the requirements the \gls{preamp} shall have an input impedance of at least \SI{730.8}{\kilo\ohm}. To ensure that the input impedance is more than \SI{730.8}{\mega\ohm}. The input impedance of the \gls{opamp} was measured, and the result is to \SI{9.18}{\mega\ohm} according to \autoref{app:opamp_impedance}. Applying the input impedance to the following \autoref{eq:tests:preamp_result}, where $A$ is at least \SI{70}{\decibel}, according to \citep{TS464}.  
 
 \begin{equation}\label{eq:tests:preamp_result}
         Z_{In_{G1}} = R_{Bias} \parallel ((Z_i + Z_{i \beta}) \cdot (1+\beta \cdot A)) \simeq R_{Bias}
         \addunit{\si{\ohm}}
     \end{equation}
 
-where the value from \autoref{label_Pre-amplifier} is applied as following \autoref{eq:tests:preamp_result_value}
+where the value from \autoref{label_Pre-amplifier} is applied as following \autoref{eq:tests:preamp_result_value}.
 
 
 
@@ -47,34 +47,37 @@ $\Updownarrow$
     \end{equation}
  \end{subequations}
 
-The calculated input impedance is higher than the required input impedance, so \autoref{req:preamp2} is approved
+The calculated input impedance is higher than the required input impedance, so \autoref{req:preamp2} is approved.
 
 \subsection{\autoref{req:preamp3}}
-According to the data sheet of the converter \citep{}, the input impedance of the \gls{adc} is \SI{20}{\kilo\ohm} and according to the test of the output impedance for the preamp, which is measured to \SI{9.06}{\kilo\ohm}, \autoref{req:preamp3} is not fulfilled 
+According to the data sheet of the converter \citep{TLV320AIC3204}, the input impedance of the \gls{adc} is \SI{20}{\kilo\ohm} and according to the test of the output impedance for the preamp, which is measured to \SI{9.06}{\kilo\ohm}, \autoref{req:preamp3} is not fulfilled. 
 
 \subsection{\autoref{req:preamp4}}
-The \gls{preamp} is designed to be supplied of a 5 to 9 voltage supply, and the \gls{preamp} will be supplied from a \SI{9}{\volt} battery. The \autoref{req:preamp4} is therefore approved.
+The \gls{preamp} is designed to be supplied by a 5 to 9 voltage supply, and the \gls{preamp} will be supplied from a \SI{9}{\volt} battery. The \autoref{req:preamp4} is therefore approved.
 
 \subsection{\autoref{req:preamp5} and \autoref{req:preamp6}}
-According to \autoref{req:preamp6}, a test was made to ensure that the \gls{preamp} \gls{pcb} including cable mound fits intro the Jack connector house. The first \autoref{fig:tests:preamp_pcb} shows the \gls{pcb} mounded on the jack connector and the cable is mounted on the \gls{preamp}
+According to \autoref{req:preamp6}, a test was made to ensure that the \gls{preamp} \gls{pcb} including cable mound fits into the jack connector house. \autoref{fig:tests:preamp_pcb} shows the \gls{pcb} mounded on the jack connector and the cable is mounted on the \gls{preamp}. 
 
-\begin{figure}[h]
-	\centering
-		\includegraphics[width=0.4\textwidth , angle=90]{preamp_pcb.jpg}
-		\caption{The picture shows the mounted \gls{preamp} \gls{pcb} }
+ 
+
+\autoref{fig:tests:preamp_jack} shows the \gls{preamp} \gls{pcb} mounted inside the jack connector house.
+
+\begin{figure}[!h]
+\centering
+\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth, angle=90]{preamp_pcb.jpg}
+		\caption{The picture shows the mounted \gls{preamp} \gls{pcb}.}
 		\label{fig:tests:preamp_pcb}
-\end{figure} 
-
-The second \autoref{fig:tests:preamp_jack} shows the \gls{preamp} \gls{pcb} mounted inside the jack connector house.
-
-\begin{figure}[h]
-	\centering
-		\includegraphics[width=0.4\textwidth , angle=90]{preamp_jack.jpg}
-		\caption{The picture shows the mounted \gls{preamp} \gls{pcb} }
+\end{subfigure}
+~, \qquad, \qquad
+\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth, angle=90]{preamp_jack.jpg}
+		\caption{The picture shows the mounted \gls{preamp} \gls{pcb} inside the jack house.}
 		\label{fig:tests:preamp_jack}
-\end{figure} 
+\end{subfigure} 
+\end{figure}
 
-The \gls{preamp} \gls{pcb} fits inside the jack house, so \autoref{req:preamp5} and \autoref{req:preamp6} is approved
+The \gls{preamp} \gls{pcb} fits inside the jack house, so \autoref{req:preamp5} and \autoref{req:preamp6} is approved.
 
 
 
@@ -84,12 +87,12 @@ In this subsection, a short review will be shown of the \gls{preamp} test.
 
 \begin{table}[H]
 \centering
-\caption{Recap of the requirements fulfillments for the \gls{preamp} test}
+\caption{Recap of the requirements fulfilments for the \gls{preamp} test}
 \label{test_of_preamp_table}
 \begin{tabular}{|l|l|}
 \hline
 \rowcolor[HTML]{9B9B9B} 
-\textbf{Requirement} & \textbf{Fulfillment State} \\ \hline
+\textbf{Requirement} & \textbf{Fulfilment State} \\ \hline
 \textbf{\ref{req:preamp1}}    & \cmark                     \\ \hline
 \textbf{\ref{req:preamp2}}    & \cmark                     \\ \hline
 \textbf{\ref{req:preamp3}}    & \xmark                     \\ \hline
