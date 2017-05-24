@@ -7,8 +7,9 @@ In all cases, the requirement \ref{req:dsp} is fulfilled since all the effects a
 
 \subsection{Test of  \autoref{req:speed}}
 In the Appendix \ref{app:effect_run_time}, the runtime of the reverb effect, which gives the elapsed time from the moment a new sample arrives until it is loaded for output, has been tested. \\
-Figure \ref{fig:reverb_time_test} shows that only 2.5 microseconds are needed to run the effect. \\
-Figure \ref{fig:flanger_time_test} shows that the flanger runtime is 2.3 microseconds. \\
+Figure \ref{fig:reverb_time_test} shows that only 2.25 microseconds are needed to run the \gls{reverb} effect. \\
+Figure \ref{fig:flanger_time_test} shows that the flanger runtime is 2.4 microseconds. \\
+Figure \ref{fig:eq_time_test} shows that the equalizer runtime is 2.35 microseconds. \\
 The results show that the runtimes of the effects are clearly faster than the sampling time of the \gls{dsp} which is 23 microseconds. \\
 It can be concluded that the effects are real-time, faster than the sampling frequency thus the requirement \ref{req:speed} is fulfilled. \\
 

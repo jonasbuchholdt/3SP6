@@ -4,9 +4,9 @@ In this part, tests for the reverb effect that show wether it fulfills the requi
 
 
 \subsection{Test of \autoref{req:reverb1}}
-According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reverb} have at least 1000 echo. The test is done by sending a single known sinus impulse intro the \gls{reverb} effect, the test setup is shown in \autoref{chap:effect_test_response}. The meaning was that every echo should haven been counted, but the scope have a limitation of 16k samples on each measurements screen, and the plotted version in this subsection is not really easy to count on. Instead the measurement will be compared to the same simulation test for the MATLAB coded \gls{reverb}. The MATLAB plot and the implemented test plot will be situated side by side, than it is easy to compare. This is done with five different frequency. 
+According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reverb} have at least 1000 echoes. The test is made by sending a single known sinus impulse into the \gls{reverb} effect. The test setup is shown in \autoref{chap:effect_test_response}. Ideally every echo should haven been counted, but the scope have a limitation of 16k samples on each measurement screen, which complicates the measurement. Instead measurements at different frequencies will be compared to the equivalent MATLAB coded \gls{reverb} simulations. The MATLAB simulation and the measurement will be situated side by side. This is done with five different frequency with the frequencies \SI{20}{\hertz}, \SI{50}{\hertz}, \SI{200}{\hertz}, \SI{1}{\kilo\hertz}, and \SI{5}{\kilo\hertz} in \autoref{fig:tests:reverb:20Hz}, \autoref{fig:tests:reverb:50Hz}, \autoref{fig:tests:reverb:200Hz}, \autoref{fig:tests:reverb:1kHz}, and \autoref{fig:tests:reverb:5kHz}. 
 
-\subsubsection*{impulse response of \SI{20}{\hertz}}
+\subsubsection*{Impulse response of \SI{20}{\hertz}}
 
 
 \begin{figure}[htbp!]
@@ -18,7 +18,7 @@ According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reve
   
   \newpage
   
-\subsubsection*{impulse response of \SI{50}{\hertz}}
+\subsubsection*{Impulse response of \SI{50}{\hertz}}
 
 \begin{figure}[htbp!]
     \centering
@@ -27,7 +27,7 @@ According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reve
         \label{fig:tests:reverb:50Hz}
   \end{figure}
 
-\subsubsection*{impulse response of \SI{200}{\hertz}}
+\subsubsection*{Impulse response of \SI{200}{\hertz}}
 
 \begin{figure}[htbp!]
     \centering
@@ -37,7 +37,7 @@ According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reve
   \end{figure}
 
   \newpage
-\subsubsection*{impulse response of \SI{1}{\kilo\hertz}}
+\subsubsection*{Impulse response of \SI{1}{\kilo\hertz}}
 
 \begin{figure}[htbp!]
     \centering
@@ -47,7 +47,7 @@ According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reve
   \end{figure}
   
   
- \subsubsection*{impulse response of \SI{5}{\kilo\hertz}}
+ \subsubsection*{Impulse response of \SI{5}{\kilo\hertz}}
 
 \begin{figure}[htbp!]
     \centering
@@ -79,7 +79,7 @@ Since the user interface not is implemented, \autoref{req:reverb2} is conditiona
 
 
 \subsection{Test of \autoref{req:reverb3}}
-According to \autoref{eq:reverb_eq_f} and the following formulas in \autoref{sec:reverb_develop} the gain of every \gls{lpcf} can be changed, which will decrease or increase the number of echo from the six \gls{lpcf}. Since the number of echo can be changed, the \autoref{req:reverb2} is approved
+According to \autoref{eq:reverb_eq_f} and the following formulas in \autoref{sec:reverb_develop} the gain of every \gls{lpcf} can be changed, which will decrease or increase the number of echo from the six \gls{lpcf}. Since the user interface has not been implemented, the user is only able to change the number of echoes by changing it directly in the code. Thus \autoref{req:reverb2} is conditionally approved
 
 \subsection{Test review of the Reverb Effect}
 In this subsection, a short review will be shown of the \gls{reverb} effect test.
@@ -94,6 +94,6 @@ In this subsection, a short review will be shown of the \gls{reverb} effect test
 \textbf{Requirement} & \textbf{Fulfillment State} \\ \hline
 \textbf{\ref{req:reverb1}}    & \cmark                     \\ \hline
 \textbf{\ref{req:reverb2}}    & \cmark*                     \\ \hline
-\textbf{\ref{req:reverb3}}    & \cmark                     \\ \hline
+\textbf{\ref{req:reverb3}}    & \cmark*                     \\ \hline
 \end{tabular}
 \end{table}
