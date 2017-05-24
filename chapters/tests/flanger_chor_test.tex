@@ -3,15 +3,15 @@
 
 \subsection{Requirements \ref{req:flanger1} and \ref{req:chorus1}}
 
-The requirement of having an \gls{lfo} that has a varying frequency between 0.1 and 10Hz has not been completely fulfilled. It has been tested that using 16bits limits the CORDIC to work with frequencies not less than 1.7Hz. Switching to 32 bits to store CORDIC data reduced this limit to 0.4 Hz which gives a working area for the \gls{lfo} frequency between 0.4 and 10Hz instead of 0.1 and 10Hz. This affects the chorus and the flanger together. 
+The requirement of having an \gls{lfo} that has a varying frequency between 0.1 and 10Hz has not been completely fulfilled. It has been tested that using 16-bits limits the \gls{cordic} algorithm to work with frequencies not less than \SI{1.7}{\hertz}. Switching to 32 bits to store \gls{cordic} data reduced this limit to 0.4 Hz which gives a working area for the \gls{lfo} frequency between 0.4 and 10Hz instead of 0.1 and 10Hz. This affects the chorus and the flanger together. In \autoref{app:cordic_shape} it proved that the \gls{cordic} algorithm is able to produce a \SI{0.4}{\hertz} sine wave.
 
 \subsection{Requirement \ref{req:chorus2}}
 
-This requirement has been fulfilled. The chorus effect has been implemented in Assembly using macro, where each Macro call represent a delay line. The user is free to choose how many times the macro should be called and thus choosing the number of delay lines. He can also customize the gain and delay for each line which are the inputs of the macro. 
+According to \autoref{req:chorus2} the user must be able to choose the number of delay lines in the chorus effect. The chorus effect has been implemented in Assembly using macro, where each macro call represent a delay line. The user is free to choose how many times the macro should be called and thus choosing the number of delay lines. He can also customize the gain and delay for each line which are the inputs of the macro. This is although only an option when changing it directly in the program since as user interface has not been implemented. Thus the requirement is partially approved.
 
 \subsection{Requirement \ref{req:flanger2}}
 
-The user is able to change the gain of the flanger. This flexibility is made possible because the gain is called every time from the coefficient buffer, the value can then be changed there. 
+According to \autoref{req:flanger2} the user must able to change the gain of the flanger. This flexibility is made possible because the gain is called every time from the coefficient buffer, the value can then be changed there. The requirement is only partially approved since no user interface has been implemented. 
 
 
 
@@ -27,7 +27,7 @@ The user is able to change the gain of the flanger. This flexibility is made pos
 \textbf{Requirement} & \textbf{Fulfillment State} \\ \hline
 \textbf{\ref{req:flanger1}}    & \xmark                     \\ \hline
 \textbf{\ref{req:chorus1}}    & \xmark                     \\ \hline
-\textbf{\ref{req:chorus2}}    & \cmark                     \\ \hline
-\textbf{\ref{req:flanger2}}    & \cmark                     \\ \hline
+\textbf{\ref{req:chorus2}}    & \cmark*                     \\ \hline
+\textbf{\ref{req:flanger2}}    & \cmark*                     \\ \hline
 \end{tabular}
 \end{table}
