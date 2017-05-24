@@ -3,8 +3,8 @@
 In this part, tests for the reverb effect that show wether it fulfills the requirement are presented. 
 
 
-\subsection{Test of requirement \autoref{req:reverb1}}
-According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reverb} have at least 1000 echo. The test is done by sending a single known sinus impulse intro the \gls{reverb} effect, and afterwards the echo should haven been counted, but the scope have a limitation of 16k samples on each measurements samples, and the plotted version in this subsection is not really easy to count on. Instead the measurement will be compared to the same simulation test for the MATLAB coded \gls{reverb}. The MATLAB plot and the implemented test plot will be situated side by side, than it is easy to compare. This is done with five different frequency. 
+\subsection{Test of \autoref{req:reverb1}}
+According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reverb} have at least 1000 echo. The test is done by sending a single known sinus impulse intro the \gls{reverb} effect, the test setup is shown in \autoref{chap:effect_test_response}. The meaning was that every echo should haven been counted, but the scope have a limitation of 16k samples on each measurements screen, and the plotted version in this subsection is not really easy to count on. Instead the measurement will be compared to the same simulation test for the MATLAB coded \gls{reverb}. The MATLAB plot and the implemented test plot will be situated side by side, than it is easy to compare. This is done with five different frequency. 
 
 \subsubsection*{impulse response of \SI{20}{\hertz}}
 
@@ -59,7 +59,7 @@ According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reve
 According to \autoref{sec:reverb_develop} the simulated data has more 1000 echo, and since the measured data are closely equal to the simulated data, \autoref{req:reverb1} is approved
   
   
-\subsection{Test of requirement \autoref{req:reverb2}}
+\subsection{Test of \autoref{req:reverb2}}
 According to \autoref{fig:reverb_block_design} there is a gain called wet and dry, which is able to adjust the factor between the \gls{reverb} effect and the direct sound as following \autoref{eq:test:wetdry}
 
 \begin{subequations}\label{eq:test:wetdry}
@@ -78,7 +78,7 @@ Wet = 1-\frac{\text{user settings}}{1}
 Since the user interface not is implemented, \autoref{req:reverb2} is conditionally approved
 
 
-\subsection{Test of requirement \autoref{req:reverb3}}
+\subsection{Test of \autoref{req:reverb3}}
 According to \autoref{eq:reverb_eq_f} and the following formulas in \autoref{sec:reverb_develop} the gain of every \gls{lpcf} can be changed, which will decrease or increase the number of echo from the six \gls{lpcf}. Since the number of echo can be changed, the \autoref{req:reverb2} is approved
 
 \subsection{Test review of the Reverb Effect}
