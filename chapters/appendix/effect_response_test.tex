@@ -1,6 +1,6 @@
 \chapter{Setup for test of the frequency and time domain response of the effects}\label{chap:effect_test_response}
 
-Responses of the effects to waves are being tested to verify if they are well operating by comparing the shape to a MATLAB simulation. 
+In this appendix the setup for measuring the frequency- and time- domain response of the implemented effects.
 
 \section{Material and Setup}
 
@@ -9,14 +9,14 @@ The use material to perform the test is:
 \begin{itemize}
 	\item A computer with MATLAB, Waveforms 2015 and Code Composer
 	\item Wave Generator Digilent Analog Discovery 2
-	\item The DSP TMS320C5515
+	\item The \gls{dsp} TMS320C5515
 	\item Wires
 \end{itemize}
 
 In \autoref{fig:appendix:dsp_frequency_response} the test setup for the measurements is shown.
 The wave generator is connected to the stereo input of the DSP. Two scopes are used, one connected on the input and the other one on the output. The computer is used to load the compiled code on the DSP, inspect what is on the scopes using Waveforms 2015. 
 Measuring the response in frequency domain or time domain depends on the effect, time domain may be useful in some cases and not in the others. 
-The step after is to compare it with the simulation on MATLAB and see whether the shapes are similar enough to conclude that the effect is working well on the DSP. 
+ 
 
 \begin{figure}[hbt]
 	\begin{picture}(0,0)%
