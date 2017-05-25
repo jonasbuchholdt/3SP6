@@ -1,11 +1,11 @@
 \section{Pre-amplifier}
 \label{label_Pre-amplifier}
-In order to transfer as much of the signal from the guitar to the \gls{dsp} as possible, and avoid a significant voltage division between the guitar and the \gls{dsp}, a \gls{preamp} will be designed. The output impedance of the guitar is measured and the result is shown in \autoref{app:output_impedance}. This shows that the output impedance for a guitar is not the same from \SI{10}{\hertz} to \SI{22}{\kilo\hertz}. The output impedance is always more than \SI{6220}{\ohm} and the maximum output impedance is \SI{73.08}{\kilo\ohm}, for the measured guitar. Therefore the \gls{preamp} must have an input impedance, much higher than \SI{73.08}{\kilo\ohm}, to avoid a significant voltage division in the frequency area from \SI{10}{\kilo\hertz} to \SI{22}{\kilo\hertz}. 
+In order to transfer as much of the signal from the guitar to the \gls{dsp} as possible, and avoid a significant voltage division between the guitar and the \gls{dsp}, a \gls{preamp} will be designed. The output impedance of the guitar is measured and the result is shown in \autoref{app:output_impedance}. This shows that the output impedance for a guitar is not the same from \SI{10}{\hertz} to \SI{22}{\kilo\hertz}. It is always more than \SI{6220}{\ohm} and with a maximum of \SI{73.08}{\kilo\ohm}, for the measured guitar. Therefore the \gls{preamp} must have an input impedance, much higher than \SI{73.08}{\kilo\ohm}, to avoid a significant voltage division in the frequency area from \SI{10}{\kilo\hertz} to \SI{22}{\kilo\hertz}. 
 
 \subsection{The operational-amplifier}
 
 In \autoref{app:guitar_max_amplitude} it is seen that the maximum output signal from the guitar is about $\SI{1}{\volt}_{peak}$. The 
-\gls{dsp} have a typical input signal level of $\SI{0.5}{\volt}_{RMS}$ which give a peak value of $\SI{0.707}{\volt}_{peak}$ \citep{TLV320AIC3204}. To make a general \gls{preamp} that works with more guitar than only the measured guitar, the \gls{preamp} will be designed with a volume control. It is chosen that the \gls{preamp} shall have a voltage gain of approximate \SI{3}{\decibel} and the input impedance shall be more than ten times the guitar output impedance. The \gls{preamp} will be designed to fit into a \SI{6.33}{\milli\meter}  jack connector house, and therefore the chosen \gls{opamp} is the ST ts424 \citep{TS464} and the \gls{preamp} will be designed to fit this \gls{opamp}. 
+\gls{dsp} have a typical input signal level of $\SI{0.5}{\volt}_{RMS}$ which give a peak value of $\SI{0.707}{\volt}_{peak}$ \citep{TLV320AIC3204}. To make a general \gls{preamp} that works with different guitars than only the measured one, the \gls{preamp} will be designed with a volume control. It is chosen that the \gls{preamp} shall have a voltage gain of approximate \SI{3}{\decibel} and the input impedance shall be more than ten times the guitar output impedance. The \gls{preamp} will be designed to fit into a \SI{6.33}{\milli\meter}  jack connector house, and therefore the chosen \gls{opamp} is the ST ts424 \citep{TS464} and the \gls{preamp} will be designed to fit this \gls{opamp}. 
 	An \gls{opamp} often have an input impedance of more than \SI{1}{\mega\ohm} and have a gain of about \SI{100}{\decibel}, and after the feedback circuit is implemented on the \gls{opamp} the input impedance is even higher and the output impedance is even lower. A simple diagram of the overall \gls{preamp}, which will be designed, is shown in \autoref{fig:simple_preamp}. 
 
 \begin{figure}[h!]
@@ -28,7 +28,7 @@ to[amp, t=$G2$]  (6,0)
 
 
 \subsection{Design of $G1$ resistor}
-The first amplification in the \gls{opamp}, $G1$ in \autoref{fig:simple_preamp}, can ether be working in a non inverting or an inverting \gls{opamp} configuration. Since the \gls{preamp} shall have a gain of \SI{6}{\decibel} and a high input impedance, the non inverting \gls{opamp} configuration will be used, because it is a voltage-seriel feedback configuration. The seriel feedback configuration gives a higher input impedance than a parallel feedback, because the feedback circuit is in series with the input imperdance of the \gls{opamp} and not i parallel. The schematics of a non inverting \gls{opamp} is shown in \autoref{fig:preamp_opamp}.
+The signal amplification \gls{opamp} in $G1$ in \autoref{fig:simple_preamp}, can either be working in a non inverting or an inverting \gls{opamp} configuration. Since the \gls{preamp} shall have a gain of \SI{6}{\decibel} and a high input impedance, the non inverting \gls{opamp} configuration will be used, because it is a voltage-serial feedback configuration. The serial feedback configuration gives a higher input impedance than a parallel feedback, because the feedback circuit is in series with the input impedance of the \gls{opamp} and not in parallel. The schematics of a non inverting \gls{opamp} is shown in \autoref{fig:preamp_opamp}.
 
 \begin{figure}[h!]
 \centering
@@ -55,7 +55,7 @@ to[short] (-1,-0.5)
 \label{fig:preamp_opamp}
 \end{figure}
 
-The output of $G1$ is looking into $G2$ which is a \gls{opamp} with an input impedance higher than \SI{1}{\mega\ohm}, and therefor the calculations can be made without taking $G2$ into account. The calculation is also without the $V_{Offset}$ power supply, because a voltage power supply is a short circuit with respect to impedances.  The equivalent schematic of a non inverting \gls{opamp} is as follows in  \autoref{fig:preamp_opamp_equa}.
+The output of $G1$ amplifier is connected to the \gls{opamp} in $G2$ with an input impedance higher than \SI{1}{\mega\ohm}, and therefore the calculations can be made without taking $G2$ into account because the signal amplification \gls{opamp} has a very low output impedance. The calculation is also without the $V_{Offset}$ power supply, because a voltage power supply is a short circuit with respect to impedances.  The equivalent schematic of a non inverting \gls{opamp} is as follows in  \autoref{fig:preamp_opamp_equa}.
 
 \begin{figure}[h!]
 \centering
@@ -96,10 +96,10 @@ Calculating of $\beta$ is done by following \autoref{eq:preamp_beta}
     \stopexplain
 
 
-The resulting input impedance of the \gls{preamp} will be as following \autoref{eq:preamp_result}.
+The resulting input impedance of the \gls{preamp} will be as the following \autoref{eq:preamp_result}.
 
 \begin{equation}\label{eq:preamp_result}
-        Z_{In_{G1}} = R_{Bias}\parallel ((Z_i + Z_{i \beta}) \cdot (1+\beta \cdot A)) \simeq R_{Bias}
+        Z_{In_{G1}} = R_{Bias}\parallel ((Z_i + Z_{i \beta}) \cdot (1+\beta \cdot A')) \simeq R_{Bias}
         \addunit{\si{\ohm}}
     \end{equation}
 
@@ -107,11 +107,11 @@ The resulting input impedance of the \gls{preamp} will be as following \autoref{
         \explain{$Z_{In_{G1}} $ is the resulting input impedance of $G1$}{\si{\ohm}}
         \explain{$R_{Bias}$ An bias resistor}{\si{\ohm}}
         \explain{$Z_i$ The input impedance of the \gls{opamp}}{\si{\ohm}}
-         \explain{$A$ is the gain of the \gls{opamp}}{\si{1}}
+         \explain{$A'$ The amplification of the feedback circuit}{\si{1}}
     \stopexplain
 
-$R_{Bias}$ is chosen to \SI{1}{\mega\ohm}.
-The feedback circuit will increase the $(Z_{i}+Z_{i\beta})$ by a factor of $(1+\beta \cdot A')$, and since the input impedance of an \gls{opamp} is over \SI{1}{\mega\ohm}, the feedback resistor values dose not matter, besides their relation. The feedback circuit will also decrease the output impedance by a factor of $(1+\beta \cdot A)$, which also entails that only the relation between the feedback resistors is important. The circuit in \autoref{fig:preamp_opamp_equa_out} shows the output impedance equivalent circuit of the \gls{opamp}.
+$R_{Bias}$ is chosen to be \SI{1}{\mega\ohm}.
+The feedback circuit will increase the $(Z_{i}+Z_{i\beta})$ by a factor of $(1+\beta \cdot A')$, and since the input impedance of an \gls{opamp} is over \SI{1}{\mega\ohm}, the feedback resistor values do not matter, besides their relation. The feedback circuit will also decrease the output impedance by a factor of $(1+\beta \cdot A')$, which also entails that only the relation between the feedback resistors is important. The circuit in \autoref{fig:preamp_opamp_equa_out} shows the output impedance equivalent circuit of the \gls{opamp}.
 
 \begin{figure}[h!]
 \centering
@@ -139,15 +139,15 @@ Calculating of $Z_{o\beta}$ is done by following \autoref{eq:preamp_beta_out}
 A voltage power supply is a short cut with respect to impedance, so the resulting output impedance of $G1$ is calculated by following \autoref{eq:preamp_zout_out} 
 
 \begin{equation}\label{eq:preamp_zout_out}
-        Z_{out_{G1}} = \frac{ Z_{o\beta} \parallel Z_{o} }{1+\beta \cdot A'}
+        Z_{out} = \frac{ Z_{o\beta} \parallel Z_{o} }{1+\beta \cdot A'}
         \addunit{\si{\ohm}}
     \end{equation}
     \startexplain
         \explain{$A' =A \cdot \frac{Z_{o\beta}}{Z_o+Z_{o\beta}} \cdot \frac{Z_i}{Z_i+Z_{i\beta}}$ }{\si{1}}
-\explain{$Z_{out_{G1}}$ is the total output impedance of $G1$ }{\si{\ohm}}
+\explain{$Z_{out_{G1}}$ is the total output impedance of the \gls{opamp} signal amplifier in $G1$ }{\si{\ohm}}
     \stopexplain
 
-$R_V$ is chosen to \SI{10}{\kilo\ohm} to make as small a voltage division between $Z_{out}$ and $R_V$ as possible. In another way, to keep the voltage over $Z_{out_{G1}}$ as small as possible. The $R_F$ is chosen to be \SI{5}{\kilo\ohm}.
+$R_V$ is chosen to \SI{10}{\kilo\ohm} to make as small a voltage division between $Z_{out}$ and $R_V$ as possible since $Z_{out}$ is 200 $\ohm$ or less without feedback. In another way, to keep the voltage over $Z_{out}$ as small as possible. The $R_F$ is chosen to be \SI{5}{\kilo\ohm}.
 
 
 The approximated amplification of a non inverting \gls{opamp} is given by \autoref{eq:preamp_amplification}
@@ -161,12 +161,12 @@ The approximated amplification of a non inverting \gls{opamp} is given by \autor
         \explain{$G$ is the amplification of $G1$}{\si{1}}
     \stopexplain
 
-Since the tested guitar have en amplitude of \SI{1}{\volt} it is chosen that the \gls{preamp} only shall be able to amplify by a factor of 2. Then  $R_1$ is founded to be \SI{5}{\kilo\ohm} by isolate $R_1$ in the above \autoref{eq:preamp_amplification}.
+Since the tested guitar has an amplitude of \SI{1}{\volt}, it is chosen that the \gls{preamp} only shall be able to amplify by a factor of 2. Then  $R_1$ is found to be \SI{5}{\kilo\ohm} by isolating $R_1$ in the above \autoref{eq:preamp_amplification}.
  
    
 \subsection{Design of $G1$ DC offset}
-The \gls{preamp} will be powered by one positive power supply of \SI{5}{\volt} and therefore a DC offset must be implemented to make the signal be swing around \SI{2.5}{\volt}. 
-The design of the voltage offset power supply will be done by two resistors which divide the voltage by two equals, and afterwards an \gls{opamp} is used as buffer  to make a small output impedance. Because the \gls{opamp} have a impedance of more than \SI{1}{\mega\ohm} the resistor size does not matter, but a non ideal \gls{opamp} do have a bias current in the input, that will affect the division if the resistors are to large. To keep the division approximate to two, the resistors shall be at least ten times smaller than the input impedance of the \gls{opamp}. The voltage offset power supply circuit is designed as in \autoref{fig:preamp_voffset}.
+The \gls{preamp} will be powered by one positive power supply of \SI{5}{\volt} and therefore a DC offset must be implemented to make the signal swing around \SI{2.5}{\volt}. 
+The design of the voltage offset power supply will be done by two resistors which divide the voltage by two equals, and afterwards an \gls{opamp} is used as buffer  to make a small output impedance. Because the \gls{opamp} have a impedance of more than \SI{1}{\mega\ohm} the resistor size does not matter in the ideal case, but a non ideal \gls{opamp} do have a bias current in the input, that will affect the division if the resistors are to large. To keep the division approximate to two, the resistors shall be at least ten times smaller than the input impedance of the \gls{opamp}. The voltage offset power supply circuit is designed as in \autoref{fig:preamp_voffset}.
     
   \begin{figure}[h!]
 \centering
@@ -290,7 +290,7 @@ $C_{Out}$ will be designed to have a cut-off frequency at a decade over the audi
 
 \begin{subequations}\label{eq:preamp_cout}
 \begin{equation}
-        C_{In} \geq  \frac{1}{2 \pi \cdot Z_{In,\gls{dsp}} \cdot f}
+        C_{Out} \geq  \frac{1}{2 \pi \cdot Z_{In,\gls{dsp}} \cdot f}
         \addunit{\si{\farad}}
     \end{equation}
 \centering
@@ -307,7 +307,7 @@ $\Updownarrow$
  \explain{$f$ is the cut-off frequency}{\si{\hertz}}
     \stopexplain
     
-The $C_{Offset}$ is selected to be separated into one \SI{100}{\nano\farad}- and one \SI{1}{\micro\farad}- capacitor, and both $C_{In}$ and $C_{Out}$ is chosen to be  \SI{10}{\micro\farad} 
+The $C_{Offset}$ is selected to be separated into one \SI{100}{\nano\farad}- and one \SI{1}{\micro\farad}- capacitor, and both $C_{In}$ and $C_{Out}$ are chosen to be  \SI{10}{\micro\farad} 
  
 \subsection{\gls{pcb} layout} 
 The signal cable will have a capacitive effect on the signal, from the guitar to the \gls{preamp}, and this will cause a low pass filter. In order to avoid the low pass problem with the cable, the \gls{preamp} will be designed to fit inside a \SI{6.35}{\milli\meter} Jack connector house. This requires that the \gls{pcb} has a maximum size of  \SI{1}{\centi\meter} times \SI{2.5}{\centi\meter}. The used cable from the \gls{dsp} to the \gls{preamp} is a balanced cable, where the shield is used as ground to both signal and power. The red wire is used as signal wire and the black wire is used as positive power wire. The resulting \gls{preamp} layout is as in \autoref{fig:preamp_layout}.
