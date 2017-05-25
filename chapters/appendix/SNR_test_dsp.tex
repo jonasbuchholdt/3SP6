@@ -1,10 +1,10 @@
-\chapter{Test of Signal to Noise Ratio on the guitar}\label{app:test:snr}
+\chapter{Test of Signal to Noise Ratio on the \gls{dsp}}\label{app:test:snr_dsp}
 
-The test of SNR of the \gls{dsp} is going to be presented in this appendix. It will include the used material and setup, the test procedure and the results. \\
+The test of \gls{snr} of the \gls{dsp} is going to be presented in this appendix. It will include the used material and setup, the test procedure and the results. \\
 
 \section{Material and Setup}
 
-In order to perform this test, the following material has been used:
+In order to perform this test, the following materials have been used:
 
 \begin{itemize}
 	\item TMS320C5515 eZdsp development board
@@ -44,7 +44,7 @@ In order to perform this test, the following material has been used:
 
 \begin{itemize}
 	\item Set up the materials as shown in \autoref{fig:appendix:snr_dsp}.
-	\item Set the oscilloscope to generate a sine wave of 0.5 V$_{RMS}$ with frequency \SI{1}{\kilo\hertz}.
+	\item Set the voltage source to generate a sine wave of 0.5 V$_{RMS}$ with frequency \SI{1}{\kilo\hertz}.
 	\item Measure the output of the \gls{dsp}.
 	\item Ground the input of the \gls{dsp}.
 	\item Measure the output of the \gls{dsp}.
@@ -62,7 +62,7 @@ In order to perform this test, the following material has been used:
      \explain{$V_{2RMS}$ is the RMS value of the measured output with the input grounded.}{V$_{RMS}$}
     \stopexplain
     
-V$_{2RMS}$ is calculated by measuring the peak-to-peak of the noise and dividing it by eight. When dividing by eight the noise peak-to-peak value will only exceed this in 0.0006\% of the time \citep{rms_noise}.
+V$_{2RMS}$ is calculated by measuring the peak-to-peak of the noise and dividing it by eight. When dividing by eight the noise peak-to-peak value will only exceed this 0.0006\% of the time \citep{rms_noise}.
 V$_{1RMS}$ is calculated by measuring the peak value of the signal and dividing it by $\sqrt{2}$. 
 
 \section{Results}
@@ -85,7 +85,7 @@ In \autoref{fig:SNR_dsp_gnd} the output of the \gls{dsp} with the input grounded
 \end{figure}
 
 The peak-to-peak value of \autoref{fig:SNR_dsp_gnd} is \SI{0.4}{\volt}, and thereby $V_{2RMS} = \frac{0.4}{8} = 0.05$ V$_{RMS}$.
-The peak value of \autoref{fig:SNR_dsp_1kHz} is measured to be \SI{0.7}{\volt}, and thereby and thereby $V_{1RMS} = \frac{0.7}{\sqrt{2}} = 0.495$ V$_{RMS}$. The \gls{snr} of the \gls{dsp} can thereby be calculated as in \autoref{}.
+The peak value of \autoref{fig:SNR_dsp_1kHz} is measured to be \SI{0.7}{\volt}, and thereby and thereby $V_{1RMS} = \frac{0.7}{\sqrt{2}} = 0.495$ V$_{RMS}$. The \gls{snr} of the \gls{dsp} can thereby be calculated as in \autoref{eq:snr_dsp_result}.
 
 \begin{equation}\label{eq:snr_dsp_result}
 	SNR_{DSP} = 20 \cdot log_{10}\left(\frac{0.495}{0.005}\right) = 39.91dB
