@@ -1,5 +1,5 @@
 clear all;
-filename = 'eq_run_time.csv'; %fasen ligger i nr 4
+filename = 'flanger_run_time.csv'; %fasen ligger i nr 4
 delimiterIn = ',';
 headerlinesIn = 6;
 preamp = importdata(filename,delimiterIn,headerlinesIn);
@@ -25,7 +25,7 @@ axis([-0.0000005 0.000003 0 6])
 set(gca,'fontsize',18)
 hold on
 grid on
-legend('EQ run time')
+legend('Flanger run time')
 ylabel('Magnetude [V]')
 xlabel('Time [s]')
 hold off

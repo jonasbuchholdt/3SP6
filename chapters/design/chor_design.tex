@@ -139,7 +139,7 @@ A MATLAB simulation of the \gls{cordic} algorithm was made and set to produce a 
 When implementing the \gls{cordic} algorithm on a \gls{dsp}, the calculated $\cos(\theta)$ and $\sin(\theta)$ values in \autoref{eq:cordic_x} and \autoref{eq:cordic_y}, might have to be changed a bit to make the algorithm stable. 
 
 \subsection{Implementation of the CORDIC algorithm}
-When implementing the CORDIC algorithm on the \gls{dsp}, some choices have to be made to begin with. The first choice is the resolution of the calculations. Because the \gls{lfo} has to produce such low frequencies, it is chosen to work in 32-bit precision. Since all the values in the CORDIC calculations are between $\pm$ 1, it is chosen to divide the 32-bits into one sign bit, one integer bit and 30 fraction bits, which should make the CORDIC algorithm able to produce a \SI{0.4}{\hertz}.
+When implementing the CORDIC algorithm on the \gls{dsp}, some choices have to be made to begin with. The first choice is the resolution of the calculations. Because the \gls{lfo} has to produce such low frequencies were 16-bits is not enough, it is chosen to work in 32-bit precision. Since all the values in the CORDIC calculations are between $\pm$ 1, it is chosen to divide the 32-bits into one sign bit, one integer bit and 30 fraction bits, which should make the CORDIC algorithm able to produce a \SI{0.4}{\hertz}.
 It is mainly the two equations \autoref{eq:cordic_x} and \autoref{eq:cordic_y} that has to be implemented. Because it is chosen to operate in 32-bits precision all calculations have to be made twice. Multiplication is e.g. done by the following algorithm:
 \begin{itemize}
 \item The two variables $a$ and $b$ both have a high (16-bits) and a low part (16-bits).
