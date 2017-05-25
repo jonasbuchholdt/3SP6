@@ -1,1 +1,1 @@
-FigureToPDF(gcf, '../../figures/appendix/eq_run_time')
+FigureToPDF(gcf, '../../figures/appendix/flanger_run_time')
