@@ -1,6 +1,6 @@
 \subsection{Equalizing}\label{sec:equalizing} 
-The audible frequencies can be separated into octaves. An octave is an interval between two frequencies, where the the highest frequency is double the frequency of the lowest frequency. Companies, such as Dolby Lake \citep{lab_gruppen_eq}, now owned by Music group and Powersoft \citep{powersoft_eq}, separates their equalizing bands in thirds of an octave. 
-The \gls{eq} is made with a bank of bandpass filters, using either octave or third octave separation from \SI{20}{\hertz} to \SI{20}{\kilo\hertz}, but the octave order can be changed in advanced systems. Both analog and digital \gls{eq}s normally use octave or third octave separation. These bandpass filters are able to either amplify or attenuate the gain of the specified frequency. The \autoref{fig:analog_equalizer} shows an analog \gls{eq} with traditional third octave separation \citep{nordic}
+The audible frequencies can be separated into octaves. An octave is an interval between two frequencies, where the highest frequency is double the frequency of the lowest frequency. Companies, such as Dolby Lake \citep{lab_gruppen_eq}, now owned by Music group and Powersoft \citep{powersoft_eq}, separate their equalizing bands in thirds of an octave. 
+The equalizer is made with a bank of bandpass filters, using either octave or third octave separation from \SI{20}{\hertz} to \SI{20}{\kilo\hertz}, but the octave order can be changed in advanced systems. Both analog and digital equalizers normally use octave or third octave separation. These bandpass filters are able to either amplify or attenuate the gain of the specified frequency. The \autoref{fig:analog_equalizer} shows an analog equalizer with traditional third octave separation \citep{nordic}
 
 \begin{figure} [htbp]
  \centering
@@ -9,8 +9,7 @@ The \gls{eq} is made with a bank of bandpass filters, using either octave or thi
   \label{fig:analog_equalizer}
 \end{figure}
 
-\todo[inline]{Mohamed : Maybe add why they will affect each other}
-One amplified bandpass filter will interfere with the neighbouring filters, thus the frequency response will be different than what can be expected with ideal filters. The following \autoref{fig:analog_equalizer_respond} shows the frequency response of the above analog \gls{eq} \autoref{fig:analog_equalizer}.
+One amplified bandpass filter will interfere with the neighbouring filters, thus the frequency response will be different than what can be expected with ideal filters. The following \autoref{fig:analog_equalizer_respond} shows the frequency response of the above analog equalizer \autoref{fig:analog_equalizer}.
 
 \begin{figure} [htbp]
  \centering
@@ -19,7 +18,7 @@ One amplified bandpass filter will interfere with the neighbouring filters, thus
   \label{fig:analog_equalizer_respond}
 \end{figure}
 
-A simple block diagram of a \gls{eq}  is shown in the following \autoref{fig:equalizer_block}.
+A simple block diagram of an equalizer is shown in the following \autoref{fig:equalizer_block}.
 
 \begin{figure}[htb] 
 	\begin{center} 
@@ -60,5 +59,5 @@ A simple block diagram of a \gls{eq}  is shown in the following \autoref{fig:equ
 			\end{figure}
 
 
-The block diagram \autoref{fig:equalizer_block} shows an simple equalizer, where each bandpass filter is divided into separate blocks. Each block is separated by octaves, where the next higher bandpass filter frequency is raised by a factor 2. 
+The block diagram \autoref{fig:equalizer_block} shows a simple equalizer, where the equalizer is divided into separate bandpass filter blocks. Each block is separated by octaves, where the next higher bandpass filter frequency is raised by a factor two. 
 
