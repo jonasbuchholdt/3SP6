@@ -5,6 +5,40 @@ dataflanger .set 3FCBh
 		.data
 			.text
 
+flang_delay_LFO_approx3:
+
+mov #3FCBh,BSA01
+mov #46DBh,BSA45 ;gain and coefficients for the flanger
+mov #0,AR4	  ;Pointer Settings
+mov	T2, *AR0(0);Putting the input in the buffer
+mov	*AR4(7), T3	;high part of cordic X1
+add	#100, T3  ;Adding an offset
+add	#1, T3, T0 ;calculating x2
+neg	T0, T0
+neg	T3, T3
+mov	T3, *AR4(14) ;storing X1
+mov	T0, *AR4(15) ;storing X2
+mov	*AR4(14), T0 ;unloading X1
+mov	*AR0(T0), AC0	;unloading Yn
+mov	*AR4(15), T0	;unloading X2
+mov	*AR0(T0), AC1	;unloading Yn-1
+sub	AC0, AC1	;doing (Yn-1)-(Yn)
+mov	*AR4(10), AC0	;unloading the fraction
+sfts AC0, #16, AC0
+SFTL AC0, #-1, AC0	;shifting the fraction by 1
+mov	hi(AC0), *AR4(13)	;moving the fraction to memory
+mov	AC1, T0	;moving Y2-Y1 to T0
+mpym *AR4(13), T0, AC2	;multiplying the fraction by Y2-Y1
+SFTS AC2, #-15, AC2	;shifting the result by 15
+mov *AR4(14), T0 ;unloading X1
+mov	*AR0(T0), AC0	;unloading Yn
+sub	AC2, AC0 ;substracting AC2(line 29) from Y2
+mov	AC0, T1
+mpym *AR4(0), T1, AC3 ;Multiplying the delayed value with the gain
+SFTS AC3, #-14, AC3 ;bit shift after multiplication
+mov *AR0+, T0	;Incremementing the data buffer
+add AC3, T2 ;Adding the delayed line to the undelayed
+ret
 
 flang_delay_LFO_approx:
 
