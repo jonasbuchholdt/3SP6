@@ -1,7 +1,7 @@
 \label{ch:disinit}
 In this chapter the \gls{dsp} initializing will be described. This include \gls{adc}, \gls{dac} and sound in and out. All the \gls{dsp} initializing will be written in C and the audio in and out will be written in assembly \citep{slaa557}. 
 
-\section{Sample frequency}
+\section{Sample Frequency}
 In this section the sample frequency will be designed and initialized to the \gls{dsp} in C. 
 On the TMS320C5515 eZdsp there is a \gls{dsp} with an external stereo \gls{adc} and \gls{dac} TLV320AIC3204 Ultra Low Power Stereo Audio Codec \citep{TLV320AIC3204}. The initializing is done by writing the initializing code on the \gls{dsp} and afterwards transfer the data through an $I^2C$ connection. The audio data is afterwards transferred with an $I^2S$ connection between the \gls{dsp} and the TLV320AIC3204 chip.
 The following \autoref{code:dsp_reset} is made to reset the TLV320AIC3204 chip.
@@ -38,7 +38,7 @@ After the $I^2S$ connection is started up, the audio in and audio out will be de
 After the audio data is processed, the audio data is written to the \gls{dac} as following \autoref{code:audio_out}.
 \includeCode{sound_out.asm}{assembly}{1}{11}{Writing data to the \gls{dac}}{code:audio_out}{code/design/}
 
-\section{Circular buffer}
+\section{Circular Buffer}
 
 The circular buffer is needed in different effects like flanger and chorus. Coding it in assembly can drastically optimize real-time signal possessing. \\
 

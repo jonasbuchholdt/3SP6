@@ -1,4 +1,4 @@
-\section{Description of the chosen DSP}\label{sec:dsp_description}
+\section{Description of the Chosen DSP}\label{sec:dsp_description}
 
 
 The chosen \gls{dsp} is the Texas Instruments TMS320C5515 Fixed-Point Digital Signal Processor.
@@ -30,7 +30,7 @@ A diagram of the \gls{cpu}'s architecture, including both data- and address- bus
 Knowledge of the registers are important when programming a \gls{dsp}, if it is chosen to program it in assembly and not in C. The different registers are assigned to do specific tasks and thereby the programmer has to know which registers should be used for which tasks. The TMS320C5515 has e.g four accumulator registers called AC0-AC3. An accumulator register assists with data computation in the \gls{alu}, the \gls{mac}'s and the shifter, meaning if it is wanted to add two numbers, this can be done in an accumulator register. 
 Another example is the three registers BK03, BK47 and BKC, which are all circular buffer size registers. Each of these registers sets the number of words in a circular buffer (at max 65535) \citep{c55x_cpu}.  
 
-\subsection{The TMS320C5515 eZdsp development board}
+\subsection{The TMS320C5515 eZdsp Development Board}
 The TMS320C5515 is placed on a developmentboard called TMS320C5515 eZdsp. Some of the boards key features are shown in \autoref{fig:ezdsp}.
 \begin{figure}[htbp!]
     \centering

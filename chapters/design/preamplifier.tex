@@ -23,7 +23,7 @@ to[amp, t=$G2$]  (6,0)
 \end{figure}
 
 
-\subsection{Design of $G1$ resistor}
+\subsection{Design of $G1$ Resistor}
 The signal amplification \gls{opamp} in $G1$ in \autoref{fig:simple_preamp}, can either be working in a non inverting or an inverting \gls{opamp} configuration. Since the \gls{preamp} shall have a gain of \SI{3}{\decibel} and a high input impedance, the non inverting \gls{opamp} configuration will be used, because it is a voltage-serial feedback configuration. The serial feedback configuration gives a higher input impedance than a parallel feedback, because the feedback circuit is in series with the input impedance of the \gls{opamp} and not in parallel. The schematics of a non inverting \gls{opamp} is shown in \autoref{fig:preamp_opamp}.
 
 \begin{figure}[h!]
@@ -162,7 +162,7 @@ The approximated amplification of a non inverting \gls{opamp} is given by \autor
 Since the tested guitar has an amplitude of \SI{1}{\volt}, it is chosen that the \gls{preamp} only shall be able to amplify by a factor of two. Then  $R_1$ is found to be \SI{5}{\kilo\ohm} by isolating $R_1$ in the above \autoref{eq:preamp_amplification}.
  
    
-\subsection{Design of $G1$ DC offset}
+\subsection{Design of $G1$ DC Offset}
 The \gls{preamp} will be powered by one positive power supply of \SI{5}{\volt} and therefore a DC offset must be implemented to make the signal swing around \SI{2.5}{\volt}. 
 The design of the voltage offset power supply will be done by two resistors which divide the voltage by two equals, and afterwards an \gls{opamp} is used as buffer  to make a small output impedance. Because the \gls{opamp} have an input impedance of more than \SI{1}{\mega\ohm} the resistor size does not matter in the ideal case, but a non ideal \gls{opamp} does have a bias current in the input, that will affect the division if the resistors are to large. To keep the division approximate to two, the resistors shall be at least ten times smaller than the input impedance of the \gls{opamp}. The voltage offset supply circuit is designed as in \autoref{fig:preamp_voffset}.
     
@@ -202,7 +202,7 @@ Where $C_{Offset}$ is used to stabilize the voltage at the input of the \gls{opa
         \explain{$R_{offset}$ is the lower resistor in the voltage division circuit}{\si{\ohm}}
     \stopexplain
 \newpage    
-\subsection{Design of input and output DC blocking}
+\subsection{Design of Input and Output DC Blocking}
 
 The total circuit of the \gls{preamp} is as in \autoref{fig:preamp_total}, where the \gls{opamp} to the far right without any resistors in the feedback loop, is $G2$.
 %and the design of $G1$ input capacitor $C_{In}$ and  $G2$ output capacitor $C_{Out}$ will be done beneath the full circuit \autoref{fig:preamp_total}.
@@ -306,7 +306,7 @@ $\Updownarrow$
     
 The $C_{Offset}$ is selected to be separated into one \SI{100}{\nano\farad}- and one \SI{1}{\micro\farad}- capacitor, and both $C_{In}$ and $C_{Out}$ are chosen to be  \SI{10}{\micro\farad} 
  
-\subsection{\gls{pcb} layout} 
+\subsection{\gls{pcb} Layout} 
 The signal cable will have a capacitive effect on the signal, from the guitar to the \gls{preamp}, and because the of output impedance in the guitar, this can cause a low pass filter. In order to avoid the low pass problem with the cable, the \gls{preamp} will be designed to fit inside a \SI{6.35}{\milli\meter} Jack connector house. This requires that the \gls{pcb} has a maximum size of  \SI{1}{\centi\meter} times \SI{2.5}{\centi\meter}. The used cable from the \gls{dsp} to the \gls{preamp} is a balanced cable, where the shield is used as ground to both signal and power. The white wire is used as signal wire and the red wire is used as positive power wire. The resulting \gls{preamp} layout is as in \autoref{fig:preamp_layout}.
  
  \begin{figure}[h]

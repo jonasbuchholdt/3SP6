@@ -1,8 +1,8 @@
-\section{Design of the equalizer}\label{sec:design:eq}
+\section{Design of the Equalizer}\label{sec:design:eq}
 This chapter aims to describe the design of an digital graphic equalizer, for an electric guitar. By graphic equalizer it is meant that only the gain of each band is changeable for the user.  
 To begin with, some design choices have to be made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by a combination of shelving filters and peak filters. The shelving filters are used for the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters will be kept as first or second order filters. 
 
-\subsection{Shelving filter}
+\subsection{Shelving Filter}
 The transfer function for a first order low shelving filter is as in \autoref{eq:analog_shelving_low} \citep{Julius_smith}.
 
 \begin{equation}\label{eq:analog_shelving_low}
@@ -44,7 +44,7 @@ When implementing \autoref{eq:analog_shelving_low} and \autoref{eq:analog_shelvi
   \end{figure} 
   %\todo[inline]{figure is now first order}
 
-\subsection{Peak filter}
+\subsection{Peak Filter}
 The peak filters for the in between bands can be made from a number of design topologies. One of these are the constant-Q design. This design is sufficient the way that it keeps a specified bandwidth of the filter and therefore each individual filter's impact on the neighbouring filters can be controlled \citep{constant_Q}.
 A way to make these constant-Q peak filters, and keep the order of the filter low, is by combining a second order lowpass filter with a high Q-value, and a linear function in Laplace domain.
 The transfer function for the analog second order lowpass filter is as in \autoref{eq:analog_2nd_order_LP} and the transfer function for the analog linear function is as in \autoref{eq:analog_linear_function}. Their bodeplot can be seen in \autoref{fig:lin_function_&_2nd_order_LP}, where $Q = 4$ and $\omega_0 = 1000$. 
@@ -99,7 +99,7 @@ When implementing \autoref{eq:H_peak} in a feedforward loop as in \autoref{fig:p
         \label{fig:peak_filter}
   \end{figure} 
   
-\subsection{Design choices and calculation of filter parameters}
+\subsection{Design Choices and Calculation of Filter Parameters}
 All the parts needed to make an equalizer have now been described. The parameters after which the equalizer shall be designed, will now be presented. 
 The equalizer will be inspired by the BOSS GE-7 which is an analog equalizer for an electric guitar. The equalizer designed in this report will have the same number of bands and have the same attenuation and amplification ranges as the BOSS GE-7 \citep{Boss_GE7}. Thus the equalizer will have seven bands and be able to amplify each band $\pm$ \SI{15}{\decibel}.
 The center frequencies of the seven bands are also inspired by the BOSS GE-7 and is placed as in \autoref{tab:center_frequencies}.
@@ -194,7 +194,7 @@ It is chosen that the equalizer shall be able to amplify each band in five diffe
 \end{tabular}
 \end{table}
 
-\subsection{Converting the equalizer to z-domain}
+\subsection{Converting the Equalizer to z-Domain}
 In order to implement the equalizer on a \gls{dsp}, the now designed analog equalizer, has be to converted to a digital equalizer. This conversion will be made by using the bilinear transformation, which converts analog filters into digital IIR filters. In \autoref{eq:bilinear_transformation} the bilinear transformation method is shown.
 
 \begin{equation}\label{eq:bilinear_transformation}
@@ -261,7 +261,7 @@ When choosing the sampling frequency, $f_s =$ \SI{44.1}{\kilo \hertz}, and there
 
 The conversion is made without prewarping, because the frequency response, when using prewarping, changed in an unwanted way at low frequencies.
 
-\subsection{Converting the equalizer to n-domain}
+\subsection{Converting the Equalizer to n-Domain}
 The last step in making the equalizer implementable in a \gls{dsp}, is to convert the z-domain transferfunction, into a differential equation in n-domain. The procedure of doing this, will be shown for the peak filters, but the procedure is the same for the shelving filters. The conversion from z-domain to n-domain is shown in the equations \autoref{eq:z_to_n1} to \autoref{eq:z_to_n7} 
 
 \begin{subequations}
@@ -323,7 +323,7 @@ When coupling the filters as in \autoref{fig:eq_parallel}, the combined output o
 
 It is now possible for the equalizer to amplify different frequency areas.
 
-\subsection{The inverse equalizer}
+\subsection{The Inverse Equalizer}
 The attenuating part of the equalizer will be made from a series connection of feedback loops. The initial idea was to implement the attenuating part as a parallel connection of feedback loops, where the differential equations from the amplifying part could be reused. The initial idea was changed because of problems when inverting the parallel feedback connection. 
 The attenuating part will be implemented as illustrated in \autoref{fig:eq_attenuate_block}.
 
@@ -426,7 +426,7 @@ In \autoref{fig:eq_z_domain_final} a bodeplot of the final equalizer's dynamic r
         \label{fig:eq_z_domain_final}
   \end{figure}
  
- \subsection{Memory map of the equalizer}
+ \subsection{Memory Map of the Equalizer}
   
 In \autoref{fig:memory_map_eq} a memory map for the equalizer is shown. It consists of three coefficient buffers and three data buffers. 
 
@@ -467,7 +467,7 @@ In \autoref{fig:memory_map_eq} a memory map for the equalizer is shown. It consi
 		\label{fig:memory_map_eq}
 \end{figure}  
   
-\subsection{Implementation of the equalizer}
+\subsection{Implementation of the Equalizer}
 When implementing the equalizer on the \gls{dsp} the amplifying part of the equalizer will be implemented first. This is because the amplifying part is the simplest one, since fewer coefficients have to be allocated in the \gls{dsp} memory. As seen in \autoref{eq:z_to_n7} the gain value, $G$, can be seen as an isolated scalar, which is multiplied on the coefficient fraction and a data value. Therefore e.g. $\frac{a_{peak1}}{b_{peak1}}$ can be written as a constant in the \gls{dsp}, no matter how much the specific band should amplify. This is not the case for the attenuating part of the equalizer, since the gain, $G$, is changing e.g. the coefficient $b_{peak1-cut}$, which is a denominator in \autoref{eq:z_to_n_peak_att}. 
 The equalizer is implemented using 16-bits precision and the main algorithm of the amplifying part of the equalizer is shown in \autoref{code:eq_code}. 
 
