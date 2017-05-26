@@ -288,19 +288,22 @@ The $L_D$ is defining the room damping, and the equation for $L_D$ is as in \aut
     \end{equation}
  \end{subequations} 
     
-
+\newpage
 The transfer function in \autoref{eq:reverb_eq_eks} is plotted in MATLAB with a sweep from \SI{16}{\hertz} to \SI{20}{\kilo\hertz} as the input. The output of the \gls{lpcf} is shown in \autoref{fig:lpcf_sweep}, where the red signal is the input and the blue signal is the output.
 
-\begin{figure}[htbp]
+\begin{figure}[htbp!]
 	\centering
-	\includegraphics[width=0.6\textwidth]{lpcf_sweep}
+	\includegraphics[width=1\textwidth]{lpcf_sweep}
 	\caption{The plot shows the result for a sweep from \SI{16}{\hertz} to \SI{20}{\kilo\hertz} of the \gls{lpcf}}
 	\label{fig:lpcf_sweep}
 \end{figure}
 
+
    The following \autoref{fig:reverb_block_design} shows the block diagram of the \gls{reverb} unit, where $g = f \cdot (1-L_D)$.
 
-\begin{figure} [htbp]
+
+
+\begin{figure} [htbp!]
  \centering
 \begin{picture}(0,0)%
 \includegraphics{reverb_serial_des.pdf}%
@@ -401,7 +404,10 @@ The transfer function in \autoref{eq:reverb_eq_eks} is plotted in MATLAB with a 
   \label{fig:reverb_block_design}
 \end{figure}
 
-The differential equation for the \gls{reverb} can be written in 12 parts as follows in \autoref{eq:reverb_eq} where the wet and dry customizations are omitted, only inserted in the implementation part.
+
+\newpage
+
+The differential equation for the \gls{reverb} can be written in 12 parts as follows in \autoref{eq:reverb_eq} where the $WET$ and $DRY$ customizations are omitted, only inserted in the implementation part.
 
 \begin{subequations}\label{eq:reverb_eq}
 \begin{equation}\label{eq:reverb_eq_ed}
@@ -457,6 +463,14 @@ The simulation uses audioread to get the samples from a soundfile, a response to
 \includeCode{reverb.m}{matlab}{6}{14}{The reverb simulation matlab code}{code:reverb_delay_startup}{code/design/}
 
 
+A response to one sine wave in the \gls{reverb}  effect gives the following result \autoref{fig:delay_plot}. The MATLAB simulation code is included in \autoref{app:reverb} \autoref{code:reverb_sim}.
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=1\textwidth]{reverb}
+	\caption{The plot shows the simulated impulse response of the \gls{reverb} effect}
+	\label{fig:reverb_plot}
+\end{figure}
+
 A response one sine wave in the delay effect gives the following result \autoref{fig:reverb_plot}. The MATLAB simulation code is included in \autoref{app:reverb} \autoref{code:delay_sim}.
 
 \begin{figure}[htbp]
@@ -468,13 +482,7 @@ A response one sine wave in the delay effect gives the following result \autoref
 
 
 
-A response to one sine wave in the \gls{reverb}  effect gives the following result \autoref{fig:delay_plot}. The MATLAB simulation code is included in \autoref{app:reverb} \autoref{code:reverb_sim}.
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.6\textwidth]{reverb}
-	\caption{The plot shows the simulated impulse response of the \gls{reverb} effect}
-	\label{fig:reverb_plot}
-\end{figure}
+
 
 \newpage
 \subsection{implementation}

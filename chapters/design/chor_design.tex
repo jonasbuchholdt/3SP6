@@ -1,3 +1,4 @@
+\newpage
 \section{Design of the Chorus and Flanger Effect}\label{chor_des}
 
 \subsection{Obtaining the Differential Equation}
@@ -137,7 +138,7 @@ A MATLAB simulation of the \gls{cordic} algorithm was made and set to produce a 
   \end{figure}
   
 When implementing the \gls{cordic} algorithm on a \gls{dsp}, the calculated $\cos(\theta)$ and $\sin(\theta)$ values in \autoref{eq:cordic_x} and \autoref{eq:cordic_y}, might have to be changed a bit to make the algorithm stable. 
-
+\newpage
 \subsection{Implementation of the CORDIC algorithm}
 When implementing the CORDIC algorithm on the \gls{dsp}, some choices have to be made to begin with. The first choice is the resolution of the calculations. Because the \gls{lfo} has to produce such low frequencies were 16-bits is not enough, it is chosen to work in 32-bit precision. Since all the values in the CORDIC calculations are between $\pm$ 1, it is chosen to divide the 32-bits into one sign bit, one integer bit and 30 fraction bits, which should make the CORDIC algorithm able to produce a \SI{0.4}{\hertz} sine wave.
 It is mainly the two equations \autoref{eq:cordic_x} and \autoref{eq:cordic_y} that has to be implemented. Because it is chosen to operate in 32-bits precision all calculations have to be made twice. Multiplication is e.g. done by the following algorithm:
@@ -239,7 +240,7 @@ Here is the memory mapping for the chorus and flanger effect in figure \ref{fig:
 	\label{fig:memory_map_chor}
 \end{figure}
 
-
+\newpage
 \subsection{Implementation of the Chorus and Flanger Effects in Assembly}
 
 This subsection will present the implementation of those two effects on the TMS320C5515 using assembly. \\

@@ -425,21 +425,9 @@ In \autoref{fig:eq_z_domain_final} a bodeplot of the final equalizer's dynamic r
         \caption{Bodeplot of the final equalizer's dynamic range in z-domain, with all bands fully amplified and fully attenuated.}
         \label{fig:eq_z_domain_final}
   \end{figure}
+ 
+ \subsection{Memory map of the equalizer}
   
-\subsection{Implementation of the equalizer}
-When implementing the equalizer on the \gls{dsp} the amplifying part of the equalizer will be implemented first. This is because the amplifying part is the simplest one, since fewer coefficients have to be allocated in the \gls{dsp} memory. As seen in \autoref{eq:z_to_n7} the gain value, $G$, can be seen as an isolated scalar, which is multiplied on the coefficient fraction and a data value. Therefore e.g. $\frac{a_{peak1}}{b_{peak1}}$ can be written as a constant in the \gls{dsp}, no matter how much the specific band should amplify. This is not the case for the attenuating part of the equalizer, since the gain, $G$, is changing e.g. the coefficient $b_{peak1-cut}$, which is a denominator in \autoref{eq:z_to_n_peak_att}. 
-The equalizer is implemented using 16-bits precision and the main algorithm of the amplifying part of the equalizer is shown in \autoref{code:eq_code}. 
-
-\includeCode{equalizer.asm}{assembly}{61}{82}{The filter algorithm in the equalizer}{code:eq_code}{code/design/}
-
-The code shows the implementation of one filter as for example the filter represented in \autoref{eq:z_to_n7}. Line 68 does the calculation $- \frac{b_{peak3}}{b_{peak1}} \cdot y_{peak}[n-2]$ and stores it in AC0. Line 69 does the calculation $-  \frac{b_{peak2}}{b_{peak1}} \cdot y_{peak}[n-1]$, adds it to what is already in AC0, and moves $y_{peak}[n-1]$ to $y_{peak}[n-2]$. This way the algorithm does the calculation of $y_{peak}[n]$. In line 74 $y_{peak}[n]$ is stored in $y_{peak}[n-1]$ to be ready to the next sample.  
-Line 71 is special for the amplifying filters, because the coefficient in this line is zero, because \autoref{eq:z_to_n7} does not use $x[n-1]$ in its calculations. 
-In \autoref{code:eq_code_parallel} the implementation of the block diagram in \autoref{fig:eq_parallel} is seen.
-
-\includeCode{equalizer.asm}{assembly}{84}{118}{The implementation of \autoref{fig:eq_parallel}}{code:eq_code_parallel}{code/design/}
-
-Line 117 is where all the outputs of the seven filters are added to the direct input.
-
 In \autoref{fig:memory_map_eq} a memory map for the equalizer is shown. It consists of three coefficient buffers and three data buffers. 
 
 \begin{figure}[htbp!]
@@ -477,7 +465,21 @@ In \autoref{fig:memory_map_eq} a memory map for the equalizer is shown. It consi
 \end{picture}%
 \caption{Memory map for the equalizer.}
 		\label{fig:memory_map_eq}
-\end{figure}
+\end{figure}  
+  
+\subsection{Implementation of the equalizer}
+When implementing the equalizer on the \gls{dsp} the amplifying part of the equalizer will be implemented first. This is because the amplifying part is the simplest one, since fewer coefficients have to be allocated in the \gls{dsp} memory. As seen in \autoref{eq:z_to_n7} the gain value, $G$, can be seen as an isolated scalar, which is multiplied on the coefficient fraction and a data value. Therefore e.g. $\frac{a_{peak1}}{b_{peak1}}$ can be written as a constant in the \gls{dsp}, no matter how much the specific band should amplify. This is not the case for the attenuating part of the equalizer, since the gain, $G$, is changing e.g. the coefficient $b_{peak1-cut}$, which is a denominator in \autoref{eq:z_to_n_peak_att}. 
+The equalizer is implemented using 16-bits precision and the main algorithm of the amplifying part of the equalizer is shown in \autoref{code:eq_code}. 
+
+\includeCode{equalizer.asm}{assembly}{61}{82}{The filter algorithm in the equalizer}{code:eq_code}{code/design/}
+
+The code shows the implementation of one filter as for example the filter represented in \autoref{eq:z_to_n7}. Line 68 does the calculation $- \frac{b_{peak3}}{b_{peak1}} \cdot y_{peak}[n-2]$ and stores it in AC0. Line 69 does the calculation $-  \frac{b_{peak2}}{b_{peak1}} \cdot y_{peak}[n-1]$, adds it to what is already in AC0, and moves $y_{peak}[n-1]$ to $y_{peak}[n-2]$. This way the algorithm does the calculation of $y_{peak}[n]$. In line 74 $y_{peak}[n]$ is stored in $y_{peak}[n-1]$ to be ready to the next sample.  
+Line 71 is special for the amplifying filters, because the coefficient in this line is zero, because \autoref{eq:z_to_n7} does not use $x[n-1]$ in its calculations. 
+In \autoref{code:eq_code_parallel} the implementation of the block diagram in \autoref{fig:eq_parallel} is seen.
+
+\includeCode{equalizer.asm}{assembly}{84}{118}{The implementation of \autoref{fig:eq_parallel}}{code:eq_code_parallel}{code/design/}
+
+Line 117 is where all the outputs of the seven filters are added to the direct input.
 
 The full assembly code of the equalizer can be found in the ZIP file under the name of $equalizer.asm$. 
 

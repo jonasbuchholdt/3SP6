@@ -1,17 +1,17 @@
 \subsection{Wah-Wah}\label{sec:wah-wah} 
 
 The Wah-Wah effect takes the original signal and mix it with another signal that passes through a bandpass filter. The bandpass filter is time varying, which means that it changes its position in the frequency spectrum \citep{wah-wah_course}. \\
-The automatic Wah-Wah effect have some different parameters that can be changed to customize the effect:\\
+The automatic Wah-Wah effect have some different parameters that can be changed to customize the effect:
 
 \begin{itemize}
 	\item \textbf{The \gls{lfo} frequency}: It sets the speed at which the bandpass filter moves in the frequency spectrum.
 	\item \textbf{\gls{lfo} start phase}: Determine where should the bandpass filter start.
 	\item \textbf{\gls{lfo} depth}: the range of frequencies it should work on, high depth gives a larger range and vice versa.
 \end{itemize} \citep{wah-wah_audacity}
-
+\newpage
 A block diagram of the effect is illustrated in \autoref{fig:wah_diag}.  
 
-\begin{figure} [htbp]
+\begin{figure} [htbp!]
 	\centering
 \begin{picture}(0,0)%
 \includegraphics{wah_diag.pdf}%
@@ -40,24 +40,10 @@ A block diagram of the effect is illustrated in \autoref{fig:wah_diag}.
 It can be seen on the block diagram that the filtered signal is added to the direct signal. Thus, this block diagram is a representation of the Wah-Wah effect. 
 The phaser effect can be created by using a band-stop filter instead of a bandpass filter using the same block diagram presented in \autoref{fig:wah_diag} \citep{wah-wah_cardiff}. 
 There is another type of Wah-Wah effect called M-fold Wah-Wah which uses multiple M-tap bandpass filters that move around the spectrum at the same time \citep{wah-wah_cardiff}. \\
-%
-%An example of a time domain response is shown in figure \autoref{fig:wah-wah-response}. \\
-%
-%\begin{figure} [htbp!]
-%	\centering
-%	\includegraphics[width=0.6\textwidth]{wah-wah-response.png}
-%	\caption{Time domain response of the original sound (red) and the one after having the wah-wah effect (blue) \citep{wah-wah_cardiff}.}
-%	\label{fig:wah-wah-response}
-%\end{figure}
-%\todo[inline]{write about wah wah frequency in text}
-%
-%\todo[inline]{Jonas: Muhammed, can you explain the above time domain spectra?(and the block diagram)}
-%\todo[inline]{Sebastian: Maybe make figure our self, because axis descriptions are missing now}
-%
-%As it can be seen on \autoref{fig:wah-wah-response}, the wah-wah effect reduced the amplitudes of many parts of the wave-form compared to the signal without the wah-wah effect. Some of the them remained the same. It is due to the bandpass-filtering.
+
 In \autoref{fig:wah_wah_frequency} an illustration of the bandpass filter in the Wah-Wah effect in frequency domain is shown. 
 
-\begin{figure}
+\begin{figure}[htbp!]
 \centering
 \def\svgwidth{\columnwidth}
 \input{figures/analysing/wah_wah_frequency_domain.pdf_tex}
@@ -66,3 +52,4 @@ In \autoref{fig:wah_wah_frequency} an illustration of the bandpass filter in the
 \end{figure}
 
 It is shown that the bandpass filter can be moved in frequency. This movement is done either by an \gls{lfo} or with an expression pedal.
+\newpage
