@@ -615,7 +615,7 @@ Here the subroutine for the allpass, \autoref{code:reverb_allpass_coeff}, will b
 The subroutine is the one that takes into account the final part of the \gls{reverb} effect which is the two all-pass filters. It also involves the use of a macro as the previous section since the two all-pass filters have considerable resemblance. Again, *AR0 is used as a buffer pointer for the $x_{i}$ values and *AR4 for the coefficients and the delay values. The other registers and accumulators are used for temporary purposes.
 Last but not least, the data is moved to T2 that plays the role of the output. 
 Another crucial step is to move the pointer of the AR0 buffer so that in the next iteration the values are not overwritten but inserted in a new slot.\\
-The full assembly code of the reverb can be found in the zip file inside the usb under the name of $reverb.asm$. 
+The full assembly code of the reverb can be found in the ZIP file under the name of $reverb.asm$. 
 
 \subsection{implementation of delay}
 As shown in \autoref{fig:reverb_block_des} delay is a copy of the \gls{reverb} all pass filter and is implemented as  in \autoref{imp:reverb_allpass} but without macros. \gls{reverb} and delay can only run at the same time with a maximum of \SI{41}{\milli\second} delay because of the required reinitializing of data buffer register size for longer delays. The coefficient for the delay is in the same memory area as \gls{reverb} and situated at the last used buffer slot. The data buffer size register shall then have a size of 0x70F and the memory overall view will be as follows \autoref{fig:delay_mem_map}. 
@@ -645,5 +645,5 @@ As shown in \autoref{fig:reverb_block_des} delay is a copy of the \gls{reverb} a
 	\label{fig:delay_mem_map}
 \end{figure}
 
-The full assembly code of the delay can be found in the zip file inside the usb under the name of $delay.asm$. 
+The full assembly code of the delay can be found in the ZIP file under the name of $delay.asm$. 
 
