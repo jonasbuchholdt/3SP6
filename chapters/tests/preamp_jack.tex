@@ -1,10 +1,10 @@
 \newpage
 \section{Pre-amplifier test}
-This section will test all requirements related to the \gls{preamp}. 
+This section will present the tests of all requirements related to the \gls{preamp}. 
 
 
 \subsection{\autoref{req:preamp1}}
-According to \autoref{req:preamp1}, a test was made to ensure that the \gls{preamp} does not change the signal amplitude more than $\pm$\SI{1}{\decibel} between 20 Hz and 20 kHz. A test was made and is descried in \autoref{app:preamp_frequency_response} and the result is seen in \autoref{fig:tests:appendix:amplitude}.
+For \autoref{req:preamp1}, a test was made to ensure that the \gls{preamp} does not change the signal amplitude more than $\pm$\SI{1}{\decibel} between 20 Hz and 20 kHz. A test was made and is described in \autoref{app:preamp_frequency_response} and the result is seen in \autoref{fig:tests:appendix:amplitude}.
 
 \begin{figure}[htbp!]
 	\centering
@@ -51,13 +51,13 @@ According to \autoref{req:preamp2} the input impedance of  the \gls{preamp} must
 %The calculated input impedance is higher than the required input impedance, so \autoref{req:preamp2} is approved.
 
 \subsection{\autoref{req:preamp3}}
-According to \autoref{req:preamp3} the output impedance of the preamp must be one tenth of the input impedance of the \gls{dsp}. The requirement is approved since the output impedance of an \gls{opamp} is normally between \SI{50}{\ohm} to \SI{200}{\ohm}, without a feedback loop. \autoref{eq:preamp_zout_out} is therefore assumed correct and thus the requirement is fulfilled.  
+According to \autoref{req:preamp3} the output impedance of the preamp must be one tenth of the input impedance of the \gls{dsp}. The requirement is approved since the output impedance of an \gls{opamp} is normally between \SI{50}{\ohm} to \SI{200}{\ohm}, without a feedback loop. The input impedance of the \gls{dsp} is \SI{20}{\kilo\ohm} and \autoref{eq:preamp_zout_out} is therefore assumed correct and thus the requirement is fulfilled \citep{TLV320AIC3204}.  
 
 \subsection{\autoref{req:preamp4}}
 The \gls{preamp} is designed to be supplied by a 5 to 9 voltage supply, and the \gls{preamp} will be supplied from a \SI{9}{\volt} battery. The \autoref{req:preamp4} is therefore approved.
 
 \subsection{\autoref{req:preamp5} and \autoref{req:preamp6}}
-According to \autoref{req:preamp6}, a test was made to ensure that the \gls{preamp} \gls{pcb} including cable mound fits into the jack connector house. \autoref{fig:tests:preamp_pcb} shows the \gls{pcb} mounded on the jack connector and the cable is mounted on the \gls{preamp}. 
+According to \autoref{req:preamp6}, a test was made to ensure that the \gls{preamp} \gls{pcb} including cable mount fits into the jack connector house. \autoref{fig:tests:preamp_pcb} shows the \gls{pcb} mounted on the jack connector and the cable is mounted on the \gls{preamp}. 
 
  
 

@@ -1,6 +1,6 @@
-\section{Design of the equalizer}
+\section{Design of the equalizer}\label{sec:design:eq}
 This chapter aims to describe the design of an digital graphic equalizer, for an electric guitar. By graphic equalizer it is meant that only the gain of each band is changeable for the user.  
-To begin with, some design choices have to made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by a combination of shelving filters and peak filters. The shelving filters are used for the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters are normally kept as first or second order filters. 
+To begin with, some design choices have to be made. From \autoref{tab:frequency_area} it is seen that the frequency area of an electric guitar is from \SI{80}{\hertz} to \SI{4400}{\hertz}. Thus the equalizer has to be able to change the frequency response in this area. This change in the frequency response is made by a combination of shelving filters and peak filters. The shelving filters are used for the highest and the lowest bands of the equalizer and the peak filters are used for the in between bands. All filters will be kept as first or second order filters. 
 
 \subsection{Shelving filter}
 The transfer function for a first order low shelving filter is as in \autoref{eq:analog_shelving_low} \citep{Julius_smith}.
@@ -132,7 +132,7 @@ The individual filters in the amplifying equalizer will coupled in parallel as s
 		\label{fig:eq_parallel}
 \end{figure}
 
-The shelving filters will be designed first, followed by the peak filters. Since the transition frequencies, $\omega_c$ for the low- filter and high shelving filters, are found in \autoref{tab:center_frequencies}, the only unknown in \autoref{eq:analog_shelving_low} is the gain, $G$.
+The shelving filters will be designed first, followed by the peak filters. Since the transition frequencies, $\omega_c$ for the low- and high -shelving filters, are found in \autoref{tab:center_frequencies}, the only unknown in \autoref{eq:analog_shelving_low} is the gain, $G$.
 The gain has to be changeable within $\pm$ \SI{15}{\decibel}. It is chosen that it is the passband that will be amplified \SI{15}{\decibel} and not the transition frequency, $\omega_c$. Thus the shelving filters gain is found by setting $\omega_c =$ \SI{100}{\radian/\second} and then finding the gain for $\omega =$ \SI{1}{\radian/\second}. The gain value for a \SI{15}{\decibel} attenuation is found in \autoref{eq:shelving_gain_value}.
 
 \begin{subequations}
@@ -164,9 +164,9 @@ $\Updownarrow$
  
  
 
-The Q-value is then the only unknown in the design of the peak filters. In \autoref{req:equalizer2} it is stated that at full amplification (\SI{15}{\decibel}), the amplification at the neighbouring centerfrequencies must drop to (\SI{9}{\decibel}). 
-The Q-value will be chosen so it has the minimum ripple. This Q-value is found using a MATLAB program, where the Q-value is increased in steps of 0.2 from 0 to 10. All gains on both the peak and the shelving filters are set to amplify \SI{15}{\decibel}. The optimal Q-value is hereby found to be 1.4, giving a ripple of $\pm$\SI{1.11}{\decibel}, in the frequency area from \SI{100}{\hertz} to \SI{6400}{\hertz}, when all filters are fully amplified. All parameters for the peak filters are then found. 
-When coupling the filters as in \autoref{fig:eq_parallel}, and plotting it in MATLAB, the bodeblot of the equalizer with all filters fully amplified, is as in \autoref{fig:eq_s_domain_comb}. In the figure all bands have their maximum gain value.
+The Q-value is then the only unknown in the design of the peak filters. In \autoref{req:equalizer2} it is stated that at full amplification (\SI{15}{\decibel}), the amplification at the neighbouring centerfrequencies must drop to \SI{9}{\decibel}. 
+The Q-value will be chosen so it has the minimum ripple. This Q-value is found using a MATLAB program, where the Q-value is increased in steps of 0.2 from 0 to 10. All gains on both the peak and the shelving filters are set to amplify \SI{15}{\decibel}. The MATLAB program can be seen in \autoref{app:equalizer}. The optimal Q-value is hereby found to be 1.4, giving a ripple of $\pm$\SI{1.11}{\decibel}, in the frequency area from \SI{100}{\hertz} to \SI{6400}{\hertz}, when all filters are fully amplified. All parameters for the peak filters are then found. 
+When coupling the filters as in \autoref{fig:eq_parallel}, and plotting it in MATLAB, the bodeplot of the equalizer with all filters fully amplified, is as in \autoref{fig:eq_s_domain_comb}. In the figure all bands have their maximum gain value.
 
 \begin{figure}[!h]
     \centering
@@ -427,7 +427,7 @@ In \autoref{fig:eq_z_domain_final} a bodeplot of the final equalizer's dynamic r
   \end{figure}
   
 \subsection{Implementation of the equalizer}
-When implementing the equalizer on the\gls{dsp} the amplifying part of the equalizer will be implemented first. This is because the amplifying part is the simplest one, since fewer coefficients have to be allocated in the \gls{dsp} memory. As seen in \autoref{eq:z_to_n7} the gain value, $G$, can be seen as an isolated scalar, which is multiplied on the coefficient fraction and a data value. Therefore e.g. $\frac{a_{peak1}}{b_{peak1}}$ can be written as a constant in the \gls{dsp}, no matter how much the specific band should amplify. This is not the case for the attenuating part of the equalizer, since the gain,$G$, is changing e.g. the coefficient $b_{peak1-cut}$, which is a denominator in \autoref{eq:z_to_n_peak_att}. 
+When implementing the equalizer on the \gls{dsp} the amplifying part of the equalizer will be implemented first. This is because the amplifying part is the simplest one, since fewer coefficients have to be allocated in the \gls{dsp} memory. As seen in \autoref{eq:z_to_n7} the gain value, $G$, can be seen as an isolated scalar, which is multiplied on the coefficient fraction and a data value. Therefore e.g. $\frac{a_{peak1}}{b_{peak1}}$ can be written as a constant in the \gls{dsp}, no matter how much the specific band should amplify. This is not the case for the attenuating part of the equalizer, since the gain, $G$, is changing e.g. the coefficient $b_{peak1-cut}$, which is a denominator in \autoref{eq:z_to_n_peak_att}. 
 The equalizer is implemented using 16-bits precision and the main algorithm of the amplifying part of the equalizer is shown in \autoref{code:eq_code}. 
 
 \includeCode{equalizer.asm}{assembly}{61}{82}{The filter algorithm in the equalizer}{code:eq_code}{code/design/}

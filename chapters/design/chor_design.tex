@@ -2,7 +2,7 @@
 
 \subsection{Obtaining the Differential Equation}
 
-The flanger- and chorus- effect are similar in their design so they will be presented in the same section. \\
+The flanger- and chorus- effect are similar in their design so they will be designed in the same section. \\
 
 From the block diagram presented in section \autoref{sec:chorus}, a block diagram in the discrete time domain for the flanger and chorus effect can be obtained and is shown in \autoref{fig:chorus_diag_des}. \\ 
 The chorus effect is the one in red and black while the flanger is only in black.  
@@ -57,7 +57,7 @@ y[n] = x[n] + \sum_{j=1}^{i}  (x[n- d_{j}] \cdot g_{j})
 \end{equation}
 
 The index $i$ represents the number of delays that are being implemented in the chorus effect which is also the chorus size. Index $n$ represents the present sample. \\
-If the implementation is done using a time varying delay, equations \ref{flang_eq} and \ref{chor_eq} can be re-written as \autoref{eq:flang_eq2} and \autoref{eq:chor_eq2}:
+If the implementation is done using a time varying delay, equations \ref{eq:flang_eq2} and \ref{eq:chor_eq2} can be re-written as \autoref{eq:flang_eq2} and \autoref{eq:chor_eq2}:
 
 \begin{equation}
 \label{eq:flang_eq2}
@@ -77,9 +77,9 @@ The number of delay lines for the chorus effect is also a choice but should not 
 The delay time for the flanging effect should be between 1 and \SI{20}{\milli\second} while the delay time in the chorus should be longer than \SI{20}{\milli\second}. 
 
 A delay can be done in different ways digitally. One way is to use a ring buffer also known as circular buffer. \\
-The idea of this data structure is that it takes values and only outputs them when it gets full, and overwrites the oldest after outputting it. It is a kind of a FIFO queue structure but where the start and the overwriting can start at any index. \\
+The idea of this data structure is that it takes values and only outputs them when it gets full, and overwrites the oldest after outputting it. It is a kind of a \gls{fifo} queue structure but where the start and the overwriting can start at any index. \\
 This means that the size of the buffer depends on the delay.  The buffer size must then be always up-to-date with the new delay value. \\ 
-The value of the delay is determined by a periodic function as said before, different waveforms can be used as said in \autoref{chor_flang}. A common periodic function that can be used is the sine. Since it varies between 0 and 1, it can be then multiplied with the user-defined range. 
+The value of the delay is determined by a periodic function as said before, different waveforms can be used, as said in \autoref{sec:chorus}. A common periodic function that can be used is the sine. Since it varies between -1 and 1, it can be then be multiplied with the user-defined range. 
 The delay can then be written as in \autoref{eq:sine_delay}.
 
 \begin{equation}\label{eq:sine_delay}
@@ -92,9 +92,9 @@ The delay can then be written as in \autoref{eq:sine_delay}.
      \explain{$f_{l}$ is the frequency of the \gls{lfo}.}{\si{\hertz}}
     \stopexplain 
 
-\subsection{Making the LFO by Cordic algorithm}
+\subsection{Making the LFO by the CORDIC algorithm}
 The \gls{lfo} in both the chorus- and the flanger- effect should, as stated in \autoref{chor_des}, be able to make sine waves from \SI{0.1}{\kilo\hertz} to \SI{10}{\kilo\hertz}. A \gls{dsp} is not necessarily able to calculate sine values and therefore an algorithm has to be implemented in order to make this possible. A way to do this is by using the \gls{cordic} algorithm, which can be used to calculate both sine, cosine, square roots etc \citep{cordic}. 
-When using the \gls{cordic} algorithm for for an \gls{lfo} the two equations \autoref{eq:cordic_x} and \autoref{eq:cordic_y} are almost all what is needed.
+When using the \gls{cordic} algorithm for a \gls{lfo} the two equations \autoref{eq:cordic_x} and \autoref{eq:cordic_y} are almost all what is needed.
 
 \begin{equation}
 \label{eq:cordic_x}
@@ -139,7 +139,7 @@ A MATLAB simulation of the \gls{cordic} algorithm was made and set to produce a 
 When implementing the \gls{cordic} algorithm on a \gls{dsp}, the calculated $\cos(\theta)$ and $\sin(\theta)$ values in \autoref{eq:cordic_x} and \autoref{eq:cordic_y}, might have to be changed a bit to make the algorithm stable. 
 
 \subsection{Implementation of the CORDIC algorithm}
-When implementing the CORDIC algorithm on the \gls{dsp}, some choices have to be made to begin with. The first choice is the resolution of the calculations. Because the \gls{lfo} has to produce such low frequencies were 16-bits is not enough, it is chosen to work in 32-bit precision. Since all the values in the CORDIC calculations are between $\pm$ 1, it is chosen to divide the 32-bits into one sign bit, one integer bit and 30 fraction bits, which should make the CORDIC algorithm able to produce a \SI{0.4}{\hertz}.
+When implementing the CORDIC algorithm on the \gls{dsp}, some choices have to be made to begin with. The first choice is the resolution of the calculations. Because the \gls{lfo} has to produce such low frequencies were 16-bits is not enough, it is chosen to work in 32-bit precision. Since all the values in the CORDIC calculations are between $\pm$ 1, it is chosen to divide the 32-bits into one sign bit, one integer bit and 30 fraction bits, which should make the CORDIC algorithm able to produce a \SI{0.4}{\hertz} sine wave.
 It is mainly the two equations \autoref{eq:cordic_x} and \autoref{eq:cordic_y} that has to be implemented. Because it is chosen to operate in 32-bits precision all calculations have to be made twice. Multiplication is e.g. done by the following algorithm:
 \begin{itemize}
 \item The two variables $a$ and $b$ both have a high (16-bits) and a low part (16-bits).
@@ -153,9 +153,9 @@ It is mainly the two equations \autoref{eq:cordic_x} and \autoref{eq:cordic_y} t
 \end{itemize}
 
 An example of this in the \gls{cordic} algorithm is in \autoref{code:cordic_2} where the 32-bit value $x_n$ is multiplied with the 32-bit value $\cos(\theta)$.
-\includeCode{cordic_2.asm}{assembly}{19}{59}{Multiplying $x_n$ with $\cos(\theta)$ in the CORDIC algorithm}{code:cordic_2}{code/design/}
+\includeCode{cordic_2.asm}{assembly}{17}{58}{Multiplying $x_n$ with $\cos(\theta)$ in the CORDIC algorithm}{code:cordic_2}{code/design/}
 
-\subsection{Approximation of Values Lying between Two Samples}\label{flang_approx_subsec}
+\subsection{Approximation of values lying between two samples}\label{flang_approx_subsec}
 
 In some cases during the chorus and the flanger effect, the delay value require an approximation between two of the delayed samples in the buffer. It happens when the delay is between two samples and not at an exact sample. In order to solve this problem, a linear approximation between the two samples has to be made. \\
 

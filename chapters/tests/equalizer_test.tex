@@ -3,7 +3,7 @@
 In this part, all the requirements related to the equalizer will be tested if they are fulfilled. 
 
 
-\subsection{Test of requirement \autoref{req:equalizer}}
+\subsection{Test of \autoref{req:equalizer}}
 According to \autoref{req:equalizer}, the gain value in each individual filter must be changeable by the user. This requirement has not been completely fulfilled since there has not been made an actual user interface for the effect. It is possible to change the gain of each individual filter, but only by writing it directly in the program. A test was made to prove this, where the peak filters with $\omega_0 =$ \SI{200}{\hertz} and $\omega_0 =$ \SI{3200}{\hertz} is set to amplify respectively \SI{6}{\decibel} and \SI{12}{\decibel}. 
 \autoref{fig:tests:eq_gain} show the result of the test.
 
@@ -16,7 +16,7 @@ According to \autoref{req:equalizer}, the gain value in each individual filter m
 
 
 
-\subsection{Test of requirement \autoref{req:equalizer2}}
+\subsection{Test of \autoref{req:equalizer2}}
 According to \autoref{req:equalizer2}, each individual band must, when fully amplified, drop \SI{6}{\decibel} at the neighbouring center frequencies. A test was made using  the setup in \autoref{chap:effect_test_response}, where all the individual, fully amplified, filters and the combined filter, with all filters fully amplified, were tested. \autoref{fig:tests:eq_filters} shows the result of the test, where the upper blue graph is the combined equalizer and the others are the individual filters.
 
 \begin{figure}[htbp!]

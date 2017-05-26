@@ -55,13 +55,13 @@
     \put(0,0){\includegraphics[width=\unitlength,page=1]{shelving_filter_block.pdf}}%
     \put(0.4685003,0.27675525){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{1}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{shelving_filter_block.pdf}}%
-    \put(0.00000001,0.27921374){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Input}}}%
-    \put(0.90397936,0.27921374){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Output}}}%
+    \put(0.00000001,0.27921374){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$Input$}}}%
+    \put(0.90397936,0.27921374){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$Output$}}}%
     \put(0.83198403,0.18965942){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{+}}}%
     \put(0.72732922,0.27429673){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{+}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{shelving_filter_block.pdf}}%
-    \put(0.2781475,0.07060309){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{Hshelving}}}%
-    \put(0.55629496,0.07060309){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{G}}}%
+    \put(0.2781475,0.07060309){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$H_{shelving}$}}}%
+    \put(0.55629496,0.07060309){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$G$}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{shelving_filter_block.pdf}}%
   \end{picture}%
 \endgroup%

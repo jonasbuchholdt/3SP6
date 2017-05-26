@@ -1,10 +1,10 @@
 \newpage
 \section{Test of the Reverb Effect}
-In this part, tests for the reverb effect that show wether it fulfills the requirement are presented. 
+In this part, tests for the reverb effect that show whether it fulfils the requirements are presented. 
 
 
 \subsection{Test of \autoref{req:reverb1}}
-According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reverb} have at least 1000 echoes. The test is made by sending a single known sinus impulse into the \gls{reverb} effect. The test setup is shown in \autoref{chap:effect_test_response}. Ideally every echo should haven been counted, but the scope have a limitation of 16k samples on each measurement screen, which complicates the measurement. Instead measurements at different frequencies will be compared to the equivalent MATLAB coded \gls{reverb} simulations. The MATLAB simulation and the measurement will be situated side by side. This is done with five different frequency with the frequencies \SI{20}{\hertz}, \SI{50}{\hertz}, \SI{200}{\hertz}, \SI{1}{\kilo\hertz}, and \SI{5}{\kilo\hertz} in \autoref{fig:tests:reverb:20Hz}, \autoref{fig:tests:reverb:50Hz}, \autoref{fig:tests:reverb:200Hz}, \autoref{fig:tests:reverb:1kHz}, and \autoref{fig:tests:reverb:5kHz}. 
+According to \autoref{req:reverb1}, a test was made to ensure that the \gls{reverb} have at least 1000 echoes. The test is made by sending a single known sine impulse into the \gls{reverb} effect. The test setup is shown in \autoref{chap:effect_test_response}. Ideally every echo should have been counted, but the scope have a limitation of 16k samples on each measurement screen, which complicates the measurement. Instead measurements at different frequencies will be compared to the equivalent MATLAB coded \gls{reverb} simulations. The MATLAB simulation and the measurement will be situated side by side. This is done with five different frequencies with the frequencies \SI{20}{\hertz}, \SI{50}{\hertz}, \SI{200}{\hertz}, \SI{1}{\kilo\hertz}, and \SI{5}{\kilo\hertz} in \autoref{fig:tests:reverb:20Hz}, \autoref{fig:tests:reverb:50Hz}, \autoref{fig:tests:reverb:200Hz}, \autoref{fig:tests:reverb:1kHz}, and \autoref{fig:tests:reverb:5kHz}. 
 
 \subsubsection*{Impulse response of \SI{20}{\hertz}}
 
@@ -79,7 +79,7 @@ Since the user interface not is implemented, \autoref{req:reverb2} is conditiona
 
 
 \subsection{Test of \autoref{req:reverb3}}
-According to \autoref{eq:reverb_eq_f} and the following formulas in \autoref{sec:reverb_develop} the gain of every \gls{lpcf} can be changed, which will decrease or increase the number of echo from the six \gls{lpcf}. Since the user interface has not been implemented, the user is only able to change the number of echoes by changing it directly in the code. Thus \autoref{req:reverb2} is conditionally approved
+According to \autoref{eq:reverb_eq_f} and the following formulas in \autoref{sec:reverb_develop} the gain of every \gls{lpcf} can be changed, which will decrease or increase the number of echoes from the six \gls{lpcf}. Since the user interface has not been implemented, the user is only able to change the number of echoes by changing it directly in the code. Thus \autoref{req:reverb3} is conditionally approved
 
 \subsection{Test review of the Reverb Effect}
 In this subsection, a short review will be shown of the \gls{reverb} effect test.

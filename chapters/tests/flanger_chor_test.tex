@@ -1,5 +1,5 @@
 \newpage
-\section{Test of the Requirements of the Flanger and Chorus Effects}
+\section{Test of the Requirements of the Flanger and Chorus effects}
 
 \subsection{Requirements \ref{req:flanger1} and \ref{req:chorus1}}
 
@@ -12,17 +12,17 @@ The requirement of having an \gls{lfo} that has a varying frequency between 0.1 
   \label{fig:flang_time_test}
 \end{figure}
 
-It can be seen in figure \ref{fig:flang_time_test} that the \gls{lfo} is working since the delay is varying. This oval shape represents one \gls{lfo} sine period. 
+It can be seen in figure \ref{fig:flang_time_test} that the \gls{lfo} is working since the delay is varying. This oval shape represents one \gls{lfo} sine period. In the attached Zip-file a video file called "flanger_impulse_response_test" shows the impulse response of the flanger effect.
 
 
 
 \subsection{Requirement \ref{req:chorus2}}
 
-According to \autoref{req:chorus2} the user must be able to choose the number of delay lines in the chorus effect. The chorus effect has been implemented in Assembly using macro, where each macro call represent a delay line. The user is free to choose how many times the macro should be called and thus choosing the number of delay lines. He can also customize the gain and delay for each line which are the inputs of the macro. This is although only an option when changing it directly in the program since as user interface has not been implemented. Thus the requirement is partially approved.
+According to \autoref{req:chorus2} the user must be able to choose the number of delay lines in the chorus effect. The chorus effect has been implemented in Assembly using macros, where each macro call represent a delay line. The user is free to choose how many times the macro should be called and thus choosing the number of delay lines. The user can also customize the gain and delay for each line which are the inputs of the macro. This is although only an option when changing it directly in the program since a user interface has not been implemented. Thus the requirement is partially approved.
 
 \subsection{Requirement \ref{req:flanger2}}
 
-According to \autoref{req:flanger2} the user must able to change the gain of the flanger. This flexibility is made possible because the gain is called every time from the coefficient buffer, the value can then be changed there. The requirement is only partially approved since no user interface has been implemented. 
+According to \autoref{req:flanger2} the user must be able to change the gain of the flanger. This flexibility is made possible because the gain is called every time from the coefficient buffer, the value can then be changed there. The requirement is only partially approved since no user interface has been implemented. 
 
 
 
