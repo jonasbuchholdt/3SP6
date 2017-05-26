@@ -35,7 +35,6 @@ reverb_lpcf:
 	;get delayed data X1(N-1) initializing 
 	mov		AC0,T2				;get X1(N)
 	mov		*AR5(-1), AC2		;get X1(N-1)
-	;mov		*AR5+, T0			;count up
 	mov     #coeffreverb,BSA01		;Select coffecient
 	mov     #coeffreverb,BSA45		;Select coffecient
 	mov     #coeffreverb,BSAC		;Select coffecient
@@ -79,17 +78,17 @@ LPCF	.macro mem, del, bval
 	mov		#bval,CDP	
 	MPYM 	*AR0, *CDP, AC0		;(X1(N-1)*-LD + X2(N-1)*LD + X2(N-D)*g + X1(N))*b1
 	.endm
-  	LPCF	0000h, -0x345, 9
+  	LPCF	datacomb1, -0x345, 9
   	mov		AC0,AC3
-	LPCF	070Fh, -0x3F5, 10
+	LPCF	datacomb2, -0x3F5, 10
 	add		AC0,AC3
-	LPCF	0E1Eh, -0x4FE, 11
+	LPCF	datacomb3, -0x4FE, 11
 	add		AC0,AC3
-	LPCF	152Dh, -0x556, 12
+	LPCF	datacomb4, -0x556, 12
 	add		AC0,AC3
-	LPCF	1C3Ch, -0x65E, 13
+	LPCF	datacomb5, -0x65E, 13
 	add		AC0,AC3
-	LPCF	234Bh, -0x70E, 14
+	LPCF	datacomb6, -0x70E, 14
 	add		AC0,AC3	
 	ret
 
@@ -110,11 +109,11 @@ Allpass	.macro mem, del, aval
 	Add	 	AC0,AC3	
 	.endm
 	
-  	Allpass	2A5Ah, -0x2ED, 8 	;-0x2ED
-    Allpass	3169h, -0x23D, 8	;-0x23D
+  	Allpass	dataall1, -0x2ED, 8 	;-0x2ED
+    Allpass	dataall2, -0x23D, 8	;-0x23D
 	SFTS 	AC3, #-14, AC3		;bit shift    
     mov		AC3,T2
-	mov     #3F97h,BSA45	;Select X1
+	mov     #datax,BSA45	;Select X1
 	add		*AR5, T2
 	mov		*AR5+, T0			;count up
 	mov		*AR0+, T0
